@@ -1,0 +1,76 @@
+---
+import { Mountain, ArrowRight } from '@lucide/astro'
+import { getTranslations } from '../../lib/i18/getTranslations'
+const {
+  subtitle,
+  title,
+  titleHighlight,
+  description,
+  learnMission,
+  shopProducts,
+} = getTranslations(Astro.params.lang).hero
+---
+
+<section
+  data-testid="hero"
+  aria-labelledby="hero-title"
+  class="bg-gradient-to-br from-stone-900 via-stone-800 to-amber-900 text-white py-20 px-4 sm:px-6 lg:px-8"
+>
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="flex items-center space-x-2 mb-6">
+          <Mountain class="h-6 w-6 text-amber-400" />
+          <span class="text-amber-400 font-medium">
+            {subtitle}
+          </span>
+        </div>
+
+        <h1
+          id="hero-title"
+          class="text-4xl md:text-6xl font-bold mb-6 leading-tight"
+        >
+          {title}
+          <span class="text-amber-400 block">
+            {titleHighlight}
+          </span>
+        </h1>
+
+        <p class="text-xl text-stone-300 mb-8 leading-relaxed">
+          {description}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="#products"
+            class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2"
+          >
+            <span>{shopProducts}</span>
+            <ArrowRight class="h-4 w-4" />
+          </a>
+          <a
+            href="#mission"
+            class="border border-stone-300 hover:bg-white hover:text-stone-900 text-white px-8 py-4 rounded-lg font-semibold transition-colors text-center"
+          >
+            {learnMission}
+          </a>
+        </div>
+      </div>
+
+      <div class="relative">
+        <img
+          src="https://images.pexels.com/photos/371589/pexels-photo-371589.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
+          alt="Rock climber on cliff face"
+          loading="eager"
+          class="rounded-lg shadow-2xl w-full h-96 object-cover"
+          width={800}
+          height={600}
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-stone-900/50 to-transparent rounded-lg"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

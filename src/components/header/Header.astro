@@ -1,0 +1,62 @@
+---
+import { Mountain } from '@lucide/astro'
+import { getTranslations } from '../../../lib/i18/getTranslations'
+import MobileMenu from './MobileMenu.astro'
+import MobileMenuButton from './MobileMenuButton.astro'
+import LangSwitcher from '../LangSwitcher.astro'
+const { lang } = Astro.params
+const { header } = getTranslations(lang)
+const { subtitle, title, products, mission, impact } = header
+---
+
+<header
+  role="banner"
+  class="bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-700 shadow-sm border-b sticky top-0 z-40 transition-colors"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href={`/${lang}`} class="flex items-center space-x-3">
+        <Mountain class="h-8 w-8 text-amber-600" />
+        <div>
+          <h1 class="text-xl font-bold text-stone-900 dark:text-white">
+            {title}
+          </h1>
+          <p class="text-xs text-stone-600 dark:text-stone-400 -mt-1">
+            {subtitle}
+          </p>
+        </div>
+      </a>
+
+      <nav
+        class="hidden md:flex items-center space-x-8"
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        <a
+          href="#products"
+          class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
+        >
+          {products}
+        </a>
+        <a
+          href="#mission"
+          class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
+        >
+          {mission}
+        </a>
+        <a
+          href="#impact"
+          class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
+        >
+          {impact}
+        </a>
+        <LangSwitcher />
+      </nav>
+
+      <div class="md:hidden flex items-center space-x-2">
+        <MobileMenuButton />
+      </div>
+    </div>
+    <MobileMenu />
+  </div>
+</header>

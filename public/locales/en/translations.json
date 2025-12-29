@@ -1,0 +1,94 @@
+{
+    "header": {
+        "title": "CliffRise",
+        "subtitle": "Funding Routes",
+        "products": "Products",
+        "mission": "Our Mission",
+        "impact": "Impact",
+        "cart": "Cart",
+        "theme": "Theme"
+    },
+    "hero": {
+        "subtitle": "Climbing Essentials",
+        "title": "Gear That",
+        "titleHighlight": "Builds Routes",
+        "description": "Every purchase funds new climbing route development. Premium climbing chalk and gear that supports the community.",
+        "shopProducts": "Shop Products",
+        "learnMission": "Learn Our Mission"
+    },
+    "product": {
+        "chalk": {
+            "name": "Pure Magnesium Carbonate",
+            "description": "Premium pure magnesium carbonate for superior grip and performance."
+        },
+        "chalkBall": {
+            "name": "Chalk Ball",
+            "description": "Convenient chalk ball for mess-free application during climbs."
+        },
+        "liquidChalk": {
+            "name": "Liquid Chalk",
+            "description": "Advanced liquid chalk formula that dries quickly for lasting grip."
+        },
+        "tshirt": {
+            "name": "CliffRise Logo T-Shirt",
+            "description": "Comfortable organic cotton t-shirt with CliffRise logo."
+        },
+        "hat": {
+            "name": "CliffRise Climbing Hat",
+            "description": "Adjustable climbing hat with embroidered CliffRise logo."
+        }
+    },
+    "products": {
+        "title": "Premium Climbing Essentials",
+        "description": "Every product sold contributes directly to new climbing route development. Choose quality gear that gives back to the climbing community.",
+        "allProducts": "All Products",
+        "chalk": "Chalk",
+        "apparel": "Apparel",
+        "features": "Features"
+    },
+    "mission": {
+        "title": "Our mission: more routes, a stronger community",
+        "description1": "CliffRise was created with one simple idea - to make climbing more accessible by funding the development of new routes. Every product you buy from us directly helps open new lines and create new opportunities for climbers of all levels.",
+        "description2": "We believe that good gear should be more than something you use - it should give something back. That’s why our entire model is built around supporting the climbing community. With every purchase, you’re not just getting a product, you’re helping grow the sport and create something that lasts.",
+        "communityFirst": "Community First",
+        "communityFirstDesc": "Every purchase funds new climbing routes",
+        "inclusiveAccess": "Inclusive Access",
+        "inclusiveAccessDesc": "Creating opportunities for all climbers",
+        "globalImpact": "Global Impact",
+        "globalImpactDesc": "Supporting route development worldwide",
+        "sustainableGrowth": "Sustainable Growth",
+        "sustainableGrowthDesc": "Building lasting climbing infrastructure"
+    },
+    "footer": {
+        "description": "Premium climbing gear that funds route development worldwide. Every purchase creates new climbing opportunities.",
+        "products": "Products",
+        "climbingChalk": "Climbing Chalk",
+        "chalkBalls": "Chalk Balls",
+        "liquidChalk": "Liquid Chalk",
+        "apparel": "Apparel",
+        "company": "Company",
+        "shipping": "Shipping",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service",
+        "contact": "Contact",
+        "copyright": "All rights reserved",
+        "ourMission": "Our Mission"
+    },
+    "impact": {
+        "title": "Real Impact, Real Routes",
+        "description": "See how the CliffRise community is making a difference in climbing areas. Every purchase leads to tangible results and leaves a lasting impact on the climbing community.",
+        "routesFunded": "Routes Funded",
+        "routesFundedDesc": "New climbing routes developed through community purchases",
+        "contributed": "Contributed",
+        "contributedDesc": "Total funds directed to route development projects",
+        "locations": "Locations",
+        "locationsDesc": "Different climbing areas supported worldwide",
+        "climbersImpacted": "Climbers Impacted",
+        "climbersImpactedDesc": "Community members who have accessed new routes",
+        "latestProject": "Latest Project: Teteven, Zaslona",
+        "projectDescription": "Our most recent funding helped establish 20 new routes at Teteven, Zaslona. These routes provide intermediate climbers with routes in the range 5c-8a and have become some of the most popular climbs in the area.",
+        "completed": "Completed",
+        "funded": "Funded",
+        "routes": "Routes"
+    }
+}

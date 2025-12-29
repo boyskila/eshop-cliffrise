@@ -1,0 +1,24 @@
+---
+import { ClientRouter } from 'astro:transitions'
+import Header from '../components/header/Header.astro'
+import Hero from '../components/Hero.astro'
+import '../styles/global.css'
+import Footer from '../components/Footer.astro'
+---
+
+<!doctype html>
+<html lang={Astro.params.lang} transition:animate="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <title>Cliffrise eshop | {Astro.props.title}</title>
+    <ClientRouter />
+  </head>
+  <body class="bg-red-500">
+    <Header />
+    <Hero />
+    <slot />
+    <Footer />
+  </body>
+</html>

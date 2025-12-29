@@ -1,0 +1,131 @@
+---
+import { Mountain, Instagram, Twitter, Mail, MapPin } from '@lucide/astro'
+import { getTranslations } from '../../lib/i18/getTranslations'
+const { footer } = getTranslations(Astro.params.lang)
+---
+
+<footer class="bg-stone-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <Mountain class="h-6 w-6 text-amber-400" />
+          <span class="text-xl font-bold">CliffRise</span>
+        </div>
+        <p class="text-stone-400 text-sm leading-relaxed mb-4">
+          {footer.description}
+        </p>
+        <div class="flex space-x-3">
+          <a
+            href="#"
+            class="text-stone-400 hover:text-amber-400 transition-colors"
+          >
+            <Instagram class="h-5 w-5" />
+          </a>
+          <a
+            href="#"
+            class="text-stone-400 hover:text-amber-400 transition-colors"
+          >
+            <Twitter class="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-white mb-4">
+          {footer.products}
+        </h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a
+              href="#"
+              class="text-stone-400 hover:text-white transition-colors"
+            >
+              {footer.climbingChalk}
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-stone-400 hover:text-white transition-colors"
+            >
+              {footer.chalkBalls}
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-stone-400 hover:text-white transition-colors"
+            >
+              {footer.liquidChalk}
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-stone-400 hover:text-white transition-colors"
+            >
+              {footer.apparel}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-white mb-4">
+          {footer.company}
+        </h3>
+        <a
+          href="#mission"
+          class="text-stone-400 hover:text-white transition-colors"
+        >
+          {footer.ourMission}
+        </a>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-white mb-4">
+          {footer.contact}
+        </h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex items-center space-x-2">
+            <Mail class="h-4 w-4 text-amber-400" />
+            <span class="text-stone-400">hello@cliffrise.com</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <MapPin class="h-4 w-4 text-amber-400" />
+            <span class="text-stone-400">Boulder, Colorado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-stone-800 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-stone-400 text-sm mb-4 md:mb-0">
+          {footer.copyright}
+        </p>
+        <div class="flex space-x-6 text-sm">
+          <a
+            href="/privacy"
+            class="text-stone-400 hover:text-white transition-colors"
+          >
+            {footer.privacyPolicy}
+          </a>
+          <a
+            href="/terms"
+            class="text-stone-400 hover:text-white transition-colors"
+          >
+            {footer.termsOfService}
+          </a>
+          <a
+            href="/shipping"
+            class="text-stone-400 hover:text-white transition-colors"
+          >
+            {footer.shipping}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

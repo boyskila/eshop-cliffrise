@@ -1,0 +1,79 @@
+---
+import type { Product } from '../../types'
+import { Package } from '@lucide/astro'
+
+interface Props {
+  product: Product
+}
+
+const { product } = Astro.props
+---
+
+<article
+  class="bg-white dark:bg-stone-700 border-stone-200 dark:border-stone-600 rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-all"
+  itemscope
+  itemtype="https://schema.org/Product"
+>
+  <div class="relative">
+    <img
+      src={product.image}
+      alt={product.name}
+      loading="lazy"
+      width={500}
+      height={300}
+      class="w-full h-48 object-cover"
+      itemprop="image"
+    />
+    <div class="absolute top-3 right-3">
+      <span
+        class="bg-white/90 dark:bg-stone-800/90 text-stone-700 dark:text-stone-300 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-medium"
+      >
+        {product.category === 'chalk' ? 'Chalk' : 'Apparel'}
+      </span>
+    </div>
+  </div>
+
+  <div class="p-6">
+    <h3
+      class="text-lg font-semibold text-stone-900 dark:text-white mb-2"
+      itemprop="name"
+    >
+      {product.name}
+    </h3>
+    <p
+      class="text-stone-600 dark:text-stone-300 text-sm mb-4 leading-relaxed"
+      itemprop="description"
+    >
+      {product.description}
+    </p>
+
+    <div class="mb-4">
+      <h4
+        class="text-xs font-medium text-stone-700 dark:text-stone-300 mb-2 flex items-center"
+      >
+        <Package class="h-3 w-3 mr-1" />
+        <!-- {t('products.features')} -->
+      </h4>
+      <ul class="text-xs text-stone-600 dark:text-stone-400 space-y-1">
+        {
+          product.features.map((feature) => (
+            <li class="flex items-center">
+              <span class="w-1 h-1 bg-amber-500 dark:bg-amber-400 rounded-full mr-2 flex-shrink-0" />
+              {feature}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <span
+        class="text-2xl font-bold text-stone-900 dark:text-white"
+        itemprop="price"
+      >
+        ${product.price}
+        <meta itemprop="priceCurrency" content="USD" />
+      </span>
+    </div>
+  </div>
+</article>
