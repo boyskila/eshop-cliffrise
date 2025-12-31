@@ -13,6 +13,10 @@ import Footer from '../components/Footer.astro'
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <title>Cliffrise eshop | {Astro.props.title}</title>
+    <script>
+      document.documentElement.className =
+        localStorage.getItem('cliffrise-theme') ?? 'light'
+    </script>
     <ClientRouter />
   </head>
   <body class="bg-red-500">
