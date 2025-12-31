@@ -3,7 +3,8 @@ import { Mountain } from '@lucide/astro'
 import { getTranslations } from '../../../lib/i18/getTranslations'
 import MobileMenu from './MobileMenu.astro'
 import MobileMenuButton from './MobileMenuButton.astro'
-import LangSwitcher from '../LangSwitcher.astro'
+import LangSwitcher from './LangSwitcher.astro'
+import ThemeSwitcher from './ThemeSwitcher.astro'
 const { lang } = Astro.params
 const { header } = getTranslations(lang)
 const { subtitle, title, products, mission, impact } = header
@@ -51,6 +52,7 @@ const { subtitle, title, products, mission, impact } = header
           {impact}
         </a>
         <LangSwitcher />
+        <ThemeSwitcher />
       </nav>
 
       <div class="md:hidden flex items-center space-x-2">
