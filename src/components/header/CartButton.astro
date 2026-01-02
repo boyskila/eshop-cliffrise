@@ -1,0 +1,24 @@
+---
+import { ShoppingCart } from '@lucide/astro'
+import { getTranslations } from '../../../lib/i18/getTranslations'
+import { getCartCount } from '../../utils/cart'
+
+const { header } = getTranslations(Astro.params.lang)
+const cart = await Astro.session?.get('cart')
+const cartCount = getCartCount(cart)
+---
+
+<button
+  cart-button
+  aria-label={`Shopping cart with ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`}
+  class="relative bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+>
+  <ShoppingCart class="h-4 w-4" />
+  <span>{header.cart}</span>
+  <span
+    class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+    cart-counter
+  >
+    {cartCount}
+  </span>
+</button>

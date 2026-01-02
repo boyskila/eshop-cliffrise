@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import node from '@astrojs/node';
 import { DEFAULT_LANG } from './src/constants';
 
 export default defineConfig({
@@ -13,5 +14,7 @@ export default defineConfig({
     routing: {
       prefixDefaultLocale: true,
     }
-  }
+  },
+  output: 'server',
+  adapter: node({ mode: 'standalone' })
 });

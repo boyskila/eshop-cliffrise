@@ -1,12 +1,14 @@
 ---
+import { getTranslations } from '../../../lib/i18/getTranslations'
 import type { Product } from '../../types'
-import { Package } from '@lucide/astro'
+import { Package, Plus } from '@lucide/astro'
 
 interface Props {
   product: Product
 }
 
 const { product } = Astro.props
+const { products } = getTranslations(Astro.params.lang)
 ---
 
 <article
@@ -52,7 +54,6 @@ const { product } = Astro.props
         class="text-xs font-medium text-stone-700 dark:text-stone-300 mb-2 flex items-center"
       >
         <Package class="h-3 w-3 mr-1" />
-        <!-- {t('products.features')} -->
       </h4>
       <ul class="text-xs text-stone-600 dark:text-stone-400 space-y-1">
         {
@@ -74,6 +75,46 @@ const { product } = Astro.props
         ${product.price}
         <meta itemprop="priceCurrency" content="USD" />
       </span>
+      <button
+        data-productid={product.id}
+        aria-label={`Add ${product.name} to cart`}
+        class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+        data-add-to-cart
+      >
+        <Plus class="h-4 w-4" />
+        <span>{products.addToCart}</span>
+      </button>
     </div>
   </div>
 </article>
+
+<script>
+  import { actions } from 'astro:actions'
+  import { getCartCount } from '../../utils/cart'
+
+  // Use a global event listener since language changes re-render the entire HTML,
+  // invalidating previously stored DOM references.
+  document.addEventListener('click', async ({ target }) => {
+    const addToCartButton = (target as HTMLElement).closest<HTMLButtonElement>(
+      '[data-add-to-cart]'
+    )
+    if (addToCartButton) {
+      const { productid } = addToCartButton.dataset
+      if (productid) {
+        const { data } = await actions.addToCart({ productId: productid })
+        const cartItemsCount = getCartCount(data)
+        const cartCounter = document?.querySelector('[cart-counter]')
+        const cartBtn = document?.querySelector('[cart-button]')
+        console.log(cartBtn)
+
+        cartBtn?.setAttribute(
+          'aria-label',
+          `Shopping cart with ${cartItemsCount} ${cartItemsCount === 1 ? 'item' : 'items'}`
+        )
+        if (cartCounter) {
+          cartCounter.textContent = String(cartItemsCount)
+        }
+      }
+    }
+  })
+</script>

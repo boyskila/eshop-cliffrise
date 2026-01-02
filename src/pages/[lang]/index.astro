@@ -3,10 +3,6 @@ import MainLayout from '../../layouts/MainLayout.astro'
 import ProductsGrid from '../../components/products/ProductsGrid.astro'
 import Mission from '../../components/Mission.astro'
 import Impact from '../../components/Impact.astro'
-
-export const getStaticPaths = () => {
-  return [{ params: { lang: 'en' } }, { params: { lang: 'bg' } }]
-}
 ---
 
 <MainLayout title="Home">

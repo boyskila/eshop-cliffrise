@@ -44,7 +44,8 @@
         "allProducts": "All Products",
         "chalk": "Chalk",
         "apparel": "Apparel",
-        "features": "Features"
+        "features": "Features",
+        "addToCart": "Add to Cart"
     },
     "mission": {
         "title": "Our mission: more routes, a stronger community",

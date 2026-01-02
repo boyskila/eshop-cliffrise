@@ -5,6 +5,7 @@ import MobileMenu from './MobileMenu.astro'
 import MobileMenuButton from './MobileMenuButton.astro'
 import LangSwitcher from './LangSwitcher.astro'
 import ThemeSwitcher from './ThemeSwitcher.astro'
+import CartButton from './CartButton.astro'
 const { lang } = Astro.params
 const { header } = getTranslations(lang)
 const { subtitle, title, products, mission, impact } = header
@@ -51,6 +52,7 @@ const { subtitle, title, products, mission, impact } = header
         >
           {impact}
         </a>
+        <CartButton />
         <LangSwitcher />
         <ThemeSwitcher />
       </nav>
