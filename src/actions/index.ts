@@ -2,6 +2,7 @@ import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { getProducts } from '../data/products'
 import type { Product } from '../types'
+import { getTranslations } from '../../lib/i18/getTranslations'
 
 export type CartItem = Product & {
   quantity: number
@@ -12,7 +13,7 @@ export const server = {
   addToCart: defineAction({
     input: z.object({ productId: z.string() }),
     handler: async ({ productId }, context) => {
-      const cart = (await context.session?.get<CartItem[]>('cart')) ?? []
+      const cart = (await context.session?.get('cart')) ?? []
       const existingItem = cart.find((cartItem) => cartItem.id === productId)
 
       if (existingItem) {
@@ -25,7 +26,9 @@ export const server = {
         context.session?.set('cart', next)
         return next
       }
-      const product = getProducts().find((product) => product.id === productId)
+      const product = getProducts(getTranslations()).find(
+        (product) => product.id === productId
+      )
       if (product) {
         const next = [...cart, { ...product, quantity: 1 }]
         context.session?.set('cart', next)

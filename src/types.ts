@@ -1,3 +1,5 @@
+import en from '../public/locales/en/translations.json'
+
 export type Product = {
   id: string
   image: string
@@ -7,3 +9,5 @@ export type Product = {
   features: string[]
   price: number
 }
+
+export type Translations = typeof en

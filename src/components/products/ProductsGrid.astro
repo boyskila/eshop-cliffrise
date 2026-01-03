@@ -2,8 +2,8 @@
 import { getTranslations } from '../../../lib/i18/getTranslations'
 import { getProducts } from '../../data/products'
 import ProductCard from './ProductCard.astro'
-const products = getProducts(Astro.params.lang)
-const t = getTranslations(Astro.params.lang)
+const translations = getTranslations(Astro.params.lang)
+const products = getProducts(translations)
 ---
 
 <section
@@ -17,10 +17,10 @@ const t = getTranslations(Astro.params.lang)
         id="products-title"
         class="text-3xl md:text-4xl font-bold text-stone-900 dark:text-white mb-4"
       >
-        {t.products.title}
+        {translations.products.title}
       </h2>
       <p class="text-lg text-stone-600 dark:text-stone-300 max-w-2xl mx-auto">
-        {t.products.description}
+        {translations.products.description}
       </p>
     </div>
 

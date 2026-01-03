@@ -91,5 +91,9 @@
         "completed": "Completed",
         "funded": "Funded",
         "routes": "Routes"
+    },
+    "notification": {
+        "addedToCart": "Added to cart!",
+        "routeFunding": "This purchase helps fund new climbing routes!"
     }
 }
