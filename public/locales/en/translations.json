@@ -19,23 +19,51 @@
     "product": {
         "chalk": {
             "name": "Pure Magnesium Carbonate",
-            "description": "Premium pure magnesium carbonate for superior grip and performance."
+            "description": "Premium pure magnesium carbonate for superior grip and performance.",
+            "features": [
+                "99% pure magnesium carbonate",
+                "0.300kg packing",
+                "Eco-friendly packing",
+                "Suitable for dry or wet skin"
+            ]
         },
         "chalkBall": {
             "name": "Chalk Ball",
-            "description": "Convenient chalk ball for mess-free application during climbs."
+            "description": "Convenient chalk ball for mess-free application during climbs.",
+            "features": [
+                "Refillable",
+                "Clean, controlled, and efficient chalking",
+                "Perfect for gym and rock climbing"
+            ]
         },
         "liquidChalk": {
             "name": "Liquid Chalk",
-            "description": "Advanced liquid chalk formula that dries quickly for lasting grip."
+            "description": "Advanced liquid chalk formula that dries quickly for lasting grip.",
+            "features": [
+                "Long-lasting effect",
+                "250ml bottle",
+                "Low dust and clean",
+                "Moisture absorption",
+                "Hygienic"
+            ]
         },
         "tshirt": {
             "name": "CliffRise Logo T-Shirt",
-            "description": "Comfortable organic cotton t-shirt with CliffRise logo."
+            "description": "Comfortable organic cotton t-shirt with CliffRise logo.",
+            "features": [
+                "100% organic cotton",
+                "Screen-printed logo",
+                "Available in S-XXL"
+            ]
         },
         "hat": {
             "name": "CliffRise Climbing Hat",
-            "description": "Adjustable climbing hat with embroidered CliffRise logo."
+            "description": "Adjustable climbing hat with embroidered CliffRise logo.",
+            "features": [
+                "Adjustable strap",
+                "UV protection",
+                "Embroidered logo"
+            ]
         }
     },
     "products": {

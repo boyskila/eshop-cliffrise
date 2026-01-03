@@ -1,10 +1,7 @@
-import { getTranslations } from '../../lib/i18/getTranslations'
-import { DEFAULT_LANG } from '../constants'
-import type { Product } from '../types'
+import type { Product, Translations } from '../types'
 
-export const getProducts = (lang = DEFAULT_LANG): Product[] => {
-  const t = getTranslations(lang)
-  const { product } = t
+export const getProducts = (translations: Translations): Product[] => {
+  const { product } = translations
   return [
     {
       id: '1',
@@ -14,12 +11,7 @@ export const getProducts = (lang = DEFAULT_LANG): Product[] => {
         'https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
       category: 'chalk',
       description: product.chalk.description,
-      features: [
-        '99% pure magnesium carbonate',
-        'Fine texture for optimal coverage',
-        '100g packet',
-        'Eco-friendly packaging',
-      ],
+      features: product.chalk.features,
     },
     {
       id: '2',
@@ -29,12 +21,7 @@ export const getProducts = (lang = DEFAULT_LANG): Product[] => {
         'https://images.pexels.com/photos/1031641/pexels-photo-1031641.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
       category: 'chalk',
       description: product.chalkBall.description,
-      features: [
-        'Refillable sock design',
-        'Even chalk distribution',
-        'No waste formula',
-        'Perfect for gym climbing',
-      ],
+      features: product.chalkBall.features,
     },
     {
       id: '3',
@@ -44,12 +31,7 @@ export const getProducts = (lang = DEFAULT_LANG): Product[] => {
         'https://images.pexels.com/photos/1571442/pexels-photo-1571442.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
       category: 'chalk',
       description: product.liquidChalk.description,
-      features: [
-        'Quick-drying formula',
-        '250ml bottle',
-        'Long-lasting grip',
-        'Perfect base layer',
-      ],
+      features: product.liquidChalk.features,
     },
     {
       id: '4',
@@ -59,12 +41,7 @@ export const getProducts = (lang = DEFAULT_LANG): Product[] => {
         'https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
       category: 'apparel',
       description: product.tshirt.description,
-      features: [
-        '100% organic cotton',
-        'Screen-printed logo',
-        'Available in S-XXL',
-        'Sustainable production',
-      ],
+      features: product.tshirt.features,
     },
     {
       id: '5',
@@ -74,12 +51,7 @@ export const getProducts = (lang = DEFAULT_LANG): Product[] => {
         'https://images.pexels.com/photos/1261578/pexels-photo-1261578.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
       category: 'apparel',
       description: product.hat.description,
-      features: [
-        'Adjustable strap',
-        'UV protection',
-        'Moisture-wicking fabric',
-        'Embroidered logo',
-      ],
+      features: product.hat.features,
     },
   ]
 }
