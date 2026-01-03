@@ -1,7 +1,11 @@
 ---
-import { Mountain, Instagram, Twitter, Mail, MapPin } from '@lucide/astro'
-import { getTranslations } from '../../lib/i18/getTranslations'
-const { footer } = getTranslations(Astro.params.lang)
+import { Mountain, Instagram, Mail, MapPin } from '@lucide/astro'
+import { getTranslations } from '@utils/i18'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { DEFAULT_LANG } from '@constants'
+
+const locale = Astro.params.lang ?? DEFAULT_LANG
+const { footer } = getTranslations(locale)
 ---
 
 <footer class="bg-stone-900 text-white py-12 px-4 sm:px-6 lg:px-8">

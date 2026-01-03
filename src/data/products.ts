@@ -1,4 +1,4 @@
-import type { Product, Translations } from '../types'
+import type { Product, Translations } from '@types'
 
 export const getProducts = (translations: Translations): Product[] => {
   const { product } = translations

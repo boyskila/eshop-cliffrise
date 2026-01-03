@@ -1,7 +1,8 @@
 ---
-import { getTranslations } from '../../../lib/i18/getTranslations'
-import type { Product } from '../../types'
+import { getTranslations } from '@utils/i18'
 import { Package, Plus } from '@lucide/astro'
+import { APP_CURRENCY } from '@constants'
+import type { Product } from '@types'
 
 interface Props {
   product: Product
@@ -90,8 +91,8 @@ const { products } = getTranslations(Astro.params.lang)
 
 <script>
   import { actions } from 'astro:actions'
-  import { getCartCount } from '../../utils/cart'
-  import { getProducts } from '../../data/products'
+  import { getCartCount } from '@utils/cart'
+  import { getProducts } from '@data/products'
 
   // Use a global event listener since language changes re-render the entire HTML,
   // invalidating previously stored DOM references.

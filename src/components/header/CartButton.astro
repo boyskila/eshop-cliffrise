@@ -1,7 +1,7 @@
 ---
 import { ShoppingCart } from '@lucide/astro'
-import { getTranslations } from '../../../lib/i18/getTranslations'
-import { getCartCount } from '../../utils/cart'
+import { getTranslations } from '@utils/i18'
+import { getCartCount } from '@utils/cart'
 
 const { header } = getTranslations(Astro.params.lang)
 const cart = await Astro.session?.get('cart')

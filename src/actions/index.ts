@@ -1,8 +1,8 @@
 import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
-import { getProducts } from '../data/products'
-import type { Product } from '../types'
-import { getTranslations } from '../../lib/i18/getTranslations'
+import { getProducts } from '@data/products'
+import type { Product } from '@types'
+import { getTranslations } from '@utils/i18'
 
 export type CartItem = Product & {
   quantity: number

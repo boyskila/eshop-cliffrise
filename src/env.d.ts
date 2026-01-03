@@ -1,5 +1,5 @@
 declare namespace App {
   interface SessionData {
-    cart: import('./actions/index').CartItem[]
+    cart: import('@actions').CartItem[]
   }
 }

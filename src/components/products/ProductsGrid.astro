@@ -1,6 +1,6 @@
 ---
-import { getTranslations } from '../../../lib/i18/getTranslations'
-import { getProducts } from '../../data/products'
+import { getTranslations } from '@utils/i18'
+import { getProducts } from '@data/products'
 import ProductCard from './ProductCard.astro'
 const translations = getTranslations(Astro.params.lang)
 const products = getProducts(translations)
