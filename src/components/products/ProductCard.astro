@@ -106,7 +106,6 @@ const { products } = getTranslations(Astro.params.lang)
         const cartItemsCount = getCartCount(data)
         const cartCounter = document?.querySelector('[cart-counter]')
         const cartBtn = document?.querySelector('[cart-button]')
-        console.log(cartBtn)
 
         cartBtn?.setAttribute(
           'aria-label',
