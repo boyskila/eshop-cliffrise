@@ -2,7 +2,7 @@
 import { getTranslations } from '@utils/i18'
 import { getProducts } from '@data/products'
 import ProductCard from './ProductCard.astro'
-const translations = getTranslations(Astro.params.lang)
+const translations = getTranslations(Astro.params)
 const products = getProducts(translations)
 ---
 

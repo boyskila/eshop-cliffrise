@@ -11,8 +11,8 @@ export type CartItem = Product & {
 
 export const server = {
   addToCart: defineAction({
-    input: z.object({ productId: z.string() }),
-    handler: async ({ productId }, context) => {
+    input: z.object({ productId: z.string(), lang: z.string() }),
+    handler: async ({ productId, lang }, context) => {
       const cart = (await context.session?.get('cart')) ?? []
       const existingItem = cart.find((cartItem) => cartItem.id === productId)
 
@@ -24,17 +24,23 @@ export const server = {
         })
 
         context.session?.set('cart', next)
-        return next
+        return { cart, addedItem: existingItem }
       }
-      const product = getProducts(getTranslations()).find(
+      const product = getProducts(getTranslations({ lang })).find(
         (product) => product.id === productId
       )
       if (product) {
         const next = [...cart, { ...product, quantity: 1 }]
         context.session?.set('cart', next)
-        return next
+        return { cart, addedItem: product }
       }
-      return []
+      return {}
+    },
+  }),
+  getCartCount: defineAction({
+    handler: async (_, { session }) => {
+      const cart = (await session?.get('cart')) ?? []
+      return { count: cart.reduce((sum, i) => sum + i.quantity, 0) }
     },
   }),
 }

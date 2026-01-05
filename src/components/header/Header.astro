@@ -1,14 +1,17 @@
 ---
 import { Mountain } from '@lucide/astro'
-import { getTranslations } from '@utils/i18'
-import MobileMenu from './MobileMenu.astro'
-import MobileMenuButton from './MobileMenuButton.astro'
+import { getLang, getTranslations } from '@utils/i18'
+import { getCartCount } from '@utils/cart'
+import { MobileMenu } from './MobileMenu'
+import { MobileMenuButton } from './MobileMenuButton'
 import LangSwitcher from './LangSwitcher.astro'
 import ThemeSwitcher from './ThemeSwitcher.astro'
-import CartButton from './CartButton.astro'
-const { lang } = Astro.params
-const { header } = getTranslations(lang)
+import CartButton from './CartButton'
+
+const lang = getLang(Astro.params)
+const { header } = getTranslations(Astro.params)
 const { subtitle, title, products, mission, impact } = header
+const cart = await Astro.session?.get('cart')
 ---
 
 <header
@@ -52,15 +55,26 @@ const { subtitle, title, products, mission, impact } = header
         >
           {impact}
         </a>
-        <CartButton />
+        <div class="block">
+          <CartButton
+            client:load
+            title={header.cart}
+            initialCartCount={getCartCount(cart)}
+          />
+        </div>
         <LangSwitcher />
         <ThemeSwitcher />
       </nav>
 
-      <div class="md:hidden flex items-center space-x-2">
-        <MobileMenuButton />
-      </div>
+      <MobileMenuButton client:load />
     </div>
-    <MobileMenu />
+    <MobileMenu
+      menuItems={[
+        { href: '#products', title: products },
+        { href: '#mission', title: mission },
+        { href: '#impact', title: impact },
+      ]}
+      client:load
+    />
   </div>
 </header>

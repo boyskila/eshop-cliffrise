@@ -1,10 +1,12 @@
 ---
 import { ClientRouter } from 'astro:transitions'
+import { getTranslations } from '@utils/i18'
 import Header from '../components/header/Header.astro'
 import Hero from '../components/Hero.astro'
-import CartNotification from '../components/CartNotification.astro'
-import '../styles/global.css'
 import Footer from '../components/Footer.astro'
+import { CartNotifications } from '../components/CartNotifications'
+import '../styles/global.css'
+const { notification } = getTranslations(Astro.params)
 ---
 
 <!doctype html>
@@ -22,7 +24,11 @@ import Footer from '../components/Footer.astro'
   </head>
   <body>
     <Header />
-    <CartNotification />
+    <CartNotifications
+      client:load
+      addedToCart={notification.addedToCart}
+      routeFunding={notification.routeFunding}
+    />
     <Hero />
     <slot />
     <Footer />

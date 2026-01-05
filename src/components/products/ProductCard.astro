@@ -1,14 +1,16 @@
 ---
-import { getTranslations } from '@utils/i18'
-import { Package, Plus } from '@lucide/astro'
+import { getLang, getTranslations } from '@utils/i18'
+import { Package } from '@lucide/astro'
 import type { Product } from '@types'
+import AddToCartButton from './AddToCartButton'
 
 interface Props {
   product: Product
 }
 
 const { product } = Astro.props
-const { products } = getTranslations(Astro.params.lang)
+const { products } = getTranslations(Astro.params)
+const lang = getLang(Astro.params)
 ---
 
 <article
@@ -75,104 +77,13 @@ const { products } = getTranslations(Astro.params.lang)
         ${product.price}
         <meta itemprop="priceCurrency" content="USD" />
       </span>
-      <button
-        data-productid={product.id}
-        aria-label={`Add ${product.name} to cart`}
-        class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
-        data-add-to-cart
-      >
-        <Plus class="h-4 w-4" />
-        <span>{products.addToCart}</span>
-      </button>
+      <AddToCartButton
+        buttonText={products.addToCart}
+        productName={product.name}
+        productId={product.id}
+        lang={lang}
+        client:load
+      />
     </div>
   </div>
 </article>
-
-<script>
-  import { actions } from 'astro:actions'
-  import { getCartCount } from '@utils/cart'
-  import { getProducts } from '@data/products'
-
-  // Use a global event listener since language changes re-render the entire HTML,
-  // invalidating previously stored DOM references.
-  document.addEventListener('click', async ({ target }) => {
-    const addToCartButton = (target as HTMLElement).closest<HTMLButtonElement>(
-      '[data-add-to-cart]'
-    )
-    if (addToCartButton) {
-      const { productid } = addToCartButton.dataset
-      if (productid) {
-        const { data } = await actions.addToCart({ productId: productid })
-        const cartItemsCount = getCartCount(data)
-        const cartCounter = document?.querySelector('[cart-counter]')
-        const cartBtn = document?.querySelector('[cart-button]')
-
-        cartBtn?.setAttribute(
-          'aria-label',
-          `Shopping cart with ${cartItemsCount} ${cartItemsCount === 1 ? 'item' : 'items'}`
-        )
-        if (cartCounter) {
-          cartCounter.textContent = String(cartItemsCount)
-        }
-      }
-    }
-  })
-
-  // Use a global event listener since language changes re-render the entire HTML,
-  // invalidating previously stored DOM references.
-  document.addEventListener('click', async ({ target }) => {
-    const lang = document.documentElement.lang || 'en'
-    const res = await fetch(`/locales/${lang}/translations.json`)
-    const translations = await res.json()
-    const addToCartButton = (target as HTMLElement).closest<HTMLButtonElement>(
-      '[data-add-to-cart]'
-    )
-    if (addToCartButton) {
-      const { productid } = addToCartButton.dataset
-      if (productid) {
-        const product = getProducts(translations).find(
-          (product) => product.id === productid
-        )
-        const cartNotification = document.querySelector<HTMLElement>(
-          '[data-cart-notification]'
-        )
-        const timeoutId = cartNotification?.dataset.timeoutId
-        clearTimeout(timeoutId)
-        cartNotification?.classList.remove('hidden')
-        cartNotification?.classList.add('block')
-        const cartNotificationImage =
-          cartNotification?.querySelector<HTMLImageElement>(
-            '[data-cart-notification-image]'
-          )
-        const cartNotificationProductName = cartNotification?.querySelector(
-          '[data-cart-notification-product-name]'
-        )
-        const cartNotificationProductPrice = cartNotification?.querySelector(
-          '[data-cart-notification-product-price]'
-        )
-
-        if (cartNotificationImage) {
-          cartNotificationImage.src = product?.image ?? ''
-          cartNotificationImage.alt = product?.name ?? ''
-        }
-
-        if (cartNotificationProductName) {
-          cartNotificationProductName.textContent = product?.name ?? ''
-        }
-
-        if (cartNotificationProductPrice) {
-          cartNotificationProductPrice.textContent = String(product?.price)
-        }
-
-        const id = setTimeout(async () => {
-          cartNotification?.classList.remove('block')
-          cartNotification?.classList.add('hidden')
-        }, 5000)
-
-        if (cartNotification) {
-          cartNotification.dataset.timeoutId = String(id)
-        }
-      }
-    }
-  })
-</script>
