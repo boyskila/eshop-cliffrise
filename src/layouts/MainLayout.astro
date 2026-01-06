@@ -6,7 +6,9 @@ import Hero from '../components/Hero.astro'
 import Footer from '../components/Footer.astro'
 import { CartNotifications } from '../components/CartNotifications'
 import '../styles/global.css'
-const { notification } = getTranslations(Astro.params)
+import { Cart } from '../components/Cart'
+const { notification, cart } = getTranslations(Astro.params)
+const cartFromSession = await Astro.session?.get('cart')
 ---
 
 <!doctype html>
@@ -24,6 +26,7 @@ const { notification } = getTranslations(Astro.params)
   </head>
   <body>
     <Header />
+    <Cart translations={cart} client:load initialCart={cartFromSession} />
     <CartNotifications
       client:load
       addedToCart={notification.addedToCart}

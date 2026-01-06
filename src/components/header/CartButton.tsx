@@ -1,6 +1,6 @@
-import { createEffect } from 'solid-js'
+import { createEffect, Show } from 'solid-js'
 import ShoppingCart from 'lucide-solid/icons/shopping-cart'
-import { cartCount, setCartCount } from '@signals/cart'
+import { cartCount, setCartCount, toggleCart } from '@signals/cart'
 
 type Props = { title: string; initialCartCount: number }
 
@@ -11,6 +11,7 @@ export default function CartButton(props: Props) {
 
   return (
     <button
+      onClick={toggleCart}
       aria-label={`Shopping cart with ${cartCount()} ${
         cartCount() === 1 ? 'item' : 'items'
       }`}
@@ -18,12 +19,14 @@ export default function CartButton(props: Props) {
     >
       <ShoppingCart class="h-4 w-4" />
       <span>{props.title}</span>
-      <span
-        class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
-        cart-counter
-      >
-        {cartCount()}
-      </span>
+      <Show when={cartCount()}>
+        <span
+          class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+          cart-counter
+        >
+          {cartCount()}
+        </span>
+      </Show>
     </button>
   )
 }

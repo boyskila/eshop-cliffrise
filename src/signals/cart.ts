@@ -1,3 +1,4 @@
+import type { CartItem } from '@actions'
 import type { Product } from '@types'
 import { createSignal } from 'solid-js'
 
@@ -21,4 +22,18 @@ export const addCartNotification = (product: Product) => {
       })
     }, 3000)
   }
+}
+
+export const [cart, setCart] = createSignal<CartItem[]>([])
+
+export const updateCart = (cart: CartItem[]) => {
+  const cartCount = cart.reduce((sum, products) => sum + products.quantity, 0)
+  setCart(cart)
+  setCartCount(cartCount)
+}
+
+export const [isCartOpen, setIsCartOpen] = createSignal(false)
+
+export const toggleCart = () => {
+  setIsCartOpen((isOpen) => !isOpen)
 }
