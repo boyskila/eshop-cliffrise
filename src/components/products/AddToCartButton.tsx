@@ -1,10 +1,6 @@
 import { actions } from 'astro:actions'
 import Plus from 'lucide-solid/icons/plus'
-import {
-  cartNotifications,
-  setCartCount,
-  addCartNotification,
-} from '@signals/cart'
+import { addCartNotification, updateCart } from '@signals/cart'
 
 export default function AddToCartButton(props: {
   productName: string
@@ -24,11 +20,10 @@ export default function AddToCartButton(props: {
           lang: props.lang,
         })
         const { cart, addedItem } = data ?? {}
-        cart &&
-          setCartCount(
-            cart.reduce((sum, products) => sum + products.quantity, 0)
-          )
-        addedItem && addCartNotification(addedItem)
+        if (cart) {
+          updateCart(cart)
+          addedItem && addCartNotification(addedItem)
+        }
       }}
       aria-label={`Add ${productName} to cart`}
       class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
