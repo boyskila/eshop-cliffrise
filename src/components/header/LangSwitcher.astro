@@ -1,17 +1,16 @@
 ---
 import { Globe } from '@lucide/astro'
-const { lang } = Astro.params
-const url = new URL(Astro.request.url)
-console.log(url.hash, 'hash')
+const langFromParams = Astro.params.lang
+const lang = langFromParams === 'en' ? 'bg' : 'en'
 ---
 
 <a
-  href={lang === 'en' ? '/bg' : '/en'}
+  href={`/${lang}`}
   data-lang-switcher
-  data-next-lang={lang === 'en' ? 'bg' : 'en'}
-  data-lang={lang}
+  data-next-lang={lang}
+  data-lang={langFromParams}
   class="p-2 rounded-lg transition-colors flex items-center space-x-1 border border-stone-200 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700"
-  aria-label={`Switch to ${lang === 'en' ? 'Bulgarian' : 'English'}`}
+  aria-label={`Switch to ${langFromParams === 'en' ? 'Bulgarian' : 'English'}`}
 >
   <Globe class="h-4 w-4" />
   <span class="text-sm font-medium uppercase">{lang}</span>
@@ -19,26 +18,27 @@ console.log(url.hash, 'hash')
 <script>
   let nextHref = ''
   document.addEventListener('astro:page-load', () => {
-    const langSwitcher = document.querySelector(
+    const langSwitcher = document.querySelector<HTMLLinkElement>(
       '[data-lang-switcher]'
-    ) as HTMLLinkElement
-    if (langSwitcher) {
-      langSwitcher.href = nextHref
+    )
+    const { hash } = window.location
+    if (langSwitcher && hash) {
+      const nextLang = langSwitcher.dataset.nextLang ?? ''
+      langSwitcher.href = nextHref || `/${nextLang}/${hash}`
     }
   })
   document.addEventListener('click', (e) => {
-    const langSwitcher = (e.target as HTMLLinkElement).closest(
+    const langSwitcher = (e.target as HTMLLinkElement).closest<HTMLLinkElement>(
       '[data-lang-switcher]'
-    ) as HTMLLinkElement
+    )
     if (langSwitcher) {
       const { hash } = window.location
       if (hash) {
         e.preventDefault()
         const nextLang = langSwitcher.dataset.nextLang ?? ''
         const currentLang = langSwitcher.dataset.lang ?? ''
-
         const pathname = window.location.pathname.replace(currentLang, nextLang)
-        nextHref = `${window.location.pathname}${hash}`
+        nextHref = `${window.location.pathname}${hash}` // current pathname become next candidate
         history.pushState(null, '', `${pathname}${hash}`)
       }
     }
