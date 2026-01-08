@@ -6,6 +6,7 @@ import { DEFAULT_LANG } from './src/constants';
 import solidJs from '@astrojs/solid-js';
 
 export default defineConfig({
+  trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()]
   },
