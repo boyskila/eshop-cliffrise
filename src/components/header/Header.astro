@@ -38,18 +38,21 @@ const cart = await Astro.session?.get('cart')
         aria-label="Main navigation"
       >
         <a
+          data-hash-link
           href="#products"
           class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
         >
           {products}
         </a>
         <a
+          data-hash-link
           href="#mission"
           class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
         >
           {mission}
         </a>
         <a
+          data-hash-link
           href="#impact"
           class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
         >
@@ -78,3 +81,21 @@ const cart = await Astro.session?.get('cart')
     />
   </div>
 </header>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const hashLink = (e.target as HTMLLinkElement)
+      .closest('[data-hash-link]')
+      ?.getAttribute('href')
+    if (hashLink) {
+      const langSwitcher = document.querySelector(
+        '[data-lang-switcher]'
+      ) as HTMLLinkElement
+      const { lang } = langSwitcher.dataset
+      const { nextLang } = langSwitcher.dataset
+      if (lang && nextLang && langSwitcher) {
+        langSwitcher.href = `${window.location.pathname.replace(lang, nextLang)}${hashLink}`
+      }
+    }
+  })
+</script>
