@@ -60,7 +60,7 @@ const cart = await Astro.session?.get('cart')
         </a>
         <div class="block">
           <CartButton
-            client:load
+            client:only="solid"
             title={header.cart}
             initialCartCount={getCartCount(cart)}
           />
