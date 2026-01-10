@@ -37,3 +37,9 @@ const cartFromSession = await Astro.session?.get('cart')
     <Footer />
   </body>
 </html>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelector(window.location.hash)?.scrollIntoView()
+  })
+</script>
