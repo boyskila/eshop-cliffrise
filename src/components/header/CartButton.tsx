@@ -1,14 +1,10 @@
-import { createEffect, Show } from 'solid-js'
+import { Show } from 'solid-js'
 import ShoppingCart from 'lucide-solid/icons/shopping-cart'
-import { cartCount, setCartCount, toggleCart } from '@signals/cart'
+import { cartCount, toggleCart } from '@signals/cart'
 
 type Props = { title: string; initialCartCount: number }
 
 export default function CartButton(props: Props) {
-  createEffect(() => {
-    setCartCount(props.initialCartCount)
-  })
-
   return (
     <button
       onClick={toggleCart}
@@ -19,11 +15,13 @@ export default function CartButton(props: Props) {
     >
       <ShoppingCart class="h-4 w-4" />
       <span>{props.title}</span>
-      <Show when={cartCount()}>
-        <span
-          class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
-          cart-counter
-        >
+      <Show
+        when={cartCount()}
+        fallback={
+          <span class="absolute -top-2 -right-2 h-5 w-5 opacity-0"></span>
+        }
+      >
+        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
           {cartCount()}
         </span>
       </Show>
