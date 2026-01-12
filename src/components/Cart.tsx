@@ -18,8 +18,16 @@ export const Cart = (props: {
   })
   return (
     <Show when={isCartOpen()}>
-      <div class="fixed inset-0 bg-black/50 z-50" onClick={toggleCart} />
-      <div class="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-stone-800 z-50 shadow-xl transition-colors">
+      <div
+        class="fixed inset-0 bg-black/50 z-50"
+        onClick={toggleCart}
+        aria-label="Close shopping cart"
+      />
+      <div
+        role="dialog"
+        aria-label="Shopping cart"
+        class="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-stone-800 z-50 shadow-xl transition-colors"
+      >
         <div class="flex flex-col h-full">
           <div class="flex items-center justify-between p-4 border-b border-stone-200 dark:border-stone-700">
             <h2 class="text-lg font-semibold text-stone-900 dark:text-white flex items-center">
@@ -64,6 +72,7 @@ export const Cart = (props: {
                           <div class="flex items-center justify-between mt-3">
                             <div class="flex items-center space-x-2">
                               <button
+                                aria-label={`Decrease quantity of ${item.name} in cart`}
                                 onClick={async () => {
                                   const { data } = await actions.updateQuantity(
                                     {
@@ -81,6 +90,7 @@ export const Cart = (props: {
                                 {item.quantity}
                               </span>
                               <button
+                                aria-label={`Increase quantity of ${item.name} in cart`}
                                 onClick={async () => {
                                   const { data } = await actions.updateQuantity(
                                     {
@@ -97,6 +107,7 @@ export const Cart = (props: {
                             </div>
 
                             <button
+                              aria-label={`Remove ${item.name} from cart`}
                               onClick={async () => {
                                 const { data } = await actions.removeFromCart({
                                   productId: item.id,

@@ -1,6 +1,6 @@
 import { Show } from 'solid-js'
 import ShoppingCart from 'lucide-solid/icons/shopping-cart'
-import { cartCount, toggleCart } from '@signals/cart'
+import { cartCount, isCartOpen, toggleCart } from '@signals/cart'
 
 type Props = { title: string; initialCartCount: number }
 
@@ -8,6 +8,7 @@ export default function CartButton(props: Props) {
   return (
     <button
       onClick={toggleCart}
+      aria-expanded={isCartOpen()}
       aria-label={`Shopping cart with ${cartCount()} ${
         cartCount() === 1 ? 'item' : 'items'
       }`}
