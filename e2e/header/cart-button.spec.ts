@@ -92,9 +92,9 @@ test.describe('Functionallity', () => {
     await addButtons.nth(1).click()
     await addButtons.nth(2).click()
     const cartBtn = header.getByLabel(/3 items/i)
-    expect(cartBtn).toBeDefined()
 
     await cartBtn.click()
+
     const removeButtons = page
       .getByRole('dialog', { name: /shopping cart/i })
       .getByRole('button', { name: /remove/i })
@@ -118,12 +118,9 @@ test.describe('Functionallity', () => {
     page,
   }) => {
     const header = page.locator('header')
-    const cartBtn = header.getByLabel(/0 items/i)
     const addButtons = page.getByRole('button', { name: /Add .* to cart/ })
 
     await addButtons.nth(0).click()
-    expect(header.getByLabel(/1 item/)).toBeDefined()
-
     await header.getByLabel(/1 item/).click()
     const shoppingCartDialog = page.getByRole('dialog', {
       name: /shopping cart/i,
