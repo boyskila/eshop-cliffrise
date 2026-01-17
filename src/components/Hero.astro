@@ -1,76 +1,38 @@
 ---
-import { Mountain, ArrowRight } from '@lucide/astro'
 import { getTranslations } from '@utils/i18'
-const {
-  subtitle,
-  title,
-  titleHighlight,
-  description,
-  learnMission,
-  shopProducts,
-} = getTranslations(Astro.params).hero
+const { heroTitle } = getTranslations(Astro.params)
 ---
 
 <section
-  data-testid="hero"
-  aria-labelledby="hero-title"
-  class="bg-gradient-to-br from-stone-900 via-stone-800 to-amber-900 text-white py-20 px-4 sm:px-6 lg:px-8"
+  class="w-full bg-[url(/assets/mobile/hero.svg)] sm:bg-[url(/assets/hero.svg)] bg-no-repeat bg-cover pt-5 pb-20 sm:pb-30 landscape:pb-20 landscape:lg:pb-35 mt-[-1px]"
 >
-  <div class="max-w-7xl mx-auto">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <div class="flex items-center space-x-2 mb-6">
-          <Mountain class="h-6 w-6 text-amber-400" />
-          <span class="text-amber-400 font-medium">
-            {subtitle}
-          </span>
-        </div>
+  <div class="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      class="flex flex-col lg:flex-row landscape:flex-row justify-evenly items-center gap-5"
+    >
+      <img
+        class="max-w-[120px] lg:max-w-[250px] h-auto"
+        alt="CliffRise Logo"
+        src="/assets/logo.svg"
+      />
 
-        <h1
-          id="hero-title"
-          class="text-4xl md:text-6xl font-bold mb-6 leading-tight"
-        >
-          {title}
-          <span class="text-amber-400 block">
-            {titleHighlight}
-          </span>
-        </h1>
-
-        <p class="text-xl text-stone-300 mb-8 leading-relaxed">
-          {description}
-        </p>
-
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a
-            href="#products"
-            class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2"
-          >
-            <span>{shopProducts}</span>
-            <ArrowRight class="h-4 w-4" />
-          </a>
-          <a
-            href="#mission"
-            class="border border-stone-300 hover:bg-white hover:text-stone-900 text-white px-8 py-4 rounded-lg font-semibold transition-colors text-center"
-          >
-            {learnMission}
-          </a>
-        </div>
-      </div>
-
-      <div class="relative">
+      <div class="flex flex-col items-center gap-3">
         <img
-          src="https://images.pexels.com/photos/371589/pexels-photo-371589.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
-          alt="Rock climber on cliff face"
-          loading="eager"
-          class="rounded-lg shadow-2xl w-full h-96 object-cover"
-          width={800}
-          height={600}
+          class="w-full max-w-[300px] lg:max-w-[500px] lg:w-auto h-auto"
+          alt="Products with mission"
+          src="/assets/mission.svg"
         />
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-stone-900/50 to-transparent rounded-lg"
+        <p
+          class="font-normal text-white lg:text-xl leading-relaxed max-w-3xl mx-auto lg:mx-0 lg:ml-auto text-center lg:text-left px-4 lg:px-0"
         >
-        </div>
+          {heroTitle}
+        </p>
       </div>
     </div>
   </div>
+  <img
+    class="hidden lg:block absolute bottom-0 right-12 xl:right-24 w-[99px] h-auto max-h-[600px]"
+    alt="Climber"
+    src="/assets/climber 1.svg"
+  />
 </section>

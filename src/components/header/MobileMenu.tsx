@@ -8,19 +8,15 @@ type Props = {
 export const MobileMenu = (props: Props) => {
   return (
     <div
-      class="md:hidden py-4 border-t border-stone-200 dark:border-stone-700"
+      class="bg-black/95 w-full lg:hidden py-4 border-t border-stone-200 dark:border-stone-700 bg-gray-900 absolute top-full left-0 z-20"
       role="navigation"
       aria-label="Mobile navigation"
       classList={{ hidden: !isMobileMenuOpen() }}
     >
-      <nav class="flex flex-col space-y-3" role="menu">
+      <nav class="flex flex-col space-y-3 text-center" role="menu">
         {props.menuItems.map(({ href, title }) => {
           return (
-            <a
-              href={href}
-              role="menuitem"
-              class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
-            >
+            <a href={href} role="menuitem" class="text-white font-medium">
               {title}
             </a>
           )

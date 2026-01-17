@@ -1,62 +1,55 @@
 ---
-import { Mountain } from '@lucide/astro'
 import { getLang, getTranslations } from '@utils/i18'
 import { getCartCount } from '@utils/cart'
 import { MobileMenu } from './MobileMenu'
 import { MobileMenuButton } from './MobileMenuButton'
 import LangSwitcher from './LangSwitcher.astro'
-import ThemeSwitcher from './ThemeSwitcher.astro'
 import CartButton from './CartButton'
 
 const lang = getLang(Astro.params)
 const { header } = getTranslations(Astro.params)
-const { subtitle, title, products, mission, impact } = header
+const { products, mission, impact } = header
 const cart = await Astro.session?.get('cart')
 ---
 
-<header
-  role="banner"
-  class="bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-700 shadow-sm border-b sticky top-0 z-40 transition-colors"
->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
-      <a href={`/${lang}`} class="flex items-center space-x-3">
-        <Mountain class="h-8 w-8 text-amber-600" />
-        <div>
-          <h1 class="text-xl font-bold text-stone-900 dark:text-white">
-            {title}
-          </h1>
-          <p class="text-xs text-stone-600 dark:text-stone-400 -mt-1">
-            {subtitle}
-          </p>
-        </div>
+<header class="sticky top-0 z-50 w-full bg-black/95 p-4 lg:py-8">
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="flex items-center justify-between">
+      <a class="flex items-center gap-4 cursor-pointer" href={`/${lang}/`}>
+        <img class="size-8 lg:size-12" alt="Logo" src="/assets/logo.svg" />
       </a>
-
-      <nav
-        class="hidden md:flex items-center space-x-8"
-        role="navigation"
-        aria-label="Main navigation"
-      >
+      <div class="hidden md:flex gap-8 xl:gap-[46px]">
         <a
           data-hash-link
           href="#products"
-          class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
+          class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
           {products}
         </a>
         <a
           data-hash-link
           href="#mission"
-          class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
+          class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
           {mission}
         </a>
         <a
           data-hash-link
           href="#impact"
-          class="text-stone-700 dark:text-stone-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-medium"
+          class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
           {impact}
+        </a>
+      </div>
+      <div class="flex items-center gap-3 lg:gap-4">
+        <a
+          href="https://www.facebook.com/profile.php?id=61574708947472"
+          target="_blank"
+        >
+          <img class="size-5" alt="Facebook" src="/assets/facebook.svg" />
+        </a>
+        <a href="https://www.instagram.com/_cliffrise/" target="_blank">
+          <img class="size-5" alt="Instagram" src="/assets/insta.svg" />
         </a>
         <div class="block">
           <CartButton
@@ -66,9 +59,7 @@ const cart = await Astro.session?.get('cart')
           />
         </div>
         <LangSwitcher />
-        <ThemeSwitcher />
-      </nav>
-
+      </div>
       <MobileMenuButton client:load />
     </div>
     <MobileMenu
@@ -79,7 +70,7 @@ const cart = await Astro.session?.get('cart')
       ]}
       client:load
     />
-  </div>
+  </nav>
 </header>
 
 <script>

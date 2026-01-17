@@ -8,14 +8,7 @@
         "cart": "Cart",
         "theme": "Theme"
     },
-    "hero": {
-        "subtitle": "Climbing Essentials",
-        "title": "Gear That",
-        "titleHighlight": "Builds Routes",
-        "description": "Every purchase funds new climbing route development. Premium climbing chalk and gear that supports the community.",
-        "shopProducts": "Shop Products",
-        "learnMission": "Learn Our Mission"
-    },
+    "heroTitle": "CliffRise is a way to give something back to the cliffs that give us so much - with every purchase supporting the creation of new routes and the care of climbing areas in Bulgaria.",
     "product": {
         "chalk": {
             "name": "Pure Magnesium Carbonate",

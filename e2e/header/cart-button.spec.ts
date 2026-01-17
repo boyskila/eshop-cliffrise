@@ -12,7 +12,6 @@ test.describe('Accessibility', () => {
       .getByRole('button', { name: /shopping cart with 0 items/i })
     await expect(cartBtn).toBeVisible()
     await expect(cartBtn).toHaveAttribute('aria-expanded', 'false')
-    await expect(cartBtn).toHaveText('Cart')
 
     const cartDrawer = page.getByRole('dialog', {
       name: /shopping cart/i,
