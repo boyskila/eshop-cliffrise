@@ -16,3 +16,9 @@
 .animate-slide-in-right {
   animation: slide-in-right 0.3s ease-out;
 }
+
+@layer base {
+  a {
+    @apply p-1 hover:opacity-80 transition-opacity;
+  }
+}

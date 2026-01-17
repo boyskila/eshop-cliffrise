@@ -9,7 +9,7 @@ export const MobileMenuButton = () => {
         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
         aria-label={isMobileMenuOpen() ? 'Close Menu' : 'Open Menu'}
         aria-expanded={isMobileMenuOpen()}
-        class="text-stone-700 dark:text-stone-300 p-2"
+        class="text-white p-2"
       >
         {isMobileMenuOpen() ? <X class="h-6 w-6" /> : <Menu class="h-6 w-6" />}
       </button>
