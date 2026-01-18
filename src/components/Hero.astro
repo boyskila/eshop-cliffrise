@@ -1,5 +1,17 @@
 ---
-import { getTranslations } from '@utils/i18'
+import { Image, getImage } from 'astro:assets'
+import { getLang, getTranslations } from '@utils/i18'
+import ProductsTitleEn from '../assets/titles/en/products-title.svg'
+import ProductsTitleBg from '../assets/titles/bg/products-title.svg'
+import Logo from '../../public/assets/logo.svg'
+
+const productsTitleImg = await getImage({
+  src: getLang(Astro.params) === 'bg' ? ProductsTitleBg : ProductsTitleEn,
+  formats: ['avif', 'webp', 'png'],
+  quality: 100,
+  alt: 'Products with mission',
+})
+
 const { heroTitle } = getTranslations(Astro.params)
 ---
 
@@ -10,17 +22,17 @@ const { heroTitle } = getTranslations(Astro.params)
     <div
       class="flex flex-col lg:flex-row landscape:flex-row justify-evenly items-center gap-5"
     >
-      <img
+      <Image
         class="max-w-[120px] lg:max-w-[250px] h-auto"
         alt="CliffRise Logo"
-        src="/assets/logo.svg"
+        src={Logo}
       />
 
       <div class="flex flex-col items-center gap-3">
         <img
           class="w-full max-w-[300px] lg:max-w-[500px] lg:w-auto h-auto"
-          alt="Products with mission"
-          src="/assets/mission.svg"
+          src={productsTitleImg.src}
+          {...productsTitleImg.attributes}
         />
         <p
           class="font-normal text-white lg:text-xl leading-relaxed max-w-3xl mx-auto lg:mx-0 lg:ml-auto text-center lg:text-left px-4 lg:px-0"

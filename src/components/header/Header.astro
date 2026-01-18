@@ -12,7 +12,9 @@ const { products, mission, impact } = header
 const cart = await Astro.session?.get('cart')
 ---
 
-<header class="sticky top-0 z-50 w-full bg-black/95 p-4 lg:py-8">
+<header
+  class="sticky top-0 z-50 w-full bg-black/95 p-4 lg:py-8 border-b border-stone-200"
+>
   <nav role="navigation" aria-label="Main navigation">
     <div class="flex items-center justify-between">
       <a class="flex items-center gap-4 cursor-pointer" href={`/${lang}/`}>
