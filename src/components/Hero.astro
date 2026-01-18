@@ -20,7 +20,7 @@ const { heroTitle } = getTranslations(Astro.params)
 >
   <div class="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
     <div
-      class="flex flex-col lg:flex-row landscape:flex-row justify-evenly items-center gap-5"
+      class="flex flex-col lg:flex-row landscape:flex-row justify-evenly items-center gap-5 mt-10"
     >
       <Image
         class="max-w-[120px] lg:max-w-[250px] h-auto"
@@ -28,14 +28,16 @@ const { heroTitle } = getTranslations(Astro.params)
         src={Logo}
       />
 
-      <div class="flex flex-col items-center gap-3">
+      <div
+        class="flex flex-col gap-3 items-center lg:items-start landscape:items-start"
+      >
         <img
           class="w-full max-w-[300px] lg:max-w-[500px] lg:w-auto h-auto"
           src={productsTitleImg.src}
           {...productsTitleImg.attributes}
         />
         <p
-          class="font-normal text-white lg:text-xl leading-relaxed max-w-3xl mx-auto lg:mx-0 lg:ml-auto text-center lg:text-left px-4 lg:px-0"
+          class="font-normal text-white lg:text-xl leading-relaxed max-w-xl lg:mx-0 lg:ml-auto text-center landscape:text-left"
         >
           {heroTitle}
         </p>
