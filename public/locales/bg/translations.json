@@ -68,19 +68,8 @@
         "features": "Характеристики",
         "addToCart": "Добави в количката"
     },
-    "mission": {
-        "title": "Нашата мисия: повече маршрути, по-силна общност",
-        "description1": "CliffRise е създаден с една проста идея – да правим катеренето по-достъпно, като финансираме изграждането на нови маршрути. Всеки продукт, който купуваш от нас, директно помага за отварянето на нови линии и нови възможности за катерачи от всякакво ниво.",
-        "description2": "Ние вярваме, че добрата екипировка не е просто нещо, което използваш – тя трябва да оставя следа. Затова целият ни модел е изграден около подкрепата на общността. С всяка покупка ти не просто взимаш продукт, а допринасяш за развитието на катеренето и за нещо, което остава във времето.",
-        "communityFirst": "Общността на първо място",
-        "communityFirstDesc": "Всяка покупка финансира нови маршрути за катерене",
-        "inclusiveAccess": "Включващ достъп",
-        "inclusiveAccessDesc": "Създаване на възможности за всички катерачи",
-        "globalImpact": "Глобално въздействие",
-        "globalImpactDesc": "Подкрепяне на разработването на маршрути по света",
-        "sustainableGrowth": "Устойчив растеж",
-        "sustainableGrowthDesc": "Изграждане на трайна инфраструктура за катерене"
-    },
+    "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
+    "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "footer": {
         "description": "Премиум екипировка за катерене, която финансира разработването на маршрути по света. Всяка покупка създава нови възможности за катерене.",
         "products": "Продукти",
