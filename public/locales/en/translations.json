@@ -68,19 +68,8 @@
         "features": "Features",
         "addToCart": "Add to Cart"
     },
-    "mission": {
-        "title": "Our mission: more routes, a stronger community",
-        "description1": "CliffRise was created with one simple idea - to make climbing more accessible by funding the development of new routes. Every product you buy from us directly helps open new lines and create new opportunities for climbers of all levels.",
-        "description2": "We believe that good gear should be more than something you use - it should give something back. That’s why our entire model is built around supporting the climbing community. With every purchase, you’re not just getting a product, you’re helping grow the sport and create something that lasts.",
-        "communityFirst": "Community First",
-        "communityFirstDesc": "Every purchase funds new climbing routes",
-        "inclusiveAccess": "Inclusive Access",
-        "inclusiveAccessDesc": "Creating opportunities for all climbers",
-        "globalImpact": "Global Impact",
-        "globalImpactDesc": "Supporting route development worldwide",
-        "sustainableGrowth": "Sustainable Growth",
-        "sustainableGrowthDesc": "Building lasting climbing infrastructure"
-    },
+    "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
+    "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "footer": {
         "description": "Premium climbing gear that funds route development worldwide. Every purchase creates new climbing opportunities.",
         "products": "Products",

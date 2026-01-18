@@ -1,0 +1,53 @@
+---
+import { getLang, getTranslations } from '@utils/i18'
+import { getImage } from 'astro:assets'
+import CityOfTetevenImg from '../assets/city-of-teteven.jpg'
+import CauseTitleEn from '../assets/titles/en/cause-title.svg'
+import CauseTitleBg from '../assets/titles/bg/cause-title.svg'
+
+const lang = getLang(Astro.params)
+
+const cityOfTetevenImg = await getImage({
+  src: CityOfTetevenImg,
+  widths: [400, 800, 1200],
+  formats: ['avif', 'webp', 'jpeg'],
+  quality: 80,
+  alt: 'Climbing scene',
+})
+const causeTitle = await getImage({
+  src: lang === 'bg' ? CauseTitleBg : CauseTitleEn,
+  widths: [200, 400],
+  formats: ['avif', 'webp', 'png'],
+  quality: 80,
+  alt: 'Cause Title',
+})
+
+const { causeP1, causeP2 } = getTranslations(Astro.params)
+---
+
+<section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+    <img
+      class="w-full h-auto rounded-lg order-1 lg:order-2"
+      src={cityOfTetevenImg.src}
+      {...cityOfTetevenImg.attributes}
+    />
+    <div class="order-2 lg:order-1 space-y-6">
+      <img
+        class="w-40 sm:w-50 h-auto"
+        src={causeTitle.src}
+        {...causeTitle.attributes}
+      />
+      <article
+        class="font-normal text-black text-sm sm:text-base leading-6 space-y-4"
+      >
+        <p>
+          {causeP1}
+        </p>
+        <p>
+          {causeP2}
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
