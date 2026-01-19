@@ -33,7 +33,7 @@ const cartFromSession = await Astro.session?.get('cart')
       routeFunding={notification.routeFunding}
     />
     <Hero />
-    <main class="px-4 md:px-25 xl:px-60">
+    <main>
       <slot />
     </main>
     <Footer />

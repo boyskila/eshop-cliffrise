@@ -25,10 +25,10 @@ const causeTitle = await getImage({
 const { causeP1, causeP2 } = getTranslations(Astro.params)
 ---
 
-<section class="py-12 lg:py-20">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+<section class="px-4 md:px-25 xl:px-60">
+  <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
     <img
-      class="w-full h-auto rounded-lg order-1 lg:order-2"
+      class="w-full lg:w-3/6 h-auto rounded-lg order-1 lg:order-2"
       src={cityOfTetevenImg.src}
       {...cityOfTetevenImg.attributes}
     />
@@ -39,7 +39,7 @@ const { causeP1, causeP2 } = getTranslations(Astro.params)
         {...causeTitle.attributes}
       />
       <article
-        class="font-normal text-black text-sm sm:text-base leading-6 space-y-4"
+        class="font-normal text-black text-sm sm:text-base leading-6 pl-6 md:pl-10"
       >
         <p>
           {causeP1}
