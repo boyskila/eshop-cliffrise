@@ -8,7 +8,7 @@ import CartButton from './CartButton'
 
 const lang = getLang(Astro.params)
 const { header } = getTranslations(Astro.params)
-const { products, mission, impact } = header
+const { products, ourCause, tetevenClimb, aboutUs } = header
 const cart = await Astro.session?.get('cart')
 ---
 
@@ -30,17 +30,24 @@ const cart = await Astro.session?.get('cart')
         </a>
         <a
           data-hash-link
-          href="#mission"
+          href="#our-cause"
           class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
-          {mission}
+          {ourCause}
         </a>
         <a
           data-hash-link
-          href="#impact"
+          href="#events-section"
           class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
-          {impact}
+          {tetevenClimb}
+        </a>
+        <a
+          data-hash-link
+          href="#about-us"
+          class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
+        >
+          {aboutUs}
         </a>
       </div>
       <div class="flex items-center gap-3 lg:gap-4">
@@ -67,8 +74,9 @@ const cart = await Astro.session?.get('cart')
     <MobileMenu
       menuItems={[
         { href: '#products', title: products },
-        { href: '#mission', title: mission },
-        { href: '#impact', title: impact },
+        { href: '#our-cause', title: ourCause },
+        { href: '#about-us', title: aboutUs },
+        { href: '#events-section', title: tetevenClimb },
       ]}
       client:load
     />
@@ -82,7 +90,7 @@ const cart = await Astro.session?.get('cart')
       ?.getAttribute('href')
     if (hashLink) {
       const langSwitcher = document.querySelector(
-        '[data-lang-switcher]'
+        '[data-lang-switcher]',
       ) as HTMLLinkElement
       const { lang } = langSwitcher.dataset
       const { nextLang } = langSwitcher.dataset
