@@ -1,0 +1,39 @@
+---
+import { getLang, getTranslations } from '@utils/i18'
+import { Carousel } from '../ui/Carousel'
+import { getImage } from 'astro:assets'
+import TetevenClimbTitleEn from '../../assets/titles/en/teteven-climb.svg'
+import TetevenClimbTitleBg from '../../assets/titles/bg/teteven-climb.svg'
+const { eventsSection } = getTranslations(Astro.params)
+const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo } =
+  eventsSection
+
+const aboutTitle = await getImage({
+  src:
+    getLang(Astro.params) === 'bg' ? TetevenClimbTitleBg : TetevenClimbTitleEn,
+  widths: [200, 400],
+  formats: ['avif', 'webp', 'png'],
+  quality: 80,
+  alt: 'Teteven Climb Title',
+})
+---
+
+<section class="bg-gray-100 py-10">
+  <div
+    class="px-15 xl:pl-45 xl:pr-35 flex flex-col lg:flex-row mb-5 xl:mb-10 gap-5 lg:gap-8"
+  >
+    <img
+      id="events-section"
+      class="w-70 sm:w-100 h-[95%]"
+      src={aboutTitle.src}
+      {...aboutTitle.attributes}
+    />
+    <p class="text-base w-full font-normal leading-5 pl-10 lg:pl-0">
+      <span class="font-bold">{boldedTextOne}</span>
+      {normalTextOne}
+      <span class="font-bold">{boldedTextTwo}</span>
+      {normalTextTwo}
+    </p>
+  </div>
+  <Carousel client:load />
+</section>
