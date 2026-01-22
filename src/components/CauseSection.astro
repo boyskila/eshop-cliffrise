@@ -14,6 +14,7 @@ const cityOfTetevenImg = await getImage({
   quality: 80,
   alt: 'Climbing scene',
 })
+
 const causeTitle = await getImage({
   src: lang === 'bg' ? CauseTitleBg : CauseTitleEn,
   widths: [200, 400],
@@ -25,7 +26,7 @@ const causeTitle = await getImage({
 const { causeP1, causeP2 } = getTranslations(Astro.params)
 ---
 
-<section class="px-4 md:px-25 xl:px-60">
+<section class="px-10 md:px-25 xl:px-60">
   <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
     <img
       class="w-full lg:w-3/6 h-auto rounded-lg order-1 lg:order-2"
