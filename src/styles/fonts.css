@@ -1,0 +1,23 @@
+/* Main variable font - replaces Regular, Medium, SemiBold, Bold */
+@font-face {
+  font-family: 'Sofia Sans';
+  src: url('/fonts/SofiaSans-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic variable font - replaces Italic */
+@font-face {
+  font-family: 'Sofia Sans';
+  src: url('/fonts/SofiaSans-Italic-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Apply globally */
+body {
+  font-family: 'Sofia Sans', system-ui, sans-serif;
+  font-weight: 400; /* Default weight */
+}
