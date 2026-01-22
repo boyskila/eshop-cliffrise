@@ -1,6 +1,18 @@
 ---
+import { getImage } from 'astro:assets'
 import { getLang, getTranslations } from '@utils/i18'
+import AboutTitleEn from '../assets/titles/en/about-us.svg'
+import AboutTitleBg from '../assets/titles/bg/about-us.svg'
+
 const { causeP1, causeP2 } = getTranslations(Astro.params)
+
+const aboutTitle = await getImage({
+  src: getLang(Astro.params) === 'bg' ? AboutTitleBg : AboutTitleEn,
+  widths: [200, 400],
+  formats: ['avif', 'webp', 'png'],
+  quality: 80,
+  alt: 'Cause Title',
+})
 ---
 
 <section class="mb-15 lg:mb-20 px-10 md:px-25 xl:px-60">
@@ -9,11 +21,10 @@ const { causeP1, causeP2 } = getTranslations(Astro.params)
     <div class="order-2 space-y-6">
       <img
         class="w-40 sm:w-50 h-auto"
-        src={`/src/assets/titles/${getLang(Astro.params)}/about-us.svg`}
+        src={aboutTitle.src}
+        {...aboutTitle.attributes}
       />
-      <article
-        class="font-normal text-black text-sm sm:text-base leading-6 pl-6 md:pl-10"
-      >
+      <article class="text-sm sm:text-base leading-5 pl-6 md:pl-10">
         <p>
           {causeP1}
         </p>
