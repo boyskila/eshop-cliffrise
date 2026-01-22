@@ -19,6 +19,11 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+  }
+  
   a {
     @apply p-1 hover:opacity-80 transition-opacity;
   }
