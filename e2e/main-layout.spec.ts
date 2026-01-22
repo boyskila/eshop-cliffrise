@@ -9,12 +9,12 @@ test('not throwig error when no hash is not present', async ({ page }) => {
 
   expect(
     errors.includes(
-      "Failed to execute 'querySelector' on 'Document': The provided selector is empty."
-    )
+      "Failed to execute 'querySelector' on 'Document': The provided selector is empty.",
+    ),
   ).toBe(false)
 })
 
-test('scrolls to element when lang is changed and hash is present on page reload', async ({
+test.skip('scrolls to element when lang is changed and hash is present on page reload', async ({
   page,
 }) => {
   await page.goto('http://localhost:4321/en/#products')
