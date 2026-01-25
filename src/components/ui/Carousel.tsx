@@ -6,6 +6,7 @@ import {
   For,
   createMemo,
   onMount,
+  onCleanup,
 } from 'solid-js'
 import KeenSlider, { type KeenSliderInstance } from 'keen-slider'
 import { images } from '../../data/carousel-images'
@@ -36,7 +37,7 @@ export const Carousel = () => {
     return slides
   })
 
-  createEffect(() => {
+  onMount(() => {
     const handleResize = () => {
       const width = window.innerWidth
       if (width < 768) {
@@ -47,14 +48,11 @@ export const Carousel = () => {
         setScreenSize('desktop')
       }
     }
-
     handleResize()
+
     window.addEventListener('resize', handleResize)
+    onCleanup(() => window.removeEventListener('resize', handleResize))
 
-    return () => window.removeEventListener('resize', handleResize)
-  })
-
-  onMount(() => {
     setTimeout(() => {
       sliderRef = new KeenSlider(`#${slideId}`, {
         loop: true,
@@ -63,6 +61,18 @@ export const Carousel = () => {
         },
       })
     })
+  })
+
+  createEffect(() => {
+    const device = screenSize()
+    setTimeout(() => {
+      if (sliderRef) {
+        sliderRef.update({
+          loop: true,
+          slides: { spacing: device === 'mobile' ? 5 : 16 },
+        })
+      }
+    }, 1000)
   })
 
   const handleDotClick = (index: number) => {
@@ -79,11 +89,11 @@ export const Carousel = () => {
       >
         <For each={groupedSlides()}>
           {(slide) => (
-            <div class="keen-slider__slide flex flex-col p-2 h-full">
+            <div class="keen-slider__slide flex flex-col h-full">
               {slide.images.length === 3 ? (
                 <div class="flex flex-col md:flex-row gap-4 h-full">
                   <div class="flex flex-col md:flex-row flex-1 gap-4 h-full">
-                    <div class="flex-1 rounded overflow-hidden">
+                    <div class="flex-1 overflow-hidden">
                       <img
                         src={slide.images[0]}
                         class="w-full h-full object-cover object-center"
@@ -91,14 +101,14 @@ export const Carousel = () => {
                       />
                     </div>
                     <div class="flex flex-col gap-4 w-full md:w-1/2">
-                      <div class="flex-1 rounded overflow-hidden">
+                      <div class="flex-1 overflow-hidden">
                         <img
                           src={slide.images[1]}
                           class="w-full h-full object-cover object-center"
                           loading="lazy"
                         />
                       </div>
-                      <div class="flex-1 rounded overflow-hidden">
+                      <div class="flex-1 overflow-hidden">
                         <img
                           src={slide.images[2]}
                           class="w-full h-full object-cover object-center"
@@ -118,7 +128,7 @@ export const Carousel = () => {
                 >
                   <For each={slide.images}>
                     {(image) => (
-                      <div class="flex-1 rounded overflow-hidden flex items-center justify-center h-full">
+                      <div class="flex-1 overflow-hidden flex items-center justify-center h-full">
                         <img
                           src={image}
                           class="w-full h-full object-cover object-center"
