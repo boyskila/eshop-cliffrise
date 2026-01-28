@@ -1,35 +1,37 @@
 ---
-import { getTranslations } from '@utils/i18'
+import { getLang, getTranslations } from '@utils/i18'
 import { getProducts } from '@data/products'
-import ProductCard from './ProductCard.astro'
+import ProductsTitleBg from '../../assets/titles/bg/products.svg'
+import ProductsTitleEn from '../../assets/titles/en/products.svg'
+import { getImage } from 'astro:assets'
+import ProductsCarousel from '../ui/ProductsCarousel'
+
 const translations = getTranslations(Astro.params)
 const products = getProducts(translations)
+const lang = getLang(Astro.params)
+const productsTitleImg = lang === 'bg' ? ProductsTitleBg : ProductsTitleEn
+const image = await getImage({
+  src: productsTitleImg,
+  widths: [200, 400],
+  formats: ['avif', 'webp', 'png'],
+  quality: 80,
+  alt: 'Products with mission',
+})
 ---
 
-<section
-  id="products"
-  aria-labelledby="products-title"
-  class="py-16 px-4 sm:px-6 lg:px-8 bg-stone-50 dark:bg-stone-800"
->
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-12">
-      <h2
-        id="products-title"
-        class="text-3xl md:text-4xl font-bold text-stone-900 dark:text-white mb-4"
-      >
-        {translations.products.title}
-      </h2>
-      <p class="text-lg text-stone-600 dark:text-stone-300 max-w-2xl mx-auto">
-        {translations.products.description}
-      </p>
-    </div>
-
-    <div
-      id="product-grid"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      role="tabpanel"
-    >
-      {products.map((product) => <ProductCard product={product} />)}
-    </div>
-  </div>
+<section id="products" class="flex-col justify-center p-3 md:p-7 lg:p-10">
+  <h2 class="mb-7 lg:mb-10">
+    <img
+      class="w-[150px] lg:w-[235px] m-auto"
+      alt="Products"
+      src={image.src}
+      {...image.attributes}
+    />
+  </h2>
+  <ProductsCarousel
+    products={products}
+    lang={lang}
+    buttonText={translations.products.addToCart}
+    client:only
+  />
 </section>

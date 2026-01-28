@@ -1,6 +1,6 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
-import { Carousel } from '../ui/Carousel'
+import GalleryCarousel from '../ui/GalleryCarousel'
 import { getImage } from 'astro:assets'
 import TetevenClimbTitleEn from '../../assets/titles/en/teteven-climb.svg'
 import TetevenClimbTitleBg from '../../assets/titles/bg/teteven-climb.svg'
@@ -35,5 +35,5 @@ const aboutTitle = await getImage({
       {normalTextTwo}
     </p>
   </div>
-  <Carousel client:load />
+  <GalleryCarousel client:load />
 </section>

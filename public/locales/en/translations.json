@@ -11,8 +11,18 @@
     },
     "heroTitle": "CliffRise is a way to give something back to the cliffs that give us so much - with every purchase supporting the creation of new routes and the care of climbing areas in Bulgaria.",
     "product": {
-        "chalk": {
-            "name": "Pure Magnesium Carbonate",
+        "dryChalk": {
+            "name": "Dry Chalk 250g",
+            "description": "Premium pure magnesium carbonate for superior grip and performance.",
+            "features": [
+                "99% pure magnesium carbonate",
+                "0.300kg packing",
+                "Eco-friendly packing",
+                "Suitable for dry or wet skin"
+            ]
+        },
+        "wetChalk": {
+            "name": "Wet Chalk 250g",
             "description": "Premium pure magnesium carbonate for superior grip and performance.",
             "features": [
                 "99% pure magnesium carbonate",
@@ -42,7 +52,7 @@
             ]
         },
         "tshirt": {
-            "name": "CliffRise Logo T-Shirt",
+            "name": "Cliffrise T-Shirt",
             "description": "Comfortable organic cotton t-shirt with CliffRise logo.",
             "features": [
                 "100% organic cotton",
@@ -51,13 +61,18 @@
             ]
         },
         "hat": {
-            "name": "CliffRise Climbing Hat",
+            "name": "Cliffrise Hat",
             "description": "Adjustable climbing hat with embroidered CliffRise logo.",
             "features": [
                 "Adjustable strap",
                 "UV protection",
                 "Embroidered logo"
             ]
+        },
+        "fingerTape": {
+            "name": "Finger Tape",
+            "description": "",
+            "features": []
         }
     },
     "products": {

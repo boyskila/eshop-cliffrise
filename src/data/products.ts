@@ -5,30 +5,27 @@ export const getProducts = (translations: Translations): Product[] => {
   return [
     {
       id: '1',
-      name: product.chalk.name,
+      name: product.dryChalk.name,
       price: 12.99,
-      image:
-        'https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
+      image: '/assets/products/dry-chalk.png',
       category: 'chalk',
-      description: product.chalk.description,
-      features: product.chalk.features,
+      description: product.dryChalk.description,
+      features: product.dryChalk.features,
     },
     {
       id: '2',
-      name: product.chalkBall.name,
+      name: product.fingerTape.name,
       price: 8.99,
-      image:
-        'https://images.pexels.com/photos/1031641/pexels-photo-1031641.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
+      image: '/assets/products/finger-tape.png',
       category: 'chalk',
-      description: product.chalkBall.description,
-      features: product.chalkBall.features,
+      description: product.fingerTape.description,
+      features: product.fingerTape.features,
     },
     {
       id: '3',
       name: product.liquidChalk.name,
       price: 15.99,
-      image:
-        'https://images.pexels.com/photos/1571442/pexels-photo-1571442.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
+      image: '/assets/products/dry-chalk.png',
       category: 'chalk',
       description: product.liquidChalk.description,
       features: product.liquidChalk.features,
@@ -37,8 +34,7 @@ export const getProducts = (translations: Translations): Product[] => {
       id: '4',
       name: product.tshirt.name,
       price: 24.99,
-      image:
-        'https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
+      image: '/assets/products/finger-tape-green.png',
       category: 'apparel',
       description: product.tshirt.description,
       features: product.tshirt.features,
@@ -47,11 +43,19 @@ export const getProducts = (translations: Translations): Product[] => {
       id: '5',
       name: product.hat.name,
       price: 19.99,
-      image:
-        'https://images.pexels.com/photos/1261578/pexels-photo-1261578.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop',
+      image: '/assets/products/dry-chalk.png',
       category: 'apparel',
       description: product.hat.description,
       features: product.hat.features,
+    },
+    {
+      id: '1',
+      name: product.wetChalk.name,
+      price: 12.99,
+      image: '/assets/products/dry-chalk.png',
+      category: 'chalk',
+      description: product.wetChalk.description,
+      features: product.wetChalk.features,
     },
   ]
 }

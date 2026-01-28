@@ -1,11 +1,12 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro'
-import ProductsGrid from '../../components/products/ProductsGrid.astro'
-import CauseSection from '../../components/CauseSection.astro'
-import Impact from '../../components/Impact.astro'
+import {
+  ProductsSection,
+  EventsSection,
+  AboutSection,
+  CauseSection,
+} from '../../components/sections'
 import Divider from '../../components/Divider.astro'
-import AboutSection from '../../components/AboutSection.astro'
-import EventsSection from '../../components/sections/EventsSection.astro'
 ---
 
 <MainLayout title="Home">
@@ -23,6 +24,5 @@ import EventsSection from '../../components/sections/EventsSection.astro'
   <Divider class="mt-10 lg:mt-15" />
   <AboutSection />
   <EventsSection />
-  <ProductsGrid />
-  <Impact />
+  <ProductsSection />
 </MainLayout>

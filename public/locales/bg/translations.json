@@ -11,8 +11,18 @@
     },
     "heroTitle": "CliffRise е начин да върнем нещо обратно към скалите, които ни дават толкова много - като с всяка покупка подкрепяме създаването на нови маршрути и грижата за катерачните обекти в България.",
     "product": {
-        "chalk": {
-            "name": "Чист магнезиев карбонат",
+        "dryChalk": {
+            "name": "Сух магнезий 250гр",
+            "description": "Премиум чист магнезиев карбонат за превъзходно сцепление и резултати.",
+            "features": [
+                "99% чист магнезиев карбонат",
+                "Опаковка от 300гр",
+                "Екологична опаковка",
+                "За суха или влажна кожа"
+            ]
+        },
+        "wetChalk": {
+            "name": "Влажен магнезий 250гр",
             "description": "Премиум чист магнезиев карбонат за превъзходно сцепление и резултати.",
             "features": [
                 "99% чист магнезиев карбонат",
@@ -42,7 +52,7 @@
             ]
         },
         "tshirt": {
-            "name": "Тениска с лого CliffRise",
+            "name": "Cliffrise Тениска",
             "description": "Удобна тениска от органичен памук с лого CliffRise.",
             "features": [
                 "100% органичен памук",
@@ -51,7 +61,16 @@
             ]
         },
         "hat": {
-            "name": "Шапка за катерене CliffRise",
+            "name": "Cliffrise Шапка",
+            "description": "Регулируема шапка за катерене с избродирано лого CliffRise.",
+            "features": [
+                "Регулеруема каишка",
+                "UV защита",
+                "Избродирано лого"
+            ]
+        },
+        "fingerTape": {
+            "name": "Лекопласт",
             "description": "Регулируема шапка за катерене с избродирано лого CliffRise.",
             "features": [
                 "Регулеруема каишка",
@@ -67,7 +86,7 @@
         "chalk": "Магнезий",
         "apparel": "Облекло",
         "features": "Характеристики",
-        "addToCart": "Добави в количката"
+        "addToCart": "Добави"
     },
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
