@@ -1,9 +1,9 @@
 import { For } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
 import type { Product } from '@types'
-import AddToCartButton from '../products/AddToCartButton'
+import AddToCartButton from '../../products/AddToCartButton'
 import { CarouselDots } from './CarouselDots'
-import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './carousel/config'
+import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
 
 export default (props: {
   products: Product[]

@@ -1,9 +1,9 @@
 import { onCleanup, createSignal, For, createMemo, onMount } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
-import { images } from '../../data/carousel-images'
+import { images } from '../../../data/carousel-images'
 
 import { CarouselDots } from './CarouselDots'
-import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './carousel/config'
+import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
 
 const imagesPerSlideMap = {
   mobile: 1,
