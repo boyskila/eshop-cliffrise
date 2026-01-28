@@ -4,7 +4,7 @@ import { getProducts } from '@data/products'
 import ProductsTitleBg from '../../assets/titles/bg/products.svg'
 import ProductsTitleEn from '../../assets/titles/en/products.svg'
 import { getImage } from 'astro:assets'
-import ProductsCarousel from '../ui/ProductsCarousel'
+import ProductsCarousel from '../ui/carousel/ProductsCarousel'
 
 const translations = getTranslations(Astro.params)
 const products = getProducts(translations)
