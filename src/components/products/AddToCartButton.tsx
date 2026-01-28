@@ -8,7 +8,6 @@ export default function AddToCartButton(props: {
   lang: string
 }) {
   const productName = props.productName
-  const buttonText = props.buttonText
   const productId = props.productId
 
   return (
@@ -25,9 +24,16 @@ export default function AddToCartButton(props: {
         }
       }}
       aria-label={`Add ${productName} to cart`}
-      class="bg-black text-white px-4 py-2 font-medium w-[150px]"
+      class="bg-black text-white size-[35px] md:size-[43px] mt-1 flex items-center justify-center"
     >
-      {buttonText}
+      <svg viewBox="0 0 24 24" class="size-[70%]">
+        <path
+          d="M12 5v14M5 12h14"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
     </button>
   )
 }
