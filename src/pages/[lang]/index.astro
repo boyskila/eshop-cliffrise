@@ -5,22 +5,15 @@ import {
   EventsSection,
   AboutSection,
   CauseSection,
+  QuotesSection,
 } from '../../components/sections'
-import Divider from '../../components/Divider.astro'
+import Divider from '../../components/ui/Divider.astro'
 ---
 
 <MainLayout title="Home">
   <CauseSection />
   <Divider class="mb-10 lg:mb-15" />
-  <p class="flex items-center justify-center">
-    <b class="lh-[44px] w-5/6 xl:w-3/6 text-xl lg:text-2xl"
-      ><q
-        >CliffRise не е поредният бранд на пазара - той е резултат от желание да
-        се свърже практичното с полезното и да се върне нещо обратно към
-        катерачната общност</q
-      ></b
-    >
-  </p>
+  <QuotesSection />
   <Divider class="mt-10 lg:mt-15" />
   <AboutSection />
   <EventsSection />
