@@ -1,5 +1,4 @@
 import { actions } from 'astro:actions'
-import Plus from 'lucide-solid/icons/plus'
 import { addCartNotification, updateCart } from '@signals/cart'
 
 export default function AddToCartButton(props: {
@@ -26,10 +25,9 @@ export default function AddToCartButton(props: {
         }
       }}
       aria-label={`Add ${productName} to cart`}
-      class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+      class="bg-black text-white px-4 py-2 font-medium w-[150px]"
     >
-      <Plus class="h-4 w-4" />
-      <span>{buttonText}</span>
+      {buttonText}
     </button>
   )
 }
