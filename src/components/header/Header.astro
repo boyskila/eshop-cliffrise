@@ -17,7 +17,7 @@ const cart = await Astro.session?.get('cart')
 >
   <nav role="navigation" aria-label="Main navigation">
     <div class="flex items-center justify-between">
-      <a class="flex items-center gap-4 cursor-pointer" href={`/${lang}/`}>
+      <a class="flex items-center" href={`/${lang}/`}>
         <img class="size-8 lg:size-12" alt="Logo" src="/assets/logo.svg" />
       </a>
       <div class="hidden md:flex gap-8 xl:gap-[46px]">

@@ -20,11 +20,10 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 100px
   }
 
   a {
-    @apply p-1 hover:opacity-80 transition-opacity;
+    @apply p-1 hover:opacity-80 transition-opacity cursor-pointer;
   }
 }
