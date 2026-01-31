@@ -89,19 +89,9 @@
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "footer": {
-        "description": "Premium climbing gear that funds route development worldwide. Every purchase creates new climbing opportunities.",
-        "products": "Products",
-        "climbingChalk": "Climbing Chalk",
-        "chalkBalls": "Chalk Balls",
-        "liquidChalk": "Liquid Chalk",
-        "apparel": "Apparel",
-        "company": "Company",
-        "shipping": "Shipping",
-        "privacyPolicy": "Privacy Policy",
-        "termsOfService": "Terms of Service",
-        "contact": "Contact",
-        "copyright": "All rights reserved",
-        "ourMission": "Our Mission"
+        "supportClimbing": "You want to support us?",
+        "contactUs": "Contact us",
+        "copyright": "2024 CliffRise © All rights reserved"
     },
     "impact": {
         "title": "Real Impact, Real Routes",

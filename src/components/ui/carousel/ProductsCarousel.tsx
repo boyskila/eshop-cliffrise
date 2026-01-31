@@ -43,16 +43,16 @@ export default (props: {
                 />
                 <div class="flex justify-between w-full">
                   <div class="flex flex-col gap-1">
-                  <span class="text-base md:text-lg xl:text-xl">{name}</span>
-                  <div class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl">
-                    {price.toFixed(2)} &euro;
+                    <span class="text-base md:text-lg xl:text-xl">{name}</span>
+                    <div class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl">
+                      {price.toFixed(2)} &euro;
+                    </div>
                   </div>
-                </div>
-                <AddToCartButton
-                  buttonText={props.buttonText}
-                  productName={name}
-                  productId={id}
-                  lang={props.lang}
+                  <AddToCartButton
+                    buttonText={props.buttonText}
+                    productName={name}
+                    productId={id}
+                    lang={props.lang}
                   />
                 </div>
               </div>

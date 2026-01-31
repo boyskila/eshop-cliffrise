@@ -91,19 +91,9 @@
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "footer": {
-        "description": "Премиум екипировка за катерене, която финансира разработването на маршрути по света. Всяка покупка създава нови възможности за катерене.",
-        "products": "Продукти",
-        "climbingChalk": "Магнезий за катерене",
-        "chalkBalls": "Топки магнезий",
-        "liquidChalk": "Течен магнезий",
-        "apparel": "Облекло",
-        "company": "Компания",
-        "shipping": "Доставка",
-        "privacyPolicy": "Политика за поверителност",
-        "termsOfService": "Условия на ползване",
-        "contact": "Контакт",
-        "copyright": "Всички права запазени",
-        "ourMission": "Нашата мисия"
+        "supportClimbing": "Искаш да подкрепиш?",
+        "contactUs": "Свържи се с нас",
+        "copyright": "2024 CliffRise © Всички права запазени"
     },
     "impact": {
         "title": "Реално въздействие, реални маршрути",

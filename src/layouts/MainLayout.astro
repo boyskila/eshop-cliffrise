@@ -7,6 +7,7 @@ import Footer from '../components/Footer.astro'
 import { CartNotifications } from '../components/CartNotifications'
 import '../styles/global.css'
 import { Cart } from '../components/Cart'
+import Divider from '../components/ui/Divider.astro'
 const { notification, cart } = getTranslations(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
 ---
@@ -36,6 +37,7 @@ const cartFromSession = await Astro.session?.get('cart')
     <main>
       <slot />
     </main>
+    <Divider class="bg-black mb-10" />
     <Footer />
   </body>
 </html>
