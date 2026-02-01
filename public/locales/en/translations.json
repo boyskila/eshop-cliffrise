@@ -111,7 +111,7 @@
         "routes": "Routes"
     },
     "notification": {
-        "addedToCart": "Added to cart!",
+        "addedToCart": "Added",
         "routeFunding": "This purchase helps fund new climbing routes!"
     },
     "cart": {
