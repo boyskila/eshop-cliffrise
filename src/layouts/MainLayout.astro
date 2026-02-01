@@ -6,7 +6,7 @@ import Hero from '../components/Hero.astro'
 import Footer from '../components/Footer.astro'
 import { CartNotifications } from '../components/CartNotifications'
 import '../styles/global.css'
-import { Cart } from '../components/Cart'
+import { Cart } from '../components/cart/Cart'
 import Divider from '../components/ui/Divider.astro'
 const { notification, cart } = getTranslations(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
