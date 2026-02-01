@@ -39,7 +39,7 @@ test.describe('Accessibility', () => {
       .locator('header')
       .getByRole('button', { name: /shopping cart with 0 items/i })
     const cartDrawer = page.getByRole('dialog', { name: /shopping cart/i })
-    const backdrop = page.getByLabel(/close shopping cart/i)
+    const backdrop = page.getByLabel(/close shopping cart/i).first()
 
     await cartBtn.click()
     await expect(backdrop).toBeVisible()

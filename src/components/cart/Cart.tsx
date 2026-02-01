@@ -1,13 +1,13 @@
 import { For, Show, createEffect } from 'solid-js'
-import { actions } from 'astro:actions'
-import ShoppingBag from 'lucide-solid/icons/shopping-bag'
-import Plus from 'lucide-solid/icons/plus'
-import Minus from 'lucide-solid/icons/minus'
-import Euro from 'lucide-solid/icons/euro'
 import { cart, isCartOpen, toggleCart, updateCart } from '@signals/cart'
 import type { Translations } from '@types'
 import type { CartItem } from '@actions'
-import { getTotalPrice } from '@utils/cart'
+import { DecreaseQuantityButton } from './DecreaseQuantityButton'
+import { IncreaseQuantityButton } from './IncreaseQuantityButton'
+import { RemoveFromCartButton } from './RemoveFromCartButton'
+import { EmptyCart } from './EmptyCart'
+import { CartFooter } from './CartFooter'
+import { CartHeader } from './CartHeader'
 
 export const Cart = (props: {
   translations: Translations['cart']
@@ -15,6 +15,9 @@ export const Cart = (props: {
 }) => {
   createEffect(() => {
     props.initialCart && updateCart(props.initialCart)
+    isCartOpen()
+      ? document.body.classList.add('overflow-hidden')
+      : document.body.classList.remove('overflow-hidden')
   })
   return (
     <Show when={isCartOpen()}>
@@ -26,128 +29,58 @@ export const Cart = (props: {
       <div
         role="dialog"
         aria-label="Shopping cart"
-        class="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-stone-800 z-50 shadow-xl transition-colors"
+        class="fixed right-0 top-0 h-full w-full md:max-w-md bg-white z-50 p-7 xl:p-8"
       >
         <div class="flex flex-col h-full">
-          <div class="flex items-center justify-between p-4 border-b border-stone-200 dark:border-stone-700">
-            <h2 class="text-lg font-semibold text-stone-900 dark:text-white flex items-center">
-              <ShoppingBag class="h-5 w-5 mr-2" />
-              {props.translations.title}
-            </h2>
-          </div>
+          <CartHeader title={props.translations.title} />
+          <div class="mb-5 mt-3 xl:mb-5 xl:mt-5 h-[1px] bg-black" />
 
-          <div class="flex-1 overflow-y-auto p-4">
+          <div class="flex-1 overflow-y-auto">
             <Show
               when={cart().length}
               fallback={
-                <div class="text-center py-12">
-                  <ShoppingBag class="h-12 w-12 text-stone-400 dark:text-stone-500 mx-auto mb-4" />
-                  <p class="text-stone-600 dark:text-stone-300">
-                    {props.translations.empty}
-                  </p>
-                  <p class="text-sm text-stone-500 dark:text-stone-400 mt-2">
-                    {props.translations.emptyDesc}
-                  </p>
-                </div>
+                <EmptyCart
+                  empty={props.translations.empty}
+                  emptyDesc={props.translations.emptyDesc}
+                />
               }
             >
-              <div class="space-y-4">
-                <For each={cart()}>
-                  {(item) => (
-                    <div class="bg-stone-50 dark:bg-stone-700 rounded-lg p-4">
-                      <div class="flex items-start space-x-3">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          class="w-16 h-16 object-cover rounded-lg"
-                        />
-                        <div class="flex-1">
-                          <h3 class="font-medium text-stone-900 dark:text-white">
-                            {item.name}
-                          </h3>
-                          <p class="text-sm text-stone-600 dark:text-stone-300">
-                            ${item.price}
-                          </p>
+              <For each={cart()}>
+                {(item) => (
+                  <div class="flex items-center space-x-3 relative ml-3 first:mt-4 not-first:my-6">
+                    <RemoveFromCartButton
+                      item={item}
+                      className="absolute -left-2 -top-2"
+                    />
+                    <img src={item.image} alt={item.name} class="size-20" />
+                    <div class="flex items-center justify-between flex-1">
+                      <div>
+                        <h3 class="text-lg font-medium mb-2">{item.name}</h3>
+                        <p class="text-lg font-bold">${item.price}</p>
+                      </div>
 
-                          <div class="flex items-center justify-between mt-3">
-                            <div class="flex items-center space-x-2">
-                              <button
-                                aria-label={`Decrease quantity of ${item.name} in cart`}
-                                onClick={async () => {
-                                  const { data } = await actions.updateQuantity(
-                                    {
-                                      productId: item.id,
-                                      quantity: item.quantity - 1,
-                                    }
-                                  )
-                                  data && updateCart(data)
-                                }}
-                                class="p-1 hover:bg-stone-200 dark:hover:bg-stone-600 rounded transition-colors"
-                              >
-                                <Minus class="h-4 w-4" />
-                              </button>
-                              <span class="w-8 text-center text-sm font-medium text-stone-900 dark:text-white">
-                                {item.quantity}
-                              </span>
-                              <button
-                                aria-label={`Increase quantity of ${item.name} in cart`}
-                                onClick={async () => {
-                                  const { data } = await actions.updateQuantity(
-                                    {
-                                      productId: item.id,
-                                      quantity: item.quantity + 1,
-                                    }
-                                  )
-                                  data && updateCart(data)
-                                }}
-                                class="p-1 hover:bg-stone-200 dark:hover:bg-stone-600 rounded transition-colors"
-                              >
-                                <Plus class="h-4 w-4" />
-                              </button>
-                            </div>
-
-                            <button
-                              aria-label={`Remove ${item.name} from cart`}
-                              onClick={async () => {
-                                const { data } = await actions.removeFromCart({
-                                  productId: item.id,
-                                })
-                                data && updateCart(data)
-                              }}
-                              class="text-red-500 hover:text-red-700 text-sm font-medium transition-colors"
-                            >
-                              {props.translations.remove}
-                            </button>
-                          </div>
-                        </div>
+                      <div class="flex space-x-2 self-end">
+                        <DecreaseQuantityButton item={item} />
+                        <span class="border border-gray size-7 flex items-center justify-center text-sm font-medium">
+                          {item.quantity}
+                        </span>
+                        <IncreaseQuantityButton item={item} />
                       </div>
                     </div>
-                  )}
-                </For>
-              </div>
+                  </div>
+                )}
+              </For>
             </Show>
           </div>
 
           <Show when={cart().length > 0}>
-            <div class="border-t border-stone-200 dark:border-stone-700 p-4">
-              <div class="flex justify-between items-center mb-4">
-                <span class="text-lg font-semibold text-stone-900 dark:text-white">
-                  {props.translations.total}
-                </span>
-                <span class="flex items-center gap-1 text-xl font-bold text-stone-900 dark:text-white">
-                  {getTotalPrice(cart()).toFixed(2)}
-                  <Euro size={20} />
-                </span>
-              </div>
-
-              <button class="block w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold transition-colors text-center">
-                {props.translations.checkout}
-              </button>
-
-              <p class="text-xs text-center text-stone-500 dark:text-stone-400 mt-2">
-                {props.translations.routeFunding}
-              </p>
-            </div>
+            <CartFooter
+              translations={{
+                total: props.translations.total,
+                checkout: props.translations.checkout,
+                routeFunding: props.translations.routeFunding,
+              }}
+            />
           </Show>
         </div>
       </div>
