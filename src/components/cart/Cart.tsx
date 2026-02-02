@@ -15,10 +15,14 @@ export const Cart = (props: {
 }) => {
   createEffect(() => {
     props.initialCart && updateCart(props.initialCart)
+  })
+
+  createEffect(() => {
     isCartOpen()
       ? document.body.classList.add('overflow-hidden')
       : document.body.classList.remove('overflow-hidden')
   })
+
   return (
     <Show when={isCartOpen()}>
       <div
