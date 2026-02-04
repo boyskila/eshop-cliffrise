@@ -34,6 +34,7 @@ const { footer } = getTranslations(Astro.params)
       {...causeTitle.attributes}
     />
     <button
+      data-open-contact-form-modal
       class="bg-black text-white px-4 py-2 lg:px-6 md:py-3 text-base md:text-lg lg:text-2xl"
       >{footer.contactUs}</button
     >
@@ -44,6 +45,7 @@ const { footer } = getTranslations(Astro.params)
       'w-full absolute h-4/6 bottom-0': true,
       'landscape:h-full': true,
       'flex items-end justify-end': true,
+      '-z-1': true,
     }}
   >
     <div
@@ -66,3 +68,25 @@ const { footer } = getTranslations(Astro.params)
     </div>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const button = document.querySelector('[data-open-contact-form-modal]')
+    const dialog =
+      document.querySelector<HTMLDialogElement>('#contactFormModal')
+
+    if (button && dialog) {
+      button.addEventListener('click', () => {
+        dialog.showModal()
+        document.body.classList.add('overflow-hidden')
+      })
+
+      const handleClose = () => {
+        document.body.classList.remove('overflow-hidden')
+      }
+
+      dialog.addEventListener('close', handleClose)
+      dialog.addEventListener('cancel', handleClose)
+    }
+  })
+</script>

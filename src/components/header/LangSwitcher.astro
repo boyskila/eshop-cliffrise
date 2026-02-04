@@ -4,7 +4,7 @@ const lang = langFromParams === 'en' ? 'bg' : 'en'
 ---
 
 <a
-  href={`/${lang}`}
+  href={`/${lang}/`}
   data-lang-switcher
   data-next-lang={lang}
   data-lang={langFromParams}
@@ -17,7 +17,7 @@ const lang = langFromParams === 'en' ? 'bg' : 'en'
   let nextHref = ''
   document.addEventListener('astro:page-load', () => {
     const langSwitcher = document.querySelector<HTMLLinkElement>(
-      '[data-lang-switcher]'
+      '[data-lang-switcher]',
     )
     const { hash } = window.location
     if (langSwitcher && hash) {
@@ -27,7 +27,7 @@ const lang = langFromParams === 'en' ? 'bg' : 'en'
   })
   document.addEventListener('click', (e) => {
     const langSwitcher = (e.target as HTMLLinkElement).closest<HTMLLinkElement>(
-      '[data-lang-switcher]'
+      '[data-lang-switcher]',
     )
     if (langSwitcher) {
       const { hash } = window.location
