@@ -1,4 +1,5 @@
 {
+    "addToCart": "Добави",
     "header": {
         "title": "CliffRise",
         "subtitle": "Финансиране на маршрути",
@@ -79,38 +80,12 @@
             ]
         }
     },
-    "products": {
-        "title": "Премиум основни продукти за катерене",
-        "description": "Всеки продаден продукт допринася директно за разработването на нови маршрути за катерене. Избери качествена екипировка, която дава обратно на общността на катерачите.",
-        "allProducts": "Всички продукти",
-        "chalk": "Магнезий",
-        "apparel": "Облекло",
-        "features": "Характеристики",
-        "addToCart": "Добави"
-    },
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "footer": {
         "supportClimbing": "Искаш да подкрепиш",
         "contactUs": "Свържи се с нас",
         "copyright": "2024 CliffRise © Всички права запазени"
-    },
-    "impact": {
-        "title": "Реално въздействие, реални маршрути",
-        "description": "Вижте как общността на CliffRise променя и развива катерачните райони. Всяка ваша покупка води до реални резултати и оставя видима, дълготрайна следа",
-        "routesFunded": "Финансирани маршрути",
-        "routesFundedDesc": "Нови маршрути за катерене, разработени чрез покупките на общността",
-        "contributed": "Допринесено",
-        "contributedDesc": "Общи средства, насочени към проекти за разработване на маршрути",
-        "locations": "Локации",
-        "locationsDesc": "Различни райони за катерене, подкрепени по света",
-        "climbersImpacted": "Засегнати катерачи",
-        "climbersImpactedDesc": "Членове на общността, които са имали достъп до нови маршрути",
-        "latestProject": "Последен проект: Тетевен, Заслонафф ",
-        "projectDescription": "Последното ни финансиране помогна за изграждането на 20 нови маршрута в района на Тетевен, Залсона. Тези линии са в диапазона 5c–8a, насочени основно към катерачи от средно ниво, и вече се превърнаха в едни от най-популярните маршрути в района.",
-        "completed": "Завършено",
-        "funded": "Финансирано",
-        "routes": "Маршрути"
     },
     "notification": {
         "addedToCart": "Добавено",
@@ -130,5 +105,14 @@
         "normalTextOne": " беше уикенд, пълен с катерене, усмивки и време навън. Скали през деня, йога и срещи с готини хора, споделени истории и идеи – всичко това на фона на красивия Тетевен. Събитие, което показа ",
         "boldedTextTwo": "колко силна и жива е катерачната общност",
         "normalTextTwo": " и остави желание това да е само началото."
+    },
+    "contactForm": {
+        "support": "Подкрепи",
+        "description1": "Екипираме катерачни маршрути и облагородяваме зони за катерене.",
+        "description2": "Ако искате да се включите, да подкрепите работата или просто имате въпрос, напишете ни и ще ви отговорим възможно най-скоро.",
+        "namePlaceholder": "Име",
+        "emailPlaceholder": "Имейл",
+        "messagePlaceholder": "Съобщение",
+        "submit": "Изпрати"
     }
 }

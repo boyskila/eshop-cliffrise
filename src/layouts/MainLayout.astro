@@ -8,6 +8,8 @@ import { CartNotifications } from '../components/CartNotifications'
 import '../styles/global.css'
 import { Cart } from '../components/cart/Cart'
 import Divider from '../components/ui/Divider.astro'
+import ContactFormModal from '../components/ContactFormModal.astro'
+
 const { notification, cart } = getTranslations(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
 ---
@@ -39,11 +41,13 @@ const cartFromSession = await Astro.session?.get('cart')
     </main>
     <Divider />
     <Footer />
+    <ContactFormModal />
   </body>
 </html>
 
 <script>
   document.addEventListener('astro:page-load', () => {
+    // document.querySelector<HTMLDialogElement>('#contactFormModal')?.showModal()
     if (window.location.hash) {
       document.querySelector(window.location.hash)?.scrollIntoView()
     }

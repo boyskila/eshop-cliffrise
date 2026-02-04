@@ -1,4 +1,5 @@
 {
+    "addToCart": "Add to Cart",
     "header": {
         "title": "CliffRise",
         "subtitle": "Funding Routes",
@@ -77,38 +78,12 @@
             ]
         }
     },
-    "products": {
-        "title": "Premium Climbing Essentials",
-        "description": "Every product sold contributes directly to new climbing route development. Choose quality gear that gives back to the climbing community.",
-        "allProducts": "All Products",
-        "chalk": "Chalk",
-        "apparel": "Apparel",
-        "features": "Features",
-        "addToCart": "Add to Cart"
-    },
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "footer": {
         "supportClimbing": "Want to support",
         "contactUs": "Contact us",
         "copyright": "2024 CliffRise © All rights reserved"
-    },
-    "impact": {
-        "title": "Real Impact, Real Routes",
-        "description": "See how the CliffRise community is making a difference in climbing areas. Every purchase leads to tangible results and leaves a lasting impact on the climbing community.",
-        "routesFunded": "Routes Funded",
-        "routesFundedDesc": "New climbing routes developed through community purchases",
-        "contributed": "Contributed",
-        "contributedDesc": "Total funds directed to route development projects",
-        "locations": "Locations",
-        "locationsDesc": "Different climbing areas supported worldwide",
-        "climbersImpacted": "Climbers Impacted",
-        "climbersImpactedDesc": "Community members who have accessed new routes",
-        "latestProject": "Latest Project: Teteven, Zaslona",
-        "projectDescription": "Our most recent funding helped establish 20 new routes at Teteven, Zaslona. These routes provide intermediate climbers with routes in the range 5c-8a and have become some of the most popular climbs in the area.",
-        "completed": "Completed",
-        "funded": "Funded",
-        "routes": "Routes"
     },
     "notification": {
         "addedToCart": "Added",
@@ -128,5 +103,14 @@
         "normalTextOne": " it was a weekend full of climbing, smiles, and time outdoors. Climbing during the day, yoga, and meeting cool people, sharing stories and ideas - all against the backdrop of beautiful Teteven. An event that showcased ",
         "boldedTextTwo": "how strong and vibrant the climbing community is",
         "normalTextTwo": " and left a desire for this to be just the beginning."
+    },
+    "contactForm": {
+        "support": "Support",
+        "description1": "We develop climbing routes and maintain climbing areas.",
+        "description2": "If you’d like to get involved, support the work, or simply ask a question, write to us and we’ll get back to you.",
+        "namePlaceholder": "Name",
+        "emailPlaceholder": "Email",
+        "messagePlaceholder": "Message",
+        "submit": "Send"
     }
 }
