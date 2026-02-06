@@ -1,0 +1,55 @@
+---
+import { getTranslations } from '@utils/i18'
+
+const translations = getTranslations(Astro.params)
+---
+
+<form method="POST" contact-form class="flex flex-col gap-7 flex-1 hiden">
+  <input
+    type="text"
+    name="company"
+    tabindex="-1"
+    autocomplete="off"
+    style="position: absolute; left: -9999px;"
+    aria-hidden="true"
+  />
+  <input
+    placeholder={translations.contactForm.namePlaceholder}
+    type="text"
+    id="name"
+    name="name"
+    required
+    minlength="2"
+    class="w-full p-2 border-b border-black mb-4 bg-[#f7f7f7] h-15"
+  />
+  <input
+    placeholder={translations.contactForm.emailPlaceholder}
+    type="email"
+    id="email"
+    name="email"
+    required
+    class="w-full p-2 border-b border-black mb-4 bg-[#f7f7f7] h-15"
+  />
+  <textarea
+    placeholder={translations.contactForm.messagePlaceholder}
+    id="message"
+    name="message"
+    rows="4"
+    required
+    minlength="10"
+    class="w-full p-2 border-b border-black mb-4 bg-[#f7f7f7] flex-1"
+  ></textarea>
+  <div class="hidde text-center" role="alert" data-form-error-msg>
+    {translations.contactForm.message.error}
+  </div>
+  <button
+    type="submit"
+    data-submit-contact-form
+    class="m-auto bg-black text-white text-xl px-11 py-2 uppercase"
+  >
+    <span class="hidden" data-submitting-text>
+      {translations.contactForm.submited}</span
+    >
+    <span data-default-text>{translations.contactForm.submit}</span>
+  </button>
+</form>
