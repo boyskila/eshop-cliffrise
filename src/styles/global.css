@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "./fonts.css";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @keyframes slide-in-right {
   from {
     transform: translateX(100%);
