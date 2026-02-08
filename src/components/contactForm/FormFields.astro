@@ -1,0 +1,58 @@
+---
+import { getTranslations } from '@utils/i18'
+import ErrorMsg from './ErrorMsg.astro'
+
+const { contactForm } = getTranslations(Astro.params)
+const className = 'w-full p-2 border-b border-black mb-4 bg-[#f7f7f7] h-15'
+---
+
+<form
+  method="POST"
+  contact-form
+  class="flex flex-col gap-7 flex-1 group-data-[success]:hidden"
+>
+  <input
+    type="text"
+    name="company"
+    tabindex="-1"
+    autocomplete="off"
+    style="position: absolute; left: -9999px;"
+    aria-hidden="true"
+  />
+  <input
+    placeholder={contactForm.namePlaceholder}
+    type="text"
+    id="name"
+    name="name"
+    required
+    minlength="2"
+    class={className}
+  />
+  <input
+    placeholder={contactForm.emailPlaceholder}
+    type="email"
+    id="email"
+    name="email"
+    required
+    class={className}
+  />
+  <textarea
+    placeholder={contactForm.messagePlaceholder}
+    id="message"
+    name="message"
+    rows="4"
+    required
+    minlength="10"
+    class={`${className} flex-1`}></textarea>
+  <ErrorMsg />
+  <button
+    type="submit"
+    data-submit-contact-form
+    class="m-auto bg-black text-white text-xl px-11 py-2 uppercase"
+  >
+    <span class="hidden group-data-[submitting]:block"
+      >{contactForm.submited}</span
+    >
+    <span class="group-data-[submitting]:hidden">{contactForm.submit}</span>
+  </button>
+</form>

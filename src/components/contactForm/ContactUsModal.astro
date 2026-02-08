@@ -1,0 +1,61 @@
+---
+import Modal from '../ui/Modal.astro'
+import ContactFormFields from './FormFields.astro'
+import ContactFormHeader from './Header.astro'
+import SuccessMsg from './SuccessMsg.astro'
+---
+
+<Modal id="contactFormModal">
+  <ContactFormHeader />
+  <ContactFormFields />
+  <SuccessMsg />
+</Modal>
+
+<script>
+  import { actions } from 'astro:actions'
+
+  document.addEventListener('astro:page-load', () => {
+    const dialog =
+      document.querySelector<HTMLDialogElement>('#contactFormModal')
+    const form = dialog?.querySelector<HTMLFormElement>('form[contact-form]')
+    const submitButton = form?.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    )
+
+    if (form && submitButton && dialog) {
+      const handleError = (message = 'An unexpected error occurred') => {
+        console.error('Error submitting contact form:', message)
+        dialog.dataset.error = 'true'
+        submitButton.disabled = false
+        delete dialog.dataset.submitting
+      }
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        delete dialog.dataset.error
+        submitButton.disabled = true
+        dialog.dataset.submitting = 'true'
+
+        const formData = new FormData(form)
+
+        try {
+          const { error } = await actions.contact(formData)
+
+          if (error) {
+            return handleError(error.message)
+          }
+
+          dialog.dataset.success = 'true'
+          setTimeout(() => {
+            form.reset()
+            submitButton.disabled = false
+            delete dialog.dataset.success
+            delete dialog.dataset.submitting
+            dialog?.close()
+          }, 4000)
+        } catch (error) {
+          handleError((error as Error)?.message)
+        }
+      })
+    }
+  })
+</script>
