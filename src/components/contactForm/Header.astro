@@ -1,0 +1,32 @@
+---
+import { getLang, getTranslations } from '@utils/i18'
+import { getImage } from 'astro:assets'
+import CauseTitleEn from '../../assets/titles/en/cause-title.svg'
+import CauseTitleBg from '../../assets/titles/bg/cause-title.svg'
+
+const lang = getLang(Astro.params)
+
+const causeTitle = await getImage({
+  src: lang === 'bg' ? CauseTitleBg : CauseTitleEn,
+  widths: [200, 400],
+  formats: ['avif', 'webp', 'png'],
+  quality: 80,
+  alt: 'Cause Title',
+})
+const translations = getTranslations(Astro.params)
+---
+
+<h2 class="flex items-center justify-center text-3xl font-bold mb-10">
+  <span> {translations.contactForm.support} </span>
+  <img
+    class="h-[40px] lg:h-[50px] w-fit ml-2 lg:ml-4"
+    src={causeTitle.src}
+    {...causeTitle.attributes}
+  />
+</h2>
+<p class="text-center mb-7">
+  <b class="text-xl">{translations.contactForm.description1}</b>
+  <span class="text-lg lg:text-xl block">
+    {translations.contactForm.description2}
+  </span>
+</p>

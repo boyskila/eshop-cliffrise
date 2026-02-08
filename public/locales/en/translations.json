@@ -110,6 +110,14 @@
         "namePlaceholder": "Name",
         "emailPlaceholder": "Email",
         "messagePlaceholder": "Message",
-        "submit": "Send"
+        "submit": "Send",
+        "submited": "Sending...",
+        "message": {
+            "error": "Something went wrong, Please try again.",
+            "success": {
+                "part1": "Thanks for reaching out!",
+                "part2": "We'll get back to you shortly."
+            }
+        }
     }
 }

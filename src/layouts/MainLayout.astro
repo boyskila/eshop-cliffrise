@@ -8,7 +8,7 @@ import { CartNotifications } from '../components/CartNotifications'
 import '../styles/global.css'
 import { Cart } from '../components/cart/Cart'
 import Divider from '../components/ui/Divider.astro'
-import ContactFormModal from '../components/ContactFormModal.astro'
+import ContactUsModal from '../components/contactForm/ContactUsModal.astro'
 
 const { notification, cart } = getTranslations(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
@@ -21,10 +21,6 @@ const cartFromSession = await Astro.session?.get('cart')
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <title>Cliffrise eshop | {Astro.props.title}</title>
-    <script>
-      document.documentElement.className =
-        localStorage.getItem('cliffrise-theme') ?? 'light'
-    </script>
     <ClientRouter />
   </head>
   <body>
@@ -41,13 +37,12 @@ const cartFromSession = await Astro.session?.get('cart')
     </main>
     <Divider />
     <Footer />
-    <ContactFormModal />
+    <ContactUsModal />
   </body>
 </html>
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    // document.querySelector<HTMLDialogElement>('#contactFormModal')?.showModal()
     if (window.location.hash) {
       document.querySelector(window.location.hash)?.scrollIntoView()
     }

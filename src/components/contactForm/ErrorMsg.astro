@@ -1,0 +1,14 @@
+---
+import { getTranslations } from '@utils/i18'
+
+const translations = getTranslations(Astro.params)
+const { contactForm } = translations
+---
+
+<div
+  class="hidden group-data-[error]:block text-center"
+  role="alert"
+  data-form-error-msg
+>
+  {contactForm.message.error}
+</div>

@@ -1,0 +1,15 @@
+---
+import { getTranslations } from '@utils/i18'
+
+const translations = getTranslations(Astro.params)
+const { contactForm } = translations
+---
+
+<div
+  class="hidden group-data-[success]:block text-xl text-center py-10 px-5 border-t border-b border-black mt-20"
+  role="alert"
+  data-form-success-msg
+>
+  <b>{contactForm.message.success.part1}</b>
+  {contactForm.message.success.part2}
+</div>
