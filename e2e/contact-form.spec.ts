@@ -14,7 +14,7 @@ test.describe('Contact Form Modal', () => {
     await page.goto('/')
   })
   test.afterEach(async ({ request }) => {
-    await request.delete('/api/test/delete-emails/')
+    await request.get('/api/test/delete-emails/')
   })
 
   test('closing the modal upon close button click', async ({ page }) => {
