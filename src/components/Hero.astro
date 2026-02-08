@@ -1,9 +1,8 @@
 ---
-import { Image, getImage } from 'astro:assets'
+import { getImage } from 'astro:assets'
 import { getLang, getTranslations } from '@utils/i18'
 import ProductsTitleEn from '../assets/titles/en/products-title.svg'
 import ProductsTitleBg from '../assets/titles/bg/products-title.svg'
-import Logo from '../../public/assets/logo.svg'
 
 const productsTitleImg = await getImage({
   src: getLang(Astro.params) === 'bg' ? ProductsTitleBg : ProductsTitleEn,
@@ -16,16 +15,17 @@ const { heroTitle } = getTranslations(Astro.params)
 ---
 
 <section
-  class="w-full bg-[url(/assets/mobile/hero.svg)] sm:bg-[url(/assets/hero.svg)] bg-no-repeat bg-cover pt-5 pb-20 sm:pb-30 landscape:pb-20 landscape:lg:pb-35 mt-[-1px]"
+  class="w-full bg-no-repeat bg-cover pt-5 pb-20 sm:pb-30 landscape:pb-20 landscape:lg:pb-35 mt-[-1px]"
+  style={`background-image: url(${import.meta.env.BASE_URL}assets/mobile/hero.svg); @media (min-width: 640px) { background-image: url(${import.meta.env.BASE_URL}assets/hero.svg); }`}
 >
   <div class="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
     <div
       class="flex flex-col lg:flex-row landscape:flex-row justify-evenly items-center gap-5 mt-10"
     >
-      <Image
+      <img
         class="max-w-[120px] lg:max-w-[250px] h-auto"
         alt="CliffRise Logo"
-        src={Logo}
+        src={`${import.meta.env.BASE_URL}assets/logo.svg`}
       />
 
       <div
@@ -47,6 +47,6 @@ const { heroTitle } = getTranslations(Astro.params)
   <img
     class="hidden lg:block absolute bottom-[-190px] right-12 xl:right-40 max-h-[800px]"
     alt="Climber"
-    src="/assets/climber 1.svg"
+    src={`${import.meta.env.BASE_URL}assets/climber 1.svg`}
   />
 </section>

@@ -41,12 +41,13 @@ const { footer } = getTranslations(Astro.params)
   </div>
   <div
     class:list={{
-      'bg-[url(/assets/mobile/footer.svg)] sm:bg-[url(/assets/footer.svg)] bg-no-repeat bg-cover': true,
+      'bg-no-repeat bg-cover': true,
       'w-full absolute h-4/6 bottom-0': true,
       'landscape:h-full': true,
       'flex items-end justify-end': true,
       '-z-1': true,
     }}
+    style={`background-image: url(${import.meta.env.BASE_URL}assets/mobile/footer.svg); @media (min-width: 640px) { background-image: url(${import.meta.env.BASE_URL}assets/footer.svg); }`}
   >
     <div
       class="flex flex-col landscape:flex-row justify-between w-full p-5 items-end gap-3"
@@ -59,10 +60,18 @@ const { footer } = getTranslations(Astro.params)
           href="https://www.facebook.com/profile.php?id=61574708947472"
           target="_blank"
         >
-          <img class="size-[25px]" alt="Climber" src="/assets/facebook.svg" />
+          <img
+            class="size-[25px]"
+            alt="Climber"
+            src={`${import.meta.env.BASE_URL}assets/facebook.svg`}
+          />
         </a>
         <a href="https://www.instagram.com/_cliffrise/" target="_blank">
-          <img class="size-[25px]" alt="Climber" src="/assets/insta.svg" />
+          <img
+            class="size-[25px]"
+            alt="Climber"
+            src={`${import.meta.env.BASE_URL}assets/insta.svg`}
+          />
         </a>
       </div>
     </div>
