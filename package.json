@@ -3,7 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --mode test",
+    "build:test": "astro build --mode test",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -18,6 +19,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-solid": "^8.6.0",
     "lucide-solid": "^0.562.0",
+    "resend": "^6.9.1",
     "solid-js": "^1.9.10",
     "tailwindcss": "^4.1.18"
   },
