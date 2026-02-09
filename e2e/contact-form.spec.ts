@@ -10,11 +10,11 @@ const openContactFormModal = async (page: Page) => {
 }
 
 test.describe('Contact Form Modal', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+  test.beforeEach(async ({ page, baseURL }) => {
+    await page.goto(baseURL ?? '/')
   })
-  test.afterEach(async ({ request }) => {
-    await request.get('/api/test/delete-emails/')
+  test.afterEach(async ({ request, baseURL }) => {
+    await request.get(`${baseURL}/api/test/delete-emails/`)
   })
 
   test('closing the modal upon close button click', async ({ page }) => {
@@ -45,6 +45,7 @@ test.describe('Contact Form Modal', () => {
   test('send email when form is submitted with valid data', async ({
     page,
     request,
+    baseURL,
   }) => {
     const dialog = await openContactFormModal(page)
 
@@ -63,7 +64,7 @@ test.describe('Contact Form Modal', () => {
     await submitButton.click()
     await responsePromise
 
-    const response = await request.get('/api/test/sent-emails/')
+    const response = await request.get(`${baseURL}/api/test/sent-emails/`)
     const data = await response.json()
 
     expect(data.emails).toHaveLength(1)
