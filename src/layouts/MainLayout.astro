@@ -19,11 +19,7 @@ const cartFromSession = await Astro.session?.get('cart')
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href={`${import.meta.env.BASE_URL}favicon.ico`}
-    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <title>Cliffrise eshop | {Astro.props.title}</title>
     <ClientRouter />
   </head>

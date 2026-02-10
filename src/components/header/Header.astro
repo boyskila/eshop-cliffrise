@@ -17,12 +17,8 @@ const cart = await Astro.session?.get('cart')
 >
   <nav role="navigation" aria-label="Main navigation">
     <div class="flex items-center justify-between">
-      <a class="flex items-center" href={`${import.meta.env.BASE_URL}${lang}/`}>
-        <img
-          class="size-8 lg:size-12"
-          alt="Logo"
-          src={`${import.meta.env.BASE_URL}assets/logo.svg`}
-        />
+      <a class="flex items-center" href={`/${lang}/`}>
+        <img class="size-8 lg:size-12" alt="Logo" src="/assets/logo.svg" />
       </a>
       <div class="hidden md:flex gap-8 xl:gap-[46px]">
         <a
@@ -59,18 +55,10 @@ const cart = await Astro.session?.get('cart')
           href="https://www.facebook.com/profile.php?id=61574708947472"
           target="_blank"
         >
-          <img
-            class="size-5"
-            alt="Facebook"
-            src={`${import.meta.env.BASE_URL}assets/facebook.svg`}
-          />
+          <img class="size-5" alt="Facebook" src="/assets/facebook.svg" />
         </a>
         <a href="https://www.instagram.com/_cliffrise/" target="_blank">
-          <img
-            class="size-5"
-            alt="Instagram"
-            src={`${import.meta.env.BASE_URL}assets/insta.svg`}
-          />
+          <img class="size-5" alt="Instagram" src="/assets/insta.svg" />
         </a>
         <div class="block">
           <CartButton

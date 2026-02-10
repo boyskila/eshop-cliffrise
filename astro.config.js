@@ -20,6 +20,4 @@ export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   integrations: [solidJs()],
-  site: 'https://boyskila.github.io',
-  base: '/eshop-cliffrise',
 })
