@@ -5,7 +5,7 @@ test('not throwig error when no hash is not present', async ({ page }) => {
   page.on('pageerror', ({ message }) => {
     errors.push(message)
   })
-  await page.goto('/')
+  await page.goto('http://localhost:4321/')
 
   expect(
     errors.includes(
@@ -17,7 +17,7 @@ test('not throwig error when no hash is not present', async ({ page }) => {
 test.skip('scrolls to element when lang is changed and hash is present on page reload', async ({
   page,
 }) => {
-  await page.goto('/en/#products')
+  await page.goto('http://localhost:4321/en/#products')
   const langSwithcher = page.locator('[data-lang-switcher]')
   await langSwithcher.click()
   await page.reload()

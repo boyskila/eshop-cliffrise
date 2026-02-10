@@ -13,8 +13,8 @@ test.describe('Contact Form Modal - BG', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/bg/')
   })
-  test.afterEach(async ({ request, baseURL }) => {
-    await request.get(`${baseURL}/api/test/delete-emails/`)
+  test.afterEach(async ({ request }) => {
+    await request.get('/api/test/delete-emails/')
   })
 
   test('success message and form fields', async ({ page }) => {
