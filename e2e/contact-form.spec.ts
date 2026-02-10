@@ -151,21 +151,15 @@ test.describe('Contact Form Modal', () => {
     await dialog.getByPlaceholder('Email').fill('john@example.com')
     await dialog.getByPlaceholder('Message').fill('This is a test message')
 
-    const submitButton = dialog.locator('button[type="submit"]', {
-      hasText: 'Send',
+    const submitButton = dialog.getByRole('button', {
+      name: 'Send',
     })
-    const sendText = submitButton
-      .locator('span', { hasText: 'Send' })
-      .filter({ hasNotText: 'Sending' })
-    const sendingText = submitButton.locator('span', { hasText: 'Sending...' })
 
-    await expect(sendText).toBeVisible()
-    await expect(sendingText).toBeHidden()
-
-    await submitButton.click()
-
-    await expect(sendingText).toBeVisible()
-    await expect(sendText).toBeHidden()
+    await expect(submitButton.getByText('Send', { exact: true })).toBeVisible()
+    await expect(submitButton.getByText('Sending...')).toBeHidden()
+    await submitButton.click({ delay: 500 })
+    await expect(submitButton.getByText('Sending...')).toBeVisible()
+    await expect(submitButton.getByText('Send', { exact: true })).toBeHidden()
   })
 
   test('header text and description', async ({ page }) => {
