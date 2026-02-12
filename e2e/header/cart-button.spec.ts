@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:4321')
+    await page.goto('/')
   })
   test('cart button is visible and has expected accessibility attributes', async ({
     page,
@@ -52,7 +52,7 @@ test.describe('Accessibility', () => {
 
 test.describe('Functionallity', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:4321')
+    await page.goto('/')
   })
   test('cart button updates cart count when items are added to cart', async ({
     page,
