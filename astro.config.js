@@ -20,4 +20,7 @@ export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   integrations: [solidJs()],
+  server: {
+    port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
+  },
 })
