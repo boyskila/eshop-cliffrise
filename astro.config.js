@@ -20,4 +20,7 @@ export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   integrations: [solidJs()],
+  server: {
+    host: true,
+  },
 })
