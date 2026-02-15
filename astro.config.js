@@ -22,5 +22,6 @@ export default defineConfig({
   integrations: [solidJs()],
   server: {
     host: true,
+    allowedHosts: ['79d8-212-70-138-204.ngrok-free.app', 'localhost'],
   },
 })
