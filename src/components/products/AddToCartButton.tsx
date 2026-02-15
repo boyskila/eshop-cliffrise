@@ -3,7 +3,6 @@ import { addCartNotification, updateCart } from '@signals/cart'
 
 export default function AddToCartButton(props: {
   productName: string
-  buttonText: string
   productId: string
   lang: string
 }) {

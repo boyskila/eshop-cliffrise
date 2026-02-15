@@ -8,7 +8,7 @@ type Props = {
 export const CartHeader = ({ title }: Props) => {
   return (
     <div class="flex justify-between items-center">
-      <h2 class="text-xl lg:text-2xl font-bold text-stone-900 dark:text-white flex items-center">
+      <h2 class="text-xl lg:text-2xl font-bold text-stone-900 flex items-center">
         {title}
       </h2>
       <button
