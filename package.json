@@ -19,7 +19,7 @@
     "astro": "^5.17.1",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-solid": "^8.6.0",
-    "lucide-solid": "^0.562.0",
+    "lucide-solid": "0.562.0",
     "resend": "^6.9.1",
     "solid-js": "^1.9.10",
     "tailwindcss": "^4.1.18"
