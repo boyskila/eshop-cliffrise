@@ -8,7 +8,7 @@ type Props = {
 export const MobileMenu = (props: Props) => {
   return (
     <div
-      class="bg-black/95 w-full lg:hidden py-4 border-t border-stone-200 dark:border-stone-700 bg-gray-900 absolute top-full left-0 z-20"
+      class="bg-black/95 w-full lg:hidden py-4 border-t border-stone-200 bg-gray-900 absolute top-full left-0 z-20"
       role="navigation"
       aria-label="Mobile navigation"
       classList={{ hidden: !isMobileMenuOpen() }}
