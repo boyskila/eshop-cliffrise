@@ -1,5 +1,5 @@
 import { actions } from 'astro:actions'
-import { Minus } from 'lucide-solid'
+import Minus from 'lucide-solid/icons/minus'
 import { updateCart } from '@signals/cart'
 import type { CartItem } from '@actions'
 
