@@ -21,7 +21,6 @@ export default defineConfig({
   adapter: node({ mode: 'standalone' }),
   integrations: [solidJs()],
   server: {
-    host: true,
-    allowedHosts: ['79d8-212-70-138-204.ngrok-free.app', 'localhost'],
+    host: process.env.NODE_ENV !== 'test',
   },
 })
