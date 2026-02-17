@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "start": "node ./dist/server/entry.mjs",
+    "start:landing": "npx serve landing -p 8080",
     "astro": "astro",
     "test": "cross-env NODE_ENV=test playwright test"
   },
