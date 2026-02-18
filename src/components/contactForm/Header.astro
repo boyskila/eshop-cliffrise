@@ -16,7 +16,7 @@ const causeTitle = await getImage({
 const translations = getTranslations(Astro.params)
 ---
 
-<h2 class="flex items-center justify-center text-3xl font-bold mb-10">
+<h2 class="flex items-center justify-center text-3xl font-bold mb-7">
   <span> {translations.contactForm.support} </span>
   <img
     class="h-[40px] lg:h-[50px] w-fit ml-2 lg:ml-4"
@@ -24,7 +24,7 @@ const translations = getTranslations(Astro.params)
     {...causeTitle.attributes}
   />
 </h2>
-<p class="text-center mb-7">
+<p class="text-center mb-5">
   <b class="text-xl">{translations.contactForm.description1}</b>
   <span class="text-lg lg:text-xl block">
     {translations.contactForm.description2}

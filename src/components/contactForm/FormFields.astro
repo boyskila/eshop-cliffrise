@@ -3,13 +3,13 @@ import { getTranslations } from '@utils/i18'
 import ErrorMsg from './ErrorMsg.astro'
 
 const { contactForm } = getTranslations(Astro.params)
-const className = 'w-full p-2 border-b border-black mb-4 bg-[#f7f7f7] h-15'
+const className = 'w-full p-2 border-b border-black bg-[#f7f7f7] h-13'
 ---
 
 <form
   method="POST"
   contact-form
-  class="flex flex-col gap-7 flex-1 group-data-[success]:hidden"
+  class="flex flex-col gap-5 lg:gap-7 flex-1 group-data-[success]:hidden"
 >
   <input
     type="text"
