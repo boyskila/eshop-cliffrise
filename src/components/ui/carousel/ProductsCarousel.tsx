@@ -49,7 +49,6 @@ export default (props: {
                     </div>
                   </div>
                   <AddToCartButton
-                    buttonText={props.buttonText}
                     productName={name}
                     productId={id}
                     lang={props.lang}
