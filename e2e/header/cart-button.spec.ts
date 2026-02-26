@@ -1,4 +1,11 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
+
+const waitForActionResponse = (page: Page, actionName: string) =>
+  page.waitForResponse(
+    (response) =>
+      response.request().method() === 'POST' &&
+      response.url().includes(`_actions/${actionName}`),
+  )
 
 test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => {
@@ -65,20 +72,31 @@ test.describe('Functionallity', () => {
       .filter({ hasText: /^[1-9]\d*$/ })
     await expect(badge).toHaveCount(0)
 
-    await addButtons.nth(0).click()
+    await Promise.all([
+      waitForActionResponse(page, 'addToCart'),
+      addButtons.nth(0).click(),
+    ])
     const cartAfterFirstAdd = page.getByLabel('Shopping cart with 1 item')
-    expect(cartAfterFirstAdd).toBeDefined()
-    expect(cartAfterFirstAdd.locator('span', { hasText: '1' })).toBeDefined()
+    await expect(cartAfterFirstAdd).toBeVisible()
+    await expect(cartAfterFirstAdd.locator('span', { hasText: '1' })).toBeVisible()
 
-    await addButtons.nth(1).click()
+    await Promise.all([
+      waitForActionResponse(page, 'addToCart'),
+      addButtons.nth(1).click(),
+    ])
     const cartAfterSecondAdd = page.getByLabel('Shopping cart with 2 items')
-    expect(cartAfterSecondAdd).toBeDefined()
-    expect(cartAfterSecondAdd.locator('span', { hasText: '2' })).toBeDefined()
+    await expect(cartAfterSecondAdd).toBeVisible()
+    await expect(
+      cartAfterSecondAdd.locator('span', { hasText: '2' }),
+    ).toBeVisible()
 
-    await addButtons.nth(2).click()
+    await Promise.all([
+      waitForActionResponse(page, 'addToCart'),
+      addButtons.nth(2).click(),
+    ])
     const cartAfterThirdAdd = page.getByLabel('Shopping cart with 3 items')
-    expect(cartAfterThirdAdd).toBeDefined()
-    expect(cartAfterThirdAdd.locator('span', { hasText: '3' })).toBeDefined()
+    await expect(cartAfterThirdAdd).toBeVisible()
+    await expect(cartAfterThirdAdd.locator('span', { hasText: '3' })).toBeVisible()
   })
 
   test('cart button updates cart count when items are removed from the cart', async ({
@@ -87,9 +105,18 @@ test.describe('Functionallity', () => {
     const header = page.locator('header')
     const addButtons = page.getByRole('button', { name: /Add .* to cart/ })
 
-    await addButtons.nth(0).click()
-    await addButtons.nth(1).click()
-    await addButtons.nth(2).click()
+    await Promise.all([
+      waitForActionResponse(page, 'addToCart'),
+      addButtons.nth(0).click(),
+    ])
+    await Promise.all([
+      waitForActionResponse(page, 'addToCart'),
+      addButtons.nth(1).click(),
+    ])
+    await Promise.all([
+      waitForActionResponse(page, 'addToCart'),
+      addButtons.nth(2).click(),
+    ])
     const cartBtn = header.getByLabel(/3 items/i)
 
     await cartBtn.click()
@@ -98,13 +125,22 @@ test.describe('Functionallity', () => {
       .getByRole('dialog', { name: /shopping cart/i })
       .getByRole('button', { name: /remove/i })
 
-    await removeButtons.nth(2).click()
-    expect(header.getByLabel(/2 items/i)).toBeDefined()
+    await Promise.all([
+      waitForActionResponse(page, 'removeFromCart'),
+      removeButtons.nth(2).click(),
+    ])
+    await expect(header.getByLabel(/2 items/i)).toBeVisible()
 
-    await removeButtons.nth(1).click()
-    expect(header.getByLabel(/1 item/i)).toBeDefined()
+    await Promise.all([
+      waitForActionResponse(page, 'removeFromCart'),
+      removeButtons.nth(1).click(),
+    ])
+    await expect(header.getByLabel(/1 item/i)).toBeVisible()
 
-    await removeButtons.nth(0).click()
+    await Promise.all([
+      waitForActionResponse(page, 'removeFromCart'),
+      removeButtons.nth(0).click(),
+    ])
     const cartBtnAfterRemovals = header.getByLabel(/0 items/i)
 
     const badge = cartBtnAfterRemovals
@@ -119,7 +155,10 @@ test.describe('Functionallity', () => {
     const header = page.locator('header')
     const addButtons = page.getByRole('button', { name: /Add .* to cart/ })
 
-    await addButtons.nth(0).click()
+    await Promise.all([
+      waitForActionResponse(page, 'addToCart'),
+      addButtons.nth(0).click(),
+    ])
     await header.getByLabel(/1 item/).click()
     const shoppingCartDialog = page.getByRole('dialog', {
       name: /shopping cart/i,
@@ -131,14 +170,23 @@ test.describe('Functionallity', () => {
       name: /decrease/i,
     })
 
-    await increaseButton.click()
-    expect(header.getByLabel(/2 items/i)).toBeDefined()
+    await Promise.all([
+      waitForActionResponse(page, 'updateQuantity'),
+      increaseButton.click(),
+    ])
+    await expect(header.getByLabel(/2 items/i)).toBeVisible()
 
-    await decreaseButton.click()
-    expect(header.getByLabel(/1 item/i)).toBeDefined()
+    await Promise.all([
+      waitForActionResponse(page, 'updateQuantity'),
+      decreaseButton.click(),
+    ])
+    await expect(header.getByLabel(/1 item/i)).toBeVisible()
 
-    await decreaseButton.click()
-    expect(header.getByLabel(/0 items/i)).toBeDefined()
+    await Promise.all([
+      waitForActionResponse(page, 'updateQuantity'),
+      decreaseButton.click(),
+    ])
+    await expect(header.getByLabel(/0 items/i)).toBeVisible()
 
     const badge = header
       .getByLabel(/0 items/i)

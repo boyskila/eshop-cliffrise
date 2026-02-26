@@ -8,7 +8,8 @@ export default defineConfig({
   workers: 1,
   reporter: [['html', { open: 'never' }], ['list']],
   use: {
-    baseURL: `http://localhost:4321`,
+    // Keep host explicit and consistent with preview to avoid origin mismatches for actions.
+    baseURL: `http://127.0.0.1:4321`,
     trace: 'on-first-retry',
     actionTimeout: 15000,
   },
@@ -19,8 +20,11 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run preview',
-    url: `http://localhost:4321`,
-    reuseExistingServer: !process.env.CI,
+    // Build + preview with E2E flag so test-only runtime branches are deterministic.
+    command:
+      'cross-env E2E=true npm run build && cross-env E2E=true npm run preview -- --host 127.0.0.1 --port 4321',
+    url: `http://127.0.0.1:4321`,
+    // Prevent reusing stale servers built with different env/mode settings.
+    reuseExistingServer: false,
   },
 })

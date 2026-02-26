@@ -4,12 +4,11 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev --mode test",
-    "build:test": "astro build --mode test",
     "build": "astro build",
     "preview": "astro preview",
     "start": "node ./dist/server/entry.mjs",
     "astro": "astro",
-    "test": "cross-env NODE_ENV=test playwright test"
+    "test": "playwright test"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.2",

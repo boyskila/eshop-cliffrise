@@ -34,7 +34,13 @@ test.describe('Contact Form Modal', () => {
     await dialog.getByPlaceholder('Message').fill('This is a test message')
 
     const submitButton = dialog.getByRole('button', { name: 'Send' })
+    const submitResponse = page.waitForResponse(
+      (response) =>
+        response.url().includes('_actions/contact') &&
+        response.request().method() === 'POST',
+    )
     await submitButton.click()
+    await submitResponse
 
     const currentUrl = page.url()
     expect(currentUrl).not.toContain('name=')
@@ -55,7 +61,6 @@ test.describe('Contact Form Modal', () => {
       .fill('This is a test message for email verification')
 
     const submitButton = dialog.getByRole('button', { name: 'Send' })
-
     const responsePromise = page.waitForResponse((response) =>
       response.url().includes('_actions/contact'),
     )
@@ -63,10 +68,24 @@ test.describe('Contact Form Modal', () => {
     await submitButton.click()
     await responsePromise
 
+    // Wait for the contact action response before polling the fake mailbox.
+    await expect
+      .poll(
+        async () => {
+          // Mail capture can lag behind the action response in CI, so poll until it appears.
+          const response = await request.get('/api/test/sent-emails/')
+          const data = await response.json()
+          return data.emails
+        },
+        {
+          message: 'Expected one sent email after successful form submission',
+          timeout: 5000,
+        },
+      )
+      .toHaveLength(1)
+
     const response = await request.get('/api/test/sent-emails/')
     const data = await response.json()
-
-    expect(data.emails).toHaveLength(1)
 
     expect(data.emails[0]).toMatchObject({
       to: 'boiskila@gmail.com',
@@ -150,15 +169,35 @@ test.describe('Contact Form Modal', () => {
     await dialog.getByPlaceholder('Email').fill('john@example.com')
     await dialog.getByPlaceholder('Message').fill('This is a test message')
 
-    const submitButton = dialog.getByRole('button', {
-      name: 'Send',
-    })
+    const submitButton = dialog.locator(
+      'button[type="submit"][data-submit-contact-form]',
+    )
+    const sendText = submitButton.getByText('Send', { exact: true })
+    const sendingText = submitButton.getByText('Sending...')
 
-    await expect(submitButton.getByText('Send', { exact: true })).toBeVisible()
-    await expect(submitButton.getByText('Sending...')).toBeHidden()
-    await submitButton.click({ delay: 500 })
-    await expect(submitButton.getByText('Sending...')).toBeVisible()
-    await expect(submitButton.getByText('Send', { exact: true })).toBeHidden()
+    // Slow down only this action call so the "Sending..." UI state is observable.
+    await page.route(
+      '**/_actions/contact/**',
+      async (route) => {
+        const response = await route.fetch()
+        // await page.waitForTimeout(300)
+        await route.fulfill({ response })
+      },
+      { times: 1 },
+    )
+
+    const submitResponse = page.waitForResponse(
+      (response) =>
+        response.url().includes('_actions/contact') &&
+        response.request().method() === 'POST',
+    )
+
+    await expect(sendText).toBeVisible()
+    await expect(sendingText).toBeHidden()
+    await submitButton.click()
+    await expect(sendingText).toBeVisible()
+    await expect(sendText).toBeHidden()
+    await submitResponse
   })
 
   test('header text and description', async ({ page }) => {
