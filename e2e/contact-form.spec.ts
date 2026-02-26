@@ -1,4 +1,9 @@
-import { test, expect, type Page } from '@playwright/test'
+import {
+  test,
+  expect,
+  type APIRequestContext,
+  type Page,
+} from '@playwright/test'
 
 const openContactFormModal = async (page: Page) => {
   const dialog = page.locator('#contactFormModal')
@@ -7,6 +12,29 @@ const openContactFormModal = async (page: Page) => {
   })
   await openButton.click()
   return dialog
+}
+
+const submitContactAction = async (
+  request: APIRequestContext,
+  payload: {
+    name: string
+    email: string
+    message: string
+    company?: string
+  },
+) => {
+  return request.post('/_actions/contact/', {
+    headers: {
+      origin: 'http://127.0.0.1:4321',
+      accept: 'application/json',
+    },
+    multipart: {
+      name: payload.name,
+      email: payload.email,
+      message: payload.message,
+      company: payload.company ?? '',
+    },
+  })
 }
 
 test.describe('Contact Form Modal', () => {
@@ -209,5 +237,144 @@ test.describe('Contact Form Modal', () => {
     await expect(dialog).toContainText(
       'We develop climbing routes and maintain climbing areas. If you’d like to get involved, support the work, or simply ask a question, write to us and we’ll get back to you. ',
     )
+  })
+
+  test('sanitizes and escapes input before sending email', async ({
+    request,
+  }) => {
+    const actionResponse = await submitContactAction(request, {
+      name: '  <b>Test\tUser</b>\u0007  ',
+      email: 'test@example.com',
+      message: 'Hello <script>alert(1)</script>\u0007\r\nLine 2',
+    })
+
+    expect(actionResponse.ok()).toBeTruthy()
+
+    await expect
+      .poll(
+        async () => {
+          const response = await request.get('/api/test/sent-emails/')
+          const data = await response.json()
+          return data.emails
+        },
+        { timeout: 5000 },
+      )
+      .toHaveLength(1)
+
+    const inboxResponse = await request.get('/api/test/sent-emails/')
+    const inbox = await inboxResponse.json()
+    const email = inbox.emails[0]
+
+    expect(email.subject).toBe(
+      '[CliffRise] New message from &lt;b&gt;Test User&lt;/b&gt;',
+    )
+    expect(email.replyTo).toBe('test@example.com')
+    expect(email.html).toContain(
+      '<p>Hello &lt;script&gt;alert(1)&lt;/script&gt;<br>Line 2</p>',
+    )
+    expect(email.html).not.toContain('<script>')
+  })
+
+  test('rejects invalid payload via zod validation and does not send email', async ({
+    request,
+  }) => {
+    const actionResponse = await submitContactAction(request, {
+      name: 'A',
+      email: 'invalid-email',
+      message: 'short',
+    })
+
+    expect(actionResponse.status()).toBe(400)
+
+    const body = await actionResponse.json()
+    expect(body).toMatchObject({
+      type: 'AstroActionInputError',
+      fields: {
+        name: expect.any(Array),
+        email: expect.any(Array),
+        message: expect.any(Array),
+      },
+    })
+
+    const inboxResponse = await request.get('/api/test/sent-emails/')
+    const inbox = await inboxResponse.json()
+    expect(inbox.emails).toHaveLength(0)
+  })
+
+  test('accepts zod upper boundary values', async ({ request }) => {
+    const maxName = 'N'.repeat(100)
+    const localPart = 'a'.repeat(64)
+    const domainLabel = 'b'.repeat(61)
+    const boundaryEmail = `${localPart}@${domainLabel}.com` // 254 chars total
+    const maxMessage = 'M'.repeat(5000)
+
+    const actionResponse = await submitContactAction(request, {
+      name: maxName,
+      email: boundaryEmail,
+      message: maxMessage,
+    })
+
+    expect(actionResponse.ok()).toBeTruthy()
+
+    await expect
+      .poll(
+        async () => {
+          const response = await request.get('/api/test/sent-emails/')
+          const data = await response.json()
+          return data.emails
+        },
+        { timeout: 5000 },
+      )
+      .toHaveLength(1)
+  })
+
+  test('rejects zod values outside boundaries', async ({ request }) => {
+    const tooLongName = 'N'.repeat(101)
+    const tooLongMessage = 'M'.repeat(5001)
+
+    const actionResponse = await submitContactAction(request, {
+      name: tooLongName,
+      email: 'valid@example.com',
+      message: tooLongMessage,
+    })
+
+    expect(actionResponse.status()).toBe(400)
+
+    const body = await actionResponse.json()
+    expect(body).toMatchObject({
+      type: 'AstroActionInputError',
+      fields: {
+        name: expect.any(Array),
+        message: expect.any(Array),
+      },
+    })
+
+    const inboxResponse = await request.get('/api/test/sent-emails/')
+    const inbox = await inboxResponse.json()
+    expect(inbox.emails).toHaveLength(0)
+  })
+
+  test('rejects email above zod upper boundary', async ({ request }) => {
+    const tooLongEmail = `${'a'.repeat(250)}@a.com` // 256 chars total
+
+    const actionResponse = await submitContactAction(request, {
+      name: 'Valid Name',
+      email: tooLongEmail,
+      message: 'Valid message with enough length',
+    })
+
+    expect(actionResponse.status()).toBe(400)
+
+    const body = await actionResponse.json()
+    expect(body).toMatchObject({
+      type: 'AstroActionInputError',
+      fields: {
+        email: expect.any(Array),
+      },
+    })
+
+    const inboxResponse = await request.get('/api/test/sent-emails/')
+    const inbox = await inboxResponse.json()
+    expect(inbox.emails).toHaveLength(0)
   })
 })

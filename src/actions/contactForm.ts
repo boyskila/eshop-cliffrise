@@ -2,12 +2,45 @@ import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { emailService } from '@services/email'
 
+const escapeHtml = (value: string) => {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+// Replaces ASCII control characters with a space:
+const sanitizeInput = (value: string) =>
+  value
+    .replace(/[\u0000-\u001F\u007F]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+// For the message field, we want to allow newlines, so we only remove the non-printable control chars and DEL, but keep tabs and newlines.
+// This allows users to format their messages with line breaks.
+const sanitizeMessage = (value: string) =>
+  value
+    // Removes non-printable control chars. Allows tabs (\t), newlines (\n, \r), but removes others that could be used for obfuscation.
+    // Intentionally keeps \n (LF, \u000A) and \r (\u000D) so line breaks can be normalized next.
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
+    // Normalizes Windows newlines to Unix newline format for consistency.
+    .replace(/\r\n/g, '\n')
+    .trim()
+
 export const contact = defineAction({
   accept: 'form',
   input: z.object({
-    name: z.string().min(2),
-    email: z.string().email(),
-    message: z.string().min(10),
+    name: z.string().transform(sanitizeInput).pipe(z.string().min(2).max(100)),
+    email: z
+      .string()
+      .transform(sanitizeInput)
+      .pipe(z.string().email().max(254)),
+    message: z
+      .string()
+      .transform(sanitizeMessage)
+      .pipe(z.string().min(10).max(5000)),
     company: z.string().optional(),
   }),
 
@@ -21,21 +54,25 @@ export const contact = defineAction({
       ctx.request.headers.get('x-forwarded-for') ??
       ctx.request.headers.get('cf-connecting-ip') ??
       'unknown'
+    const safeName = escapeHtml(name)
+    const safeEmail = escapeHtml(email)
+    const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
+    const safeIp = escapeHtml(ip)
 
     try {
       const result = await emailService.get().send({
         from: 'CliffRise Contact <onboarding@resend.dev>',
         to: 'boiskila@gmail.com',
-        subject: `[CliffRise] New message from ${name}`,
+        subject: `[CliffRise] New message from ${safeName}`,
         html: `
           <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
           <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, '<br>')}</p>
+          <p>${safeMessage}</p>
           <hr>
           <p style="color: #666; font-size: 12px;">
-            IP: ${ip}
+            IP: ${safeIp}
           </p>
         `,
         replyTo: email,
