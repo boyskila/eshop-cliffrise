@@ -23,6 +23,18 @@ export default defineConfig({
   security: {
     checkOrigin:
       process.env.NODE_ENV === 'production' && process.env.E2E !== 'true',
+    allowedDomains: [
+      {
+        protocol: 'https',
+        hostname:
+          'https://eshop-cliffrise-eshop-cliffrise-test.up.railway.app/',
+      },
+      {
+        protocol: 'https',
+        hostname:
+          'www.https://eshop-cliffrise-eshop-cliffrise-test.up.railway.app/',
+      },
+    ],
   },
   server: {
     host: process.env.NODE_ENV !== 'test',
