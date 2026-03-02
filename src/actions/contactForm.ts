@@ -1,6 +1,7 @@
-import { defineAction } from 'astro:actions'
+import { ActionError, defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { emailService } from '@services/email'
+import { checkRateLimit } from '@services/rateLimit'
 
 const escapeHtml = (value: string) => {
   return value
@@ -29,6 +30,19 @@ const sanitizeMessage = (value: string) =>
     .replace(/\r\n/g, '\n')
     .trim()
 
+const getClientIp = (request: Request) => {
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0]?.trim() || 'unknown'
+  }
+  return request.headers.get('cf-connecting-ip') ?? 'unknown'
+}
+
+const rateLimitMax = Number(import.meta.env.CONTACT_RATE_LIMIT_MAX ?? 5)
+const rateLimitWindowMs = Number(
+  import.meta.env.CONTACT_RATE_LIMIT_WINDOW_MS ?? 60_000,
+)
+
 export const contact = defineAction({
   accept: 'form',
   input: z.object({
@@ -50,10 +64,20 @@ export const contact = defineAction({
       return { success: true }
     }
 
-    const ip =
-      ctx.request.headers.get('x-forwarded-for') ??
-      ctx.request.headers.get('cf-connecting-ip') ??
-      'unknown'
+    const ip = getClientIp(ctx.request)
+    const rateLimit = checkRateLimit({
+      key: `contact:${ip}`,
+      limit: rateLimitMax,
+      windowMs: rateLimitWindowMs,
+    })
+
+    if (!rateLimit.allowed) {
+      throw new ActionError({
+        code: 'TOO_MANY_REQUESTS',
+        message: `Too many requests. Try again in ${rateLimit.retryAfterSeconds}s.`,
+      })
+    }
+
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
