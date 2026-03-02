@@ -24,4 +24,7 @@ export default defineConfig({
     checkOrigin:
       process.env.NODE_ENV === 'production' && process.env.E2E !== 'true',
   },
+  server: {
+    host: process.env.NODE_ENV !== 'test',
+  },
 })
