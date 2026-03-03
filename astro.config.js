@@ -30,6 +30,10 @@ export default defineConfig({
         hostname: 'eshop-cliffrise-test.up.railway.app',
       },
       {
+        protocol: 'http',
+        hostname: 'eshop-cliffrise-test.up.railway.app',
+      },
+      {
         protocol: 'https',
         hostname: 'eshop-cliffrise-test.up.railway.app',
         port: '443',
