@@ -41,6 +41,9 @@ export default defineConfig({
       { protocol: 'https', hostname: process.env.RAILWAY_PUBLIC_DOMAIN },
       { protocol: 'https', hostname: '0.0.0.0' },
       { protocol: 'https', hostname: '*.up.railway.app' },
+      { protocol: 'http', hostname: 'localhost', port: '8080' },
+      { protocol: 'http', hostname: '127.0.0.1', port: '8080' },
+      { protocol: 'http', hostname: '10.179.135.236', port: '8080' },
     ],
   },
 })
