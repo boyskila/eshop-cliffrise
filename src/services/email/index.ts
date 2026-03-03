@@ -13,10 +13,7 @@ class EmailServiceSingleton {
     }
 
     // Prefer FakeEmailService in e2e/test modes so action tests do not call the real provider.
-    const isTest =
-      import.meta.env.E2E === 'true' ||
-      process.env.E2E === 'true' ||
-      import.meta.env.MODE === 'test'
+    const isTest = import.meta.env.MODE === 'test'
 
     if (isTest) {
       EmailServiceSingleton.instance = new FakeEmailService()
