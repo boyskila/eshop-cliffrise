@@ -122,4 +122,3 @@ test.describe('Contact Form Modal - Submission UI', () => {
     await submitResponse
   })
 })
-
