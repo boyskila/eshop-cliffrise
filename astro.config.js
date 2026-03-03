@@ -27,7 +27,7 @@ export default defineConfig({
       { protocol: 'http', hostname: '127.0.0.1', port: '4321' },
       {
         protocol: 'https',
-        hostname: 'eshop-cliffrise-eshop-cliffrise-test.up.railway.app',
+        hostname: 'eshop-cliffrise-test.up.railway.app',
       },
     ],
   },
