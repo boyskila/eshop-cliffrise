@@ -20,11 +20,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    // Build + preview with E2E flag so test-only runtime branches are deterministic.
     command:
-      'cross-env E2E=true npm run astro -- build --mode test && cross-env E2E=true npm run preview -- --host 127.0.0.1 --port 4321',
+      'npm run astro -- build --mode test && npm run preview -- --host 127.0.0.1 --port 4321',
     url: `http://127.0.0.1:4321`,
-    // Prevent reusing stale servers built with different env/mode settings.
     reuseExistingServer: false,
   },
 })
