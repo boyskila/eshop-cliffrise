@@ -44,6 +44,21 @@ export default defineConfig({
       { protocol: 'http', hostname: 'localhost', port: '8080' },
       { protocol: 'http', hostname: '127.0.0.1', port: '8080' },
       { protocol: 'http', hostname: '10.179.135.236', port: '8080' },
+
+      // IPv6 ULA range (fd00::/8) - where your [fd12:...] address comes from
+      {
+        protocol: 'http',
+        hostname: '[fd00::]',
+        port: process.env.PORT || '8080',
+      },
+
+      // Common local addresses in production (Railway uses these)
+      {
+        protocol: 'http',
+        hostname: '0.0.0.0',
+        port: process.env.PORT || '8080',
+      },
+      { protocol: 'http', hostname: '[::1]', port: process.env.PORT || '8080' },
     ],
   },
 })
