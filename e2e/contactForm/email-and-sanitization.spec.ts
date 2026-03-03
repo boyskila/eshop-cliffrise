@@ -102,4 +102,3 @@ test.describe('Contact Form Modal - Email And Sanitization', () => {
     expect(email.html).not.toContain('<script>')
   })
 })
-

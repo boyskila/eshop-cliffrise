@@ -15,7 +15,9 @@ test.describe('Contact Form Modal - BG Locale', () => {
 
     await dialog.locator('input[name="name"]').fill('John Doe')
     await dialog.locator('input[name="email"]').fill('john@example.com')
-    await dialog.locator('textarea[name="message"]').fill('This is a test message')
+    await dialog
+      .locator('textarea[name="message"]')
+      .fill('This is a test message')
 
     const submitButton = dialog.locator('[data-submit-contact-form]')
     await submitButton.click()

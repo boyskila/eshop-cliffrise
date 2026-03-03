@@ -113,4 +113,3 @@ test.describe('Contact Form Modal - Validation', () => {
     expect(inbox.emails).toHaveLength(0)
   })
 })
-
