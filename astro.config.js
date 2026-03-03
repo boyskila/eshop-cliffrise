@@ -6,7 +6,7 @@ import { DEFAULT_LANG } from './src/constants'
 import solidJs from '@astrojs/solid-js'
 
 export default defineConfig({
-  site: process.env.SITE_URL || 'http://localhost:4321',
+  site: 'https://eshop-cliffrise-test.up.railway.app',
   trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],
