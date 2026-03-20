@@ -1,38 +1,50 @@
 import { actions } from 'astro:actions'
-import { addCartNotification, updateCart } from '@signals/cart'
+import {
+  addCartNotification,
+  quantity,
+  setQuantity,
+  updateCart,
+} from '@signals/cart'
 
 export default function AddToCartButton(props: {
   productName: string
   productId: string
   lang: string
+  label?: string
+  disabled?: boolean
 }) {
   const productName = props.productName
   const productId = props.productId
 
   return (
     <button
-      onClick={async () => {
+      onClick={async (event) => {
+        const kind = (event.currentTarget as HTMLButtonElement).dataset
+          .productKind
         const { data } = await actions.addToCart({
           productId,
           lang: props.lang,
+          kind,
+          quantity: quantity(),
         })
         const { cart, addedItem } = data ?? {}
         if (cart) {
           updateCart(cart)
           addedItem && addCartNotification(addedItem)
+          setQuantity(1)
         }
       }}
+      data-add-to-cart-button
+      disabled={props.disabled}
       aria-label={`Add ${productName} to cart`}
-      class="bg-black text-white size-[35px] md:size-[43px] mt-1 flex items-center justify-center"
+      class="p-2 md:p-3
+        flex items-center justify-center flex-1
+        border border-black bg-white text-black
+        text-base md:text-lg leading-none
+        tracking-[2px] uppercase
+        disabled:opacity-40 disabled:cursor-not-allowed"
     >
-      <svg viewBox="0 0 24 24" class="size-[70%]">
-        <path
-          d="M12 5v14M5 12h14"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-      </svg>
+      {props.label}
     </button>
   )
 }

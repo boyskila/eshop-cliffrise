@@ -10,14 +10,14 @@ export const [cartNotifications, setCartNotifications] = createSignal<
 export const addCartNotification = (product: Product) => {
   const productId = product.id
   const isProductAlreadyAdded = cartNotifications().find(
-    (notification) => notification.id === productId
+    (notification) => notification.id === productId,
   )
   if (!isProductAlreadyAdded) {
     setCartNotifications((notifications) => [...notifications, product])
     setTimeout(() => {
       setCartNotifications((notifications) => {
         return notifications.filter(
-          (notification) => notification.id !== productId
+          (notification) => notification.id !== productId,
         )
       })
     }, 3000)
@@ -33,6 +33,7 @@ export const updateCart = (cart: CartItem[]) => {
 }
 
 export const [isCartOpen, setIsCartOpen] = createSignal(false)
+export const [quantity, setQuantity] = createSignal(1)
 
 export const toggleCart = () => {
   setIsCartOpen((isOpen) => !isOpen)

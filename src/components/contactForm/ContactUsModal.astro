@@ -6,9 +6,11 @@ import SuccessMsg from './SuccessMsg.astro'
 ---
 
 <Modal id="contactFormModal">
-  <ContactFormHeader />
-  <ContactFormFields />
-  <SuccessMsg />
+  <div class="pb-5 px-12 pt-1 flex-1 flex flex-col">
+    <ContactFormHeader />
+    <ContactFormFields />
+    <SuccessMsg />
+  </div>
 </Modal>
 
 <script>

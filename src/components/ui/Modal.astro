@@ -1,7 +1,9 @@
 <dialog
   id={Astro.props.id}
-  class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-         size-[100%] lg:w-170 shadow-lg group backdrop:backdrop-blur-sm z-50 flex-col open:flex"
+  class:list={[
+    'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-[100%] lg:w-170 shadow-lg group backdrop:bg-[rgba(0,0,0,0.5)] z-50 flex-col open:flex',
+    Astro.props.class,
+  ]}
 >
   <form method="dialog" class="flex justify-end pt-1 pr-2">
     <button type="submit" aria-label="Close modal" class="p-2">
@@ -21,7 +23,5 @@
       </svg>
     </button>
   </form>
-  <div class="pb-5 px-12 pt-1 flex-1 flex flex-col">
-    <slot />
-  </div>
+  <slot />
 </dialog>

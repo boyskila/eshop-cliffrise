@@ -35,7 +35,7 @@ export const Cart = (props: {
         aria-label="Shopping cart"
         class="fixed right-0 top-0 h-full w-full md:max-w-md bg-white z-50 p-7 xl:p-8"
       >
-        <div class="flex flex-col h-full">
+        <div class="flex flex-col h-[97%]">
           <CartHeader title={props.translations.title} />
           <div class="mb-5 mt-3 xl:mb-5 xl:mt-5 h-[1px] bg-black" />
 

@@ -1,13 +1,19 @@
 import en from '../public/locales/en/translations.json'
 
+type ProductKind = {
+  name: string
+  image?: string
+}
+
 export type Product = {
   id: string
   image: string
   name: string
   category: 'chalk' | 'apparel'
   description: string
-  features: string[]
+  images: string[]
   price: number
+  kind: ProductKind[]
 }
 
 export type Translations = typeof en
