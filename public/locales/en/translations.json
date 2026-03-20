@@ -1,5 +1,7 @@
 {
     "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "selectSize": "Select size:",
     "header": {
         "title": "CliffRise",
         "subtitle": "Funding Routes",
@@ -12,68 +14,41 @@
     "heroTitle": "CliffRise is a way to give something back to the cliffs that give us so much - with every purchase supporting the creation of new routes and the care of climbing areas in Bulgaria.",
     "product": {
         "dryChalk": {
-            "name": "Dry Chalk 250g",
-            "description": "Premium pure magnesium carbonate for superior grip and performance.",
-            "features": [
-                "99% pure magnesium carbonate",
-                "0.300kg packing",
-                "Eco-friendly packing",
-                "Suitable for dry or wet skin"
-            ]
+            "name": "Chunky Chalk – 250 g",
+            "description": "Chunky climbing chalk with a coarse structure that breaks down easily and provides reliable friction. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb."
         },
         "wetChalk": {
-            "name": "Wet Chalk 250g",
-            "description": "Premium pure magnesium carbonate for superior grip and performance.",
-            "features": [
-                "99% pure magnesium carbonate",
-                "0.300kg packing",
-                "Eco-friendly packing",
-                "Suitable for dry or wet skin"
-            ]
-        },
-        "chalkBall": {
-            "name": "Chalk Ball",
-            "description": "Convenient chalk ball for mess-free application during climbs.",
-            "features": [
-                "Refillable",
-                "Clean, controlled, and efficient chalking",
-                "Perfect for gym and rock climbing"
-            ]
+            "name": "Moist Chunky Chalk – 250 g",
+            "description": "Moist chunky climbing chalk with a denser structure that breaks down easily and leaves an even layer on the hands. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb."
         },
         "liquidChalk": {
-            "name": "Liquid Chalk",
-            "description": "Advanced liquid chalk formula that dries quickly for lasting grip.",
-            "features": [
-                "Long-lasting effect",
-                "250ml bottle",
-                "Low dust and clean",
-                "Moisture absorption",
-                "Hygienic"
-            ]
+            "name": "Liquid Chalk - 250 ml",
+            "description": "Liquid chalk that dries quickly and leaves an even layer on the hands. Made for reliable friction both indoors and outdoors."
         },
         "tshirt": {
-            "name": "Cliffrise T-Shirt",
-            "description": "Comfortable organic cotton t-shirt with CliffRise logo.",
-            "features": [
-                "100% organic cotton",
-                "Screen-printed logo",
-                "Available in S-XXL"
-            ]
+            "name": "T‑Shirt with a Cause",
+            "description": "Comfortable T‑shirt for climbing and for the days between routes. Simple, durable and made for people who love climbing."
         },
         "hat": {
-            "name": "Cliffrise Hat",
-            "description": "Adjustable climbing hat with embroidered CliffRise logo.",
-            "features": [
-                "Adjustable strap",
-                "UV protection",
-                "Embroidered logo"
-            ]
+            "name": "Beanie with a Cause",
+            "description": "Warm beanie for cold days in the mountains and in the city. Comfortable, simple and made for climbing adventures."
         },
         "fingerTape": {
-            "name": "Finger Tape",
-            "description": "",
-            "features": [
-                ""
+            "name": "Climbing Tape",
+            "description": "Durable tape for protecting fingers while climbing. Made for crack climbing, sharp holds and long climbing sessions.",
+            "kind": [
+                {
+                    "name": "blue",
+                    "image": "/assets/products/tape/blue.png"
+                },
+                {
+                    "name": "green",
+                    "image": "/assets/products/tape/green.png"
+                },
+                {
+                    "name": "yellow",
+                    "image": "/assets/products/tape/yellow.png"
+                }
             ]
         }
     },

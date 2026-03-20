@@ -1,13 +1,12 @@
 import { For } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
 import type { Product } from '@types'
-import AddToCartButton from '../../products/AddToCartButton'
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
+import { getProductModalPanelId } from '../../products/productModalId'
 
 export default (props: {
   products: Product[]
-  lang: string
   buttonText: string
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -19,44 +18,59 @@ export default (props: {
     <div class="overflow-hidden" ref={emblaRef}>
       <div class="flex touch-pan-y touch-pinch-zoom">
         <For each={props.products}>
-          {({ image, name, id, price }) => (
-            <div
-              classList={{
-                'flex-[0_0_70%] px-3': true,
-                'landscape:flex-[0_0_33.33%] landscape:px-2': true,
-                'md:flex-[0_0_40%] md:landscape:flex-[0_0_40%]': true,
-                'xl:flex-[0_0_35%] xl:landscape:flex-[0_0_35%]': true,
-                '2xl:flex-[0_0_25%] 2xl:landscape:flex-[0_0_25%]': true,
-              }}
-            >
+          {({ image, name, id, price }, index) => {
+            const panelId = getProductModalPanelId(id, index())
+
+            return (
               <div
                 classList={{
-                  'flex flex-col gap-3 justify-center items-center': true,
-                  'md:gap-4 md:landscape:gap-3': true,
-                  'xl:gap-5 xl:landscape:gap-5': true,
+                  'flex-[0_0_70%] px-3': true,
+                  'landscape:flex-[0_0_33.33%] landscape:px-2': true,
+                  'md:flex-[0_0_40%] md:landscape:flex-[0_0_40%]': true,
+                  'xl:flex-[0_0_35%] xl:landscape:flex-[0_0_35%]': true,
+                  '2xl:flex-[0_0_25%] 2xl:landscape:flex-[0_0_25%]': true,
                 }}
               >
-                <img
-                  src={image}
-                  class="w-full h-auto object-cover object-center"
-                  loading="lazy"
-                />
-                <div class="flex justify-between w-full">
-                  <div class="flex flex-col gap-1">
-                    <span class="text-base md:text-lg xl:text-xl">{name}</span>
-                    <div class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl">
-                      {price.toFixed(2)} &euro;
-                    </div>
-                  </div>
-                  <AddToCartButton
-                    productName={name}
-                    productId={id}
-                    lang={props.lang}
+                <div
+                  classList={{
+                    'flex flex-col gap-3 justify-center items-center': true,
+                    'md:gap-4 md:landscape:gap-3': true,
+                    'xl:gap-5 xl:landscape:gap-5': true,
+                  }}
+                >
+                  <img
+                    src={image}
+                    class="w-full h-auto object-cover object-center"
+                    loading="lazy"
                   />
+                  <div class="flex justify-between w-full">
+                    <div class="flex flex-col gap-1">
+                      <span class="text-base md:text-lg xl:text-xl">{name}</span>
+                      <div class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl">
+                        {price.toFixed(2)} &euro;
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      data-open-product-modal
+                      data-product-modal-panel={panelId}
+                      aria-label={`${props.buttonText}: ${name}`}
+                      class="bg-black text-white size-[35px] md:size-[43px] mt-1 flex items-center justify-center"
+                    >
+                      <svg viewBox="0 0 24 24" class="size-[70%]">
+                        <path
+                          d="M12 5v14M5 12h14"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )
+          }}
         </For>
       </div>
       <CarouselDots api={emblaApi} />

@@ -11,15 +11,21 @@ export type CartItem = Product & {
 
 export const cart = {
   addToCart: defineAction({
-    input: z.object({ productId: z.string(), lang: z.string() }),
-    handler: async ({ productId, lang }, context) => {
+    input: z.object({
+      productId: z.string(),
+      lang: z.string(),
+      kind: z.string().optional(),
+      quantity: z.number().optional().default(1),
+    }),
+    handler: async ({ productId, lang, kind, quantity }, context) => {
       const cart = (await context.session?.get('cart')) ?? []
-      const existingItem = cart.find((cartItem) => cartItem.id === productId)
+      const cartItemId = kind ? `${productId}:${kind}` : productId
+      const existingItem = cart.find((cartItem) => cartItem.id === cartItemId)
 
       if (existingItem) {
         const next = cart.map((cartItem) => {
-          return cartItem.id === productId
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          return cartItem.id === cartItemId
+            ? { ...cartItem, quantity: cartItem.quantity + quantity }
             : cartItem
         })
 
@@ -27,12 +33,25 @@ export const cart = {
         return { cart: next, addedItem: existingItem }
       }
       const product = getProducts(getTranslations({ lang })).find(
-        (product) => product.id === productId
+        (product) => product.id === productId,
       )
       if (product) {
-        const next = [...cart, { ...product, quantity: 1 }]
+        const selectedKind = kind
+          ? product.kind.find((productKind) => productKind.name === kind)
+          : undefined
+        const nextItem = {
+          ...product,
+          id: cartItemId,
+          name: selectedKind
+            ? `${product.name} (${selectedKind.name})`
+            : product.name,
+          image: selectedKind?.image || product.image,
+          metadata: kind ? { kind, productId } : undefined,
+          quantity: quantity,
+        }
+        const next = [...cart, nextItem]
         context.session?.set('cart', next)
-        return { cart: next, addedItem: product }
+        return { cart: next, addedItem: nextItem }
       }
       return {}
     },
