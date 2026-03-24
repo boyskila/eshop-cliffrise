@@ -11,19 +11,17 @@ const { products, lang } = Astro.props as {
   products: Product[]
   lang: string
 }
-const { addToCart, buyNow, selectSize } = getTranslations(Astro.params)
+const { addToCart, buyNow, ...translations } = getTranslations(Astro.params)
 ---
 
 <Modal
   id="productModal"
-  class="md:max-w-[80%]
-    phone-portrait:max-w-[95%]
+  class="phone-portrait:max-w-[95%]
     phone-portrait:max-h-[97%]
     phone-landscape:max-w-[97%]
     phone-landscape:max-h-[95%]
-    tablet-landscape:max-w-none
-    tablet-landscape:w-[80%]
-    tablet-landscape:h-[70%]"
+    tablet-landscape:max-w-150
+    max-w-[600px]"
 >
   {
     products.map((product, index) => {
@@ -33,34 +31,33 @@ const { addToCart, buyNow, selectSize } = getTranslations(Astro.params)
         <article
           data-product-modal-panel={panelId}
           class="
-            hidden h-full min-h-0 flex-1 p-5 lg:p-10
-            short-screen-portrait:pb-3 pt-0
-            phone-landscape:p-4 phone-landscape:pt-0
-            tablet:p-8 tablet:pt-0
-            flex overflow-hidden"
+            hidden h-full min-h-0 flex-1 p-5 pt-6 lg:p-10
+            short-screen-portrait:pb-3
+            phone-landscape:p-3
+            phone-portrait:pt-8
+            tablet:p-8"
         >
           <div
             class="
-            flex flex-col gap-2 md:gap-4 h-full min-h-0
-            phone-portrait:gap-4
-            phone-landscape:flex-row
-            phone-landscape:gap-4
-            tablet-landscape:flex-row
-            tablet-landscape:gap-8"
+              flex flex-col gap-2 md:gap-4 h-full min-h-0
+              phone-portrait:gap-4
+              phone-landscape:flex-row
+              phone-landscape:gap-4
+              tablet-landscape:gap-8"
           >
             <div
               class="
-              flex-1 gap-3 min-h-0 flex flex-col
-              md:portrait:gap-4
-              phone-portrait:max-h-[40%]
-              phone-landscape:flex-none
-              phone-landscape:basis-[40%]
-              phone-landscape:h-full
-              tablet-landscape:flex-none
-              tablet-landscape:basis-[40%]
-              tablet-landscape:h-full"
+                flex-1 gap-3 min-h-0 flex flex-col
+                md:portrait:gap-4
+                phone-portrait:max-h-[40%]
+                phone-landscape:flex-none
+                phone-landscape:basis-[40%]
+                phone-landscape:h-full
+                tablet-landscape:flex-none
+                tablet-landscape:basis-[50%]
+                "
             >
-              <div class="bg-[#d9d9d9] flex-1 min-h-0 overflow-hidden">
+              <div class="bg-[#d9d9d9] flex-1 min-h-0">
                 <img
                   src={product.image}
                   alt={product.name}
@@ -71,46 +68,53 @@ const { addToCart, buyNow, selectSize } = getTranslations(Astro.params)
                 />
               </div>
               {product.images.length > 0 && (
-                <div
-                  class="phone-portrait:hidden phone-landscape:hidden flex gap-2 flex-wrap shrink-0 tablet-landscape:flex"
+                <ul
+                  class="
+                    flex gap-2 flex-wrap shrink-0
+                    phone-portrait:hidden
+                    phone-landscape:hidden
+                    tablet-landscape:flex"
                   data-image-thumbnails
                 >
                   {product.images.map((image, imageIndex) => (
-                    <button
-                      type="button"
-                      data-image-thumb
-                      data-image-index={String(imageIndex)}
-                      data-image-src={image}
-                      class="size-[58px] bg-[#d9d9d9] p-1"
-                      aria-label={`Preview ${imageIndex + 1} for ${product.name}`}
-                    >
-                      <img
-                        src={image}
-                        alt={`Preview ${imageIndex + 1} for ${product.name}`}
-                        class="size-full object-cover object-center"
-                        loading="lazy"
-                      />
-                    </button>
+                    <li>
+                      <button
+                        type="button"
+                        data-image-thumb
+                        data-image-index={String(imageIndex)}
+                        data-image-src={image}
+                        class="size-[58px] bg-[#d9d9d9] p-1"
+                        aria-label={`Preview ${imageIndex + 1} for ${product.name}`}
+                      >
+                        <img
+                          src={image}
+                          alt={`Preview ${imageIndex + 1} for ${product.name}`}
+                          class="size-full object-cover object-center"
+                          loading="lazy"
+                        />
+                      </button>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
             </div>
             <div
               class="
-              flex flex-col gap-2 shrink-0 flex-1 
-              short-screen-portrait:gap-1.5
-              phone-landscape:flex-1
-              phone-landscape:min-h-0
-              phone-landscape:overflow-hidden
-              tablet-landscape:gap-3"
+                flex flex-col gap-1 shrink-0 flex-1 
+                short-screen-portrait:gap-1.5
+                phone-landscape:flex-1
+                phone-landscape:min-h-0
+                phone-landscape:overflow-hidden
+                tablet-landscape:gap-3"
             >
               <div class="mb-4 phone-landscape:mb-0 short-screen-portrait:mb-2">
                 <h3
                   class="
-                  text-2xl font-bold mb-2
-                  short-screen-portrait:text-lg
-                  phone-landscape:mb-1
-                  tablet-landscape:text-2xl"
+                    text-2xl font-bold mb-2
+                    short-screen-portrait:text-lg
+                    phone-landscape:mb-1
+                    tablet-landscape:text-2xl
+                    phone-landscape:max-w-[95%]"
                 >
                   {product.name}
                 </h3>
@@ -121,6 +125,7 @@ const { addToCart, buyNow, selectSize } = getTranslations(Astro.params)
                     tablet-landscape:text-base
                     phone-landscape:text-base
                     phone-portrait:text-base
+                    max-h-[120px] overflow-y-scroll
                     leading-relaxed"
                 >
                   {product.description}
@@ -129,18 +134,30 @@ const { addToCart, buyNow, selectSize } = getTranslations(Astro.params)
               {product.kind.length > 0 && (
                 <div
                   class="
-                  flex flex-col gap-3
-                  short-screen-portrait:gap-2
-                  short-screen-landscape:gap-1"
+                    flex flex-col gap-3
+                    short-screen-portrait:gap-2
+                    short-screen-landscape:gap-1"
                 >
                   <p
-                    class="text-xl font-semibold underline underline-offset-2
-                    short-screen-portrait:text-base
-                    short-screen-landscape:text-base"
+                    class="
+                      text-xl font-semibold underline underline-offset-2
+                      phone-landscape:hidden
+                      short-screen-portrait:text-base
+                      short-screen-landscape:text-base"
                   >
-                    {selectSize}
+                    {Object.entries(translations.product).map(
+                      ([key, value]) => {
+                        if (
+                          value.name === product.name &&
+                          value.kindTitle !== null
+                        ) {
+                          return value.kindTitle
+                        }
+                        return null
+                      },
+                    )}
                   </p>
-                  <ul class="flex flex-wrap gap-2" data-kind-selector>
+                  <ul class="flex flex-wrap gap-1" data-kind-selector>
                     {product.kind.map((kind, kindIndex) => (
                       <li>
                         <button
@@ -150,14 +167,13 @@ const { addToCart, buyNow, selectSize } = getTranslations(Astro.params)
                           data-kind-name={kind.name}
                           data-kind-image={kind.image}
                           class="py-1 px-4
-                          border border-[#D9D9D9]
-                          short-screen-portrait:text-sm
-                          phone-portrait:px-2
-                          short-screen-landscape:text-xs
-                          phone-landscape:text-sm
-                          phone-landscape:text-base
-                          tablet-landscape:text-lg
-                          uppercase"
+                            border border-[#D9D9D9]
+                            short-screen-portrait:text-sm
+                            phone-portrait:px-2
+                            short-screen-landscape:text-xs
+                            phone-landscape:text-sm
+                            phone-portrait:text-sm
+                            uppercase"
                         >
                           {kind.name}
                         </button>

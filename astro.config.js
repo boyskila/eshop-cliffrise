@@ -9,6 +9,9 @@ export default defineConfig({
   trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      allowedHosts: ['test.cliffrise.com'],
+    },
   },
   i18n: {
     defaultLocale: DEFAULT_LANG,

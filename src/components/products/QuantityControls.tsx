@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup } from 'solid-js'
+import { onMount, onCleanup } from 'solid-js'
 import Minus from 'lucide-solid/icons/minus'
 import Plus from 'lucide-solid/icons/plus'
 import type { Product } from '@types'
@@ -21,7 +21,7 @@ export const QuantityControls = ({ product }: { product: Product }) => {
       >
         <Minus class="h-4 w-4" />
       </button>
-      <span class="border border-gray size-7 flex items-center justify-center text-sm font-medium">
+      <span class="border border-gray size-6 flex items-center justify-center text-sm font-medium">
         {quantity()}
       </span>
       <button
