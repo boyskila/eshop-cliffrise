@@ -33,15 +33,7 @@ export const getProducts = (translations: Translations): Product[] => {
         '/assets/products/tape/black.png',
         '/assets/products/tape/white.png',
       ],
-      kind: [
-        { name: 'green', image: '/assets/products/tape/green.png' },
-        { name: 'blue', image: '/assets/products/tape/blue.png' },
-        { name: 'yellow', image: '/assets/products/tape/yellow.png' },
-        { name: 'orange', image: '/assets/products/tape/orange.png' },
-        { name: 'pink', image: '/assets/products/tape/pink.png' },
-        { name: 'black', image: '/assets/products/tape/black.png' },
-        { name: 'white', image: '/assets/products/tape/white.png' },
-      ],
+      kind: product.fingerTape.kind,
     },
     {
       id: '3',
@@ -89,13 +81,7 @@ export const getProducts = (translations: Translations): Product[] => {
         '/assets/products/beanies/green.png',
         '/assets/products/beanies/gray.png',
       ],
-      kind: [
-        { name: 'blue', image: '/assets/products/beanies/blue.png' },
-        { name: 'black', image: '/assets/products/beanies/black.png' },
-        { name: 'red', image: '/assets/products/beanies/red.png' },
-        { name: 'green', image: '/assets/products/beanies/green.png' },
-        { name: 'gray', image: '/assets/products/beanies/gray.png' },
-      ],
+      kind: product.hat.kind,
     },
     {
       id: '6',

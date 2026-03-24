@@ -14,6 +14,7 @@ export type Product = {
   images: string[]
   price: number
   kind: ProductKind[]
+  kindTitle?: string
 }
 
 export type Translations = typeof en
