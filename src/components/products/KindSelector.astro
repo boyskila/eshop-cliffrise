@@ -1,0 +1,166 @@
+---
+import type { Product, Translations } from '@types'
+
+interface Props {
+  product: Product
+  translations: Omit<Translations, 'addToCart' | 'buyNow'>
+}
+
+const { product, translations } = Astro.props
+
+const kindTitle = Object.entries(translations.product)
+  .map(([_, value]) => {
+    if (value.name === product.name && value.kindTitle !== null) {
+      return value.kindTitle
+    }
+    return null
+  })
+  .find((title) => title !== null)
+---
+
+{
+  product.kind.length > 0 && (
+    <div
+      class="
+        flex flex-col gap-3
+        short-screen-portrait:gap-2
+        short-screen-landscape:gap-1"
+    >
+      <p
+        class="
+          text-xl font-semibold underline underline-offset-2
+          phone-landscape:hidden
+          short-screen-portrait:text-base
+          short-screen-landscape:text-base"
+      >
+        {kindTitle}
+      </p>
+      <ul class="flex flex-wrap gap-1" data-kind-selector>
+        {product.kind.map((kind, kindIndex) => (
+          <li>
+            <button
+              type="button"
+              data-kind-option
+              data-kind-index={String(kindIndex)}
+              data-kind-name={kind.name}
+              data-kind-image={kind.image}
+              class="py-1 px-4
+                border border-[#D9D9D9]
+                short-screen-portrait:text-sm
+                phone-portrait:px-2
+                short-screen-landscape:text-xs
+                phone-landscape:text-sm
+                phone-portrait:text-sm
+                uppercase"
+            >
+              {kind.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+<script>
+  let kindSelectorController: AbortController | null = null
+
+  document.addEventListener('astro:page-load', () => {
+    const selectors = document.querySelectorAll<HTMLElement>(
+      '[data-kind-selector]',
+    )
+    if (!selectors.length) return
+
+    kindSelectorController?.abort()
+    kindSelectorController = new AbortController()
+    const { signal } = kindSelectorController
+
+    selectors.forEach((selector) => {
+      const panel = selector.closest<HTMLElement>('[data-product-modal-panel]')
+      if (!panel) return
+
+      const kindOptions = Array.from(
+        selector.querySelectorAll<HTMLButtonElement>('[data-kind-option]'),
+      )
+      if (!kindOptions.length) return
+
+      const addToCartButton = panel.querySelector<HTMLButtonElement>(
+        '[data-add-to-cart-button]',
+      )
+      const buyNowButton = panel.querySelector<HTMLButtonElement>(
+        '[data-buy-now-button]',
+      )
+      const productImage = panel.querySelector<HTMLImageElement>(
+        '[data-product-image]',
+      )
+
+      const clearKindSelection = () => {
+        kindOptions.forEach((option) => {
+          option.dataset.selected = 'false'
+          option.setAttribute('aria-pressed', 'false')
+          option.classList.remove('bg-black', 'text-white', 'border-black')
+        })
+
+        if (addToCartButton) {
+          delete addToCartButton.dataset.productKind
+          addToCartButton.disabled = true
+        }
+        if (buyNowButton) {
+          delete buyNowButton.dataset.productKind
+          buyNowButton.disabled = true
+        }
+      }
+
+      const setKind = (kindIndex: string) => {
+        const selectedOption = kindOptions.find(
+          (option) => option.dataset.kindIndex === kindIndex,
+        )
+        if (!selectedOption) return
+
+        kindOptions.forEach((option) => {
+          const isSelected = option.dataset.kindIndex === kindIndex
+          option.dataset.selected = isSelected ? 'true' : 'false'
+          option.setAttribute('aria-pressed', isSelected ? 'true' : 'false')
+          option.classList.toggle('bg-black', isSelected)
+          option.classList.toggle('text-white', isSelected)
+          option.classList.toggle('border-black', isSelected)
+        })
+
+        const selectedKind = selectedOption.dataset.kindName ?? ''
+        const selectedKindImage = selectedOption.dataset.kindImage ?? ''
+
+        if (addToCartButton) {
+          addToCartButton.dataset.productKind = selectedKind
+          addToCartButton.disabled = selectedKind.length === 0
+        }
+        if (buyNowButton) {
+          buyNowButton.dataset.productKind = selectedKind
+          buyNowButton.disabled = selectedKind.length === 0
+        }
+
+        if (productImage && selectedKindImage.trim().length > 0) {
+          productImage.src = selectedKindImage
+        }
+      }
+
+      kindOptions.forEach((option) => {
+        option.addEventListener(
+          'click',
+          () => {
+            const kindIndex = option.dataset.kindIndex ?? '0'
+            setKind(kindIndex)
+          },
+          { signal },
+        )
+      })
+
+      clearKindSelection()
+
+      window.addEventListener(
+        'product-modal:closed',
+        () => clearKindSelection(),
+        { signal },
+      )
+    })
+  })
+</script>

@@ -3,6 +3,9 @@ import type { Product } from '@types'
 import Modal from '../ui/Modal.astro'
 import AddToCartButton from './AddToCartButton'
 import BuyNowButton from './BuyNowButton'
+import KindSelector from './KindSelector.astro'
+import ProductGallery from './ProductGallery.astro'
+import ProductInfo from './ProductInfo.astro'
 import { getProductModalPanelId } from './productModalId'
 import { QuantityControls } from './QuantityControls'
 import { getTranslations } from '@utils/i18'
@@ -45,59 +48,7 @@ const { addToCart, buyNow, ...translations } = getTranslations(Astro.params)
               phone-landscape:gap-4
               tablet-landscape:gap-8"
           >
-            <div
-              class="
-                flex-1 gap-3 min-h-0 flex flex-col
-                md:portrait:gap-4
-                phone-portrait:max-h-[40%]
-                phone-landscape:flex-none
-                phone-landscape:basis-[40%]
-                phone-landscape:h-full
-                tablet-landscape:flex-none
-                tablet-landscape:basis-[50%]
-                "
-            >
-              <div class="bg-[#d9d9d9] flex-1 min-h-0">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  data-product-image
-                  data-default-image={product.image}
-                  class="size-full object-contain"
-                  loading="lazy"
-                />
-              </div>
-              {product.images.length > 0 && (
-                <ul
-                  class="
-                    flex gap-2 flex-wrap shrink-0
-                    phone-portrait:hidden
-                    phone-landscape:hidden
-                    tablet-landscape:flex"
-                  data-image-thumbnails
-                >
-                  {product.images.map((image, imageIndex) => (
-                    <li>
-                      <button
-                        type="button"
-                        data-image-thumb
-                        data-image-index={String(imageIndex)}
-                        data-image-src={image}
-                        class="size-[58px] bg-[#d9d9d9] p-1"
-                        aria-label={`Preview ${imageIndex + 1} for ${product.name}`}
-                      >
-                        <img
-                          src={image}
-                          alt={`Preview ${imageIndex + 1} for ${product.name}`}
-                          class="size-full object-cover object-center"
-                          loading="lazy"
-                        />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+            <ProductGallery product={product} />
             <div
               class="
                 flex flex-col gap-1 shrink-0 flex-1 
@@ -107,81 +58,8 @@ const { addToCart, buyNow, ...translations } = getTranslations(Astro.params)
                 phone-landscape:overflow-hidden
                 tablet-landscape:gap-3"
             >
-              <div class="mb-4 phone-landscape:mb-0 short-screen-portrait:mb-2">
-                <h3
-                  class="
-                    text-2xl font-bold mb-2
-                    short-screen-portrait:text-lg
-                    phone-landscape:mb-1
-                    tablet-landscape:text-2xl
-                    phone-landscape:max-w-[95%]"
-                >
-                  {product.name}
-                </h3>
-                <p
-                  class="text-sm
-                    short-screen-portrait:text-sm
-                    short-screen-landscape:text-sm
-                    tablet-landscape:text-base
-                    phone-landscape:text-base
-                    phone-portrait:text-base
-                    max-h-[120px] overflow-y-scroll
-                    leading-relaxed"
-                >
-                  {product.description}
-                </p>
-              </div>
-              {product.kind.length > 0 && (
-                <div
-                  class="
-                    flex flex-col gap-3
-                    short-screen-portrait:gap-2
-                    short-screen-landscape:gap-1"
-                >
-                  <p
-                    class="
-                      text-xl font-semibold underline underline-offset-2
-                      phone-landscape:hidden
-                      short-screen-portrait:text-base
-                      short-screen-landscape:text-base"
-                  >
-                    {Object.entries(translations.product).map(
-                      ([key, value]) => {
-                        if (
-                          value.name === product.name &&
-                          value.kindTitle !== null
-                        ) {
-                          return value.kindTitle
-                        }
-                        return null
-                      },
-                    )}
-                  </p>
-                  <ul class="flex flex-wrap gap-1" data-kind-selector>
-                    {product.kind.map((kind, kindIndex) => (
-                      <li>
-                        <button
-                          type="button"
-                          data-kind-option
-                          data-kind-index={String(kindIndex)}
-                          data-kind-name={kind.name}
-                          data-kind-image={kind.image}
-                          class="py-1 px-4
-                            border border-[#D9D9D9]
-                            short-screen-portrait:text-sm
-                            phone-portrait:px-2
-                            short-screen-landscape:text-xs
-                            phone-landscape:text-sm
-                            phone-portrait:text-sm
-                            uppercase"
-                        >
-                          {kind.name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <ProductInfo product={product} />
+              <KindSelector product={product} translations={translations} />
               <div class="flex-1 flex flex-col justify-end gap-5 phone-landscape:gap-3">
                 <div class="flex items-center justify-between gap-3">
                   <QuantityControls product={product} client:load />
@@ -253,150 +131,6 @@ const { addToCart, buyNow, ...translations } = getTranslations(Astro.params)
       dialog.showModal()
       document.body.classList.add('overflow-hidden')
     }
-
-    const initKindSelectors = () => {
-      const selectors = dialog.querySelectorAll<HTMLElement>(
-        '[data-kind-selector]',
-      )
-
-      selectors.forEach((selector) => {
-        const panel = selector.closest<HTMLElement>(
-          '[data-product-modal-panel]',
-        )
-        if (!panel) return
-
-        const kindOptions = Array.from(
-          selector.querySelectorAll<HTMLButtonElement>('[data-kind-option]'),
-        )
-        if (!kindOptions.length) return
-
-        const addToCartButton = panel.querySelector<HTMLButtonElement>(
-          '[data-add-to-cart-button]',
-        )
-        const buyNowButton = panel.querySelector<HTMLButtonElement>(
-          '[data-buy-now-button]',
-        )
-        const productImage = panel.querySelector<HTMLImageElement>(
-          '[data-product-image]',
-        )
-
-        const clearKindSelection = () => {
-          kindOptions.forEach((option) => {
-            option.dataset.selected = 'false'
-            option.setAttribute('aria-pressed', 'false')
-            option.classList.remove('bg-black', 'text-white', 'border-black')
-          })
-
-          if (addToCartButton) {
-            delete addToCartButton.dataset.productKind
-            addToCartButton.disabled = true
-          }
-          if (buyNowButton) {
-            delete buyNowButton.dataset.productKind
-            buyNowButton.disabled = true
-          }
-        }
-
-        const setKind = (kindIndex: string) => {
-          const selectedOption = kindOptions.find(
-            (option) => option.dataset.kindIndex === kindIndex,
-          )
-          if (!selectedOption) return
-
-          kindOptions.forEach((option) => {
-            const isSelected = option.dataset.kindIndex === kindIndex
-            option.dataset.selected = isSelected ? 'true' : 'false'
-            option.setAttribute('aria-pressed', isSelected ? 'true' : 'false')
-            option.classList.toggle('bg-black', isSelected)
-            option.classList.toggle('text-white', isSelected)
-            option.classList.toggle('border-black', isSelected)
-          })
-
-          const selectedKind = selectedOption.dataset.kindName ?? ''
-          const selectedKindImage = selectedOption.dataset.kindImage ?? ''
-
-          if (addToCartButton) {
-            addToCartButton.dataset.productKind = selectedKind
-            addToCartButton.disabled = selectedKind.length === 0
-          }
-          if (buyNowButton) {
-            buyNowButton.dataset.productKind = selectedKind
-            buyNowButton.disabled = selectedKind.length === 0
-          }
-
-          if (productImage && selectedKindImage.trim().length > 0) {
-            productImage.src = selectedKindImage
-          }
-        }
-
-        kindOptions.forEach((option) => {
-          option.addEventListener(
-            'click',
-            () => {
-              const kindIndex = option.dataset.kindIndex ?? '0'
-              setKind(kindIndex)
-            },
-            { signal },
-          )
-        })
-
-        clearKindSelection()
-      })
-    }
-
-    const initImageThumbnails = () => {
-      const containers = dialog.querySelectorAll<HTMLElement>(
-        '[data-image-thumbnails]',
-      )
-
-      containers.forEach((container) => {
-        const panel = container.closest<HTMLElement>(
-          '[data-product-modal-panel]',
-        )
-        if (!panel) return
-
-        const productImage = panel.querySelector<HTMLImageElement>(
-          '[data-product-image]',
-        )
-        const imageThumbs = Array.from(
-          container.querySelectorAll<HTMLButtonElement>('[data-image-thumb]'),
-        )
-        if (!productImage || !imageThumbs.length) return
-
-        const setImage = (imageIndex: string) => {
-          const selectedThumb = imageThumbs.find(
-            (thumb) => thumb.dataset.imageIndex === imageIndex,
-          )
-          if (!selectedThumb) return
-
-          const selectedImage = selectedThumb.dataset.imageSrc ?? ''
-          const fallbackImage =
-            productImage.dataset.defaultImage ?? productImage.src
-          productImage.src = selectedImage || fallbackImage
-
-          imageThumbs.forEach((thumb) => {
-            const isSelected = thumb.dataset.imageIndex === imageIndex
-            thumb.classList.toggle('border-black', isSelected)
-          })
-        }
-
-        imageThumbs.forEach((thumb) => {
-          thumb.addEventListener(
-            'click',
-            () => {
-              const imageIndex = thumb.dataset.imageIndex ?? '0'
-              setImage(imageIndex)
-            },
-            { signal },
-          )
-        })
-
-        setImage(imageThumbs[0].dataset.imageIndex ?? '0')
-      })
-    }
-
-    initKindSelectors()
-    initImageThumbnails()
 
     document.addEventListener('click', handleDocumentClick, { signal })
 
