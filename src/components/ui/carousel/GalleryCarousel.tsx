@@ -52,7 +52,7 @@ export default () => {
   })
 
   return (
-    <div ref={emblaRef} class="overflow-x-hidden xl:max-w-[68%] m-auto">
+    <div ref={emblaRef} data-year-panel="2025" class="hidden">
       <div class="flex touch-pan-y touch-pinch-zoom">
         <For each={groupedSlides()}>
           {(slide) => (
