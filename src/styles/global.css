@@ -6,7 +6,7 @@
 @custom-variant phone-portrait (@media (orientation: portrait) and (max-width: 767px));
 @custom-variant short-screen-portrait (@media (orientation: portrait) and (max-height: 668px));
 @custom-variant short-screen-landscape (@media (orientation: landscape) and (max-height: 375px));
-@custom-variant tablet (@media (min-width: 768px) and (min-height: 501px) and (max-width: 1024px));
+@custom-variant tablet (@media (min-width: 768px) and (min-height: 501px) and (max-width: 1180px));
 
 @keyframes slide-in-right {
   from {

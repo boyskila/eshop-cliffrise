@@ -1,11 +1,13 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
 import GalleryCarousel from '../ui/carousel/GalleryCarousel'
+import YearToggle from './YearToggle.astro'
 import { getImage } from 'astro:assets'
 import TetevenClimbTitleEn from '../../assets/titles/en/teteven-climb.svg'
 import TetevenClimbTitleBg from '../../assets/titles/bg/teteven-climb.svg'
+import EventLink from './EventLink.astro'
 const { eventsSection } = getTranslations(Astro.params)
-const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo } =
+const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo, seeEvent } =
   eventsSection
 
 const aboutTitle = await getImage({
@@ -20,7 +22,14 @@ const aboutTitle = await getImage({
 
 <section class="bg-gray-100 py-15 xl:py-22 my-15 xl:my-22">
   <div
-    class="px-15 xl:pl-45 xl:pr-35 flex flex-col lg:flex-row mb-5 xl:mb-10 gap-5 lg:gap-8"
+    class="px-15
+    xl:px-0
+    mb-5
+    xl:mb-10
+    xl:max-w-[75%]
+    m-auto
+    flex flex-col lg:flex-row
+    gap-5 lg:gap-8"
   >
     <img
       id="events-section"
@@ -28,12 +37,33 @@ const aboutTitle = await getImage({
       src={aboutTitle.src}
       {...aboutTitle.attributes}
     />
-    <p class="text-base w-full font-normal leading-5 pl-10 lg:pl-0">
+    <p class="text-base w-full font-normal leading-5">
       <span class="font-bold">{boldedTextOne}</span>
       {normalTextOne}
       <span class="font-bold">{boldedTextTwo}</span>
       {normalTextTwo}
     </p>
   </div>
-  <GalleryCarousel client:load />
+
+  <div class="relative xl:max-w-[68%] m-auto">
+    <YearToggle />
+    <div class="overflow-x-hidden flex items-start justify-center">
+      <div data-year-panel="2026" class="w-full">
+        <div class="relative">
+          <img
+            src="/assets/ttvn_meetup_2026.png"
+            alt="Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
+            class="object-contain
+              w-full
+              px-3
+              md:max-h-[65%]"
+          />
+          <EventLink text={seeEvent} />
+        </div>
+      </div>
+      <div data-year-panel="2025" class="hidden w-full">
+        <GalleryCarousel client:load />
+      </div>
+    </div>
+  </div>
 </section>

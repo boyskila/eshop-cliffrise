@@ -1,0 +1,67 @@
+---
+
+---
+
+<div
+  class="flex justify-end items-center gap-1 sm:gap-2 shrink-0
+    pr-4
+    phone-landscape:gap-3
+    phone-landscape:pb-3
+    h-[50px]"
+>
+  <button
+    data-year-toggle="2026"
+    aria-pressed="true"
+    class="font-black cursor-pointer bg-transparent border-none
+      text-2xl
+      sm:text-4xl
+      text-black/30
+      aria-pressed:text-3xl
+      sm:aria-pressed:text-5xl
+      aria-pressed:text-black
+      transition-all duration-200"
+  >
+    2026
+  </button>
+  <button
+    data-year-toggle="2025"
+    aria-pressed="false"
+    class="font-black cursor-pointer bg-transparent border-none
+      text-2xl
+      sm:text-4xl
+      text-black/30
+      aria-pressed:text-3xl
+      sm:aria-pressed:text-5xl
+      aria-pressed:text-black
+      transition-all duration-200"
+  >
+    2025
+  </button>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const yearToggles =
+      document.querySelectorAll<HTMLButtonElement>('[data-year-toggle]')
+
+    yearToggles.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const year = btn.dataset.yearToggle
+        if (!year) return
+
+        yearToggles.forEach((b) => {
+          b.setAttribute(
+            'aria-pressed',
+            b.dataset.yearToggle === year ? 'true' : 'false',
+          )
+        })
+
+        document
+          .querySelectorAll<HTMLElement>('[data-year-panel]')
+          .forEach((panel) => {
+            panel.classList.toggle('hidden', panel.dataset.yearPanel !== year)
+          })
+      })
+    })
+  })
+</script>
