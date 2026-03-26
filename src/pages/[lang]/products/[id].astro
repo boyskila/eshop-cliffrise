@@ -1,0 +1,156 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro'
+import { getTranslations, getLang } from '@utils/i18'
+import { getProducts } from '@data/products'
+import AddToCartButton from '../../../components/products/AddToCartButton'
+import ProductsCarousel from '../../../components/ui/carousel/ProductsCarousel'
+import KindSelector from '../../../components/products/KindSelector.astro'
+import { QuantityControls } from '../../../components/products/QuantityControls'
+import Divider from '../../../components/ui/Divider.astro'
+import SeeAlsoBg from '../../../assets/titles/bg/see-also.svg'
+import SeeAlsoEn from '../../../assets/titles/en/see-also.svg'
+import { getImage } from 'astro:assets'
+
+const translations = getTranslations(Astro.params)
+const products = getProducts(translations)
+const lang = getLang(Astro.params)
+const { id } = Astro.params
+const productsTitleImg = lang === 'bg' ? SeeAlsoBg : SeeAlsoEn
+const image = await getImage({
+  src: productsTitleImg,
+  widths: [200, 400],
+  formats: ['avif', 'webp', 'png'],
+  quality: 80,
+  alt: 'Products with mission',
+})
+
+const product = products.find((p) => p.id === id)
+
+if (!product) {
+  return Astro.redirect(`/${lang}/products/`)
+}
+---
+
+<MainLayout title={product.name} showHero={false}>
+  <section class="py-10 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
+    <div
+      data-product-container
+      class="flex flex-col md:flex-row gap-8 md:gap-12"
+    >
+      <div class="flex-1 min-w-0">
+        <div class="aspect-square overflow-hidden mb-4">
+          <img
+            id="product-main-image"
+            data-product-image
+            src={product.images[0]}
+            alt={product.name}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        {
+          product.images.length > 1 && (
+            <ul class="flex gap-2 flex-wrap">
+              {product.images.map((img) => (
+                <li>
+                  <button
+                    data-product-thumbnail
+                    data-image-src={img}
+                    class="
+                    w-14
+                    h-14
+                    border
+                    border-gray-200
+                    rounded
+                    overflow-hidden
+                    cursor-pointer
+                    hover:border-black
+                    transition-colors"
+                  >
+                    <img
+                      src={img}
+                      alt={product.name}
+                      class="w-full h-full object-cover"
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+
+      <div class="flex-1 flex flex-col gap-4">
+        <h1 class="text-2xl md:text-3xl font-bold">{product.name}</h1>
+        <p class="text-xl font-semibold">{product.price.toFixed(2)} лв.</p>
+        <p
+          class="text-gray-600 leading-relaxed"
+          class:list={{ 'flex-1': product.kind.length === 0 }}
+        >
+          {product.description}
+        </p>
+
+        {
+          product.kind.length > 0 && (
+            <KindSelector product={product} translations={translations} />
+          )
+        }
+
+        <div class="flex justify-between items-center">
+          <QuantityControls product={product} client:load />
+          <div
+            class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl"
+          >
+            {product.price.toFixed(2)} &euro;
+          </div>
+        </div>
+        <div class="flex items-center gap-4 mt-4">
+          <AddToCartButton
+            productName={product.name}
+            productId={product.id}
+            lang={lang}
+            label={translations.addToCart}
+            disabled={product.kind.length > 0}
+            client:load
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <Divider class="my-10 w-full" />
+  <section id="products" class="flex-col justify-center px-3 md:px-7 lg:px-10">
+    <h2 class="mb-7 lg:mb-10">
+      <img
+        class="w-[150px] lg:w-[235px] m-auto"
+        alt="Products"
+        src={image.src}
+        {...image.attributes}
+      />
+    </h2>
+    <ProductsCarousel
+      products={products}
+      buttonText={translations.buyNow}
+      lang={lang}
+      client:only
+    />
+  </section>
+</MainLayout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const mainImage = document.getElementById(
+      'product-main-image',
+    ) as HTMLImageElement | null
+    const thumbnails = document.querySelectorAll<HTMLButtonElement>(
+      '[data-product-thumbnail]',
+    )
+
+    thumbnails.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const src = thumb.dataset.imageSrc
+        if (mainImage && src) {
+          mainImage.src = src
+        }
+      })
+    })
+  })
+</script>

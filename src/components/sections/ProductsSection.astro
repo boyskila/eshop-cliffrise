@@ -5,7 +5,6 @@ import ProductsTitleBg from '../../assets/titles/bg/products.svg'
 import ProductsTitleEn from '../../assets/titles/en/products.svg'
 import { getImage } from 'astro:assets'
 import ProductsCarousel from '../ui/carousel/ProductsCarousel'
-import ProductModal from '../products/ProductModal.astro'
 
 const translations = getTranslations(Astro.params)
 const products = getProducts(translations)
@@ -31,8 +30,8 @@ const image = await getImage({
   </h2>
   <ProductsCarousel
     products={products}
-    buttonText={translations.addToCart}
+    buttonText={translations.buyNow}
+    lang={lang}
     client:only
   />
-  <ProductModal products={products} lang={lang} />
 </section>

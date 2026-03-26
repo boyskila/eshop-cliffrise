@@ -22,7 +22,7 @@ const kindTitle = Object.entries(translations.product)
   product.kind.length > 0 && (
     <div
       class="
-        flex flex-col gap-3
+        flex flex-col gap-3 flex-1
         short-screen-portrait:gap-2
         short-screen-landscape:gap-1"
     >
@@ -76,7 +76,7 @@ const kindTitle = Object.entries(translations.product)
     const { signal } = kindSelectorController
 
     selectors.forEach((selector) => {
-      const panel = selector.closest<HTMLElement>('[data-product-modal-panel]')
+      const panel = selector.closest<HTMLElement>('[data-product-container]')
       if (!panel) return
 
       const kindOptions = Array.from(
@@ -84,12 +84,6 @@ const kindTitle = Object.entries(translations.product)
       )
       if (!kindOptions.length) return
 
-      const addToCartButton = panel.querySelector<HTMLButtonElement>(
-        '[data-add-to-cart-button]',
-      )
-      const buyNowButton = panel.querySelector<HTMLButtonElement>(
-        '[data-buy-now-button]',
-      )
       const productImage = panel.querySelector<HTMLImageElement>(
         '[data-product-image]',
       )
@@ -101,14 +95,11 @@ const kindTitle = Object.entries(translations.product)
           option.classList.remove('bg-black', 'text-white', 'border-black')
         })
 
-        if (addToCartButton) {
-          delete addToCartButton.dataset.productKind
-          addToCartButton.disabled = true
-        }
-        if (buyNowButton) {
-          delete buyNowButton.dataset.productKind
-          buyNowButton.disabled = true
-        }
+        window.dispatchEvent(
+          new CustomEvent('kind-changed', {
+            detail: { kind: null },
+          }),
+        )
       }
 
       const setKind = (kindIndex: string) => {
@@ -129,14 +120,11 @@ const kindTitle = Object.entries(translations.product)
         const selectedKind = selectedOption.dataset.kindName ?? ''
         const selectedKindImage = selectedOption.dataset.kindImage ?? ''
 
-        if (addToCartButton) {
-          addToCartButton.dataset.productKind = selectedKind
-          addToCartButton.disabled = selectedKind.length === 0
-        }
-        if (buyNowButton) {
-          buyNowButton.dataset.productKind = selectedKind
-          buyNowButton.disabled = selectedKind.length === 0
-        }
+        window.dispatchEvent(
+          new CustomEvent('kind-changed', {
+            detail: { kind: selectedKind || null },
+          }),
+        )
 
         if (productImage && selectedKindImage.trim().length > 0) {
           productImage.src = selectedKindImage
@@ -155,12 +143,6 @@ const kindTitle = Object.entries(translations.product)
       })
 
       clearKindSelection()
-
-      window.addEventListener(
-        'product-modal:closed',
-        () => clearKindSelection(),
-        { signal },
-      )
     })
   })
 </script>
