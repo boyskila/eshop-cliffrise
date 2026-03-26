@@ -1,55 +1,40 @@
-import { test, expect, type Page, type Locator } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
-const openProductModal = async (page: Page, productName: string) => {
-  await page
-    .locator(`[data-open-product-modal][aria-label*="${productName}"]`)
-    .first()
-    .click()
-
-  const dialog = page.locator('#productModal')
-  await expect(dialog).toBeVisible()
-  return dialog
-}
-
-const getVisiblePanel = (dialog: Locator) =>
-  dialog.locator('[data-product-modal-panel]:not(.hidden)')
+// Chunky Chalk (id=1) - no kind options
+const PRODUCT_URL = '/en/products/1/'
 
 test.describe('Product Info', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto(PRODUCT_URL)
   })
 
   test('displays the product name', async ({ page }) => {
-    const dialog = await openProductModal(page, 'Chunky Chalk')
-    const panel = getVisiblePanel(dialog)
-
-    const name = panel.locator('[data-product-name]')
-    await expect(name).toHaveText('Chunky Chalk – 250 g')
+    const heading = page.locator('[data-product-container] h1')
+    await expect(heading).toHaveText('Chunky Chalk – 250 g')
   })
 
   test('displays the product description', async ({ page }) => {
-    const dialog = await openProductModal(page, 'Chunky Chalk')
-    const panel = getVisiblePanel(dialog)
-
-    const description = panel.locator('[data-product-description]')
-    await expect(description).toContainText(
+    const container = page.locator('[data-product-container]')
+    await expect(container).toContainText(
       'Chunky climbing chalk with a coarse structure that breaks down easily and provides reliable friction. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.',
     )
   })
 
-  test('product name is rendered as an h3 heading', async ({ page }) => {
-    const dialog = await openProductModal(page, 'Chunky Chalk')
-    const panel = getVisiblePanel(dialog)
-
-    const heading = panel.locator('h3[data-product-name]')
+  test('product name is rendered as an h1 heading', async ({ page }) => {
+    const heading = page.locator('[data-product-container] h1')
     await expect(heading).toBeVisible()
   })
 
-  test('description has scroll for long content', async ({ page }) => {
-    const dialog = await openProductModal(page, 'Chunky Chalk')
-    const panel = getVisiblePanel(dialog)
+  test('displays the product price', async ({ page }) => {
+    const container = page.locator('[data-product-container]')
+    await expect(container).toContainText('12.99')
+  })
 
-    const description = panel.locator('[data-product-description]')
-    await expect(description).toHaveCSS('overflow-y', 'scroll')
+  test('add to cart button is visible and enabled for products without kind', async ({
+    page,
+  }) => {
+    const addToCart = page.locator('[data-add-to-cart-button]')
+    await expect(addToCart).toBeVisible()
+    await expect(addToCart).toBeEnabled()
   })
 })

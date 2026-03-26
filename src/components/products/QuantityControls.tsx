@@ -1,17 +1,9 @@
-import { onMount, onCleanup } from 'solid-js'
 import Minus from 'lucide-solid/icons/minus'
 import Plus from 'lucide-solid/icons/plus'
 import type { Product } from '@types'
 import { quantity, setQuantity } from '@signals/cart'
 
 export const QuantityControls = ({ product }: { product: Product }) => {
-  onMount(() => {
-    const resetQty = () => setQuantity(1)
-    window.addEventListener('product-modal:closed', resetQty)
-    onCleanup(() =>
-      window.removeEventListener('product-modal:closed', resetQty),
-    )
-  })
   return (
     <div
       role="group"

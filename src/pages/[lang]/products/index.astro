@@ -1,0 +1,7 @@
+---
+import { getLang } from '@utils/i18'
+
+const lang = getLang(Astro.params)
+
+return Astro.redirect(`/${lang}/#products`)
+---

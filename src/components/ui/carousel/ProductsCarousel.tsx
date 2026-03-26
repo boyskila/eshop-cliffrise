@@ -3,24 +3,23 @@ import useEmblaCarousel from 'embla-carousel-solid'
 import type { Product } from '@types'
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
-import { getProductModalPanelId } from '../../products/productModalId'
+import BuyNowButton from '../../products/BuyNowButton'
 
 export default (props: {
   products: Product[]
   buttonText: string
+  lang: string
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     CAROUSEL_OPTIONS,
-    CAROUSEL_PLUGINS,
+    // CAROUSEL_PLUGINS,
   )
 
   return (
     <div class="overflow-hidden" ref={emblaRef}>
       <div class="flex touch-pan-y touch-pinch-zoom">
         <For each={props.products}>
-          {({ image, name, id, price }, index) => {
-            const panelId = getProductModalPanelId(id, index())
-
+          {({ image, name, id, price }) => {
             return (
               <div
                 classList={{
@@ -38,34 +37,32 @@ export default (props: {
                     'xl:gap-5 xl:landscape:gap-5': true,
                   }}
                 >
-                  <img
-                    src={image}
-                    class="w-full h-auto object-cover object-center"
-                    loading="lazy"
-                  />
+                  <a
+                    class="w-full h-full"
+                    href={`/${props.lang}/products/${id}/`}
+                  >
+                    <img
+                      src={image}
+                      class="w-full h-auto object-cover object-center"
+                      loading="lazy"
+                    />
+                  </a>
                   <div class="flex justify-between w-full">
                     <div class="flex flex-col gap-1">
-                      <span class="text-base md:text-lg xl:text-xl">{name}</span>
+                      <span class="text-base md:text-lg xl:text-xl">
+                        {name}
+                      </span>
                       <div class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl">
                         {price.toFixed(2)} &euro;
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      data-open-product-modal
-                      data-product-modal-panel={panelId}
-                      aria-label={`${props.buttonText}: ${name}`}
-                      class="bg-black text-white size-[35px] md:size-[43px] mt-1 flex items-center justify-center"
-                    >
-                      <svg viewBox="0 0 24 24" class="size-[70%]">
-                        <path
-                          d="M12 5v14M5 12h14"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                        />
-                      </svg>
-                    </button>
+                    <BuyNowButton
+                      productName={name}
+                      productId={id}
+                      lang={props.lang}
+                      label={props.buttonText}
+                      disabled={false}
+                    />
                   </div>
                 </div>
               </div>

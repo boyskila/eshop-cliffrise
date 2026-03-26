@@ -14,7 +14,7 @@ test('not throwig error when no hash is not present', async ({ page }) => {
   ).toBe(false)
 })
 
-test.skip('scrolls to element when lang is changed and hash is present on page reload', async ({
+test('scrolls to element when lang is changed and hash is present on page reload', async ({
   page,
 }) => {
   await page.goto('/en/#products')
@@ -25,13 +25,18 @@ test.skip('scrolls to element when lang is changed and hash is present on page r
   const el = page.locator('#products')
   await expect(el).toBeAttached()
 
-  const inViewport = await page.evaluate(() => {
-    const el = document.querySelector('#products')
-    if (el) {
+  await expect(async () => {
+    const inViewport = await page.evaluate(() => {
+      const el = document.querySelector('#products')
+      if (!el) {
+        return false
+      }
       const { top } = el.getBoundingClientRect()
-      return Math.abs(top) < 5
-    }
-  })
-
-  expect(inViewport).toBe(true)
+      const expectedScrollPadding = 100
+      // Allow a small margin of error due to potential
+      // subpixel differences or minor layout shifts
+      return Math.abs(top - expectedScrollPadding) < 2
+    })
+    expect(inViewport).toBe(true)
+  }).toPass({ timeout: 5000 })
 })

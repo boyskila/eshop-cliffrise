@@ -1,4 +1,5 @@
 import { actions } from 'astro:actions'
+import { createSignal, onMount, onCleanup } from 'solid-js'
 import {
   addCartNotification,
   quantity,
@@ -15,16 +16,27 @@ export default function AddToCartButton(props: {
 }) {
   const productName = props.productName
   const productId = props.productId
+  const [isDisabled, setIsDisabled] = createSignal(props.disabled ?? false)
+  const [kind, setKind] = createSignal<string | undefined>(undefined)
+
+  onMount(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail
+      const selectedKind = detail?.kind as string | null
+      setKind(selectedKind ?? undefined)
+      setIsDisabled(!selectedKind)
+    }
+    window.addEventListener('kind-changed', handler)
+    onCleanup(() => window.removeEventListener('kind-changed', handler))
+  })
 
   return (
     <button
-      onClick={async (event) => {
-        const kind = (event.currentTarget as HTMLButtonElement).dataset
-          .productKind
+      onClick={async () => {
         const { data } = await actions.addToCart({
           productId,
           lang: props.lang,
-          kind,
+          kind: kind(),
           quantity: quantity(),
         })
         const { cart, addedItem } = data ?? {}
@@ -35,7 +47,7 @@ export default function AddToCartButton(props: {
         }
       }}
       data-add-to-cart-button
-      disabled={props.disabled}
+      disabled={isDisabled()}
       aria-label={`Add ${productName} to cart`}
       class="p-2 md:p-3
         flex items-center justify-center flex-1

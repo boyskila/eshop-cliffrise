@@ -23,28 +23,28 @@ const cart = await Astro.session?.get('cart')
       <div class="hidden md:flex gap-8 xl:gap-[46px]">
         <a
           data-hash-link
-          href="#products"
+          href={`/${lang}/#products`}
           class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
           {products}
         </a>
         <a
           data-hash-link
-          href="#our-cause"
+          href={`/${lang}/#our-cause`}
           class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
           {ourCause}
         </a>
         <a
           data-hash-link
-          href="#events-section"
+          href={`/${lang}/#events-section`}
           class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
           {tetevenClimb}
         </a>
         <a
           data-hash-link
-          href="#about-us"
+          href={`/${lang}/#about-us`}
           class="font-normal text-white text-lg xl:text-xl whitespace-nowrap"
         >
           {aboutUs}
@@ -73,10 +73,10 @@ const cart = await Astro.session?.get('cart')
     </div>
     <MobileMenu
       menuItems={[
-        { href: '#products', title: products },
-        { href: '#our-cause', title: ourCause },
-        { href: '#about-us', title: aboutUs },
-        { href: '#events-section', title: tetevenClimb },
+        { href: `/${lang}/#products`, title: products },
+        { href: `/${lang}/#our-cause`, title: ourCause },
+        { href: `/${lang}/#about-us`, title: aboutUs },
+        { href: `/${lang}/#events-section`, title: tetevenClimb },
       ]}
       client:load
     />
@@ -85,17 +85,18 @@ const cart = await Astro.session?.get('cart')
 
 <script>
   document.addEventListener('click', (e) => {
-    const hashLink = (e.target as HTMLLinkElement)
-      .closest('[data-hash-link]')
-      ?.getAttribute('href')
-    if (hashLink) {
+    const link = (e.target as HTMLElement).closest<HTMLAnchorElement>(
+      '[data-hash-link]',
+    )
+    if (link) {
+      const hash = link.hash
       const langSwitcher = document.querySelector(
         '[data-lang-switcher]',
       ) as HTMLLinkElement
       const { lang } = langSwitcher.dataset
       const { nextLang } = langSwitcher.dataset
       if (lang && nextLang && langSwitcher) {
-        langSwitcher.href = `${window.location.pathname.replace(lang, nextLang)}${hashLink}`
+        langSwitcher.href = `/${nextLang}/${hash}`
       }
     }
   })
