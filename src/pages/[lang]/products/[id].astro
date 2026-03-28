@@ -1,15 +1,16 @@
 ---
+import { getImage } from 'astro:assets'
 import MainLayout from '../../../layouts/MainLayout.astro'
 import { getTranslations, getLang } from '@utils/i18'
 import { getProducts } from '@data/products'
-import AddToCartButton from '../../../components/products/AddToCartButton'
-import ProductsCarousel from '../../../components/ui/carousel/ProductsCarousel'
-import KindSelector from '../../../components/products/KindSelector.astro'
-import { QuantityControls } from '../../../components/products/QuantityControls'
-import Divider from '../../../components/ui/Divider.astro'
-import SeeAlsoBg from '../../../assets/titles/bg/see-also.svg'
-import SeeAlsoEn from '../../../assets/titles/en/see-also.svg'
-import { getImage } from 'astro:assets'
+import { AddToCartButton } from '@components/products/AddToCartButton'
+import ProductsCarousel from '@components/ui/carousel/ProductsCarousel'
+import KindSelector from '@components/products/KindSelector.astro'
+import { QuantityControls } from '@components/products/QuantityControls'
+import Divider from '@components/ui/Divider.astro'
+import SeeAlsoBg from '@assets/titles/bg/see-also.svg'
+import SeeAlsoEn from '@assets/titles/en/see-also.svg'
+import ImageThumbnails from '@components/products/ImageThumbnails.astro'
 
 const translations = getTranslations(Astro.params)
 const products = getProducts(translations)

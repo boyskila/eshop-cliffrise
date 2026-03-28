@@ -10,7 +10,9 @@
       "@data/*": ["./src/data/*"],
       "@actions": ["./src/actions/"],
       "@signals/*": ["./src/signals/*"],
-      "@services/*": ["./src/services/*"]
+      "@services/*": ["./src/services/*"],
+      "@components/*": ["./src/components/*"],
+      "@assets/*": ["./src/assets/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"
