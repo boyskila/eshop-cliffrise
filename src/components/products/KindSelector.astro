@@ -77,12 +77,16 @@ const kindTitle = Object.entries(productTranslations)
 
     selectors.forEach((selector) => {
       const panel = selector.closest<HTMLElement>('[data-product-container]')
-      if (!panel) return
+      if (!panel) {
+        return
+      }
 
       const kindOptions = Array.from(
         selector.querySelectorAll<HTMLButtonElement>('[data-kind-option]'),
       )
-      if (!kindOptions.length) return
+      if (!kindOptions.length) {
+        return
+      }
 
       const productImage = panel.querySelector<HTMLImageElement>(
         '[data-product-image]',
@@ -106,7 +110,9 @@ const kindTitle = Object.entries(productTranslations)
         const selectedOption = kindOptions.find(
           (option) => option.dataset.kindIndex === kindIndex,
         )
-        if (!selectedOption) return
+        if (!selectedOption) {
+          return
+        }
 
         kindOptions.forEach((option) => {
           const isSelected = option.dataset.kindIndex === kindIndex
@@ -122,7 +128,7 @@ const kindTitle = Object.entries(productTranslations)
 
         window.dispatchEvent(
           new CustomEvent('kind-changed', {
-            detail: { kind: selectedKind || null },
+            detail: { kind: selectedKind },
           }),
         )
 

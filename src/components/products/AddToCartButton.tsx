@@ -7,13 +7,13 @@ import {
   updateCart,
 } from '@signals/cart'
 
-export default function AddToCartButton(props: {
+export const AddToCartButton = (props: {
   productName: string
   productId: string
   lang: string
   label?: string
   disabled?: boolean
-}) {
+}) => {
   const productName = props.productName
   const productId = props.productId
   const [isDisabled, setIsDisabled] = createSignal(props.disabled ?? false)
@@ -22,8 +22,8 @@ export default function AddToCartButton(props: {
   onMount(() => {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail
-      const selectedKind = detail?.kind as string | null
-      setKind(selectedKind ?? undefined)
+      const selectedKind = detail?.kind as string
+      setKind(selectedKind)
       setIsDisabled(!selectedKind)
     }
     window.addEventListener('kind-changed', handler)
