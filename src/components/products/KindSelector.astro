@@ -20,37 +20,21 @@ const kindTitle = Object.entries(productTranslations)
 
 {
   product.kind.length > 0 && (
-    <div
-      class="
-        flex flex-col gap-3 flex-1
-        short-screen-portrait:gap-2
-        short-screen-landscape:gap-1"
-    >
-      <p
-        class="
-          text-xl font-semibold underline underline-offset-2
-          phone-landscape:hidden
-          short-screen-portrait:text-base
-          short-screen-landscape:text-base"
-      >
-        {kindTitle}
-      </p>
-      <ul class="flex flex-wrap gap-1" data-kind-selector>
+    <div class="flex flex-col gap-4 flex-1">
+      <h3 class="text-xl underline underline-offset-2">{kindTitle}</h3>
+      <ul class="flex flex-wrap gap-1 md:gap-2" data-kind-selector>
         {product.kind.map((kind, kindIndex) => (
           <li>
             <button
               type="button"
               data-kind-option
-              data-kind-index={String(kindIndex)}
+              data-kind-index={kindIndex}
               data-kind-name={kind.name}
               data-kind-image={kind.image}
-              class="py-1 px-4
+              class="
+                py-1 px-4
+                text-[15px] lg:text-lg
                 border border-[#D9D9D9]
-                short-screen-portrait:text-sm
-                phone-portrait:px-2
-                short-screen-landscape:text-xs
-                phone-landscape:text-sm
-                phone-portrait:text-sm
                 uppercase"
             >
               {kind.name}

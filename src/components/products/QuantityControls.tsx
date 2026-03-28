@@ -18,12 +18,16 @@ export const QuantityControls = ({ productName }: Props) => {
         class="p-1 rounded transition-colors cursor-pointer"
         onClick={() => setQuantity((q) => Math.max(1, q - 1))}
       >
-        <Minus class="h-4 w-4" aria-hidden="true" />
+        <Minus class="size-5" aria-hidden="true" />
       </button>
       <output
         aria-live="polite"
         aria-label={`Current quantity of ${productName}`}
-        class="border border-gray size-6 flex items-center justify-center text-sm font-medium"
+        class="
+          border border-gray
+          size-7
+          flex items-center justify-center
+          font-medium"
       >
         {quantity()}
       </output>
@@ -32,7 +36,7 @@ export const QuantityControls = ({ productName }: Props) => {
         class="p-1 rounded transition-colors cursor-pointer"
         onClick={() => setQuantity((q) => q + 1)}
       >
-        <Plus class="h-4 w-4" aria-hidden="true" />
+        <Plus class="size-5" aria-hidden="true" />
       </button>
     </div>
   )
