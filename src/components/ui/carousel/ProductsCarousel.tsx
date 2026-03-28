@@ -3,7 +3,6 @@ import useEmblaCarousel from 'embla-carousel-solid'
 import type { Product } from '@types'
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
-import BuyNowButton from '../../products/BuyNowButton'
 
 export default (props: {
   products: Product[]
