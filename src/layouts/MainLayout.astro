@@ -31,11 +31,24 @@ const cartFromSession = await Astro.session?.get('cart')
   </head>
   <body>
     <Header />
-    <Cart translations={cart} client:idle initialCart={cartFromSession} />
+    <Cart
+      text={{
+        title: cart.title,
+        empty: cart.empty,
+        emptyDesc: cart.emptyDesc,
+        total: cart.total,
+        checkout: cart.checkout,
+        routeFunding: cart.routeFunding,
+      }}
+      client:idle
+      initialCart={cartFromSession}
+    />
     <CartNotifications
       client:visible
-      addedToCart={notification.addedToCart}
-      routeFunding={notification.routeFunding}
+      text={{
+        addedToCart: notification.addedToCart,
+        routeFunding: notification.routeFunding,
+      }}
     />
     {showHero && <Hero />}
     <main>

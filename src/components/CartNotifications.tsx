@@ -2,7 +2,14 @@ import { For } from 'solid-js'
 import type { Translations } from '@types'
 import { cartNotifications } from '@signals/cart'
 
-export const CartNotifications = (props: Translations['notification']) => {
+type Props = {
+  text: {
+    addedToCart: string
+    routeFunding: string
+  }
+}
+
+export const CartNotifications = ({ text }: Props) => {
   return (
     <div class="fixed top-25 right-1 z-50 space-y-2">
       <For each={cartNotifications()}>
@@ -12,7 +19,7 @@ export const CartNotifications = (props: Translations['notification']) => {
               <div class="flex">
                 <div class="bg-black text-white p-2 items-center flex">
                   <span class="flex rotate-180 [writing-mode:vertical-rl]">
-                    {props.addedToCart}
+                    {text.addedToCart}
                   </span>
                 </div>
 
@@ -31,7 +38,7 @@ export const CartNotifications = (props: Translations['notification']) => {
                     </div>
                   </div>
                   <p class="text-xs pt-2 border-t border-black">
-                    {props.routeFunding}
+                    {text.routeFunding}
                   </p>
                 </div>
               </div>

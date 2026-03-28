@@ -3,14 +3,14 @@ import { cart } from '@signals/cart'
 import { getTotalPrice } from '@utils/cart'
 
 type Props = {
-  translations: {
+  text: {
     total: string
     checkout: string
     routeFunding: string
   }
 }
 export const CartFooter = (props: Props) => {
-  const { checkout, routeFunding, total } = props.translations
+  const { checkout, routeFunding, total } = props.text
   return (
     <div class="border-t border-black pt-4 xl:pt-7">
       <div class="flex justify-between items-center mb-4 xl:mb-7">

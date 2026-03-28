@@ -1,14 +1,14 @@
 ---
-import type { Product, Translations } from '@types'
+import type { Product, ProductTranslations } from '@types'
 
 interface Props {
   product: Product
-  translations: Omit<Translations, 'addToCart' | 'buyNow'>
+  productTranslations: ProductTranslations
 }
 
-const { product, translations } = Astro.props
+const { product, productTranslations } = Astro.props
 
-const kindTitle = Object.entries(translations.product)
+const kindTitle = Object.entries(productTranslations)
   .map(([_, value]) => {
     if (value.name === product.name && value.kindTitle !== null) {
       return value.kindTitle

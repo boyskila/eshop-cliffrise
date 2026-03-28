@@ -9,7 +9,6 @@ export type Product = {
   id: string
   image: string
   name: string
-  category: 'chalk' | 'apparel'
   description: string
   images: string[]
   price: number
@@ -18,6 +17,7 @@ export type Product = {
 }
 
 export type Translations = typeof en
+export type ProductTranslations = typeof en.product
 
 export type EmailData = {
   from: string
