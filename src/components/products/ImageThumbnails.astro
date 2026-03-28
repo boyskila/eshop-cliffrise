@@ -2,23 +2,17 @@
 import type { Product } from '@types'
 
 interface Props {
-  product: Product
+  productName: string
+  productImages: Product['images']
 }
 
-const { product } = Astro.props
+const { productName, productImages } = Astro.props
 ---
 
 {
-  product.images.length > 0 && (
-    <ul
-      class="
-        flex gap-2 flex-wrap shrink-0
-        phone-portrait:hidden
-        phone-landscape:hidden
-        tablet-landscape:flex"
-      data-image-thumbnails
-    >
-      {product.images.map((image, imageIndex) => (
+  productImages.length > 1 && (
+    <ul class="flex gap-2 flex-wrap">
+      {productImages.map((img) => (
         <li>
           <button
             type="button"
@@ -26,11 +20,11 @@ const { product } = Astro.props
             data-image-index={String(imageIndex)}
             data-image-src={image}
             class="size-[58px] bg-[#d9d9d9] p-1 aria-pressed:border aria-pressed:border-black"
-            aria-label={`Preview ${imageIndex + 1} for ${product.name}`}
+            aria-label={`Preview ${imageIndex + 1} for ${productName}`}
           >
             <img
               src={image}
-              alt={`Preview ${imageIndex + 1} for ${product.name}`}
+              alt={`Preview ${imageIndex + 1} for ${productName}`}
               class="size-full object-cover object-center"
               loading="lazy"
             />
