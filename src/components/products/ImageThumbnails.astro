@@ -15,19 +15,16 @@ const { productName, productImages } = Astro.props
       {productImages.map((img) => (
         <li>
           <button
-            type="button"
-            data-image-thumb
-            data-image-index={String(imageIndex)}
-            data-image-src={image}
-            class="size-[58px] bg-[#d9d9d9] p-1 aria-pressed:border aria-pressed:border-black"
-            aria-label={`Preview ${imageIndex + 1} for ${productName}`}
+            data-product-thumbnail
+            data-image-src={img}
+            class="
+              size-14
+              rounded
+              cursor-pointer
+              hover:border
+              hover:border-black"
           >
-            <img
-              src={image}
-              alt={`Preview ${imageIndex + 1} for ${productName}`}
-              class="size-full object-cover object-center"
-              loading="lazy"
-            />
+            <img src={img} alt={productName} class="size-full object-cover" />
           </button>
         </li>
       ))}
@@ -36,67 +33,21 @@ const { productName, productImages } = Astro.props
 }
 
 <script>
-  let imageThumbnailsController: AbortController | null = null
-
   document.addEventListener('astro:page-load', () => {
-    const containers = document.querySelectorAll<HTMLElement>(
-      '[data-image-thumbnails]',
+    const mainImage = document.getElementById(
+      'product-main-image',
+    ) as HTMLImageElement | null
+    const thumbnails = document.querySelectorAll<HTMLButtonElement>(
+      '[data-product-thumbnail]',
     )
-    if (!containers.length) return
 
-    imageThumbnailsController?.abort()
-    imageThumbnailsController = new AbortController()
-    const { signal } = imageThumbnailsController
-
-    containers.forEach((container) => {
-      const panel = container.closest<HTMLElement>('[data-product-modal-panel]')
-      if (!panel) return
-
-      const productImage = panel.querySelector<HTMLImageElement>(
-        '[data-product-image]',
-      )
-      const imageThumbs = Array.from(
-        container.querySelectorAll<HTMLButtonElement>('[data-image-thumb]'),
-      )
-      if (!productImage || !imageThumbs.length) return
-
-      const setImage = (imageIndex: string) => {
-        const selectedThumb = imageThumbs.find(
-          (thumb) => thumb.dataset.imageIndex === imageIndex,
-        )
-        if (!selectedThumb) return
-
-        const selectedImage = selectedThumb.dataset.imageSrc ?? ''
-        const fallbackImage =
-          productImage.dataset.defaultImage ?? productImage.src
-        productImage.src = selectedImage || fallbackImage
-
-        imageThumbs.forEach((thumb) => {
-          const isSelected = thumb.dataset.imageIndex === imageIndex
-          thumb.setAttribute('aria-pressed', String(isSelected))
-        })
-      }
-
-      imageThumbs.forEach((thumb) => {
-        thumb.addEventListener(
-          'click',
-          () => {
-            const imageIndex = thumb.dataset.imageIndex ?? '0'
-            setImage(imageIndex)
-          },
-          { signal },
-        )
+    thumbnails.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const src = thumb.dataset.imageSrc
+        if (mainImage && src) {
+          mainImage.src = src
+        }
       })
-
-      const resetToFirst = () => {
-        const defaultImage = productImage.dataset.defaultImage
-        if (defaultImage) productImage.src = defaultImage
-        setImage(imageThumbs[0].dataset.imageIndex ?? '0')
-      }
-
-      resetToFirst()
-
-      window.addEventListener('product-modal:closed', resetToFirst, { signal })
     })
   })
 </script>

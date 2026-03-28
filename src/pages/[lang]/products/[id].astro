@@ -48,36 +48,10 @@ if (!product) {
             class="w-full h-full object-cover"
           />
         </div>
-        {
-          product.images.length > 1 && (
-            <ul class="flex gap-2 flex-wrap">
-              {product.images.map((img) => (
-                <li>
-                  <button
-                    data-product-thumbnail
-                    data-image-src={img}
-                    class="
-                    w-14
-                    h-14
-                    border
-                    border-gray-200
-                    rounded
-                    overflow-hidden
-                    cursor-pointer
-                    hover:border-black
-                    transition-colors"
-                  >
-                    <img
-                      src={img}
-                      alt={product.name}
-                      class="w-full h-full object-cover"
-                    />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )
-        }
+        <ImageThumbnails
+          productImages={product.images}
+          productName={product.name}
+        />
       </div>
 
       <div class="flex-1 flex flex-col gap-4">
