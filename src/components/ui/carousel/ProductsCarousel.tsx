@@ -11,7 +11,7 @@ export default (props: {
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     CAROUSEL_OPTIONS,
-    // CAROUSEL_PLUGINS,
+    CAROUSEL_PLUGINS,
   )
 
   return (
@@ -48,20 +48,37 @@ export default (props: {
                   </a>
                   <div class="flex justify-between w-full gap-2">
                     <div class="flex flex-col gap-1">
-                      <span class="text-base md:text-lg xl:text-xl">
+                      <a
+                        href={`/${props.lang}/products/${id}/`}
+                        class="
+                          text-base
+                          md:text-lg
+                          xl:text-2xl
+                          underline-offset-4
+                          font-bold
+                          hover:underline"
+                      >
                         {name}
                       </a>
                       <div class="font-bold text-[19px] lg:text-xl xl:text-2xl">
                         {price.toFixed(2)} &euro;
                       </div>
-                    </div>
-                    <BuyNowButton
-                      productName={name}
-                      productId={id}
-                      lang={props.lang}
-                      label={props.buttonText}
-                      disabled={false}
-                    />
+                    </div>{' '}
+                    <a
+                      href={`/${props.lang}/products/${id}/`}
+                      aria-label={`Buy ${name} now`}
+                      class="
+                        phone-portrait:h-7
+                        phone-landscape:h-7
+                        flex items-center justify-center
+                        max-h-10 w-32
+                        text-sm
+                        md:text-base
+                        bg-black text-white lg:text-lg
+                        leading-none tracking-[2px] uppercase"
+                    >
+                      {props.buttonText}
+                    </a>
                   </div>
                 </div>
               </div>
