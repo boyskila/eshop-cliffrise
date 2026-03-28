@@ -33,10 +33,10 @@ if (!product) {
 ---
 
 <MainLayout title={product.name} showHero={false}>
-  <section class="py-10 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
+  <section class="pt-10 px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
     <div
       data-product-container
-      class="flex flex-col md:flex-row gap-8 md:gap-12"
+      class="flex phone-landscape:flex-row flex-col md:flex-row gap-8 md:gap-12"
     >
       <div class="flex-1 min-w-0">
         <div class="aspect-square overflow-hidden mb-4">
@@ -81,8 +81,9 @@ if (!product) {
       </div>
 
       <div class="flex-1 flex flex-col gap-4">
-        <h1 class="text-2xl md:text-3xl font-bold">{product.name}</h1>
-        <p class="text-xl font-semibold">{product.price.toFixed(2)} лв.</p>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold">
+          {product.name}
+        </h1>
         <p
           class="text-gray-600 leading-relaxed"
           class:list={{ 'flex-1': product.kind.length === 0 }}
@@ -101,10 +102,8 @@ if (!product) {
 
         <div class="flex justify-between items-center">
           <QuantityControls productName={product.name} client:idle />
-          <div
-            class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl"
-          >
-            {product.price.toFixed(2)} &euro;
+          <div class="flex items-center gap-2 font-bold text-2xl md:text-3xl">
+            &euro;{product.price.toFixed(2)} EUR
           </div>
         </div>
         <div class="flex items-center gap-4 mt-4">

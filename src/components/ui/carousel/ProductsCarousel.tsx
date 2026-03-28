@@ -46,12 +46,12 @@ export default (props: {
                       loading="lazy"
                     />
                   </a>
-                  <div class="flex justify-between w-full">
+                  <div class="flex justify-between w-full gap-2">
                     <div class="flex flex-col gap-1">
                       <span class="text-base md:text-lg xl:text-xl">
                         {name}
-                      </span>
-                      <div class="flex items-center gap-2 font-bold text-[19px] lg:text-xl xl:text-2xl">
+                      </a>
+                      <div class="font-bold text-[19px] lg:text-xl xl:text-2xl">
                         {price.toFixed(2)} &euro;
                       </div>
                     </div>
