@@ -31,9 +31,9 @@ const cartFromSession = await Astro.session?.get('cart')
   </head>
   <body>
     <Header />
-    <Cart translations={cart} client:load initialCart={cartFromSession} />
+    <Cart translations={cart} client:idle initialCart={cartFromSession} />
     <CartNotifications
-      client:load
+      client:visible
       addedToCart={notification.addedToCart}
       routeFunding={notification.routeFunding}
     />

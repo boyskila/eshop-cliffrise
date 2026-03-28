@@ -62,14 +62,14 @@ const cart = await Astro.session?.get('cart')
         </a>
         <div class="block">
           <CartButton
-            client:only="solid"
+            client:idle
             title={header.cart}
             initialCartCount={getCartCount(cart)}
           />
         </div>
         <LangSwitcher />
       </div>
-      <MobileMenuButton client:load />
+      <MobileMenuButton client:media="(max-width: 768px)" />
     </div>
     <MobileMenu
       menuItems={[
@@ -78,7 +78,7 @@ const cart = await Astro.session?.get('cart')
         { href: `/${lang}/#about-us`, title: aboutUs },
         { href: `/${lang}/#events-section`, title: tetevenClimb },
       ]}
-      client:load
+      client:media="(max-width: 768px)"
     />
   </nav>
 </header>
