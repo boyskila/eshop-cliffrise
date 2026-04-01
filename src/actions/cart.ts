@@ -1,7 +1,6 @@
 import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { getProducts } from '@data/products'
-import { getTranslations } from '@utils/i18'
 import type { Product } from '@types'
 
 export type CartItem = Product & {
@@ -32,7 +31,7 @@ export const cart = {
         context.session?.set('cart', next)
         return { cart: next, addedItem: existingItem }
       }
-      const product = getProducts(getTranslations({ lang })).find(
+      const product = (await getProducts(lang)).find(
         (product) => product.id === productId,
       )
       if (product) {

@@ -4,14 +4,14 @@ import { getLang, getTranslations } from '@utils/i18'
 import AboutTitleEn from '@assets/titles/en/about-us.svg'
 import AboutTitleBg from '@assets/titles/bg/about-us.svg'
 
-const { causeP1, causeP2 } = getTranslations(Astro.params)
+const { aboutUsP1, aboutUsP2 } = getTranslations(Astro.params)
 
 const aboutTitle = await getImage({
   src: getLang(Astro.params) === 'bg' ? AboutTitleBg : AboutTitleEn,
   widths: [200, 400],
   formats: ['avif', 'webp', 'png'],
   quality: 80,
-  alt: 'Cause Title',
+  alt: 'About Us Title',
 })
 ---
 
@@ -27,10 +27,10 @@ const aboutTitle = await getImage({
       />
       <article class="text-sm sm:text-base leading-5 pl-6 md:pl-10">
         <p>
-          {causeP1}
+          {aboutUsP1}
         </p>
         <p>
-          {causeP2}
+          {aboutUsP2}
         </p>
       </article>
     </div>

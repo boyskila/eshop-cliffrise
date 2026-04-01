@@ -1,0 +1,99 @@
+---
+import { getTranslations } from '@utils/i18'
+import { StripeCheckout } from '@components/checkout/StripeCheckout'
+import { getStripe } from '@services/stripe'
+import type { CartItem } from '@actions'
+import type { ShippingInfo } from '@types'
+import CheckoutLayout from '../../../layouts/CheckoutLayout.astro'
+
+const { lang } = Astro.params
+const translations = getTranslations(Astro.params)
+
+const cart: CartItem[] = (await Astro.session?.get('cart')) ?? []
+
+if (cart.length === 0) {
+  return Astro.redirect(`/${lang}/`)
+}
+
+const shipping: ShippingInfo | undefined = await Astro.session?.get('shipping')
+
+if (!shipping) {
+  return Astro.redirect(`/${lang}/checkout/shipping/`)
+}
+
+const stripePublicKey = import.meta.env.STRIPE_PUBLIC_KEY
+
+if (!stripePublicKey) {
+  throw new Error('STRIPE_PUBLIC_KEY is not set')
+}
+
+const sessionId = Astro.url.searchParams.get('session_id')
+let clientSecret: string | null = null
+let stripeRedirect: string | null = null
+
+const stripe = getStripe()
+
+if (sessionId) {
+  const session = await stripe.checkout.sessions.retrieve(sessionId)
+  clientSecret = session.client_secret ?? null
+} else {
+  const siteUrl = import.meta.env.SITE_URL || 'http://localhost:4321'
+
+  const lineItems = cart.map((item) => ({
+    price_data: {
+      currency: 'eur',
+      product_data: {
+        name: item.name,
+        images: item.image ? [`${siteUrl}${item.image}`] : [],
+      },
+      unit_amount: Math.round(item.price * 100),
+    },
+    quantity: item.quantity,
+  }))
+
+  const created = await stripe.checkout.sessions.create({
+    mode: 'payment',
+    ui_mode: 'embedded_page',
+    line_items: lineItems,
+    return_url: `${siteUrl}/${lang}/checkout/success/?session_id={CHECKOUT_SESSION_ID}`,
+    customer_creation: 'always',
+    metadata: {
+      courier: shipping.courier,
+    },
+    payment_intent_data: {
+      shipping: {
+        name: shipping.name,
+        phone: shipping.phone,
+        address: {
+          line1: shipping.office,
+          country: 'BG',
+        },
+      },
+    },
+  })
+
+  stripeRedirect = `/${lang}/checkout/?session_id=${created.id}`
+}
+
+if (stripeRedirect) {
+  return Astro.redirect(stripeRedirect)
+}
+
+if (!clientSecret) {
+  return Astro.redirect(`/${lang}/`)
+}
+---
+
+<CheckoutLayout>
+  <StripeCheckout
+    client:load
+    stripePublicKey={stripePublicKey}
+    clientSecret={clientSecret}
+    lang={lang!}
+    text={{
+      loading: translations.checkout.loading,
+      error: translations.checkout.error,
+      retry: translations.checkout.retry,
+    }}
+  />
+</CheckoutLayout>

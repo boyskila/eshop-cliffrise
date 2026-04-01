@@ -13,8 +13,8 @@ import SeeAlsoEn from '@assets/titles/en/see-also.svg'
 import ImageThumbnails from '@components/products/ImageThumbnails.astro'
 
 const translations = getTranslations(Astro.params)
-const products = getProducts(translations)
 const lang = getLang(Astro.params)
+const products = await getProducts(lang)
 const { id } = Astro.params
 const productsTitleImg = lang === 'bg' ? SeeAlsoBg : SeeAlsoEn
 const image = await getImage({
@@ -65,14 +65,7 @@ if (!product) {
           {product.description}
         </p>
 
-        {
-          product.kind.length > 0 && (
-            <KindSelector
-              product={product}
-              productTranslations={translations.product}
-            />
-          )
-        }
+        {product.kind.length > 0 && <KindSelector product={product} />}
 
         <div class="flex justify-between items-center">
           <QuantityControls productName={product.name} client:idle />

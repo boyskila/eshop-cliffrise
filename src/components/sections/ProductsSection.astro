@@ -7,8 +7,9 @@ import { getImage } from 'astro:assets'
 import ProductsCarousel from '../ui/carousel/ProductsCarousel'
 
 const translations = getTranslations(Astro.params)
-const products = getProducts(translations)
 const lang = getLang(Astro.params)
+const products = await getProducts(lang)
+
 const productsTitleImg = lang === 'bg' ? ProductsTitleBg : ProductsTitleEn
 const image = await getImage({
   src: productsTitleImg,
