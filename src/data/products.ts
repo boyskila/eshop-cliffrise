@@ -1,7 +1,14 @@
 import { getStripe } from '@services/stripe'
+import { getMockProducts } from './mockProducts'
 import type { Product, ProductKind } from '@types'
 
+const isTest = import.meta.env.MODE === 'test'
+
 export const getProducts = async (lang: string): Promise<Product[]> => {
+  if (isTest) {
+    return getMockProducts(lang)
+  }
+
   const stripe = getStripe()
   const productsList = await stripe.products.list({
     expand: ['data.default_price'],
