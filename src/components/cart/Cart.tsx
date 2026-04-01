@@ -9,6 +9,7 @@ import { CartFooter } from './CartFooter'
 import { CartHeader } from './CartHeader'
 
 type Props = {
+  lang: string
   text: {
     title: string
     empty: string
@@ -83,6 +84,7 @@ export const Cart = (props: Props) => {
 
           <Show when={cart().length > 0}>
             <CartFooter
+              lang={props.lang}
               text={{
                 total,
                 checkout,

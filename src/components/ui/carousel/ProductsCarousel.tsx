@@ -18,7 +18,8 @@ export default (props: {
     <div class="overflow-hidden" ref={emblaRef}>
       <div class="flex touch-pan-y touch-pinch-zoom">
         <For each={props.products}>
-          {({ image, name, id, price }) => {
+          {(product) => {
+            const { image, name, id, price } = product
             return (
               <div
                 classList={{

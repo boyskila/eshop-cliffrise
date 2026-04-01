@@ -1,15 +1,19 @@
-import { Show } from 'solid-js'
+import { createEffect, createSignal, Show } from 'solid-js'
 import { cartCount, isCartOpen, toggleCart } from '@signals/cart'
 
-type Props = { title: string; initialCartCount: number }
+type Props = { initialCartCount: number }
 
 export default function CartButton(props: Props) {
+  const [count, setCount] = createSignal(props.initialCartCount)
+  createEffect(() => {
+    setCount(cartCount())
+  })
   return (
     <button
       onClick={toggleCart}
       aria-expanded={isCartOpen()}
-      aria-label={`Shopping cart with ${cartCount()} ${
-        cartCount() === 1 ? 'item' : 'items'
+      aria-label={`Shopping cart with ${count()} ${
+        count() === 1 ? 'item' : 'items'
       }`}
       class="relative cursor-pointer p-2"
     >
@@ -26,13 +30,13 @@ export default function CartButton(props: Props) {
         ></path>
       </svg>
       <Show
-        when={cartCount()}
+        when={count()}
         fallback={
           <span class="absolute -top-2 -right-2 h-5 w-5 opacity-0"></span>
         }
       >
         <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-          {cartCount()}
+          {count()}
         </span>
       </Show>
     </button>

@@ -1,0 +1,77 @@
+---
+import { getLang, getTranslations } from '@utils/i18'
+import { getStripe } from '@services/stripe'
+import CheckoutLayout from '../../../layouts/CheckoutLayout.astro'
+
+const lang = getLang(Astro.params)
+const translations = getTranslations(Astro.params)
+
+const sessionId = Astro.url.searchParams.get('session_id')
+
+let status: string | null = null
+let customerEmail: string | null = null
+
+if (sessionId) {
+  try {
+    const stripe = getStripe()
+    const session = await stripe.checkout.sessions.retrieve(sessionId)
+
+    if (session.status === 'complete') {
+      Astro.session?.set('cart', [])
+      Astro.session?.set('shipping', undefined)
+      Astro.session?.set('orderEmail', session.customer_details?.email ?? null)
+      return Astro.redirect(`/${lang}/checkout/success/`)
+    }
+
+    status = session.status
+  } catch {
+    status = 'error'
+  }
+} else {
+  const orderEmail = await Astro.session?.get('orderEmail')
+  if (orderEmail !== undefined) {
+    status = 'complete'
+    customerEmail = orderEmail ?? null
+    Astro.session?.set('orderEmail', undefined)
+  }
+}
+---
+
+<CheckoutLayout>
+  <section class="size-full flex items-center justify-center">
+    {
+      status === 'complete' ? (
+        <div class="text-center max-w-lg mx-auto px-4">
+          <div class="text-6xl mb-6">&#10003;</div>
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">
+            {translations.checkout.successTitle}
+          </h1>
+          <p class="text-lg text-gray-600 mb-2">
+            {translations.checkout.successMessage}
+          </p>
+          {customerEmail && (
+            <p class="text-gray-500 mb-8">
+              {translations.checkout.confirmationEmail} {customerEmail}
+            </p>
+          )}
+          <a
+            href={`/${lang}/`}
+            class="inline-block bg-black text-white px-8 py-3 text-lg"
+          >
+            {translations.checkout.continueShopping}
+          </a>
+        </div>
+      ) : (
+        <div class="text-center max-w-lg mx-auto px-4">
+          <h1 class="text-3xl font-bold mb-4">{translations.checkout.error}</h1>
+          <a
+            href={`/${lang}/`}
+            class="inline-block bg-black text-white px-8 py-3 text-lg"
+          >
+            {translations.checkout.continueShopping}
+          </a>
+        </div>
+      )
+    }
+  </section>
+</CheckoutLayout>

@@ -1,0 +1,15 @@
+---
+import '../styles/global.css'
+Astro.response.headers.set('Cache-Control', 'no-store')
+---
+
+<!doctype html>
+<html lang={Astro.params.lang} class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <title>Cliffrise eshop | Checkout</title>
+  </head>
+  <body class="h-full"><slot /></body>
+</html>

@@ -1,7 +1,9 @@
 import { cart } from '@signals/cart'
 import { getTotalPrice } from '@utils/cart'
+import { CheckoutButton } from '@components/checkout/CheckoutButton'
 
 type Props = {
+  lang: string
   text: {
     total: string
     checkout: string
@@ -23,15 +25,7 @@ export const CartFooter = (props: Props) => {
           &euro;{getTotalPrice(cart()).toFixed(2)} EUR
         </span>
       </div>
-      <button
-        class="
-        w-full
-        bg-black text-center
-        p-3 mb-3
-        text-white text-lg md:text-xl"
-      >
-        {checkout}
-      </button>
+      <CheckoutButton lang={props.lang} text={checkout} />
       <p class="text-base text-center">{routeFunding}</p>
     </div>
   )

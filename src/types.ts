@@ -1,8 +1,9 @@
 import en from '../public/locales/en/translations.json'
 
-type ProductKind = {
+export type ProductKind = {
   name: string
   image?: string
+  inStock: boolean
 }
 
 export type Product = {
@@ -34,4 +35,11 @@ export type EmailResult = {
 
 export type EmailService = {
   send(data: EmailData): Promise<EmailResult>
+}
+
+export type ShippingInfo = {
+  courier: 'speedy'
+  name: string
+  phone: string
+  office: string
 }

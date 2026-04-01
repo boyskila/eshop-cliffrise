@@ -1,0 +1,24 @@
+---
+import { getLang, getTranslations } from '@utils/i18'
+import ShippingForm from '@components/checkout/ShippingForm.astro'
+import type { CartItem } from '@actions'
+import type { ShippingInfo } from '@types'
+import CheckoutLayout from '../../../layouts/CheckoutLayout.astro'
+
+const lang = getLang(Astro.params)
+const translations = getTranslations(Astro.params)
+
+Astro.response.headers.set('Cache-Control', 'no-store')
+
+const cart: CartItem[] = (await Astro.session?.get('cart')) ?? []
+
+if (cart.length === 0) {
+  return Astro.redirect(`/${lang}/`)
+}
+
+const savedShipping: ShippingInfo | undefined = await Astro.session?.get('shipping')
+---
+
+<CheckoutLayout>
+  <ShippingForm lang={lang!} text={translations.shipping} initialShipping={savedShipping} />
+</CheckoutLayout>

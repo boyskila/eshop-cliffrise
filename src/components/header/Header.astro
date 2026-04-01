@@ -61,11 +61,7 @@ const cart = await Astro.session?.get('cart')
           <img class="size-5" alt="Instagram" src="/assets/insta.svg" />
         </a>
         <div class="block">
-          <CartButton
-            client:idle
-            title={header.cart}
-            initialCartCount={getCartCount(cart)}
-          />
+          <CartButton client:load initialCartCount={getCartCount(cart)} />
         </div>
         <LangSwitcher />
       </div>

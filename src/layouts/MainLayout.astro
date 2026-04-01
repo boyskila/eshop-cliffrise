@@ -1,6 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions'
-import { getTranslations } from '@utils/i18'
+import { getLang, getTranslations } from '@utils/i18'
 import Header from '@components/header/Header.astro'
 import Hero from '@components/Hero.astro'
 import Footer from '@components/Footer.astro'
@@ -17,6 +17,7 @@ interface Props {
 
 const { showHero = true, title } = Astro.props
 const { notification, cart } = getTranslations(Astro.params)
+const lang = getLang(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
 ---
 
@@ -32,6 +33,7 @@ const cartFromSession = await Astro.session?.get('cart')
   <body>
     <Header />
     <Cart
+      lang={lang}
       text={{
         title: cart.title,
         empty: cart.empty,

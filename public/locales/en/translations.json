@@ -84,6 +84,8 @@
     },
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
+    "aboutUsP1": " United by their love for climbing and a desire to give something back to the community, Boiko Lalov and Alex Yanev began working together in 2020, developing the Peshterata (The Cave) crag near Ribaritsa. Shortly after, while establishing routes at Teteven/Zaslona, the idea for CliffRise was born.",
+    "aboutUsP2": " United by their love for climbing and a desire to give something back to the community, Boiko Lalov and Alex Yanev began working together in 2020, developing the Peshterata (The Cave) crag near Ribaritsa. Shortly after, while establishing routes at Teteven/Zaslona, the idea for CliffRise was born.",
     "footer": {
         "supportClimbing": "Want to support",
         "contactUs": "Contact us",
@@ -108,6 +110,36 @@
         "boldedTextTwo": "how strong and vibrant the climbing community is",
         "normalTextTwo": " and left a desire for this to be just the beginning.",
         "seeEvent": "See the event"
+    },
+    "shipping": {
+        "title": "Shipping",
+        "courierLabel": "Select courier",
+        "speedy": "Speedy",
+        "ekont": "Ekont",
+        "nameLabel": "Recipient name",
+        "namePlaceholder": "Full name",
+        "phoneLabel": "Phone number",
+        "phonePlaceholder": "+359...",
+        "officeLabel": "Courier office",
+        "officePlaceholder": "Office name or address",
+        "selectedOffice": "Selected office",
+        "changeOffice": "Change",
+        "continue": "Continue to Payment",
+        "backToShop": "\u2190 Continue Shopping",
+        "loading": "Loading...",
+        "error": "Something went wrong. Please try again.",
+        "required": "This field is required"
+    },
+    "checkout": {
+        "title": "Checkout",
+        "loading": "Loading checkout...",
+        "error": "Something went wrong. Please try again.",
+        "retry": "Back to Shop",
+        "backToShop": "\u2190 Continue Shopping",
+        "successTitle": "Thank You!",
+        "successMessage": "Your order has been placed successfully.",
+        "confirmationEmail": "A confirmation has been sent to",
+        "continueShopping": "Continue Shopping"
     },
     "contactForm": {
         "support": "Support",

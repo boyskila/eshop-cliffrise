@@ -98,6 +98,8 @@
     },
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
+    "aboutUsP1": "Момчетата, които стоят зад идеята, са добре познати катерачи в България, с редица изкатерени трудни маршрути.",
+    "aboutUsP2": "Обединени от любовта към катеренето и желанието да върнат нещо обратно към общността, Бойко Лалов и Алекс Янев започват съвместна работа през 2020г., когато разработват заедно обекта Пещерата на Рибарица. Малко след това, сред редица направени маршрути на Тетевен/Заслона се ражда и идеята за бранда CliffRise.",
     "footer": {
         "supportClimbing": "Искаш да подкрепиш",
         "contactUs": "Свържи се с нас",
@@ -122,6 +124,36 @@
         "boldedTextTwo": "колко силна и жива е катерачната общност",
         "normalTextTwo": " и остави желание това да е само началото.",
         "seeEvent": "Виж събитието"
+    },
+    "shipping": {
+        "title": "Доставка",
+        "courierLabel": "Изберете куриер",
+        "speedy": "Speedy",
+        "ekont": "Еконт",
+        "nameLabel": "Получател",
+        "namePlaceholder": "Пълно име",
+        "phoneLabel": "Телефон",
+        "phonePlaceholder": "+359...",
+        "officeLabel": "Офис на куриер",
+        "officePlaceholder": "Име или адрес на офис",
+        "selectedOffice": "Избран офис",
+        "changeOffice": "Смени",
+        "continue": "Продължи към плащане",
+        "backToShop": "\u2190 Продължи пазаруването",
+        "loading": "Зареждане...",
+        "error": "Нещо се обърка. Моля, опитайте отново.",
+        "required": "Това поле е задължително"
+    },
+    "checkout": {
+        "title": "Плащане",
+        "loading": "Зареждане на плащането...",
+        "error": "Нещо се обърка. Моля, опитайте отново.",
+        "retry": "Обратно към магазина",
+        "backToShop": "← Продължи пазаруването",
+        "successTitle": "Благодарим!",
+        "successMessage": "Поръчката ви беше направена успешно.",
+        "confirmationEmail": "Потвърждение е изпратено на",
+        "continueShopping": "Продължи пазаруването"
     },
     "contactForm": {
         "support": "Подкрепи",
