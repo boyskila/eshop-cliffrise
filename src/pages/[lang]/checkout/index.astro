@@ -1,12 +1,12 @@
 ---
-import { getTranslations } from '@utils/i18'
+import { getLang, getTranslations } from '@utils/i18'
 import { StripeCheckout } from '@components/checkout/StripeCheckout'
 import { getStripe } from '@services/stripe'
 import type { CartItem } from '@actions'
 import type { ShippingInfo } from '@types'
 import CheckoutLayout from '../../../layouts/CheckoutLayout.astro'
 
-const { lang } = Astro.params
+const lang = getLang(Astro.params)
 const translations = getTranslations(Astro.params)
 
 const cart: CartItem[] = (await Astro.session?.get('cart')) ?? []
@@ -59,6 +59,10 @@ if (sessionId) {
     customer_creation: 'always',
     metadata: {
       courier: shipping.courier,
+      shipping_name: shipping.name,
+      shipping_phone: shipping.phone,
+      shipping_office: shipping.office,
+      lang,
     },
     payment_intent_data: {
       shipping: {
