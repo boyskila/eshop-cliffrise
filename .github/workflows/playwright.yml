@@ -8,6 +8,18 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      RESEND_TEMPLATE_ID: ${{ secrets.RESEND_TEMPLATE_ID }}
+      CONTACT_RATE_LIMIT_MAX: 3
+      CONTACT_RATE_LIMIT_WINDOW_MS: 60000
+      SITE_URL: http://127.0.0.1:4321
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+      OWNER_EMAIL: ${{ secrets.OWNER_EMAIL }}
+      BCC_EMAIL_ONE: ${{ secrets.BCC_EMAIL_ONE }}
+      BCC_EMAIL_TWO: ${{ secrets.BCC_EMAIL_TWO }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
