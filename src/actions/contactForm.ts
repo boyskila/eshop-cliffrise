@@ -2,15 +2,7 @@ import { ActionError, defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { emailService } from '@services/email'
 import { checkRateLimit } from '@services/rateLimit'
-
-const escapeHtml = (value: string) => {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-}
+import { escapeHtml } from '@utils/func'
 
 // Replaces ASCII control characters with a space:
 const sanitizeInput = (value: string) =>
