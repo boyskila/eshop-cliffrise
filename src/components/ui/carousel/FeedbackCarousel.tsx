@@ -5,13 +5,13 @@ import Arrows from './ContainerWithArrows'
 
 const feedbacks = [
   {
-    author: 'Ivan Petrov',
-    text: 'Great products and excellent customer service! Highly recommend CliffRise for all climbing enthusiasts.',
+    author: 'Matey Mitcev',
+    text: 'If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!',
     image: '/assets/matei.png',
   },
   {
-    author: 'Maria Dimitrova',
-    text: 'I love the quality and durability of the climbing gear from CliffRise. It has never let me down during my climbs.',
+    author: 'Ivaylo Angelov - The Maniak',
+    text: 'I am in love with the chalk texture. I have very dry skin and it is really hard to find something that stays on my hands. Super happy to have found this chalk, it has all the qualities I need and definitely boosts my confidence on the rock.',
     image: '/assets/matei.png',
   },
   {
