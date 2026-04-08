@@ -48,21 +48,16 @@ test.describe('Contact Form Modal - Email And Sanitization', () => {
     const data = await response.json()
 
     expect(data.emails[0]).toMatchObject({
-      to: 'boiskila@gmail.com',
+      to: 'test@example.com',
       subject: '[CliffRise] New message from Test User',
-      from: 'CliffRise Contact <onboarding@resend.dev>',
       replyTo: 'test@example.com',
-      html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> Test User</p>
-          <p><strong>Email:</strong> test@example.com</p>
-          <p><strong>Message:</strong></p>
-          <p>This is a test message for email verification</p>
-          <hr>
-          <p style="color: #666; font-size: 12px;">
-            IP: unknown
-          </p>
-        `,
+      template: {
+        variables: {
+          name: 'Test User',
+          email: 'test@example.com',
+          message: 'This is a test message for email verification',
+        },
+      },
     })
   })
 

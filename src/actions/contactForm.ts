@@ -51,25 +51,21 @@ export const contact = defineAction({
 
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
-    const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
-    const safeIp = escapeHtml(ip)
 
     try {
       const result = await emailService.get().send({
-        from: 'CliffRise Contact <onboarding@resend.dev>',
-        to: 'boiskila@gmail.com',
+        from: import.meta.env.OWNER_EMAIL,
+        to: safeEmail,
         subject: `[CliffRise] New message from ${safeName}`,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${safeName}</p>
-          <p><strong>Email:</strong> ${safeEmail}</p>
-          <p><strong>Message:</strong></p>
-          <p>${safeMessage}</p>
-          <hr>
-          <p style="color: #666; font-size: 12px;">
-            IP: ${safeIp}
-          </p>
-        `,
+        bcc: [import.meta.env.BCC_EMAIL_ONE, import.meta.env.BCC_EMAIL_TWO],
+        template: {
+          id: import.meta.env.RESEND_CONTACT_TEMPLATE_ID,
+          variables: {
+            name: safeName,
+            email: safeEmail,
+            message: escapeHtml(message).replace(/\n/g, '<br>'),
+          },
+        },
         replyTo: email,
       })
 
