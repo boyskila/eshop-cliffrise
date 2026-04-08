@@ -141,6 +141,25 @@
         "confirmationEmail": "A confirmation has been sent to",
         "continueShopping": "Continue Shopping"
     },
+    "email": {
+        "orderConfirmedSubject": "Order Confirmed – CliffRise",
+        "orderConfirmedHeading": "Order Confirmed!",
+        "thankYou": "Thank you for your order, {name}.",
+        "orderReference": "Order reference:",
+        "itemsHeading": "Items",
+        "itemColumn": "Item",
+        "qtyColumn": "Qty",
+        "priceColumn": "Price",
+        "shippingHeading": "Shipping",
+        "recipient": "Recipient:",
+        "phone": "Phone:",
+        "courier": "Courier:",
+        "office": "Office:",
+        "total": "Total:",
+        "supportMessage": "Thank you for supporting new climbing routes in Bulgaria!",
+        "allRightsReserved": "All rights reserved.",
+        "greeting": "Hi"
+    },
     "contactForm": {
         "support": "Support",
         "description1": "We develop climbing routes and maintain climbing areas.",

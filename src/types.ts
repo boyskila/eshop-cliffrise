@@ -1,3 +1,4 @@
+import type { CreateEmailOptions } from 'resend'
 import en from '../public/locales/en/translations.json'
 
 export type ProductKind = {
@@ -20,13 +21,7 @@ export type Product = {
 export type Translations = typeof en
 export type ProductTranslations = typeof en.product
 
-export type EmailData = {
-  from: string
-  to: string
-  subject: string
-  html: string
-  replyTo?: string
-}
+export type EmailData = CreateEmailOptions
 
 export type EmailResult = {
   success: boolean

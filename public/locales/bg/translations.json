@@ -155,6 +155,25 @@
         "confirmationEmail": "Потвърждение е изпратено на",
         "continueShopping": "Продължи пазаруването"
     },
+    "email": {
+        "orderConfirmedSubject": "Поръчката е потвърдена – CliffRise",
+        "orderConfirmedHeading": "Поръчката е потвърдена!",
+        "thankYou": "Благодарим ти за поръчката, {name}.",
+        "orderReference": "Номер на поръчка:",
+        "itemsHeading": "Продукти",
+        "itemColumn": "Продукт",
+        "qtyColumn": "Бр.",
+        "priceColumn": "Цена",
+        "shippingHeading": "Доставка",
+        "recipient": "Получател:",
+        "phone": "Телефон:",
+        "courier": "Куриер:",
+        "office": "Офис:",
+        "total": "Общо:",
+        "supportMessage": "Благодарим ти, че подкрепяш нови катерачни маршрути в България!",
+        "allRightsReserved": "Всички права запазени.",
+        "greeting": "Здравей"
+    },
     "contactForm": {
         "support": "Подкрепи",
         "description1": "Екипираме катерачни маршрути и облагородяваме зони за катерене.",

@@ -10,13 +10,7 @@ export class ResendEmailService implements EmailService {
 
   async send(data: EmailData): Promise<EmailResult> {
     try {
-      const { error } = await this.resend.emails.send({
-        from: data.from,
-        to: data.to,
-        subject: data.subject,
-        html: data.html,
-        replyTo: data.replyTo,
-      })
+      const { error } = await this.resend.emails.send(data)
       return error
         ? { success: false, error: error.message }
         : { success: true }
