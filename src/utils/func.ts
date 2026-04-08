@@ -1,8 +1,16 @@
+import validator from 'validator'
+
 export const escapeHtml = (value: string) => {
+  return validator.escape(value)
+}
+
+export const sanitizeInput = (value: string) => {
   return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
+    .replace(/[\u0000-\u001F\u007F]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+export const sanitizeMessage = (value: string) => {
+  return validator.stripLow(value, true).replace(/\r\n/g, '\n').trim()
 }

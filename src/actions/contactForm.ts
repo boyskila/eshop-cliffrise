@@ -2,25 +2,7 @@ import { ActionError, defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { emailService } from '@services/email'
 import { checkRateLimit } from '@services/rateLimit'
-import { escapeHtml } from '@utils/func'
-
-// Replaces ASCII control characters with a space:
-const sanitizeInput = (value: string) =>
-  value
-    .replace(/[\u0000-\u001F\u007F]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-
-// For the message field, we want to allow newlines, so we only remove the non-printable control chars and DEL, but keep tabs and newlines.
-// This allows users to format their messages with line breaks.
-const sanitizeMessage = (value: string) =>
-  value
-    // Removes non-printable control chars. Allows tabs (\t), newlines (\n, \r), but removes others that could be used for obfuscation.
-    // Intentionally keeps \n (LF, \u000A) and \r (\u000D) so line breaks can be normalized next.
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
-    // Normalizes Windows newlines to Unix newline format for consistency.
-    .replace(/\r\n/g, '\n')
-    .trim()
+import { escapeHtml, sanitizeInput, sanitizeMessage } from '@utils/func'
 
 const getClientIp = (request: Request) => {
   const forwardedFor = request.headers.get('x-forwarded-for')
@@ -39,10 +21,7 @@ export const contact = defineAction({
   accept: 'form',
   input: z.object({
     name: z.string().transform(sanitizeInput).pipe(z.string().min(2).max(100)),
-    email: z
-      .string()
-      .transform(sanitizeInput)
-      .pipe(z.string().email().max(254)),
+    email: z.string().trim().email().max(254),
     message: z
       .string()
       .transform(sanitizeMessage)
