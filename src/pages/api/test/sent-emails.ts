@@ -1,8 +1,5 @@
 import type { APIRoute } from 'astro'
-import {
-  sentEmails,
-  clearSentEmails,
-} from '../../../services/email/FakeEmailService'
+import { sentEmails } from '../../../services/email/FakeEmailService'
 
 export const GET: APIRoute = async () => {
   const emails = sentEmails.map((mail) => mail)
