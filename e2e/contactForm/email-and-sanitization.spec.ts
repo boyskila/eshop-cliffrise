@@ -93,12 +93,54 @@ test.describe('Contact Form Modal - Email And Sanitization', () => {
     const email = inbox.emails[0]
 
     expect(email.subject).toBe(
-      '[CliffRise] New message from &lt;b&gt;Test User&lt;/b&gt;',
+      '[CliffRise] New message from &lt;b&gt;Test User&lt;&#x2F;b&gt;',
     )
     expect(email.replyTo).toBe('test@example.com')
-    expect(email.html).toContain(
-      '<p>Hello &lt;script&gt;alert(1)&lt;/script&gt;<br>Line 2</p>',
+    expect(email.template.variables.message).toContain(
+      'Hello &lt;script&gt;alert(1)&lt;&#x2F;script&gt;<br>Line 2',
     )
-    expect(email.html).not.toContain('<script>')
+    expect(email.template.variables.message).not.toContain('<script>')
+  })
+
+  test('honeypot field prevents email from being sent', async ({ request }) => {
+    const actionResponse = await submitContactAction(request, {
+      name: 'Bot',
+      email: 'bot@spam.com',
+      message: 'Buy my stuff now!!!',
+      company: 'SpamCo',
+    })
+
+    expect(actionResponse.ok()).toBeTruthy()
+
+    const inboxResponse = await request.get('/api/test/sent-emails/')
+    const { emails } = await inboxResponse.json()
+    expect(emails).toHaveLength(0)
+  })
+
+  test('converts newlines to <br> in email message', async ({ request }) => {
+    const actionResponse = await submitContactAction(request, {
+      name: 'Jane',
+      email: 'jane@example.com',
+      message: 'Line one\nLine two\nLine three',
+    })
+
+    expect(actionResponse.ok()).toBeTruthy()
+
+    await expect
+      .poll(
+        async () => {
+          const response = await request.get('/api/test/sent-emails/')
+          const data = await response.json()
+          return data.emails
+        },
+        { timeout: 5000 },
+      )
+      .toHaveLength(1)
+
+    const inboxResponse = await request.get('/api/test/sent-emails/')
+    const { emails } = await inboxResponse.json()
+    expect(emails[0].template.variables.message).toBe(
+      'Line one<br>Line two<br>Line three',
+    )
   })
 })
