@@ -22,6 +22,7 @@ export const getProducts = async (lang: string): Promise<Product[]> => {
       images,
       'image-folder': imageFolder,
       'main-image': mainImage,
+      weight,
     } = metadata
 
     return {
@@ -34,6 +35,7 @@ export const getProducts = async (lang: string): Promise<Product[]> => {
         inStock: inStock === undefined ? true : inStock,
       })),
       price: (stripeProduct.default_price as any).unit_amount / 100,
+      weight: parseFloat(weight),
       image: `${imageFolder}${mainImage}`,
       images: JSON.parse(images).map((img: string) => `${imageFolder}${img}`),
       kindTitle,

@@ -14,6 +14,7 @@ export type Product = {
   description: string
   images: string[]
   price: number
+  weight: number
   kind: ProductKind[]
   kindTitle?: string
 }
