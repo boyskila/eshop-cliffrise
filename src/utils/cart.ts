@@ -9,3 +9,9 @@ export const getTotalPrice = (cart: CartItem[]) => {
     return sum + price * quantity
   }, 0)
 }
+
+export const getTotalWeight = (cart: CartItem[]) => {
+  return cart.reduce((sum, { weight, quantity }) => {
+    return sum + (weight || 0) * quantity
+  }, 0)
+}

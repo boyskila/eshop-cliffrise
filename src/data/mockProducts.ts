@@ -10,6 +10,7 @@ const enProducts: Product[] = [
       'Chunky climbing chalk with a coarse structure that breaks down easily and provides reliable friction. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.',
     kind: [],
     price: 12.99,
+    weight: 0.3,
     image: '/assets/products/dry-chalk/main.png',
     images: [
       '/assets/products/dry-chalk/main.png',
@@ -24,6 +25,7 @@ const enProducts: Product[] = [
       'Moist chunky climbing chalk with a denser structure that breaks down easily and leaves an even layer on the hands. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.',
     kind: [],
     price: 13.99,
+    weight: 0.3,
     image: '/assets/products/wet-chalk/main.png',
     images: [
       '/assets/products/wet-chalk/main.png',
@@ -37,6 +39,7 @@ const enProducts: Product[] = [
       'Liquid chalk that dries quickly and leaves an even layer on the hands. Made for reliable friction both indoors and outdoors.',
     kind: [],
     price: 14.99,
+    weight: 0.3,
     image: '/assets/products/liquid-chalk/main.png',
     images: ['/assets/products/liquid-chalk/main.png'],
   },
@@ -53,6 +56,7 @@ const enProducts: Product[] = [
     ],
     kindTitle: 'Select size:',
     price: 29.99,
+    weight: 0.25,
     image: '/assets/products/tshirt/main.png',
     images: ['/assets/products/tshirt/main.png'],
   },
@@ -90,6 +94,7 @@ const enProducts: Product[] = [
     ],
     kindTitle: 'Select color:',
     price: 24.99,
+    weight: 0.1,
     image: '/assets/products/beanies/main.png',
     images: ['/assets/products/beanies/main.png'],
   },
@@ -137,6 +142,7 @@ const enProducts: Product[] = [
     ],
     kindTitle: 'Select color:',
     price: 7.99,
+    weight: 0.05,
     image: '/assets/products/tape/main.png',
     images: ['/assets/products/tape/main.png'],
   },
@@ -145,6 +151,7 @@ const enProducts: Product[] = [
 const bgProducts: Product[] = [
   {
     id: '1',
+    weight: 0.3,
     name: 'Сух магнезий на бучка – 250 гр',
     description:
       'Магнезий на бучка с едра структура, който се раздробява лесно и осигурява стабилно сцепление. Създаден за боулдър, спортни маршрути и дълги катерачни сесии. Отваряш. Натрошаваш. Катериш.',
@@ -159,6 +166,7 @@ const bgProducts: Product[] = [
   },
   {
     id: '2',
+    weight: 0.3,
     name: 'Влажен магнезий на бучка – 250 гр',
     description:
       'Магнезий на бучка с по‑плътна структура, който се раздробява лесно и оставя равномерен слой по ръцете. Създаден за боулдър, спортни маршрути и дълги катерачни сесии. Отваряш. Натрошаваш. Катериш.',
@@ -169,6 +177,7 @@ const bgProducts: Product[] = [
   },
   {
     id: '3',
+    weight: 0.3,
     name: 'Течен магнезий – 250 мл',
     description:
       'Течен магнезий, който изсъхва бързо и оставя равномерен слой по ръцете. Създаден за стабилно сцепление при катерене в зала и навън.',
@@ -190,6 +199,7 @@ const bgProducts: Product[] = [
     ],
     kindTitle: 'Изберете размер:',
     price: 29.99,
+    weight: 0.25,
     image: '/assets/products/tshirt/main.png',
     images: ['/assets/products/tshirt/main.png'],
   },
@@ -227,6 +237,7 @@ const bgProducts: Product[] = [
     ],
     kindTitle: 'Изберете цвят:',
     price: 24.99,
+    weight: 0.1,
     image: '/assets/products/beanies/main.png',
     images: ['/assets/products/beanies/main.png'],
   },
@@ -274,6 +285,7 @@ const bgProducts: Product[] = [
     ],
     kindTitle: 'Изберете цвят:',
     price: 7.99,
+    weight: 0.05,
     image: '/assets/products/tape/main.png',
     images: ['/assets/products/tape/main.png'],
   },
