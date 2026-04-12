@@ -142,7 +142,10 @@
         "backToShop": "\u2190 Продължи пазаруването",
         "loading": "Зареждане...",
         "error": "Нещо се обърка. Моля, опитайте отново.",
-        "required": "Това поле е задължително"
+        "required": "Това поле е задължително",
+        "shippingFeeLabel": "Такса доставка:",
+        "calculatingFee": "Изчисляване...",
+        "selectCaption": "Избери офис"
     },
     "checkout": {
         "title": "Плащане",
@@ -153,7 +156,10 @@
         "successTitle": "Благодарим!",
         "successMessage": "Поръчката ви беше направена успешно.",
         "confirmationEmail": "Потвърждение е изпратено на",
-        "continueShopping": "Продължи пазаруването"
+        "continueShopping": "Продължи пазаруването",
+        "shippingFee": "Доставка",
+        "freeShipping": "Безплатна доставка",
+        "freeShippingThreshold": "Безплатна доставка при поръчки над \u20ac30"
     },
     "email": {
         "orderConfirmedSubject": "Поръчката е потвърдена – CliffRise",
@@ -167,8 +173,10 @@
         "shippingHeading": "Доставка",
         "recipient": "Получател:",
         "phone": "Телефон:",
-        "courier": "Куриер:",
         "office": "Офис:",
+        "productsAmount": "Продукти:",
+        "shippingFee": "Такса доставка:",
+        "freeShipping": "Безплатна",
         "total": "Общо:",
         "supportMessage": "Благодарим ти, че подкрепяш нови катерачни маршрути в България!",
         "allRightsReserved": "Всички права запазени.",

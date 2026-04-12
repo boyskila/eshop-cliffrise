@@ -65,19 +65,33 @@
             "description": "Durable tape for protecting fingers while climbing. Made for crack climbing, sharp holds and long climbing sessions.",
             "kindTitle": "Select color:",
             "kind": [
-                { "name": "green", "image": "/assets/products/tape/green.png"
+                {
+                    "name": "green",
+                    "image": "/assets/products/tape/green.png"
                 },
-                { "name": "blue", "image": "/assets/products/tape/blue.png"
+                {
+                    "name": "blue",
+                    "image": "/assets/products/tape/blue.png"
                 },
-                { "name": "yellow", "image": "/assets/products/tape/yellow.png"
+                {
+                    "name": "yellow",
+                    "image": "/assets/products/tape/yellow.png"
                 },
-                { "name": "orange", "image": "/assets/products/tape/orange.png"
+                {
+                    "name": "orange",
+                    "image": "/assets/products/tape/orange.png"
                 },
-                { "name": "pink", "image": "/assets/products/tape/pink.png"
+                {
+                    "name": "pink",
+                    "image": "/assets/products/tape/pink.png"
                 },
-                { "name": "black", "image": "/assets/products/tape/black.png"
+                {
+                    "name": "black",
+                    "image": "/assets/products/tape/black.png"
                 },
-                { "name": "white", "image": "/assets/products/tape/white.png"
+                {
+                    "name": "white",
+                    "image": "/assets/products/tape/white.png"
                 }
             ]
         }
@@ -128,7 +142,10 @@
         "backToShop": "\u2190 Continue Shopping",
         "loading": "Loading...",
         "error": "Something went wrong. Please try again.",
-        "required": "This field is required"
+        "required": "This field is required",
+        "shippingFeeLabel": "Shipping fee:",
+        "calculatingFee": "Calculating...",
+        "selectCaption": "Select this office"
     },
     "checkout": {
         "title": "Checkout",
@@ -139,7 +156,10 @@
         "successTitle": "Thank You!",
         "successMessage": "Your order has been placed successfully.",
         "confirmationEmail": "A confirmation has been sent to",
-        "continueShopping": "Continue Shopping"
+        "continueShopping": "Continue Shopping",
+        "shippingFee": "Shipping",
+        "freeShipping": "Free shipping",
+        "freeShippingThreshold": "Free shipping on orders over \u20ac30"
     },
     "email": {
         "orderConfirmedSubject": "Order Confirmed – CliffRise",
@@ -153,8 +173,10 @@
         "shippingHeading": "Shipping",
         "recipient": "Recipient:",
         "phone": "Phone:",
-        "courier": "Courier:",
         "office": "Office:",
+        "productsAmount": "Products:",
+        "shippingFee": "Shipping fee:",
+        "freeShipping": "Free",
         "total": "Total:",
         "supportMessage": "Thank you for supporting new climbing routes in Bulgaria!",
         "allRightsReserved": "All rights reserved.",

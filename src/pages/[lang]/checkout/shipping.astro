@@ -4,6 +4,8 @@ import ShippingForm from '@components/checkout/ShippingForm.astro'
 import type { CartItem } from '@actions'
 import type { ShippingInfo } from '@types'
 import CheckoutLayout from '../../../layouts/CheckoutLayout.astro'
+import { getTotalPrice, getTotalWeight } from '@utils/cart'
+import { getFreeShippingThreshold } from '@utils/shipping'
 
 const lang = getLang(Astro.params)
 const translations = getTranslations(Astro.params)
@@ -16,9 +18,32 @@ if (cart.length === 0) {
   return Astro.redirect(`/${lang}/`)
 }
 
-const savedShipping: ShippingInfo | undefined = await Astro.session?.get('shipping')
+const cartTotal = getTotalPrice(cart)
+const totalWeight = getTotalWeight(cart)
+const freeShippingThreshold = await getFreeShippingThreshold()
+const isFreeShipping = cartTotal >= freeShippingThreshold
+
+const savedShipping: ShippingInfo | undefined =
+  await Astro.session?.get('shipping')
 ---
 
 <CheckoutLayout>
-  <ShippingForm lang={lang!} text={translations.shipping} initialShipping={savedShipping} />
+  <ShippingForm
+    lang={lang!}
+    text={{
+      title: translations.shipping.title,
+      officeLabel: translations.shipping.officeLabel,
+      selectedOffice: translations.shipping.selectedOffice,
+      changeOffice: translations.shipping.changeOffice,
+      continue: translations.shipping.continue,
+      backToShop: translations.shipping.backToShop,
+      required: translations.shipping.required,
+      shippingFeeLabel: translations.shipping.shippingFeeLabel,
+      calculatingFee: translations.shipping.calculatingFee,
+      selectCaption: translations.shipping.selectCaption,
+    }}
+    initialShipping={savedShipping}
+    isFreeShipping={isFreeShipping}
+    totalWeight={totalWeight}
+  />
 </CheckoutLayout>

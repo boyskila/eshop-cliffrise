@@ -5,24 +5,24 @@ type Props = {
   lang: string
   text: {
     title: string
-    nameLabel: string
-    namePlaceholder: string
-    phoneLabel: string
-    phonePlaceholder: string
     officeLabel: string
     selectedOffice: string
     changeOffice: string
     continue: string
     backToShop: string
     required: string
+    shippingFeeLabel: string
+    calculatingFee: string
+    selectCaption: string
   }
   initialShipping?: ShippingInfo
+  isFreeShipping: boolean
+  totalWeight: number
 }
 
-const { lang, text, initialShipping } = Astro.props
+const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
 
-const selectCaption = lang === 'bg' ? 'Избери офис' : 'Select this office'
-const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_locator.php?lang=${lang}&showOfficesList=0&officeType=ALL&officesFilterOnTheMap=1&selectOfficeButtonCaption=${encodeURIComponent(selectCaption)}`
+const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_locator.php?lang=${lang}&showOfficesList=0&officeType=ALL&officesFilterOnTheMap=1&selectOfficeButtonCaption=${encodeURIComponent(text.selectCaption)}`
 ---
 
 <div class="w-full max-w-2xl mx-auto px-4 py-8">
@@ -32,39 +32,12 @@ const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_lo
     id="shipping-form"
     class="flex flex-col gap-6"
     data-redirect={`/${lang}/checkout/`}
+    data-lang={lang}
+    data-fee-label={text.shippingFeeLabel}
+    data-calculating-fee={text.calculatingFee}
+    data-free-shipping={isFreeShipping ? 'true' : 'false'}
+    data-total-weight={totalWeight}
   >
-    <div>
-      <label for="shipping-name" class="block text-sm font-medium mb-1">
-        {text.nameLabel}
-      </label>
-      <input
-        id="shipping-name"
-        type="text"
-        placeholder={text.namePlaceholder}
-        value={initialShipping?.name ?? ''}
-        class="w-full border border-black px-3 py-2 text-base outline-none focus:ring-1 focus:ring-black"
-      />
-      <p id="error-name" class="text-red-600 text-sm mt-1 hidden">
-        {text.required}
-      </p>
-    </div>
-
-    <div>
-      <label for="shipping-phone" class="block text-sm font-medium mb-1">
-        {text.phoneLabel}
-      </label>
-      <input
-        id="shipping-phone"
-        type="tel"
-        placeholder={text.phonePlaceholder}
-        value={initialShipping?.phone ?? ''}
-        class="w-full border border-black px-3 py-2 text-base outline-none focus:ring-1 focus:ring-black"
-      />
-      <p id="error-phone" class="text-red-600 text-sm mt-1 hidden">
-        {text.required}
-      </p>
-    </div>
-
     <div>
       <label class="block text-sm font-medium mb-2">{text.officeLabel}</label>
 
@@ -82,8 +55,15 @@ const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_lo
       <div
         id="speedy-selected"
         class={`border border-black px-3 py-2 flex items-center justify-between gap-4${initialShipping?.office ? '' : ' hidden'}`}
+        data-initial-office-id={initialShipping?.officeId}
       >
-        <span id="speedy-office-name" class="text-sm">{initialShipping?.office ?? ''}</span>
+        <div class="flex flex-col gap-0.5">
+          <span id="speedy-office-name" class="text-sm"
+            >{initialShipping?.office ?? ''}</span
+          >
+          <span id="speedy-fee" class="text-sm font-medium text-gray-700"
+          ></span>
+        </div>
         <button
           type="button"
           id="speedy-change"
@@ -119,32 +99,83 @@ const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_lo
   import { actions } from 'astro:actions'
 
   const form = document.getElementById('shipping-form') as HTMLFormElement
-  const { redirect } = form.dataset as { redirect: string }
+  const { redirect, lang, feeLabel, calculatingFee, freeShipping, totalWeight } =
+    form.dataset as {
+      redirect: string
+      lang: string
+      feeLabel: string
+      calculatingFee: string
+      freeShipping: string
+      totalWeight: string
+    }
+  const isFreeShipping = freeShipping === 'true'
 
-  const officeNameEl = document.getElementById('speedy-office-name') as HTMLElement
+  const officeNameEl = document.getElementById(
+    'speedy-office-name',
+  ) as HTMLElement
+  const officeFeeEl = document.getElementById('speedy-fee') as HTMLElement
   const iframeContainer = document.getElementById('speedy-iframe-container')!
   const selectedEl = document.getElementById('speedy-selected')!
 
   const getOfficeName = () => officeNameEl.textContent?.trim() ?? ''
 
   const officeDisplayName = (office: Record<string, any>): string =>
-    office.name ??
-    office.nameEn ??
+    (lang === 'en' ? (office.nameEn ?? office.name) : (office.name ?? office.nameEn)) ??
     office.address?.fullAddressString ??
     JSON.stringify(office)
 
-  window.addEventListener('message', (e: MessageEvent) => {
+  let selectedOfficeId: number | null =
+    Number(selectedEl.dataset.initialOfficeId) || null
+
+  async function calculateFee(officeId: number) {
+    if (isFreeShipping) {
+      officeFeeEl.textContent = `${feeLabel} €0.00`
+      return
+    }
+    officeFeeEl.textContent = calculatingFee
+    try {
+      const { data } = await actions.calculateShipping({
+        officeId,
+        totalWeight: parseFloat(totalWeight),
+      })
+      const fee = data?.fee ?? null
+      console.log({ fee, totalWeight })
+
+      officeFeeEl.textContent =
+        fee != null ? `${feeLabel} €${fee.toFixed(2)}` : ''
+    } catch {
+      officeFeeEl.textContent = ''
+    }
+  }
+
+  if (selectedOfficeId !== null) {
+    calculateFee(selectedOfficeId)
+  }
+
+  window.addEventListener('message', async (e: MessageEvent) => {
     if (e.origin !== 'https://services.speedy.bg') return
     if (!e.data || typeof e.data !== 'object' || Array.isArray(e.data)) return
 
     officeNameEl.textContent = officeDisplayName(e.data)
+    selectedOfficeId = e.data.id ?? null
     iframeContainer.classList.add('hidden')
     selectedEl.classList.remove('hidden')
     document.getElementById('error-office')!.classList.add('hidden')
+
+    if (selectedOfficeId !== null) {
+      await calculateFee(selectedOfficeId)
+
+      actions.saveShipping({
+        office: getOfficeName(),
+        officeId: selectedOfficeId,
+      })
+    }
   })
 
   document.getElementById('speedy-change')!.addEventListener('click', () => {
     officeNameEl.textContent = ''
+    officeFeeEl.textContent = ''
+    selectedOfficeId = null
     iframeContainer.classList.remove('hidden')
     selectedEl.classList.add('hidden')
   })
@@ -152,25 +183,27 @@ const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_lo
   form.addEventListener('submit', async (e: SubmitEvent) => {
     e.preventDefault()
 
-    const nameVal = (document.getElementById('shipping-name') as HTMLInputElement).value.trim()
-    const phoneVal = (document.getElementById('shipping-phone') as HTMLInputElement).value.trim()
     const officeVal = getOfficeName()
 
-    document.getElementById('error-name')!.classList.toggle('hidden', !!nameVal)
-    document.getElementById('error-phone')!.classList.toggle('hidden', !!phoneVal)
-    document.getElementById('error-office')!.classList.toggle('hidden', !!officeVal)
+    document
+      .getElementById('error-office')!
+      .classList.toggle('hidden', !!officeVal)
 
-    if (!nameVal || !phoneVal || !officeVal) return
+    if (!officeVal || !selectedOfficeId) return
 
     const btn = document.getElementById('shipping-submit') as HTMLButtonElement
     btn.disabled = true
 
-    await actions.saveShipping({
-      courier: 'speedy',
-      name: nameVal,
-      phone: phoneVal,
+    const { error } = await actions.saveShipping({
       office: officeVal,
+      officeId: selectedOfficeId,
     })
+
+    if (error) {
+      console.error('saveShipping failed:', error)
+      btn.disabled = false
+      return
+    }
 
     window.location.href = redirect
   })

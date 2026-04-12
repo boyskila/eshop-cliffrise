@@ -34,8 +34,6 @@ export type EmailService = {
 }
 
 export type ShippingInfo = {
-  courier: 'speedy'
-  name: string
-  phone: string
   office: string
+  officeId: number
 }
