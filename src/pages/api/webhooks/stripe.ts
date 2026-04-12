@@ -14,25 +14,35 @@ const buildEmailVariables = (
   const amount = ((session.amount_total ?? 0) / 100).toFixed(2)
   const currency = (session.currency ?? 'EUR').toUpperCase()
 
+  const shippingFeeRaw = parseFloat(session.metadata?.shipping_fee ?? '0')
+  const shippingFeeDisplay =
+    shippingFeeRaw > 0 ? `€${shippingFeeRaw.toFixed(2)}` : t.freeShipping
+  const productsAmount = (
+    (session.amount_total ?? 0) / 100 -
+    shippingFeeRaw
+  ).toFixed(2)
+
   return {
     storeName: 'CLIFFRISE',
     orderConfirmedHeading: t.orderConfirmedHeading,
     greeting: `${t.greeting} ${name} 👋`,
     thankYou: t.thankYou.replace('{name}', name),
     orderReferenceLabel: t.orderReference,
-    sessionId: session.id,
+    sessionId: `#${session.id.slice(-8).toUpperCase()}`,
+    productsAmountLabel: t.productsAmount,
+    productsAmount,
     totalLabel: t.total,
     amount,
     currency,
     shippingHeading: t.shippingHeading,
     recipientLabel: t.recipient,
-    shippingName: escapeHtml(session.metadata?.shipping_name ?? ''),
+    shippingName: escapeHtml(session.customer_details?.name ?? ''),
     phoneLabel: t.phone,
-    shippingPhone: escapeHtml(session.metadata?.shipping_phone ?? ''),
-    courierLabel: t.courier,
-    courier: escapeHtml(session.metadata?.courier ?? ''),
+    shippingPhone: escapeHtml(session.customer_details?.phone ?? ''),
     officeLabel: t.office,
     shippingOffice: escapeHtml(session.metadata?.shipping_office ?? ''),
+    shippingFeeLabel: t.shippingFee,
+    shippingFee: shippingFeeDisplay,
     supportMessage: t.supportMessage,
     copyright: `© ${new Date().getFullYear()} Cliffrise. ${t.allRightsReserved}`,
   }

@@ -7,7 +7,8 @@ const makeSessionCompletedEvent = (
     currency: string
     customer_name: string
     customer_email: string | null
-    customer_phone: string
+    customer_phone: string | null
+    metadata: Record<string, string>
   }> = {},
 ) => ({
   type: 'checkout.session.completed',
@@ -23,11 +24,15 @@ const makeSessionCompletedEvent = (
           ? {
               email: overrides.customer_email ?? 'customer@example.com',
               name: overrides.customer_name ?? 'Test Customer',
-              phone: overrides.customer_phone ?? null,
+              phone: overrides.customer_phone ?? '+359888000111',
               address: null,
             }
           : null,
-      metadata: {},
+      metadata: overrides.metadata ?? {
+        shipping_fee: '5.00',
+        shipping_office: 'Sofia Office 1',
+        lang: 'en',
+      },
     },
   },
 })
@@ -75,9 +80,16 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
       'tancheva.design@gmail.com',
       'boiskila@gmail.com',
     ])
+
     expect(customerEmail.html).toContain('Test Customer')
+    expect(customerEmail.html).toContain('+359888000111')
+    expect(customerEmail.html).toContain('#TEST_123')
+    expect(customerEmail.html).toContain('24.99')
     expect(customerEmail.html).toContain('29.99 EUR')
-    expect(customerEmail.html).toContain('cs_test_123')
+    expect(customerEmail.html).toContain('€5.00')
+    expect(customerEmail.html).toContain('Sofia Office 1')
+    expect(customerEmail.html).toContain('CLIFFRISE')
+    expect(customerEmail.html).toContain('Order Confirmed!')
   })
 
   test('bccs both owner inboxes on customer confirmation', async ({
@@ -91,6 +103,11 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
         customer_name: 'Jane Doe',
         customer_email: 'jane@example.com',
         customer_phone: '+359888123456',
+        metadata: {
+          shipping_fee: '5.00',
+          shipping_office: 'Plovdiv Office 3',
+          lang: 'en',
+        },
       }),
     })
 
@@ -120,14 +137,51 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
       'tancheva.design@gmail.com',
       'boiskila@gmail.com',
     ])
-    expect(customerEmail.html).toContain('cs_test_owner_456')
-    expect(customerEmail.html).toContain('49.99 EUR')
+
     expect(customerEmail.html).toContain('Jane Doe')
+    expect(customerEmail.html).toContain('+359888123456')
+    expect(customerEmail.html).toContain('#WNER_456')
+    expect(customerEmail.html).toContain('44.99')
+    expect(customerEmail.html).toContain('49.99 EUR')
+    expect(customerEmail.html).toContain('€5.00')
+    expect(customerEmail.html).toContain('Plovdiv Office 3')
   })
 
-  test('sends no email when customer_details is null', async ({
-    request,
-  }) => {
+  test('shows free shipping when shipping_fee is 0', async ({ request }) => {
+    const response = await request.post('/api/webhooks/stripe/', {
+      data: makeSessionCompletedEvent({
+        amount_total: 3499,
+        metadata: {
+          shipping_fee: '0',
+          shipping_office: 'Varna Office 1',
+          lang: 'en',
+        },
+      }),
+    })
+
+    expect(response.ok()).toBeTruthy()
+
+    await expect
+      .poll(
+        async () => {
+          const res = await request.get('/api/test/sent-emails/')
+          const data = await res.json()
+          return data.emails
+        },
+        { timeout: 5000 },
+      )
+      .toHaveLength(1)
+
+    const res = await request.get('/api/test/sent-emails/')
+    const { emails } = await res.json()
+
+    // shippingFee should render the translation key for free shipping ('Free')
+    expect(emails[0].html).toContain('Free')
+    // productsAmount equals full amount when shipping is free
+    expect(emails[0].html).toContain('34.99')
+  })
+
+  test('sends no email when customer_details is null', async ({ request }) => {
     const response = await request.post('/api/webhooks/stripe/', {
       data: makeSessionCompletedEvent({ customer_email: null }),
     })
@@ -150,7 +204,10 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
     request,
   }) => {
     const response = await request.post('/api/webhooks/stripe/', {
-      data: { type: 'payment_intent.created', data: { object: { id: 'pi_test_123' } } },
+      data: {
+        type: 'payment_intent.created',
+        data: { object: { id: 'pi_test_123' } },
+      },
     })
 
     expect(response.ok()).toBeTruthy()
@@ -160,11 +217,19 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
     expect(emails).toHaveLength(0)
   })
 
-  test('escapes HTML in the confirmation email', async ({ request }) => {
+  test('escapes HTML in customer name, phone, and shipping fields', async ({
+    request,
+  }) => {
     const response = await request.post('/api/webhooks/stripe/', {
       data: makeSessionCompletedEvent({
         customer_name: '<script>alert(1)</script>',
         customer_email: 'xss@example.com',
+        customer_phone: '<img src=x onerror=alert(1)>',
+        metadata: {
+          shipping_fee: '5.00',
+          shipping_office: '<script>evil()</script>',
+          lang: 'en',
+        },
       }),
     })
 
@@ -186,6 +251,7 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
 
     expect(emails[0].html).not.toContain('<script>')
     expect(emails[0].html).toContain('&lt;script&gt;')
+    expect(emails[0].html).not.toContain('<img')
   })
 
   test('returns 400 for invalid JSON body', async ({ request }) => {

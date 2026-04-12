@@ -1,14 +1,23 @@
 import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { getStripe } from '@services/stripe'
+import { calculateShippingFee } from '@utils/speedy'
 
 export const checkout = {
+  calculateShipping: defineAction({
+    input: z.object({
+      officeId: z.coerce.number(),
+      totalWeight: z.coerce.number().optional(),
+    }),
+    handler: async ({ officeId, totalWeight }) => {
+      const fee = await calculateShippingFee(officeId, totalWeight ?? 1)
+      return { fee }
+    },
+  }),
   saveShipping: defineAction({
     input: z.object({
-      courier: z.enum(['speedy']),
-      name: z.string().min(1),
-      phone: z.string().min(1),
       office: z.string().min(1),
+      officeId: z.coerce.number(),
     }),
     handler: async (input, context) => {
       context.session?.set('shipping', input)

@@ -5,6 +5,9 @@ import { getStripe } from '@services/stripe'
 import type { CartItem } from '@actions'
 import type { ShippingInfo } from '@types'
 import CheckoutLayout from '../../../layouts/CheckoutLayout.astro'
+import { getTotalPrice, getTotalWeight } from '@utils/cart'
+import { calculateShippingFee } from '@utils/speedy'
+import { getFreeShippingThreshold } from '@utils/shipping'
 
 const lang = getLang(Astro.params)
 const translations = getTranslations(Astro.params)
@@ -26,6 +29,13 @@ const stripePublicKey = import.meta.env.STRIPE_PUBLIC_KEY
 if (!stripePublicKey) {
   throw new Error('STRIPE_PUBLIC_KEY is not set')
 }
+
+const cartTotal = getTotalPrice(cart)
+const freeShippingThreshold = await getFreeShippingThreshold()
+const isFreeShipping = cartTotal >= freeShippingThreshold
+const shippingFeeEur = isFreeShipping
+  ? 0
+  : await calculateShippingFee(shipping.officeId, getTotalWeight(cart))
 
 const sessionId = Astro.url.searchParams.get('session_id')
 let clientSecret: string | null = null
@@ -55,24 +65,30 @@ if (sessionId) {
     mode: 'payment',
     ui_mode: 'embedded_page',
     line_items: lineItems,
+    billing_address_collection: 'required',
+    phone_number_collection: {
+      enabled: true,
+    },
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: {
+            amount: Math.round(shippingFeeEur * 100),
+            currency: 'eur',
+          },
+          display_name: isFreeShipping
+            ? translations.checkout.freeShipping
+            : translations.checkout.shippingFee,
+        },
+      },
+    ],
     return_url: `${siteUrl}/${lang}/checkout/success/?session_id={CHECKOUT_SESSION_ID}`,
     customer_creation: 'always',
     metadata: {
-      courier: shipping.courier,
-      shipping_name: shipping.name,
-      shipping_phone: shipping.phone,
       shipping_office: shipping.office,
+      shipping_fee: shippingFeeEur.toFixed(2),
       lang,
-    },
-    payment_intent_data: {
-      shipping: {
-        name: shipping.name,
-        phone: shipping.phone,
-        address: {
-          line1: shipping.office,
-          country: 'BG',
-        },
-      },
     },
   })
 
@@ -89,6 +105,22 @@ if (!clientSecret) {
 ---
 
 <CheckoutLayout>
+  <div class="text-center py-2 px-4 text-sm border-b border-gray-200">
+    {
+      isFreeShipping ? (
+        <span class="text-green-700 font-medium">
+          {translations.checkout.freeShipping}
+        </span>
+      ) : (
+        <span>
+          {translations.checkout.shippingFee}: €{shippingFeeEur.toFixed(2)}
+          <span class="text-gray-400 ml-2">
+            — {translations.checkout.freeShippingThreshold}
+          </span>
+        </span>
+      )
+    }
+  </div>
   <StripeCheckout
     client:load
     stripePublicKey={stripePublicKey}
