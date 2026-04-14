@@ -14,3 +14,7 @@ export const sanitizeInput = (value: string) => {
 export const sanitizeMessage = (value: string) => {
   return validator.stripLow(value, true).replace(/\r\n/g, '\n').trim()
 }
+
+export const isPresent = <T>(value: T | null | undefined): value is T => {
+  return value !== null && value !== undefined
+}

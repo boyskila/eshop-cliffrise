@@ -145,7 +145,17 @@
         "required": "This field is required",
         "shippingFeeLabel": "Shipping fee:",
         "calculatingFee": "Calculating...",
-        "selectCaption": "Select this office"
+        "selectCaption": "Select this office",
+        "workingTime": "Working time:",
+        "monFri": "Mon-Fri",
+        "sat": "Sat",
+        "selectOffice": "Select this office",
+        "loadingMap": "Loading offices...",
+        "searchPlaceholder": "Search by office name...",
+        "noResults": "No offices found",
+        "searchLabel": "Office",
+        "orBrowseMap": "Or browse on the map:",
+        "mapUnavailable": "Map unavailable"
     },
     "checkout": {
         "title": "Checkout",

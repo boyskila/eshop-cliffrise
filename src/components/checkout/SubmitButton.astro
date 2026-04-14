@@ -1,0 +1,57 @@
+---
+type Props = {
+  text: string
+}
+
+const { text } = Astro.props
+---
+
+<button
+  id="shipping-submit"
+  type="submit"
+  class="w-full bg-black text-white p-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {text}
+</button>
+
+<script>
+  import { actions } from 'astro:actions'
+
+  const form = document.getElementById('shipping-form') as HTMLFormElement
+  const submitButton = document.getElementById(
+    'shipping-submit',
+  ) as HTMLButtonElement
+
+  form.addEventListener('submit', async (event: SubmitEvent) => {
+    event.preventDefault()
+
+    const validateEvent = new CustomEvent('shipping-validate', {
+      cancelable: true,
+    })
+    form.dispatchEvent(validateEvent)
+    if (validateEvent.defaultPrevented) {
+      return
+    }
+
+    const officeId = Number(form.dataset.selectedOfficeId) || null
+    const officeName = form.dataset.selectedOfficeName || ''
+    if (!officeId || !officeName) {
+      return
+    }
+
+    submitButton.disabled = true
+
+    const { error } = await actions.saveShipping({
+      office: officeName,
+      officeId,
+    })
+
+    if (error) {
+      console.error('saveShipping failed:', error)
+      submitButton.disabled = false
+      return
+    }
+
+    window.location.href = form.dataset.redirect!
+  })
+</script>

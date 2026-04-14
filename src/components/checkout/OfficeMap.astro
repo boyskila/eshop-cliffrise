@@ -1,0 +1,278 @@
+---
+type Props = {
+  lang: string
+  initialOfficeId?: number
+  text: {
+    workingTime: string
+    monFri: string
+    sat: string
+    selectOffice: string
+    loadingMap: string
+    mapUnavailable: string
+  }
+}
+
+const { lang, text, initialOfficeId } = Astro.props
+---
+
+<div
+  id="office-map-wrapper"
+  class="flex flex-col flex-1"
+  data-lang={lang}
+  data-initial-office-id={initialOfficeId}
+  data-text-working-time={text.workingTime}
+  data-text-mon-fri={text.monFri}
+  data-text-sat={text.sat}
+  data-text-select={text.selectOffice}
+  data-text-loading={text.loadingMap}
+  data-text-unavailable={text.mapUnavailable}
+>
+  <div
+    id="office-map-loader"
+    class="flex items-center justify-center flex-1 min-h-[200px] md:h-[50vh] bg-gray-50 border border-black"
+  >
+    <div class="flex flex-col items-center gap-2">
+      <div
+        class="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-black"
+      >
+      </div>
+      <span class="text-sm text-gray-500">{text.loadingMap}</span>
+    </div>
+  </div>
+  <div
+    id="office-map"
+    tabindex="-1"
+    class="flex-1 min-h-[200px] md:h-[50vh] border border-black hidden"
+  >
+  </div>
+</div>
+
+<style is:global>
+  .leaflet-popup {
+    z-index: 1000 !important;
+  }
+</style>
+
+<script>
+  import L from 'leaflet'
+  import 'leaflet/dist/leaflet.css'
+  import { escapeHtml } from '@utils/func'
+  import type { MapOffice } from '@types'
+
+  type LocalizedOffice = Omit<MapOffice, 'nameEn' | 'addressEn'>
+
+  const wrapper = document.getElementById('office-map-wrapper')!
+  const lang = wrapper.dataset.lang!
+  const textWorkingTime = wrapper.dataset.textWorkingTime!
+  const textMonFri = wrapper.dataset.textMonFri!
+  const textSat = wrapper.dataset.textSat!
+  const textSelect = wrapper.dataset.textSelect!
+  const textUnavailable = wrapper.dataset.textUnavailable!
+
+  const mapLoader = document.getElementById('office-map-loader')!
+  const mapContainer = document.getElementById('office-map')!
+
+  const initMap = async () => {
+    const response = await fetch('/api/offices/')
+    const offices: MapOffice[] = await response.json()
+
+    const localizedOffices = offices.map((office) => ({
+      id: office.id,
+      name:
+        lang === 'en'
+          ? office.nameEn || office.name
+          : office.name || office.nameEn,
+      address:
+        lang === 'en'
+          ? office.addressEn || office.address
+          : office.address || office.addressEn,
+      lat: office.lat,
+      lng: office.lng,
+      type: office.type,
+      workingTimeFrom: office.workingTimeFrom,
+      workingTimeTo: office.workingTimeTo,
+      workingTimeHalfFrom: office.workingTimeHalfFrom,
+      workingTimeHalfTo: office.workingTimeHalfTo,
+    }))
+
+    mapLoader.classList.add('hidden')
+    mapContainer.classList.remove('hidden')
+
+    const map = L.map('office-map', {
+      keyboard: false,
+      zoomControl: false,
+      attributionControl: false,
+    }).setView([42.7, 25.5], 7)
+    L.control.zoom({ position: 'bottomright' }).addTo(map)
+
+    setTimeout(() => map.invalidateSize(), 0)
+
+    mapContainer
+      .querySelectorAll('a, button, [tabindex]')
+      .forEach((element) => {
+        ;(element as HTMLElement).tabIndex = -1
+      })
+
+    mapContainer.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' || event.key === 'Tab') {
+        event.preventDefault()
+        event.stopPropagation()
+        ;(document.activeElement as HTMLElement | null)?.blur()
+
+        const focusable = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          ),
+        ).filter(
+          (element) =>
+            !mapContainer.contains(element) && element.offsetParent !== null,
+        )
+
+        const target =
+          event.key === 'Tab' && event.shiftKey
+            ? focusable
+                .reverse()
+                .find(
+                  (element) =>
+                    element.compareDocumentPosition(mapContainer) &
+                    Node.DOCUMENT_POSITION_FOLLOWING,
+                )
+            : focusable.find(
+                (element) =>
+                  element.compareDocumentPosition(mapContainer) &
+                  Node.DOCUMENT_POSITION_PRECEDING,
+              )
+
+        target?.focus()
+      }
+    })
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
+    }).addTo(map)
+
+    const icon = L.divIcon({
+      html: `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#e11d48" stroke="white" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+      className: '',
+      iconSize: [36, 36],
+      iconAnchor: [18, 36],
+      popupAnchor: [0, -36],
+    })
+
+    const markersByOfficeId = new Map<number, L.Marker>()
+    const officeDataById = new Map<number, LocalizedOffice>()
+
+    const buildPopupHtml = (office: LocalizedOffice, showSelect: boolean) => {
+      const workingHours: string[] = []
+      if (office.workingTimeFrom && office.workingTimeTo) {
+        workingHours.push(
+          `${escapeHtml(textMonFri)} ${escapeHtml(office.workingTimeFrom)} - ${escapeHtml(office.workingTimeTo)}`,
+        )
+      }
+      if (office.workingTimeHalfFrom && office.workingTimeHalfTo) {
+        workingHours.push(
+          `${escapeHtml(textSat)} ${escapeHtml(office.workingTimeHalfFrom)} - ${escapeHtml(office.workingTimeHalfTo)}`,
+        )
+      }
+
+      return `
+        <div>
+          <div class="font-bold text-sm mb-1">${escapeHtml(office.name ?? '')}</div>
+          <div class="text-xs text-gray-500 mb-1">${escapeHtml(office.address ?? '')}</div>
+          <div class="text-sm ${workingHours.length ? '' : 'hidden'}">
+            <div class="font-semibold mb-1">${escapeHtml(textWorkingTime)}</div>
+            ${workingHours.map((hour) => `<div>${hour}</div>`).join('')}
+          </div>
+          <button
+            class="
+              ${showSelect ? '' : 'hidden'}
+              office-map-select
+              bg-black text-white
+              py-[6px] px-[16px] mt-2
+              text-sm cursor-pointer
+              border-none w-full"
+            data-id="${office.id}"
+            data-name="${escapeHtml(office.name)}"
+          >${textSelect}</button>
+        </div>
+      `
+    }
+
+    for (const office of localizedOffices) {
+      officeDataById.set(office.id, office)
+
+      const marker = L.marker([office.lat, office.lng], { icon })
+        .addTo(map)
+        .bindPopup(buildPopupHtml(office, true))
+      markersByOfficeId.set(office.id, marker)
+    }
+
+    let selectedOfficeId: number | null = null
+
+    const initialId = Number(wrapper.dataset.initialOfficeId) || null
+
+    if (initialId) {
+      selectedOfficeId = initialId
+      const marker = markersByOfficeId.get(initialId)
+      const office = officeDataById.get(initialId)
+      if (marker && office) {
+        marker.setPopupContent(buildPopupHtml(office, false))
+        map.setView(marker.getLatLng(), 15)
+        marker.openPopup()
+      }
+    }
+
+    document.addEventListener('office-selected', ((event: CustomEvent) => {
+      const id = event.detail?.id
+      selectedOfficeId = id
+
+      markersByOfficeId.forEach((marker, markerId) => {
+        const office = officeDataById.get(markerId)
+        if (office) {
+          marker.setPopupContent(buildPopupHtml(office, markerId !== id))
+        }
+      })
+
+      const marker = markersByOfficeId.get(id)
+      if (marker) {
+        map.flyTo(marker.getLatLng(), 15, { duration: 0.8 })
+        marker.openPopup()
+      }
+    }) as EventListener)
+
+    mapContainer.addEventListener('click', (event) => {
+      const selectButton = (event.target as HTMLElement).closest(
+        '.office-map-select',
+      ) as HTMLElement | null
+      if (!selectButton) {
+        return
+      }
+      const id = Number(selectButton.dataset.id)
+      const name = selectButton.dataset.name ?? ''
+      if (id && name) {
+        document.dispatchEvent(
+          new CustomEvent('office-selected', {
+            bubbles: true,
+            detail: { id, name },
+          }),
+        )
+        map.closePopup()
+      }
+    })
+  }
+
+  try {
+    await initMap()
+  } catch (error) {
+    console.error('[OfficeMap] initMap failed:', error)
+    mapContainer.classList.add('hidden')
+    mapLoader.classList.remove('hidden')
+    mapLoader.innerHTML = `
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-sm text-gray-500">${textUnavailable}</span>
+      </div>
+    `
+  }
+</script>

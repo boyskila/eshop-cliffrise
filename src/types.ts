@@ -37,3 +37,35 @@ export type ShippingInfo = {
   office: string
   officeId: number
 }
+
+export type SpeedyOffice = {
+  id: number
+  name?: string
+  nameEn?: string
+  address?: {
+    fullAddressString?: string
+    fullAddressStringEn?: string
+    x?: number
+    y?: number
+  }
+  type?: string
+  workingTimeFrom?: string
+  workingTimeTo?: string
+  workingTimeHalfFrom?: string
+  workingTimeHalfTo?: string
+}
+
+export type MapOffice = {
+  id: number
+  name: string
+  nameEn: string
+  address: string
+  addressEn: string
+  lat: number
+  lng: number
+  type: string
+  workingTimeFrom: string | null
+  workingTimeTo: string | null
+  workingTimeHalfFrom: string | null
+  workingTimeHalfTo: string | null
+}

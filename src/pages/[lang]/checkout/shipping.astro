@@ -30,18 +30,7 @@ const savedShipping: ShippingInfo | undefined =
 <CheckoutLayout>
   <ShippingForm
     lang={lang!}
-    text={{
-      title: translations.shipping.title,
-      officeLabel: translations.shipping.officeLabel,
-      selectedOffice: translations.shipping.selectedOffice,
-      changeOffice: translations.shipping.changeOffice,
-      continue: translations.shipping.continue,
-      backToShop: translations.shipping.backToShop,
-      required: translations.shipping.required,
-      shippingFeeLabel: translations.shipping.shippingFeeLabel,
-      calculatingFee: translations.shipping.calculatingFee,
-      selectCaption: translations.shipping.selectCaption,
-    }}
+    text={translations.shipping}
     initialShipping={savedShipping}
     isFreeShipping={isFreeShipping}
     totalWeight={totalWeight}

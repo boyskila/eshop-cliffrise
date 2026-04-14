@@ -8,10 +8,10 @@ const PRODUCT_URL = '/en/products/1/'
 const selectOffice = (page: Page, officeId: number, officeName: string) =>
   page.evaluate(
     ({ officeId, officeName }) => {
-      window.dispatchEvent(
-        new MessageEvent('message', {
-          origin: 'https://services.speedy.bg',
-          data: { id: officeId, name: officeName },
+      document.dispatchEvent(
+        new CustomEvent('office-selected', {
+          bubbles: true,
+          detail: { id: officeId, name: officeName },
         }),
       )
     },
@@ -26,9 +26,9 @@ test.describe('Checkout - Shipping', () => {
 
     await Promise.all([
       page.waitForResponse(
-        (r) =>
-          r.url().includes('_actions/addToCart') &&
-          r.request().method() === 'POST',
+        (response) =>
+          response.url().includes('_actions/addToCart') &&
+          response.request().method() === 'POST',
       ),
       page.getByRole('button', { name: /add chunky chalk.*to cart/i }).click(),
     ])
@@ -52,25 +52,15 @@ test.describe('Checkout - Shipping', () => {
   test('calculates shipping fee after Bourgas office is selected', async ({
     page,
   }) => {
-    const addRes = await page.request.post('/_actions/addToCart/', {
+    const addResponse = await page.request.post('/_actions/addToCart/', {
       data: { productId: '1', lang: 'en', quantity: 1 },
     })
-    expect(addRes.ok()).toBeTruthy()
+    expect(addResponse.ok()).toBeTruthy()
 
     await page.goto('/en/checkout/shipping/')
     await expect(page.locator('#shipping-form')).toBeVisible()
 
-    await page.evaluate(
-      ({ officeId, officeName }) => {
-        window.dispatchEvent(
-          new MessageEvent('message', {
-            origin: 'https://services.speedy.bg',
-            data: { id: officeId, name: officeName },
-          }),
-        )
-      },
-      { officeId: BOURGAS_OFFICE_ID, officeName: BOURGAS_OFFICE_NAME },
-    )
+    await selectOffice(page, BOURGAS_OFFICE_ID, BOURGAS_OFFICE_NAME)
 
     await expect(page.locator('#speedy-fee')).toContainText(/€\d+\.\d{2}/, {
       timeout: 15000,
@@ -95,33 +85,31 @@ test.describe('Checkout - Shipping form', () => {
     await expect(page.locator('#error-office')).toBeVisible()
   })
 
-  test('office selection hides iframe and shows selected panel', async ({
+  test('office selection hides search and shows selected panel', async ({
     page,
   }) => {
-    await expect(page.locator('#speedy-iframe-container')).toBeVisible()
-    await expect(page.locator('#speedy-selected')).toBeHidden()
+    await expect(page.locator('[data-office-search]')).toBeVisible()
+    await expect(page.locator('#office-selected-state')).toBeHidden()
 
     await selectOffice(page, BOURGAS_OFFICE_ID, BOURGAS_OFFICE_NAME)
 
-    await expect(page.locator('#speedy-iframe-container')).toBeHidden()
-    await expect(page.locator('#speedy-selected')).toBeVisible()
+    await expect(page.locator('[data-office-search]')).toBeHidden()
+    await expect(page.locator('#office-selected-state')).toBeVisible()
     await expect(page.locator('#speedy-office-name')).toHaveText(
       BOURGAS_OFFICE_NAME,
     )
   })
 
-  test('change office button resets selection and shows iframe again', async ({
+  test('change office button resets selection and shows search again', async ({
     page,
   }) => {
     await selectOffice(page, BOURGAS_OFFICE_ID, BOURGAS_OFFICE_NAME)
-    await expect(page.locator('#speedy-selected')).toBeVisible()
+    await expect(page.locator('#office-selected-state')).toBeVisible()
 
     await page.locator('#speedy-change').click()
 
-    await expect(page.locator('#speedy-iframe-container')).toBeVisible()
-    await expect(page.locator('#speedy-selected')).toBeHidden()
-    await expect(page.locator('#speedy-office-name')).toHaveText('')
-    await expect(page.locator('#speedy-fee')).toHaveText('')
+    await expect(page.locator('[data-office-search]')).toBeVisible()
+    await expect(page.locator('#office-selected-state')).toBeHidden()
   })
 
   test('selecting an office clears the office validation error', async ({

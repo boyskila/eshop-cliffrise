@@ -1,0 +1,201 @@
+---
+type Props = {
+  lang: string
+  text: {
+    searchPlaceholder: string
+    noResults: string
+    searchLabel: string
+  }
+  className?: string
+}
+
+const { lang, text, className } = Astro.props
+---
+
+<div class:list={['relative', className]} data-office-search data-lang={lang}>
+  <input
+    id="office-search-input"
+    type="text"
+    placeholder={text.searchPlaceholder}
+    autocomplete="off"
+    role="combobox"
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-controls="office-search-results"
+    aria-activedescendant=""
+    class="w-full px-3 py-2 text-sm focus:outline-none"
+  />
+  <ul
+    id="office-search-results"
+    role="listbox"
+    class="absolute z-[1000] top-full left-0 right-0 bg-white border border-black max-h-60 overflow-y-auto hidden"
+  >
+  </ul>
+  <p id="office-search-no-results" class="text-sm text-gray-500 mt-1 hidden">
+    {text.noResults}
+  </p>
+</div>
+
+<script>
+  import { actions } from 'astro:actions'
+  import { escapeHtml } from '@utils/func'
+
+  const container = document.querySelector(
+    '[data-office-search]',
+  ) as HTMLElement
+  const lang = container.dataset.lang ?? 'bg'
+  const input = document.getElementById(
+    'office-search-input',
+  ) as HTMLInputElement
+  const resultsList = document.getElementById(
+    'office-search-results',
+  ) as HTMLUListElement
+  const noResults = document.getElementById(
+    'office-search-no-results',
+  ) as HTMLElement
+
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null
+  let activeIndex = -1
+
+  const getItems = (): HTMLLIElement[] => {
+    return Array.from(resultsList.querySelectorAll('li'))
+  }
+
+  const setActiveItem = (index: number) => {
+    const items = getItems()
+    if (items.length === 0) {
+      return
+    }
+
+    // Clear previous
+    items.forEach((item) => {
+      item.classList.remove('bg-gray-100')
+      item.removeAttribute('aria-selected')
+    })
+
+    activeIndex = index
+    if (activeIndex < 0) {
+      activeIndex = items.length - 1
+    }
+    if (activeIndex >= items.length) {
+      activeIndex = 0
+    }
+
+    const activeItem = items[activeIndex]
+    activeItem.classList.add('bg-gray-100')
+    activeItem.setAttribute('aria-selected', 'true')
+    activeItem.scrollIntoView({ block: 'nearest' })
+    input.setAttribute('aria-activedescendant', activeItem.id)
+  }
+
+  input.addEventListener('keydown', (event) => {
+    const items = getItems()
+    if (!items.length && event.key !== 'Escape') {
+      return
+    }
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault()
+        setActiveItem(activeIndex + 1)
+        break
+      case 'ArrowUp':
+        event.preventDefault()
+        setActiveItem(activeIndex - 1)
+        break
+      case 'Enter':
+        event.preventDefault()
+        if (activeIndex >= 0 && activeIndex < items.length) {
+          items[activeIndex].dispatchEvent(
+            new MouseEvent('mousedown', { bubbles: true }),
+          )
+        }
+        break
+      case 'Escape':
+        resultsList.innerHTML = ''
+        resultsList.classList.add('hidden')
+        input.setAttribute('aria-expanded', 'false')
+        activeIndex = -1
+        break
+    }
+  })
+
+  input.addEventListener('input', () => {
+    activeIndex = -1
+    const query = input.value.trim()
+
+    if (debounceTimer) clearTimeout(debounceTimer)
+    noResults.classList.add('hidden')
+
+    if (query.length < 2) {
+      resultsList.innerHTML = ''
+      resultsList.classList.add('hidden')
+      return
+    }
+
+    debounceTimer = setTimeout(async () => {
+      try {
+        const { data } = await actions.searchOffices({
+          query,
+          lang: lang as 'bg' | 'en',
+        })
+        const offices = data?.offices ?? []
+
+        resultsList.innerHTML = ''
+
+        if (offices.length === 0) {
+          resultsList.classList.add('hidden')
+          noResults.classList.remove('hidden')
+          return
+        }
+
+        noResults.classList.add('hidden')
+
+        offices.forEach((office, index) => {
+          const listItem = document.createElement('li')
+          listItem.id = `office-option-${index}`
+          listItem.setAttribute('role', 'option')
+          listItem.className =
+            'px-3 py-2 cursor-pointer hover:bg-gray-100 text-sm border-b border-gray-100 last:border-0'
+          listItem.innerHTML = `
+            <span class="font-medium">${escapeHtml(office.name ?? '')}</span>
+            <span class="block text-xs text-gray-500">${escapeHtml(office.address ?? '')}</span>
+          `
+          listItem.addEventListener('mousedown', (event) => {
+            event.preventDefault()
+            input.value = office.name ?? ''
+            resultsList.innerHTML = ''
+            resultsList.classList.add('hidden')
+
+            container.dispatchEvent(
+              new CustomEvent('office-selected', {
+                bubbles: true,
+                detail: {
+                  id: office.id,
+                  name: office.name,
+                  address: office.address,
+                  type: office.type,
+                },
+              }),
+            )
+          })
+          resultsList.appendChild(listItem)
+        })
+
+        resultsList.classList.remove('hidden')
+        input.setAttribute('aria-expanded', 'true')
+      } catch (error) {
+        console.error('Office search error:', error)
+      }
+    }, 300)
+  })
+
+  document.addEventListener('click', (event) => {
+    if (!container.contains(event.target as Node)) {
+      resultsList.innerHTML = ''
+      resultsList.classList.add('hidden')
+      input.setAttribute('aria-expanded', 'false')
+      activeIndex = -1
+    }
+  })
+</script>

@@ -1,90 +1,81 @@
 ---
-import type { ShippingInfo } from '@types'
+import type { ShippingInfo, Translations } from '@types'
+import OfficeSearch from './OfficeSearch.astro'
+import OfficeMap from './OfficeMap.astro'
+import SubmitButton from './SubmitButton.astro'
+import SelectedOffice from './SelectedOffice.astro'
 
 type Props = {
   lang: string
-  text: {
-    title: string
-    officeLabel: string
-    selectedOffice: string
-    changeOffice: string
-    continue: string
-    backToShop: string
-    required: string
-    shippingFeeLabel: string
-    calculatingFee: string
-    selectCaption: string
-  }
+  text: Translations['shipping']
   initialShipping?: ShippingInfo
   isFreeShipping: boolean
   totalWeight: number
 }
 
 const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
-
-const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_locator.php?lang=${lang}&showOfficesList=0&officeType=ALL&officesFilterOnTheMap=1&selectOfficeButtonCaption=${encodeURIComponent(text.selectCaption)}`
 ---
 
-<div class="w-full max-w-2xl mx-auto px-4 py-8">
+<div class="size-full max-w-4xl mx-auto px-4 py-8 flex flex-col">
   <h1 class="text-2xl md:text-3xl font-bold mb-8">{text.title}</h1>
 
   <form
     id="shipping-form"
-    class="flex flex-col gap-6"
+    class="flex flex-col gap-6 flex-1"
     data-redirect={`/${lang}/checkout/`}
     data-lang={lang}
     data-fee-label={text.shippingFeeLabel}
     data-calculating-fee={text.calculatingFee}
     data-free-shipping={isFreeShipping ? 'true' : 'false'}
     data-total-weight={totalWeight}
+    data-selected-office-id={initialShipping?.officeId ?? ''}
+    data-selected-office-name={initialShipping?.office ?? ''}
   >
-    <div>
-      <label class="block text-sm font-medium mb-2">{text.officeLabel}</label>
+    <div class="flex flex-col flex-1">
+      <label class="block text-sm font-medium mb-2">{text.searchLabel}</label>
 
       <div
-        id="speedy-iframe-container"
-        class={`relative w-full h-[420px] md:h-[500px] border border-black${initialShipping?.office ? ' hidden' : ''}`}
-      >
-        <iframe
-          id="frameOfficeLocator"
-          name="frameOfficeLocator"
-          src={speedySrc}
-          class="absolute inset-0 w-full h-full"></iframe>
-      </div>
-
-      <div
-        id="speedy-selected"
-        class={`border border-black px-3 py-2 flex items-center justify-between gap-4${initialShipping?.office ? '' : ' hidden'}`}
+        id="office-combined"
+        class="border border-black"
         data-initial-office-id={initialShipping?.officeId}
       >
-        <div class="flex flex-col gap-0.5">
-          <span id="speedy-office-name" class="text-sm"
-            >{initialShipping?.office ?? ''}</span
-          >
-          <span id="speedy-fee" class="text-sm font-medium text-gray-700"
-          ></span>
-        </div>
-        <button
-          type="button"
-          id="speedy-change"
-          class="text-sm underline shrink-0"
-        >
-          {text.changeOffice}
-        </button>
+        <SelectedOffice
+          officeName={initialShipping?.office}
+          changeText={text.changeOffice}
+        />
+
+        <OfficeSearch
+          className={initialShipping?.office ? 'hidden' : ''}
+          lang={lang}
+          text={{
+            searchPlaceholder: text.searchPlaceholder,
+            noResults: text.noResults,
+            searchLabel: text.searchLabel,
+          }}
+        />
       </div>
+
+      <p class="text-sm text-gray-500 mt-2 mb-2">{text.orBrowseMap}</p>
+
+      <OfficeMap
+        lang={lang}
+        initialOfficeId={initialShipping?.officeId}
+        text={{
+          workingTime: text.workingTime,
+          monFri: text.monFri,
+          sat: text.sat,
+          selectOffice: text.selectOffice,
+          loadingMap: text.loadingMap,
+          mapUnavailable: text.mapUnavailable,
+        }}
+      />
 
       <p id="error-office" class="text-red-600 text-sm mt-1 hidden">
         {text.required}
       </p>
     </div>
 
-    <button
-      id="shipping-submit"
-      type="submit"
-      class="w-full bg-black text-white p-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      {text.continue}
-    </button>
+    <SubmitButton text={text.continue} />
 
     <a
       href={`/${lang}/`}
@@ -97,12 +88,11 @@ const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_lo
 
 <script>
   import { actions } from 'astro:actions'
+  import { isPresent } from '../../utils/func'
 
   const form = document.getElementById('shipping-form') as HTMLFormElement
-  const { redirect, lang, feeLabel, calculatingFee, freeShipping, totalWeight } =
+  const { feeLabel, calculatingFee, freeShipping, totalWeight } =
     form.dataset as {
-      redirect: string
-      lang: string
       feeLabel: string
       calculatingFee: string
       freeShipping: string
@@ -110,101 +100,96 @@ const speedySrc = `https://services.speedy.bg/office_locator_widget_v3/office_lo
     }
   const isFreeShipping = freeShipping === 'true'
 
-  const officeNameEl = document.getElementById(
+  const officeNameElement = document.getElementById(
     'speedy-office-name',
   ) as HTMLElement
-  const officeFeeEl = document.getElementById('speedy-fee') as HTMLElement
-  const iframeContainer = document.getElementById('speedy-iframe-container')!
-  const selectedEl = document.getElementById('speedy-selected')!
+  const officeFeeElement = document.getElementById('speedy-fee') as HTMLElement
+  const combinedContainer = document.getElementById('office-combined')!
+  const selectedPanel = document.getElementById('office-selected-state')!
+  const searchState = document.querySelector('[data-office-search]')!
+  const searchInput = document.getElementById(
+    'office-search-input',
+  ) as HTMLInputElement
+  const changeButton = document.getElementById(
+    'speedy-change',
+  ) as HTMLButtonElement
 
-  const getOfficeName = () => officeNameEl.textContent?.trim() ?? ''
+  const showSearch = () => {
+    selectedPanel.classList.add('hidden')
+    searchState.classList.remove('hidden')
+    searchInput.value = ''
+    searchInput.focus()
+  }
 
-  const officeDisplayName = (office: Record<string, any>): string =>
-    (lang === 'en' ? (office.nameEn ?? office.name) : (office.name ?? office.nameEn)) ??
-    office.address?.fullAddressString ??
-    JSON.stringify(office)
+  const showSelected = () => {
+    searchState.classList.add('hidden')
+    selectedPanel.classList.remove('hidden')
+  }
+
+  changeButton.addEventListener('click', showSearch)
+
+  const getOfficeName = () => officeNameElement.textContent?.trim() ?? ''
 
   let selectedOfficeId: number | null =
-    Number(selectedEl.dataset.initialOfficeId) || null
+    Number(combinedContainer.dataset.initialOfficeId) || null
 
-  async function calculateFee(officeId: number) {
+  const calculateFee = async (officeId: number) => {
     if (isFreeShipping) {
-      officeFeeEl.textContent = `${feeLabel} €0.00`
+      officeFeeElement.textContent = `${feeLabel} €0.00`
       return
     }
-    officeFeeEl.textContent = calculatingFee
+    officeFeeElement.textContent = calculatingFee
     try {
       const { data } = await actions.calculateShipping({
         officeId,
         totalWeight: parseFloat(totalWeight),
       })
-      const fee = data?.fee ?? null
-      console.log({ fee, totalWeight })
-
-      officeFeeEl.textContent =
-        fee != null ? `${feeLabel} €${fee.toFixed(2)}` : ''
+      const fee = data?.fee
+      officeFeeElement.textContent = isPresent(fee)
+        ? `${feeLabel} €${fee.toFixed(2)}`
+        : ''
     } catch {
-      officeFeeEl.textContent = ''
+      officeFeeElement.textContent = ''
     }
+  }
+
+  const selectOffice = (id: number, name: string) => {
+    officeNameElement.textContent = name
+    selectedOfficeId = id
+    form.dataset.selectedOfficeId = String(id)
+    form.dataset.selectedOfficeName = name
+    showSelected()
+    document.getElementById('error-office')!.classList.add('hidden')
+
+    calculateFee(id)
   }
 
   if (selectedOfficeId !== null) {
     calculateFee(selectedOfficeId)
+    searchState.classList.add('hidden')
   }
 
-  window.addEventListener('message', async (e: MessageEvent) => {
-    if (e.origin !== 'https://services.speedy.bg') return
-    if (!e.data || typeof e.data !== 'object' || Array.isArray(e.data)) return
+  // Listen for search autocomplete selection
+  document.addEventListener('office-selected', ((event: CustomEvent) => {
+    const { id, name } = event.detail
+    if (id && name) {
+      selectOffice(id, name)
+    }
+  }) as EventListener)
 
-    officeNameEl.textContent = officeDisplayName(e.data)
-    selectedOfficeId = e.data.id ?? null
-    iframeContainer.classList.add('hidden')
-    selectedEl.classList.remove('hidden')
-    document.getElementById('error-office')!.classList.add('hidden')
-
-    if (selectedOfficeId !== null) {
-      await calculateFee(selectedOfficeId)
-
-      actions.saveShipping({
-        office: getOfficeName(),
-        officeId: selectedOfficeId,
-      })
+  searchInput.addEventListener('blur', () => {
+    if (selectedOfficeId) {
+      showSelected()
     }
   })
 
-  document.getElementById('speedy-change')!.addEventListener('click', () => {
-    officeNameEl.textContent = ''
-    officeFeeEl.textContent = ''
-    selectedOfficeId = null
-    iframeContainer.classList.remove('hidden')
-    selectedEl.classList.add('hidden')
-  })
-
-  form.addEventListener('submit', async (e: SubmitEvent) => {
-    e.preventDefault()
-
-    const officeVal = getOfficeName()
-
-    document
-      .getElementById('error-office')!
-      .classList.toggle('hidden', !!officeVal)
-
-    if (!officeVal || !selectedOfficeId) return
-
-    const btn = document.getElementById('shipping-submit') as HTMLButtonElement
-    btn.disabled = true
-
-    const { error } = await actions.saveShipping({
-      office: officeVal,
-      officeId: selectedOfficeId,
-    })
-
-    if (error) {
-      console.error('saveShipping failed:', error)
-      btn.disabled = false
-      return
+  // Validation for submit button
+  form.addEventListener('shipping-validate', ((event: CustomEvent) => {
+    const officeName = getOfficeName()
+    const errorElement = document.getElementById('error-office')!
+    errorElement.classList.toggle('hidden', !!officeName)
+    if (!officeName || !selectedOfficeId) {
+      event.preventDefault()
     }
-
-    window.location.href = redirect
-  })
+  }) as EventListener)
 </script>
