@@ -1,24 +1,7 @@
-import { getStripe } from '@services/stripe'
-import { FREE_SHIPPING_THRESHOLD_EUR } from '@constants'
+const DEFAULT_THRESHOLD = 30
 
-export async function getFreeShippingThreshold(): Promise<number> {
-  const rateId = import.meta.env.STRIPE_SHIPPING_RATE_FREE
-  if (!rateId) {
-    return FREE_SHIPPING_THRESHOLD_EUR
-  }
-
-  let threshold: number | null = null
-
-  try {
-    const stripe = getStripe()
-    const rate = await stripe.shippingRates.retrieve(rateId)
-    const raw = rate.metadata?.['free-shipping-threshold']
-    const parsed = raw ? parseFloat(raw) : NaN
-    threshold = isNaN(parsed) ? FREE_SHIPPING_THRESHOLD_EUR : parsed
-  } catch (err) {
-    console.error('Failed to fetch free shipping threshold from Stripe:', err)
-    threshold = FREE_SHIPPING_THRESHOLD_EUR
-  }
-
-  return threshold
+export const getFreeShippingThreshold = () => {
+  const raw = import.meta.env.FREE_SHIPPING_THRESHOLD
+  const parsed = raw ? parseFloat(raw) : NaN
+  return isNaN(parsed) ? DEFAULT_THRESHOLD : parsed
 }

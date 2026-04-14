@@ -145,7 +145,17 @@
         "required": "Това поле е задължително",
         "shippingFeeLabel": "Такса доставка:",
         "calculatingFee": "Изчисляване...",
-        "selectCaption": "Избери офис"
+        "selectCaption": "Избери офис",
+        "workingTime": "Работно време:",
+        "monFri": "Пон-Пет",
+        "sat": "Съб",
+        "selectOffice": "Избери офис",
+        "loadingMap": "Зареждане на офиси...",
+        "searchPlaceholder": "Търси по име на офис...",
+        "noResults": "Няма намерени офиси",
+        "searchLabel": "Офис",
+        "orBrowseMap": "Или разгледай на картата:",
+        "mapUnavailable": "Картата не е налична"
     },
     "checkout": {
         "title": "Плащане",
