@@ -36,64 +36,12 @@
         "hat": {
             "name": "Шапка с кауза",
             "description": "Топла шапка за студените дни в планината и в града. Удобна, семпла и създадена за катерачни приключения.",
-            "kindTitle": "Изберете цвят:",
-            "kind": [
-                {
-                    "name": "син",
-                    "image": "/assets/products/beanies/blue.png"
-                },
-                {
-                    "name": "черен",
-                    "image": "/assets/products/beanies/black.png"
-                },
-                {
-                    "name": "червен",
-                    "image": "/assets/products/beanies/red.png"
-                },
-                {
-                    "name": "зелен",
-                    "image": "/assets/products/beanies/green.png"
-                },
-                {
-                    "name": "сив",
-                    "image": "/assets/products/beanies/gray.png"
-                }
-            ]
+            "kindTitle": "Изберете цвят:"
         },
         "fingerTape": {
             "name": "Катерачен тейп",
             "description": "Здрав тейп за защита на пръстите при катерене. Създаден за цепки, остри хватки и дълги катерачни сесии.",
-            "kindTitle": "Изберете цвят:",
-            "kind": [
-                {
-                    "name": "зелен",
-                    "image": "/assets/products/tape/green.png"
-                },
-                {
-                    "name": "син",
-                    "image": "/assets/products/tape/blue.png"
-                },
-                {
-                    "name": "жълт",
-                    "image": "/assets/products/tape/yellow.png"
-                },
-                {
-                    "name": "оранжев",
-                    "image": "/assets/products/tape/orange.png"
-                },
-                {
-                    "name": "розов",
-                    "image": "/assets/products/tape/pink.png"
-                },
-                {
-                    "name": "черен",
-                    "image": "/assets/products/tape/black.png"
-                },
-                {
-                    "name": "бял",
-                    "image": "/assets/products/tape/white.png"
-                }
-            ]
+            "kindTitle": "Изберете цвят:"
         }
     },
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
