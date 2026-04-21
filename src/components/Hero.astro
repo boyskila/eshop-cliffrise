@@ -1,16 +1,5 @@
 ---
-import { Image, getImage } from 'astro:assets'
 import { getLang, getTranslations } from '@utils/i18'
-import ProductsTitleEn from '../assets/titles/en/products-title.svg'
-import ProductsTitleBg from '../assets/titles/bg/products-title.svg'
-import Logo from '../../public/assets/logo.svg'
-
-const productsTitleImg = await getImage({
-  src: getLang(Astro.params) === 'bg' ? ProductsTitleBg : ProductsTitleEn,
-  formats: ['avif', 'webp', 'png'],
-  quality: 100,
-  alt: 'Products with mission',
-})
 
 const { heroTitle } = getTranslations(Astro.params)
 ---
@@ -22,10 +11,10 @@ const { heroTitle } = getTranslations(Astro.params)
     <div
       class="flex flex-col lg:flex-row landscape:flex-row justify-evenly items-center gap-5 mt-10"
     >
-      <Image
+      <img
         class="max-w-[120px] lg:max-w-[250px] h-auto"
         alt="CliffRise Logo"
-        src={Logo}
+        src="/logos/cliffrise.svg"
       />
 
       <div
@@ -33,8 +22,9 @@ const { heroTitle } = getTranslations(Astro.params)
       >
         <img
           class="w-full max-w-[300px] lg:max-w-[500px] lg:w-auto h-auto"
-          src={productsTitleImg.src}
-          {...productsTitleImg.attributes}
+          src={`/titles/${getLang(Astro.params)}/products-title.svg`}
+          alt="Products with mission"
+          loading="lazy"
         />
         <p
           class="font-normal text-white lg:text-xl leading-relaxed max-w-xl lg:mx-0 lg:ml-auto text-center landscape:text-left"
@@ -47,6 +37,7 @@ const { heroTitle } = getTranslations(Astro.params)
   <img
     class="hidden lg:block absolute bottom-[-190px] right-12 xl:right-40 max-h-[800px]"
     alt="Climber"
-    src="/assets/climber 1.svg"
+    src="/hanging-climber.svg"
+    loading="eager"
   />
 </section>

@@ -1,19 +1,7 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
-import { getImage } from 'astro:assets'
-import CauseTitleEn from '../assets/titles/en/cause-title.svg'
-import CauseTitleBg from '../assets/titles/bg/cause-title.svg'
 
 const lang = getLang(Astro.params)
-
-const causeTitle = await getImage({
-  src: lang === 'bg' ? CauseTitleBg : CauseTitleEn,
-  widths: [200, 400],
-  formats: ['avif', 'webp', 'png'],
-  quality: 80,
-  alt: 'Cause Title',
-})
-
 const { footer } = getTranslations(Astro.params)
 ---
 
@@ -30,8 +18,9 @@ const { footer } = getTranslations(Astro.params)
     >
     <img
       class="h-[50px] lg:h-[70px] w-fit mb-5 landscape:mb-0 landscape:mr-5 lg:landscape:mr-10"
-      src={causeTitle.src}
-      {...causeTitle.attributes}
+      src={`/titles/${lang}/cause-title.svg`}
+      alt="Cause Title"
+      loading="lazy"
     />
     <button
       data-open-contact-form-modal
@@ -59,10 +48,10 @@ const { footer } = getTranslations(Astro.params)
           href="https://www.facebook.com/profile.php?id=61574708947472"
           target="_blank"
         >
-          <img class="size-[25px]" alt="Climber" src="/assets/facebook.svg" />
+          <img class="size-[25px]" alt="Facebook" src="/logos/facebook.svg" />
         </a>
         <a href="https://www.instagram.com/_cliffrise/" target="_blank">
-          <img class="size-[25px]" alt="Climber" src="/assets/insta.svg" />
+          <img class="size-[25px]" alt="Instagram" src="/logos/insta.svg" />
         </a>
       </div>
     </div>
