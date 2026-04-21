@@ -2,8 +2,6 @@
 import { getLang, getTranslations } from '@utils/i18'
 import { getImage } from 'astro:assets'
 import CityOfTetevenImg from '@assets/city-of-teteven.jpg'
-import CauseTitleEn from '@assets/titles/en/cause-title.svg'
-import CauseTitleBg from '@assets/titles/bg/cause-title.svg'
 
 const lang = getLang(Astro.params)
 
@@ -15,14 +13,7 @@ const cityOfTetevenImg = await getImage({
   alt: 'Climbing scene',
 })
 
-const causeTitle = await getImage({
-  src: lang === 'bg' ? CauseTitleBg : CauseTitleEn,
-  widths: [200, 400],
-  formats: ['avif', 'webp', 'png'],
-  quality: 80,
-  alt: 'Cause Title',
-})
-
+const lang = getLang(Astro.params)
 const { causeP1, causeP2 } = getTranslations(Astro.params)
 ---
 
@@ -36,8 +27,9 @@ const { causeP1, causeP2 } = getTranslations(Astro.params)
     <div class="order-2 lg:order-1 space-y-6" id="our-cause">
       <img
         class="w-40 sm:w-50 h-auto"
-        src={causeTitle.src}
-        {...causeTitle.attributes}
+        src={`/titles/${lang}/cause-title.svg`}
+        alt="Cause Title"
+        loading="eager"
       />
       <article
         class="font-normal text-black text-sm sm:text-base leading-6 pl-6 md:pl-10"

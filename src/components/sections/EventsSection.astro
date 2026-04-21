@@ -2,22 +2,10 @@
 import { getLang, getTranslations } from '@utils/i18'
 import GalleryCarousel from '../ui/carousel/GalleryCarousel'
 import YearToggle from './YearToggle.astro'
-import { getImage } from 'astro:assets'
-import TetevenClimbTitleEn from '@assets/titles/en/teteven-climb.svg'
-import TetevenClimbTitleBg from '@assets/titles/bg/teteven-climb.svg'
 import EventLink from './EventLink.astro'
 const { eventsSection } = getTranslations(Astro.params)
 const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo, seeEvent } =
   eventsSection
-
-const aboutTitle = await getImage({
-  src:
-    getLang(Astro.params) === 'bg' ? TetevenClimbTitleBg : TetevenClimbTitleEn,
-  widths: [200, 400],
-  formats: ['avif', 'webp', 'png'],
-  quality: 80,
-  alt: 'Teteven Climb Title',
-})
 ---
 
 <section class="bg-gray-100 py-15 xl:py-22 my-15 xl:my-22">
@@ -34,8 +22,9 @@ const aboutTitle = await getImage({
     <img
       id="events-section"
       class="w-70 sm:w-100 h-[95%]"
-      src={aboutTitle.src}
-      {...aboutTitle.attributes}
+      src={`/titles/${getLang(Astro.params)}/teteven-climb.svg`}
+      alt="Teteven Climb Title"
+      loading="lazy"
     />
     <p class="text-base w-full font-normal leading-5">
       <span class="font-bold">{boldedTextOne}</span>

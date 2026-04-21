@@ -18,7 +18,12 @@ const cart = await Astro.session?.get('cart')
   <nav role="navigation" aria-label="Main navigation">
     <div class="flex items-center justify-between">
       <a class="flex items-center" href={`/${lang}/`}>
-        <img class="size-8 lg:size-12" alt="Logo" src="/assets/logo.svg" />
+        <img
+          class="size-8 lg:size-12"
+          alt="Cliffrise Logo"
+          src="/logos/cliffrise.svg"
+          loading="eager"
+        />
       </a>
       <div class="hidden md:flex gap-8 xl:gap-[46px]">
         <a
@@ -55,10 +60,20 @@ const cart = await Astro.session?.get('cart')
           href="https://www.facebook.com/profile.php?id=61574708947472"
           target="_blank"
         >
-          <img class="size-5" alt="Facebook" src="/assets/facebook.svg" />
+          <img
+            class="size-5"
+            alt="Facebook Logo"
+            src="/logos/facebook.svg"
+            loading="eager"
+          />
         </a>
         <a href="https://www.instagram.com/_cliffrise/" target="_blank">
-          <img class="size-5" alt="Instagram" src="/assets/insta.svg" />
+          <img
+            class="size-5"
+            alt="Instagram Logo"
+            src="/logos/insta.svg"
+            loading="eager"
+          />
         </a>
         <div class="block">
           <CartButton client:load initialCartCount={getCartCount(cart)} />

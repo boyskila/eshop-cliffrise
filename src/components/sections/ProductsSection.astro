@@ -1,32 +1,20 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
 import { getProducts } from '@data/products'
-import ProductsTitleBg from '@assets/titles/bg/products.svg'
-import ProductsTitleEn from '@assets/titles/en/products.svg'
-import { getImage } from 'astro:assets'
 import ProductsCarousel from '../ui/carousel/ProductsCarousel'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const products = await getProducts(lang)
-
-const productsTitleImg = lang === 'bg' ? ProductsTitleBg : ProductsTitleEn
-const image = await getImage({
-  src: productsTitleImg,
-  widths: [200, 400],
-  formats: ['avif', 'webp', 'png'],
-  quality: 80,
-  alt: 'Products with mission',
-})
 ---
 
 <section id="products" class="flex-col justify-center px-3 md:px-7 lg:px-10">
   <h2 class="mb-7 lg:mb-10">
     <img
       class="w-[150px] lg:w-[235px] m-auto"
-      alt="Products"
-      src={image.src}
-      {...image.attributes}
+      alt="Products with mission"
+      src={`/titles/${lang}/products.svg`}
+      loading="lazy"
     />
   </h2>
   <ProductsCarousel

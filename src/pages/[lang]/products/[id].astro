@@ -8,22 +8,12 @@ import ProductsCarousel from '@components/ui/carousel/ProductsCarousel'
 import KindSelector from '@components/products/KindSelector.astro'
 import { QuantityControls } from '@components/products/QuantityControls'
 import Divider from '@components/ui/Divider.astro'
-import SeeAlsoBg from '@assets/titles/bg/see-also.svg'
-import SeeAlsoEn from '@assets/titles/en/see-also.svg'
 import ImageThumbnails from '@components/products/ImageThumbnails.astro'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const products = await getProducts(lang)
 const { id } = Astro.params
-const productsTitleImg = lang === 'bg' ? SeeAlsoBg : SeeAlsoEn
-const image = await getImage({
-  src: productsTitleImg,
-  widths: [200, 400],
-  formats: ['avif', 'webp', 'png'],
-  quality: 80,
-  alt: 'Products with mission',
-})
 
 const product = products.find((p) => p.id === id)
 
@@ -91,9 +81,9 @@ if (!product) {
     <h2 class="mb-7 lg:mb-10">
       <img
         class="w-[150px] lg:w-[235px] m-auto"
-        alt="Products"
-        src={image.src}
-        {...image.attributes}
+        alt="See Also"
+        src={`/titles/${lang}/see-also.svg`}
+        loading="lazy"
       />
     </h2>
     <ProductsCarousel
