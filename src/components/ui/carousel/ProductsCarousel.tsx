@@ -19,7 +19,7 @@ export default (props: {
       <div class="flex touch-pan-y touch-pinch-zoom">
         <For each={props.products}>
           {(product) => {
-            const { image, name, id, price } = product
+            const { image, name, price, href } = product
             return (
               <div
                 classList={{
@@ -37,10 +37,7 @@ export default (props: {
                     'xl:gap-5 xl:landscape:gap-5': true,
                   }}
                 >
-                  <a
-                    class="w-full h-full"
-                    href={`/${props.lang}/products/${id}/`}
-                  >
+                  <a class="w-full h-full" href={href}>
                     <img
                       src={image}
                       width={400}
@@ -53,7 +50,7 @@ export default (props: {
                   <div class="flex justify-between w-full gap-2">
                     <div class="flex flex-col gap-1">
                       <a
-                        href={`/${props.lang}/products/${id}/`}
+                        href={href}
                         class="
                           text-base
                           md:text-lg
@@ -69,7 +66,7 @@ export default (props: {
                       </div>
                     </div>{' '}
                     <a
-                      href={`/${props.lang}/products/${id}/`}
+                      href={href}
                       aria-label={`Buy ${name} now`}
                       class="
                         phone-portrait:h-7

@@ -7,36 +7,30 @@ const feedbacks = [
   {
     author: 'Matey Mitcev',
     text: 'If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!',
-    image: '/assets/matei.png',
   },
   {
     author: 'Ivaylo Angelov - The Maniak',
     text: 'I am in love with the chalk texture. I have very dry skin and it is really hard to find something that stays on my hands. Super happy to have found this chalk, it has all the qualities I need and definitely boosts my confidence on the rock.',
-    image: '/assets/matei.png',
   },
   {
     author: 'Georgi Ivanov',
     text: 'CliffRise offers an amazing selection of climbing gear at competitive prices. Their customer support is top-notch!',
-    image: '/assets/matei.png',
   },
   {
     author: 'Elena Kolarova',
     text: 'The team at CliffRise is knowledgeable and passionate about climbing. They helped me find the perfect gear for my needs.',
-    image: '/assets/matei.png',
   },
   {
     author: 'Dimitar Stoyanov',
     text: 'Fast shipping and great packaging! My order from CliffRise arrived quickly and in perfect condition.',
-    image: '/assets/matei.png',
   },
   {
     author: 'Nina Petrova',
     text: 'CliffRise is my go-to store for all things climbing. Their products are reliable, and their prices are unbeatable.',
-    image: '/assets/matei.png',
   },
 ]
 
-export default () => {
+export default (props: { reviewerImageSrc: string }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(CAROUSEL_OPTIONS)
 
   return (
@@ -44,7 +38,7 @@ export default () => {
       <div class="overflow-hidden" ref={emblaRef}>
         <div class="flex touch-pan-y touch-pinch-zoom h-[240px] items-center">
           <For each={feedbacks}>
-            {({ text, author, image }) => (
+            {({ text, author }) => (
               <div
                 classList={{
                   'landscape:flex-[0_0_45%] landscape:lg:flex-[0_0_40%] landscape:2xl:flex-[0_0_24.5%] me-3': true,
@@ -53,7 +47,7 @@ export default () => {
               >
                 <div class="p-4 bg-[#f7f7f7] h-full">
                   <img
-                    src={img}
+                    src={props.reviewerImageSrc}
                     alt={author}
                     class="size-20 -mt-13 ml-2"
                     width="80"

@@ -1,17 +1,28 @@
 ---
+import { Image } from 'astro:assets'
 import { getLang, getTranslations } from '@utils/i18'
+import CliffriseTeamImg from '@assets/images/cliffrise-team.webp'
 
 const { aboutUsP1, aboutUsP2 } = getTranslations(Astro.params)
 ---
 
 <section class="mb-15 lg:mb-20 px-10 md:px-25 xl:px-60">
   <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-    <img class="w-full h-auto" src="/assets/cliffrise-team.png" />
+    <Image
+      src={CliffriseTeamImg}
+      alt="Cliffrise Team"
+      widths={[400, 800, 1200]}
+      sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1023px) calc(100vw - 200px), 40vw"
+      quality={80}
+      class="w-full lg:w-auto"
+      loading="lazy"
+      decoding="async"
+    />
     <div class="order-2 space-y-6">
       <img
         id="about-us"
         class="w-40 sm:w-50 h-auto"
-        src={`/titles/${getLang(Astro.params)}/about-us-title.svg`}
+        src={`/titles/${getLang(Astro.params)}/about-us.svg`}
         alt="About Us"
         loading="lazy"
       />

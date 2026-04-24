@@ -2,10 +2,25 @@
 import { getLang, getTranslations } from '@utils/i18'
 import GalleryCarousel from '../ui/carousel/GalleryCarousel'
 import YearToggle from './YearToggle.astro'
+import { getImage, Image } from 'astro:assets'
+import TtvnMeetup2026Img from '@assets/images/ttvn_meetup_2026.webp'
+import { galleryImages } from '@data/carousel-images'
 import EventLink from './EventLink.astro'
 const { eventsSection } = getTranslations(Astro.params)
 const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo, seeEvent } =
   eventsSection
+
+const processedGalleryImages = await Promise.all(
+  galleryImages.map((img) =>
+    getImage({
+      src: img,
+      widths: [400, 800, 1200],
+      format: 'webp',
+      quality: 80,
+    }),
+  ),
+)
+const galleryImageUrls = processedGalleryImages.map((img) => img.src)
 ---
 
 <section class="bg-gray-100 py-15 xl:py-22 my-15 xl:my-22">
@@ -39,9 +54,12 @@ const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo, seeEvent } =
     <div class="overflow-x-hidden flex items-start justify-center">
       <div data-year-panel="2026" class="w-full">
         <div class="relative">
-          <img
-            src="/assets/ttvn_meetup_2026.png"
+          <Image
+            src={TtvnMeetup2026Img}
             alt="Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
+            widths={[390, 600, 780, 1000]}
+            sizes="(max-width: 767px) calc(100vw - 24px), (max-width: 1279px) calc(80vw - 24px), calc(68vw - 24px)"
+            quality={65}
             class="object-contain
               w-full
               px-3
@@ -51,7 +69,7 @@ const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo, seeEvent } =
         </div>
       </div>
       <div data-year-panel="2025" class="hidden w-full">
-        <GalleryCarousel client:idle />
+        <GalleryCarousel images={galleryImageUrls} client:idle />
       </div>
     </div>
   </div>

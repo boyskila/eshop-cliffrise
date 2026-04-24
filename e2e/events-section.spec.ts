@@ -25,7 +25,7 @@ test.describe('Events Section', () => {
 
     const poster = panel2026.locator('img')
     await expect(poster).toBeVisible()
-    await expect(poster).toHaveAttribute('src', '/assets/ttvn_meetup_2026.png')
+    await expect(poster).toHaveAttribute('src', /ttvn_meetup_2026/)
   })
 
   test('2025 panel is hidden by default', async ({ page }) => {

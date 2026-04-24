@@ -18,3 +18,7 @@ export const sanitizeMessage = (value: string) => {
 export const isPresent = <T>(value: T | null | undefined): value is T => {
   return value !== null && value !== undefined
 }
+
+export const isString = (value: unknown): value is string => {
+  return typeof value === 'string'
+}
