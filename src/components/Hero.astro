@@ -15,6 +15,8 @@ const { heroTitle } = getTranslations(Astro.params)
         class="max-w-[120px] lg:max-w-[250px] h-auto"
         alt="CliffRise Logo"
         src="/logos/cliffrise.svg"
+        loading="eager"
+        fetchpriority="high"
       />
 
       <div
@@ -24,7 +26,8 @@ const { heroTitle } = getTranslations(Astro.params)
           class="w-full max-w-[300px] lg:max-w-[500px] lg:w-auto h-auto"
           src={`/titles/${getLang(Astro.params)}/products-title.svg`}
           alt="Products with mission"
-          loading="lazy"
+          loading="eager"
+          fetchpriority="high"
         />
         <p
           class="font-normal text-white lg:text-xl leading-relaxed max-w-xl lg:mx-0 lg:ml-auto text-center landscape:text-left"
@@ -39,5 +42,6 @@ const { heroTitle } = getTranslations(Astro.params)
     alt="Climber"
     src="/hanging-climber.svg"
     loading="eager"
+    fetchpriority="high"
   />
 </section>

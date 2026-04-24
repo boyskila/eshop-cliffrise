@@ -24,7 +24,14 @@ const { productName, productImages } = Astro.props
               hover:border
               hover:border-black"
           >
-            <img src={img} alt={productName} class="size-full object-cover" />
+            <img
+              src={img}
+              alt={productName}
+              class="size-full object-cover"
+              width="56"
+              height="56"
+              loading="lazy"
+            />
           </button>
         </li>
       ))}

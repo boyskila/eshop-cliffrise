@@ -52,7 +52,14 @@ export default () => {
                 }}
               >
                 <div class="p-4 bg-[#f7f7f7] h-full">
-                  <img src={image} alt={author} class="size-20 -mt-13 ml-2" />
+                  <img
+                    src={img}
+                    alt={author}
+                    class="size-20 -mt-13 ml-2"
+                    width="80"
+                    height="80"
+                    loading="lazy"
+                  />
                   <p class="ml-25 -mt-7 text-xl font-bold">- {author}</p>
                   <p class="mt-5">{text}</p>
                 </div>

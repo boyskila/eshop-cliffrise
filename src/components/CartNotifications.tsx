@@ -28,6 +28,9 @@ export const CartNotifications = ({ text }: Props) => {
                     <img
                       src={notification.image}
                       alt={notification.name}
+                      width="80"
+                      height="80"
+                      loading="lazy"
                       class="size-20 object-cover"
                     />
                     <div class="ml-3 flex flex-col justify-center">
