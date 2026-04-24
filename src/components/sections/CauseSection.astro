@@ -1,17 +1,7 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
-import { getImage } from 'astro:assets'
+import { Image } from 'astro:assets'
 import CityOfTetevenImg from '@assets/city-of-teteven.jpg'
-
-const lang = getLang(Astro.params)
-
-const cityOfTetevenImg = await getImage({
-  src: CityOfTetevenImg,
-  widths: [400, 800, 1200],
-  formats: ['avif', 'webp', 'jpeg'],
-  quality: 80,
-  alt: 'Climbing scene',
-})
 
 const lang = getLang(Astro.params)
 const { causeP1, causeP2 } = getTranslations(Astro.params)
@@ -19,10 +9,14 @@ const { causeP1, causeP2 } = getTranslations(Astro.params)
 
 <section class="px-10 md:px-25 xl:px-60">
   <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-    <img
+    <Image
       class="w-full lg:w-3/6 h-auto order-1 lg:order-2"
-      src={cityOfTetevenImg.src}
-      {...cityOfTetevenImg.attributes}
+      src={CityOfTetevenImg}
+      alt="Climbing scene"
+      widths={[200, 400, 600, 900]}
+      sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1023px) calc(100vw - 200px), (max-width: 1279px) calc(50vw - 124px), calc(50vw - 264px)"
+      quality={70}
+      fetchpriority="high"
     />
     <div class="order-2 lg:order-1 space-y-6" id="our-cause">
       <img

@@ -9,17 +9,46 @@ import KindSelector from '@components/products/KindSelector.astro'
 import { QuantityControls } from '@components/products/QuantityControls'
 import Divider from '@components/ui/Divider.astro'
 import ImageThumbnails from '@components/products/ImageThumbnails.astro'
+import { PRODUCT_IMAGE_SIZES } from '@constants'
+import { isString } from '@utils/func'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const products = await getProducts(lang)
 const { id } = Astro.params
 
-const product = products.find((p) => p.id === id)
+const product = products.find((p) => p.slug === id)
 
 if (!product) {
   return Astro.redirect(`/${lang}/products/`)
 }
+
+const mainImage = isString(product.images[0])
+  ? { src: product.images[0], srcSet: undefined as string | undefined }
+  : await getImage({
+      src: product.images[0],
+      widths: [400, 800, 1200],
+      sizes: PRODUCT_IMAGE_SIZES,
+      format: 'webp',
+      quality: 80,
+    })
+
+const carouselProducts = await Promise.all(
+  products.map(async (p) => {
+    const img = isString(p.image)
+      ? p.image
+      : (
+          await getImage({
+            src: p.image,
+            width: 800,
+            height: 800,
+            format: 'webp',
+            quality: 80,
+          })
+        ).src
+    return { ...p, image: img }
+  }),
+)
 ---
 
 <MainLayout title={product.name} showHero={false}>
@@ -33,7 +62,9 @@ if (!product) {
           <img
             id="product-main-image"
             data-product-image
-            src={product.images[0]}
+            src={mainImage.src}
+            srcset={mainImage.srcSet?.attribute}
+            sizes={PRODUCT_IMAGE_SIZES}
             alt={product.name}
             loading="eager"
             fetchpriority="high"
@@ -61,7 +92,7 @@ if (!product) {
         {product.kind.length > 0 && <KindSelector product={product} />}
 
         <div class="flex justify-between items-center">
-          <QuantityControls productName={product.name} client:idle />
+          <QuantityControls productName={product.name} client:visible />
           <div class="flex items-center gap-2 font-bold text-2xl md:text-3xl">
             &euro;{product.price.toFixed(2)} EUR
           </div>
@@ -73,7 +104,7 @@ if (!product) {
             lang={lang}
             label={translations.addToCart}
             disabled={product.kind.length > 0}
-            client:idle
+            client:load
           />
         </div>
       </div>
@@ -90,30 +121,10 @@ if (!product) {
       />
     </h2>
     <ProductsCarousel
-      products={products}
+      products={carouselProducts}
       buttonText={translations.buyNow}
       lang={lang}
       client:visible
     />
   </section>
 </MainLayout>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const mainImage = document.getElementById(
-      'product-main-image',
-    ) as HTMLImageElement | null
-    const thumbnails = document.querySelectorAll<HTMLButtonElement>(
-      '[data-product-thumbnail]',
-    )
-
-    thumbnails.forEach((thumb) => {
-      thumb.addEventListener('click', () => {
-        const src = thumb.dataset.imageSrc
-        if (mainImage && src) {
-          mainImage.src = src
-        }
-      })
-    })
-  })
-</script>

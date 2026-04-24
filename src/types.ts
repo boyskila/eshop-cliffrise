@@ -1,22 +1,25 @@
 import type { CreateEmailOptions } from 'resend'
+import type { ImageMetadata } from 'astro'
 import en from '../public/locales/en/translations.json'
 
 export type ProductKind = {
   name: string
-  image?: string
+  image?: ImageMetadata | string
   inStock: boolean
 }
 
 export type Product = {
   id: string
-  image: string
+  image: ImageMetadata | string
   name: string
   description: string
-  images: string[]
+  images: (ImageMetadata | string)[]
   price: number
   weight: number
   kind: ProductKind[]
   kindTitle?: string
+  href: string
+  slug?: string
 }
 
 export type Translations = typeof en

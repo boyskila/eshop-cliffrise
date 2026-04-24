@@ -1,11 +1,37 @@
 ---
-import type { Product, ProductTranslations } from '@types'
+import { getImage } from 'astro:assets'
+import type { Product } from '@types'
+import { PRODUCT_IMAGE_SIZES } from '@constants'
+import { isString } from '@utils/func'
 
 interface Props {
   product: Product
 }
 
 const { product } = Astro.props
+
+const processedKinds = await Promise.all(
+  product.kind.map(async ({ image, ...rest }) => {
+    let imageUrl: string | undefined
+    let imageSrcSet: string | undefined
+    if (image) {
+      if (isString(image)) {
+        imageUrl = image
+      } else {
+        const processed = await getImage({
+          src: image,
+          widths: [400, 800, 1200],
+          sizes: PRODUCT_IMAGE_SIZES,
+          format: 'webp',
+          quality: 80,
+        })
+        imageUrl = processed.src
+        imageSrcSet = processed.srcSet.attribute
+      }
+    }
+    return { ...rest, imageUrl, imageSrcSet }
+  }),
+)
 ---
 
 {
@@ -13,7 +39,7 @@ const { product } = Astro.props
     <div class="flex flex-col gap-4 flex-1">
       <h3 class="text-xl underline underline-offset-2">{product.kindTitle}</h3>
       <ul class="flex flex-wrap gap-1 md:gap-2" data-kind-selector>
-        {product.kind.map(({ name, image, inStock }, kindIndex) => (
+        {processedKinds.map(({ name, imageUrl, imageSrcSet, inStock }, kindIndex) => (
           <li>
             <button
               disabled={!inStock}
@@ -22,7 +48,9 @@ const { product } = Astro.props
               data-kind-option
               data-kind-index={kindIndex}
               data-kind-name={name}
-              data-kind-image={image}
+              data-kind-image={imageUrl}
+              data-kind-image-srcset={imageSrcSet}
+              data-kind-image-sizes={PRODUCT_IMAGE_SIZES}
               class="
                 disabled:opacity-50
                 py-1 px-4
@@ -102,6 +130,9 @@ const { product } = Astro.props
 
         const selectedKind = selectedOption.dataset.kindName ?? ''
         const selectedKindImage = selectedOption.dataset.kindImage ?? ''
+        const selectedKindImageSrcSet =
+          selectedOption.dataset.kindImageSrcset ?? ''
+        const selectedKindImageSizes = selectedOption.dataset.kindImageSizes ?? ''
 
         window.dispatchEvent(
           new CustomEvent('kind-changed', {
@@ -111,6 +142,14 @@ const { product } = Astro.props
 
         if (productImage && selectedKindImage.trim().length > 0) {
           productImage.src = selectedKindImage
+          if (selectedKindImageSrcSet.trim().length > 0) {
+            productImage.srcset = selectedKindImageSrcSet
+          } else {
+            productImage.removeAttribute('srcset')
+          }
+          if (selectedKindImageSizes.trim().length > 0) {
+            productImage.sizes = selectedKindImageSizes
+          }
         }
       }
 

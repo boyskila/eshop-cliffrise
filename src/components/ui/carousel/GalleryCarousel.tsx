@@ -1,7 +1,5 @@
 import { onCleanup, createSignal, For, createMemo, onMount } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
-import { images } from '../../../data/carousel-images'
-
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
 
@@ -11,7 +9,7 @@ const imagesPerSlideMap = {
   desktop: 3,
 }
 
-export default () => {
+export default (props: { images: string[] }) => {
   const [screenSize, setScreenSize] = createSignal<
     'mobile' | 'tablet' | 'desktop'
   >('desktop')
@@ -25,9 +23,9 @@ export default () => {
     const imagesPerSlide = imagesPerSlideMap[screenSize()]
     const slides = []
 
-    for (let i = 0; i < images.length; i += imagesPerSlide) {
+    for (let i = 0; i < props.images.length; i += imagesPerSlide) {
       slides.push({
-        images: images.slice(i, i + imagesPerSlide),
+        images: props.images.slice(i, i + imagesPerSlide),
       })
     }
 

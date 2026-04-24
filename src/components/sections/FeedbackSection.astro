@@ -1,7 +1,17 @@
 ---
+import { getImage } from 'astro:assets'
 import FeedbackCarousel from '../ui/carousel/FeedbackCarousel'
+import MateiImg from '@assets/images/matei.webp'
+
+const reviewerImage = await getImage({
+  src: MateiImg,
+  width: 160,
+  height: 160,
+  format: 'webp',
+  quality: 80,
+})
 ---
 
 <section class="px-3 md:px-10">
-  <FeedbackCarousel client:visible />
+  <FeedbackCarousel reviewerImageSrc={reviewerImage.src} client:visible />
 </section>

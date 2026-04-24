@@ -2,6 +2,7 @@ import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { getProducts } from '@data/products'
 import type { Product } from '@types'
+import { isString } from '@utils/func'
 
 export type CartItem = Product & {
   quantity: number
@@ -38,13 +39,14 @@ export const cart = {
         const selectedKind = kind
           ? product.kind.find((productKind) => productKind.name === kind)
           : undefined
+        const rawImage = selectedKind?.image ?? product.image
         const nextItem = {
           ...product,
           id: cartItemId,
           name: selectedKind
             ? `${product.name} (${selectedKind.name})`
             : product.name,
-          image: selectedKind?.image || product.image,
+          image: isString(rawImage) ? rawImage : rawImage.src,
           metadata: kind ? { kind, productId } : undefined,
           quantity: quantity,
         }

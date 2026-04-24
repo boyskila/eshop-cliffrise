@@ -1,6 +1,6 @@
 import { For } from 'solid-js'
-import type { Translations } from '@types'
 import { cartNotifications } from '@signals/cart'
+import { isString } from '@utils/func'
 
 type Props = {
   text: {
@@ -13,8 +13,7 @@ export const CartNotifications = ({ text }: Props) => {
   return (
     <div class="fixed top-25 right-1 z-50 space-y-2">
       <For each={cartNotifications()}>
-        {(notification) => {
-          return (
+        {(notification) => (
             <div class="flex animate-slide-in-right bg-white shadow-2xl max-w-sm">
               <div class="flex">
                 <div class="bg-black text-white p-2 items-center flex">
@@ -26,7 +25,11 @@ export const CartNotifications = ({ text }: Props) => {
                 <div class="p-4">
                   <div class="flex mb-5">
                     <img
-                      src={notification.image}
+                      src={
+                        isString(notification.image)
+                          ? notification.image
+                          : notification.image.src
+                      }
                       alt={notification.name}
                       width="80"
                       height="80"
@@ -47,7 +50,7 @@ export const CartNotifications = ({ text }: Props) => {
               </div>
             </div>
           )
-        }}
+        }
       </For>
     </div>
   )
