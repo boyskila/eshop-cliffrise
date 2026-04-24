@@ -35,6 +35,9 @@ if (!product) {
             data-product-image
             src={product.images[0]}
             alt={product.name}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
             class="w-full h-full object-cover"
           />
         </div>

@@ -43,6 +43,9 @@ export default (props: {
                   >
                     <img
                       src={image}
+                      width={400}
+                      height={400}
+                      alt={name}
                       class="w-full h-auto object-cover object-center"
                       loading="lazy"
                     />
