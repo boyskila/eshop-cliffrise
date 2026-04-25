@@ -25,7 +25,9 @@ const cart = await Astro.session?.get('cart')
           loading="eager"
         />
       </a>
-      <div class="hidden md:flex gap-8 xl:gap-[46px]">
+      <div
+        class="hidden lg:flex tablet-landscape:flex md:flex gap-8 xl:gap-[46px]"
+      >
         <a
           data-hash-link
           href={`/${lang}/#products`}

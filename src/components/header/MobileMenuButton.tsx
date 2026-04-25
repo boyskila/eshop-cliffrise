@@ -4,7 +4,7 @@ import { isMobileMenuOpen, setIsMobileMenuOpen } from '@signals/mobileMenu'
 
 export const MobileMenuButton = () => {
   return (
-    <div class="md:hidden flex items-center space-x-2">
+    <div class="lg:hidden tablet-landscape:hidden flex items-center space-x-2">
       <button
         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
         aria-label={isMobileMenuOpen() ? 'Close Menu' : 'Open Menu'}
