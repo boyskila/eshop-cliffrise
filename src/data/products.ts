@@ -21,9 +21,8 @@ export const getProducts = async (lang: string): Promise<Product[]> => {
   })
   return productsList.data.map((stripeProduct) => {
     const { metadata } = stripeProduct
-    const { name, description, kind, kindTitle, inStock } = JSON.parse(
-      metadata[lang],
-    )
+    const { name, description, kind, kindTitle, inStock, productPageTitle } =
+      JSON.parse(metadata[lang])
     const {
       images,
       'image-folder': imageFolder,
@@ -51,6 +50,7 @@ export const getProducts = async (lang: string): Promise<Product[]> => {
       ),
       kindTitle,
       inStock: inStock === undefined ? true : inStock,
+      productPageTitle,
     } as Product
   })
 }
