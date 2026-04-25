@@ -15,11 +15,12 @@ export type Product = {
   description: string
   images: (ImageMetadata | string)[]
   price: number
-  weight: number
+  weight: number // actual product weight in kg, used for shipping calculation
   kind: ProductKind[]
   kindTitle?: string
   href: string
   slug?: string
+  productPageTitle?: string
 }
 
 export type Translations = typeof en
