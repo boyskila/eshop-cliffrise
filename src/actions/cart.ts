@@ -1,5 +1,6 @@
 import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
+import { getImage } from 'astro:assets'
 import { getProducts } from '@data/products'
 import type { Product } from '@types'
 import { isString } from '@utils/func'
@@ -40,13 +41,24 @@ export const cart = {
           ? product.kind.find((productKind) => productKind.name === kind)
           : undefined
         const rawImage = selectedKind?.image ?? product.image
+        const cartImage = isString(rawImage)
+          ? rawImage
+          : (
+              await getImage({
+                src: rawImage,
+                width: 160,
+                height: 160,
+                format: 'webp',
+                quality: 80,
+              })
+            ).src
         const nextItem = {
           ...product,
           id: cartItemId,
           name: selectedKind
             ? `${product.name} (${selectedKind.name})`
             : product.name,
-          image: isString(rawImage) ? rawImage : rawImage.src,
+          image: cartImage,
           metadata: kind ? { kind, productId } : undefined,
           quantity: quantity,
         }

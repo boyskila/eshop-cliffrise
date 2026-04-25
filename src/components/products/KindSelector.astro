@@ -97,6 +97,23 @@ const processedKinds = await Promise.all(
         '[data-product-image]',
       )
 
+      const warmCache = (option: HTMLButtonElement) => {
+        const src = option.dataset.kindImage
+        if (!src) {
+          return
+        }
+        const img = new Image()
+        const srcset = option.dataset.kindImageSrcset
+        const sizes = option.dataset.kindImageSizes
+        if (srcset) {
+          img.srcset = srcset
+        }
+        if (sizes) {
+          img.sizes = sizes
+        }
+        img.src = src
+      }
+
       const clearKindSelection = () => {
         kindOptions.forEach((option) => {
           option.dataset.selected = 'false'
@@ -111,7 +128,7 @@ const processedKinds = await Promise.all(
         )
       }
 
-      const setKind = (kindIndex: string) => {
+      const setKind = async (kindIndex: string) => {
         const selectedOption = kindOptions.find(
           (option) => option.dataset.kindIndex === kindIndex,
         )
@@ -141,6 +158,16 @@ const processedKinds = await Promise.all(
         )
 
         if (productImage && selectedKindImage.trim().length > 0) {
+          const preloader = new Image()
+          if (selectedKindImageSrcSet.trim().length > 0) {
+            preloader.srcset = selectedKindImageSrcSet
+          }
+          if (selectedKindImageSizes.trim().length > 0) {
+            preloader.sizes = selectedKindImageSizes
+          }
+          preloader.src = selectedKindImage
+          await preloader.decode().catch(() => {})
+
           productImage.src = selectedKindImage
           if (selectedKindImageSrcSet.trim().length > 0) {
             productImage.srcset = selectedKindImageSrcSet
@@ -154,6 +181,15 @@ const processedKinds = await Promise.all(
       }
 
       kindOptions.forEach((option) => {
+        const onIntent = () => warmCache(option)
+        option.addEventListener('mouseenter', onIntent, { signal, once: true })
+        option.addEventListener('focus', onIntent, { signal, once: true })
+        option.addEventListener('touchstart', onIntent, {
+          signal,
+          once: true,
+          passive: true,
+        })
+
         option.addEventListener(
           'click',
           () => {
