@@ -1,23 +1,13 @@
+import type { ImageMetadata } from 'astro'
 import { getStripe } from '@services/stripe'
 import { getMockProducts } from './mockProducts'
 import { PRODUCT_IMAGES } from './productImages'
 import type { Product, ProductKind } from '@types'
 import { isTestMode } from '@utils/func'
-import type { ImageMetadata } from 'astro'
 
-const isTest = import.meta.env.MODE === 'test'
-
-const normalizeImageKey = (key: string) =>
-  key
-    .replace(/\\/g, '/')
-    .replace(/^\/?src\/assets\/images\/products\//, '')
-    .replace(/^\/+/, '')
-    .replace(/\.[^.]+$/, '')
-
-const resolveImage = (key: string): ImageMetadata | string => {
-  const normalizedKey = normalizeImageKey(key)
-
-  return PRODUCT_IMAGES[normalizedKey] ?? key
+export const resolveImage = (key: string): ImageMetadata | string => {
+  const productImage = PRODUCT_IMAGES[key]
+  return productImage ? productImage.default : key
 }
 
 export const getProducts = async (lang: string): Promise<Product[]> => {
