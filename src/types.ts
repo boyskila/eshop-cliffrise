@@ -23,7 +23,6 @@ export type Product = {
 }
 
 export type Translations = typeof en
-export type ProductTranslations = typeof en.product
 
 export type EmailData = CreateEmailOptions
 

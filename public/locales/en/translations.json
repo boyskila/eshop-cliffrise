@@ -12,38 +12,6 @@
         "cart": "Cart"
     },
     "heroTitle": "CliffRise is a way to give something back to the cliffs that give us so much - with every purchase supporting the creation of new routes and the care of climbing areas in Bulgaria.",
-    "product": {
-        "dryChalk": {
-            "name": "Chunky Chalk – 250 g",
-            "description": "Chunky climbing chalk with a coarse structure that breaks down easily and provides reliable friction. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.",
-            "kindTitle": null
-        },
-        "wetChalk": {
-            "name": "Moist Chunky Chalk – 250 g",
-            "description": "Moist chunky climbing chalk with a denser structure that breaks down easily and leaves an even layer on the hands. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.",
-            "kindTitle": null
-        },
-        "liquidChalk": {
-            "name": "Liquid Chalk - 250 ml",
-            "description": "Liquid chalk that dries quickly and leaves an even layer on the hands. Made for reliable friction both indoors and outdoors.",
-            "kindTitle": null
-        },
-        "tshirt": {
-            "name": "T‑Shirt with a Cause",
-            "description": "Comfortable T‑shirt for climbing and for the days between routes. Simple, durable and made for people who love climbing.",
-            "kindTitle": "Select size:"
-        },
-        "hat": {
-            "name": "Beanie with a Cause",
-            "description": "Warm beanie for cold days in the mountains and in the city. Comfortable, simple and made for climbing adventures.",
-            "kindTitle": "Select color:"
-        },
-        "fingerTape": {
-            "name": "Climbing Tape",
-            "description": "Durable tape for protecting fingers while climbing. Made for crack climbing, sharp holds and long climbing sessions.",
-            "kindTitle": "Select color:"
-        }
-    },
     "causeP1": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "causeP2": "Integer ac odio ultricies, pellentesque erat quis, molestie augue. Nulla tempus dui at lacinia facilisis. Vestibulum accumsan dolor dolor, eu fringilla orci cursus in.",
     "aboutUsP1": " United by their love for climbing and a desire to give something back to the community, Boiko Lalov and Alex Yanev began working together in 2020, developing the Peshterata (The Cave) crag near Ribaritsa. Shortly after, while establishing routes at Teteven/Zaslona, the idea for CliffRise was born.",
