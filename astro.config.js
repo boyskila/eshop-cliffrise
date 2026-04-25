@@ -11,7 +11,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     server: {
       host: true,
-      allowedHosts: ['test.cliffrise.com'],
+      allowedHosts: ['rise.cliffrise.com'],
     },
   },
   i18n: {
