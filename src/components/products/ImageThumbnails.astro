@@ -76,25 +76,34 @@ const processedImages = await Promise.all(
       '[data-product-thumbnail]',
     )
 
-    thumbnails.forEach((thumb) => {
+    const warmCache = (thumb: HTMLButtonElement) => {
       const src = thumb.dataset.imageSrc
-      const srcset = thumb.dataset.imageSrcset
-      const sizes = thumb.dataset.imageSizes
-      if (!src) return
-
-      const link = document.createElement('link')
-      link.rel = 'preload'
-      link.as = 'image'
-      link.href = src
-      if (srcset) link.setAttribute('imagesrcset', srcset)
-      if (sizes) link.setAttribute('imagesizes', sizes)
-      document.head.appendChild(link)
-    })
+      if (!src) {
+        return
+      }
+      const img = new Image()
+      img.src = src
+    }
 
     thumbnails.forEach((thumb) => {
-      thumb.addEventListener('click', () => {
+      const onIntent = () => warmCache(thumb)
+      thumb.addEventListener('mouseenter', onIntent, { once: true })
+      thumb.addEventListener('focus', onIntent, { once: true })
+      thumb.addEventListener('touchstart', onIntent, {
+        once: true,
+        passive: true,
+      })
+
+      thumb.addEventListener('click', async () => {
         const src = thumb.dataset.imageSrc
-        if (!mainImage || !src) return
+        if (!mainImage || !src) {
+          return
+        }
+
+        const preloader = new Image()
+        preloader.src = src
+        await preloader.decode().catch(() => {})
+
         mainImage.removeAttribute('srcset')
         mainImage.removeAttribute('sizes')
         mainImage.src = src
