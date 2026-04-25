@@ -1,6 +1,7 @@
 import type { EmailService } from '@types'
 import { FakeEmailService } from './FakeEmailService'
 import { ResendEmailService } from './ResendEmailService'
+import { isTestMode } from '@utils/func'
 
 export { sentEmails, clearSentEmails } from './FakeEmailService'
 
@@ -12,10 +13,7 @@ class EmailServiceSingleton {
       return EmailServiceSingleton.instance
     }
 
-    // Prefer FakeEmailService in e2e/test modes so action tests do not call the real provider.
-    const isTest = import.meta.env.MODE === 'test'
-
-    if (isTest) {
+    if (isTestMode) {
       EmailServiceSingleton.instance = new FakeEmailService()
     } else {
       EmailServiceSingleton.instance = new ResendEmailService(

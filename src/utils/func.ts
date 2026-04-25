@@ -22,3 +22,5 @@ export const isPresent = <T>(value: T | null | undefined): value is T => {
 export const isString = (value: unknown): value is string => {
   return typeof value === 'string'
 }
+
+export const isTestMode = import.meta.env.MODE === 'test'
