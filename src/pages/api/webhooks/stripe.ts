@@ -3,7 +3,7 @@ import type Stripe from 'stripe'
 import { getStripe } from '@services/stripe'
 import { emailService } from '@services/email'
 import { getTranslations } from '@utils/i18'
-import { escapeHtml } from '@utils/func'
+import { escapeHtml, isTestMode } from '@utils/func'
 
 const buildEmailVariables = (
   session: Stripe.Checkout.Session,
@@ -50,11 +50,10 @@ const buildEmailVariables = (
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.text()
-  const isTest = import.meta.env.MODE === 'test'
 
   let event: Stripe.Event
 
-  if (isTest) {
+  if (isTestMode) {
     try {
       event = JSON.parse(body) as Stripe.Event
     } catch {

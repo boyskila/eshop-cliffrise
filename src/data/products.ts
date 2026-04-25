@@ -2,6 +2,7 @@ import { getStripe } from '@services/stripe'
 import { getMockProducts } from './mockProducts'
 import { PRODUCT_IMAGES } from './productImages'
 import type { Product, ProductKind } from '@types'
+import { isTestMode } from '@utils/func'
 import type { ImageMetadata } from 'astro'
 
 const isTest = import.meta.env.MODE === 'test'
@@ -20,7 +21,7 @@ const resolveImage = (key: string): ImageMetadata | string => {
 }
 
 export const getProducts = async (lang: string): Promise<Product[]> => {
-  if (isTest) {
+  if (isTestMode) {
     return getMockProducts(lang)
   }
 
