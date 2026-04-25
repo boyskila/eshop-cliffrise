@@ -87,7 +87,7 @@ const cart = await Astro.session?.get('cart')
         </div>
         <LangSwitcher />
       </div>
-      <MobileMenuButton client:media="(max-width: 768px)" />
+      <MobileMenuButton client:media="(max-width: 1023px)" />
     </div>
     <MobileMenu
       menuItems={[
@@ -97,7 +97,7 @@ const cart = await Astro.session?.get('cart')
         { href: `/${lang}/#events-section`, title: tetevenClimb },
         { href: `/${lang}/#contact-us`, title: tetevenClimb },
       ]}
-      client:media="(max-width: 768px)"
+      client:media="(max-width: 1023px)"
     />
   </nav>
 </header>
