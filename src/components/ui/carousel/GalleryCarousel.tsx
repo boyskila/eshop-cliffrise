@@ -14,10 +14,7 @@ export default (props: { images: string[] }) => {
     'mobile' | 'tablet' | 'desktop'
   >('desktop')
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    CAROUSEL_OPTIONS,
-    CAROUSEL_PLUGINS,
-  )
+  const [emblaRef] = useEmblaCarousel(CAROUSEL_OPTIONS, CAROUSEL_PLUGINS)
 
   const groupedSlides = createMemo(() => {
     const imagesPerSlide = imagesPerSlideMap[screenSize()]
@@ -57,7 +54,7 @@ export default (props: { images: string[] }) => {
             <div
               classList={{
                 'flex-[0_0_100%] px-3': true,
-                'h-[50vh] sm:h-[65vh] md:h-[70vh] lg:h-[80vh]': true,
+                'h-[50vh] sm:h-[65vh] md:h-[80vh] lg:h-[63vh]': true,
               }}
             >
               {slide.images.length === 3 ? (
@@ -70,21 +67,19 @@ export default (props: { images: string[] }) => {
                         loading="lazy"
                       />
                     </div>
-                    <div class="flex flex-col gap-4 w-full md:w-1/2 h-full">
-                      <div class="flex-1 overflow-hidden">
-                        <img
-                          src={slide.images[1]}
-                          class="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="flex-1 overflow-hidden">
-                        <img
-                          src={slide.images[2]}
-                          class="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
+                    <div class="flex-1 overflow-hidden">
+                      <img
+                        src={slide.images[1]}
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="flex-1 overflow-hidden">
+                      <img
+                        src={slide.images[2]}
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
                   </div>
                 </div>
@@ -113,7 +108,6 @@ export default (props: { images: string[] }) => {
           )}
         </For>
       </div>
-      <CarouselDots api={emblaApi} />
     </div>
   )
 }

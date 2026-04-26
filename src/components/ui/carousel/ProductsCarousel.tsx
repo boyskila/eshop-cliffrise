@@ -3,6 +3,7 @@ import useEmblaCarousel from 'embla-carousel-solid'
 import type { Product } from '@types'
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
+import { isString } from '@utils/func'
 
 export default (props: {
   products: Product[]
@@ -39,7 +40,7 @@ export default (props: {
                 >
                   <a class="w-full h-full" href={href}>
                     <img
-                      src={image}
+                      src={isString(image) ? image : image.src}
                       width={400}
                       height={400}
                       alt={name}
@@ -48,15 +49,16 @@ export default (props: {
                     />
                   </a>
                   <div class="flex justify-between w-full gap-2">
-                    <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1 pl-1">
                       <a
                         href={href}
                         class="
+                          p-0
                           text-base
                           md:text-lg
                           xl:text-2xl
                           underline-offset-4
-                          font-bold
+                          font-semibold
                           hover:underline"
                       >
                         {name}

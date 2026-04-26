@@ -1,6 +1,7 @@
 import { For, Show, createEffect } from 'solid-js'
 import { cart, isCartOpen, toggleCart, updateCart } from '@signals/cart'
 import type { CartItem } from '@actions'
+import { isString } from '@utils/func'
 import { DecreaseQuantityButton } from './DecreaseQuantityButton'
 import { IncreaseQuantityButton } from './IncreaseQuantityButton'
 import { RemoveFromCartButton } from './RemoveFromCartButton'
@@ -61,7 +62,11 @@ export const Cart = (props: Props) => {
                       item={item}
                       className="absolute -left-2 -top-2"
                     />
-                    <img src={item.image} alt={item.name} class="size-20" />
+                    <img
+                      src={isString(item.image) ? item.image : item.image.src}
+                      alt={item.name}
+                      class="size-20"
+                    />
                     <div class="flex items-center justify-between flex-1">
                       <div>
                         <h3 class="text-lg font-medium mb-2">{item.name}</h3>

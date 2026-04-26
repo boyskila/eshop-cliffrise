@@ -12,27 +12,26 @@ const products = await getProducts(lang)
 
 const carouselProducts = await Promise.all(
   products.map(async (product) => {
-    const image =
-      isString(product.image)
-        ? product.image
-        : (
-            await getImage({
-              src: product.image as ImageMetadata,
-              width: 800,
-              height: 800,
-              format: 'webp',
-              quality: 80,
-            })
-          ).src
+    const image = isString(product.image)
+      ? product.image
+      : (
+          await getImage({
+            src: product.image as ImageMetadata,
+            width: 800,
+            height: 800,
+            format: 'webp',
+            quality: 80,
+          })
+        ).src
     return { ...product, image }
   }),
 )
 ---
 
 <section id="products" class="flex-col justify-center px-3 md:px-7 lg:px-10">
-  <h2 class="mb-7 lg:mb-10">
+  <h2 class="mb-7 lg:mb-10 flex justify-center">
     <img
-      class="w-[150px] lg:w-[235px] m-auto"
+      class="w-[240px] h-[100px]"
       alt="Products with mission"
       src={`/titles/${lang}/products.svg`}
       loading="lazy"
