@@ -24,7 +24,7 @@ if (!product) {
 }
 
 const mainImage = isString(product.images[0])
-  ? { src: product.images[0], srcSet: undefined as string | undefined }
+  ? { src: product.images[0], srcSet: { attribute: '' } }
   : await getImage({
       src: product.images[0],
       widths: [400, 800, 1200],
@@ -63,7 +63,7 @@ const carouselProducts = await Promise.all(
             id="product-main-image"
             data-product-image
             src={mainImage.src}
-            srcset={mainImage.srcSet?.attribute}
+            srcset={mainImage.srcSet.attribute}
             sizes={PRODUCT_IMAGE_SIZES}
             alt={product.name}
             loading="eager"

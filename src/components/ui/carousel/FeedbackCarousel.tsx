@@ -9,7 +9,7 @@ const feedbacks = [
     text: 'If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!',
   },
   {
-    author: 'Ivaylo Angelov - The Maniak',
+    author: 'Ivaylo - The Maniac',
     text: 'I am in love with the chalk texture. I have very dry skin and it is really hard to find something that stays on my hands. Super happy to have found this chalk, it has all the qualities I need and definitely boosts my confidence on the rock.',
   },
   {
@@ -36,16 +36,16 @@ export default (props: { reviewerImageSrc: string }) => {
   return (
     <Arrows api={emblaApi!}>
       <div class="overflow-hidden" ref={emblaRef}>
-        <div class="flex touch-pan-y touch-pinch-zoom h-[240px] items-center">
+        <div class="flex touch-pan-y touch-pinch-zoom h-[260px] items-center">
           <For each={feedbacks}>
             {({ text, author }) => (
               <div
                 classList={{
                   'landscape:flex-[0_0_45%] landscape:lg:flex-[0_0_40%] landscape:2xl:flex-[0_0_24.5%] me-3': true,
-                  'flex-[0_0_90%] md:flex-[0_0_40%] xl:flex-[0_0_33.33%] h-[70%]': true,
+                  'flex-[0_0_90%] md:flex-[0_0_40%] xl:flex-[0_0_33.33%] h-full': true,
                 }}
               >
-                <div class="p-4 bg-[#f7f7f7] h-full">
+                <div class="p-4 bg-[#f7f7f7] mt-[40px] h-full">
                   <img
                     src={props.reviewerImageSrc}
                     alt={author}
@@ -54,8 +54,8 @@ export default (props: { reviewerImageSrc: string }) => {
                     height="80"
                     loading="lazy"
                   />
-                  <p class="ml-25 -mt-7 text-xl font-bold">- {author}</p>
-                  <p class="mt-5">{text}</p>
+                  <p class="ml-25 -mt-7 text-xl font-bold">{author}</p>
+                  <p class="mt-5 lh-sm">{text}</p>
                 </div>
               </div>
             )}

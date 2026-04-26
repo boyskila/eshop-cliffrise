@@ -19,7 +19,7 @@ export type Product = {
   kind: ProductKind[]
   kindTitle?: string
   href: string
-  slug?: string
+  slug?: string // url friendly identifier, used for product pages
   productPageTitle?: string
 }
 

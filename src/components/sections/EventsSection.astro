@@ -23,20 +23,17 @@ const processedGalleryImages = await Promise.all(
 const galleryImageUrls = processedGalleryImages.map((img) => img.src)
 ---
 
-<section class="bg-gray-100 py-15 xl:py-22 my-15 xl:my-22">
+<section class="bg-gray-100 pt-15 pb-20 my-15 xl:my-22">
   <div
-    class="px-15
-    xl:px-0
-    mb-5
-    xl:mb-10
-    xl:max-w-[75%]
-    m-auto
-    flex flex-col lg:flex-row
+    class="mb-3
+    xl:mb-5
+    flex flex-col lg:flex-row align-center
+    px-5 md:px-15 xl:px-55
     gap-5 lg:gap-8"
   >
     <img
       id="events-section"
-      class="w-70 sm:w-100 h-[95%]"
+      class="w-[456px] h-[100px] sm:self-start lg:self-center"
       src={`/titles/${getLang(Astro.params)}/teteven-climb.svg`}
       alt="Teteven Climb Title"
       loading="lazy"
@@ -49,7 +46,8 @@ const galleryImageUrls = processedGalleryImages.map((img) => img.src)
     </p>
   </div>
 
-  <div class="relative xl:max-w-[68%] m-auto">
+  <div class="relative
+px-10 md:px-15 xl:px-60">
     <YearToggle />
     <div class="overflow-x-hidden flex items-start justify-center">
       <div data-year-panel="2026" class="w-full">
