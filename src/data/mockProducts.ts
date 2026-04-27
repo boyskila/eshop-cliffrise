@@ -1,9 +1,5 @@
 import type { Product } from '@types'
-import { PRODUCT_IMAGES } from './productImages'
-export const resolveImage = (key: string): ImageMetadata | string => {
-  const productImage = PRODUCT_IMAGES[`/src/assets/images/products/${key}`]
-  return productImage ? productImage.default : key
-}
+import { resolveProductImage } from './productImages'
 
 type MockProductsMap = Record<string, Product[]>
 
@@ -18,11 +14,11 @@ const enProducts: Product[] = [
     kind: [],
     price: 12.99,
     weight: 0.3,
-    image: resolveImage('dry-chalk/dry-chalk'),
+    image: resolveProductImage('dry-chalk/dry-chalk'),
     images: [
-      resolveImage('dry-chalk/dry-chalk'),
-      resolveImage('wet-chalk/dry-chalk'),
-      resolveImage('liquid-chalk/dry-chalk'),
+      resolveProductImage('dry-chalk/dry-chalk'),
+      resolveProductImage('wet-chalk/dry-chalk'),
+      resolveProductImage('liquid-chalk/dry-chalk'),
     ],
     productPageTitle: 'Chunky Chalk – 250 g',
   },
@@ -36,8 +32,8 @@ const enProducts: Product[] = [
     kind: [],
     price: 13.99,
     weight: 0.3,
-    image: resolveImage('wet-chalk/dry-chalk'),
-    images: [resolveImage('wet-chalk/dry-chalk')],
+    image: resolveProductImage('wet-chalk/dry-chalk'),
+    images: [resolveProductImage('wet-chalk/dry-chalk')],
     productPageTitle: 'Moist Chunky Chalk – 250g',
   },
   {
@@ -50,8 +46,8 @@ const enProducts: Product[] = [
     kind: [],
     price: 14.99,
     weight: 0.3,
-    image: resolveImage('liquid-chalk/dry-chalk'),
-    images: [resolveImage('liquid-chalk/dry-chalk')],
+    image: resolveProductImage('liquid-chalk/dry-chalk'),
+    images: [resolveProductImage('liquid-chalk/dry-chalk')],
     productPageTitle: 'Liquid Chalk – 250 ml',
   },
   {
@@ -70,8 +66,8 @@ const enProducts: Product[] = [
     kindTitle: 'Select size:',
     price: 29.99,
     weight: 0.25,
-    image: resolveImage('tshirt/tshirt'),
-    images: [resolveImage('tshirt/tshirt')],
+    image: resolveProductImage('tshirt/tshirt'),
+    images: [resolveProductImage('tshirt/tshirt')],
   },
   {
     id: '5',
@@ -81,17 +77,33 @@ const enProducts: Product[] = [
     description:
       'Warm beanie for cold days in the mountains and in the city. Comfortable, simple and made for climbing adventures.',
     kind: [
-      { name: 'blue', image: resolveImage('beanies/blue'), inStock: true },
-      { name: 'black', image: resolveImage('beanies/black'), inStock: true },
-      { name: 'red', image: resolveImage('beanies/red'), inStock: true },
-      { name: 'green', image: resolveImage('beanies/green'), inStock: true },
-      { name: 'gray', image: resolveImage('beanies/gray'), inStock: true },
+      {
+        name: 'blue',
+        image: resolveProductImage('beanies/blue'),
+        inStock: true,
+      },
+      {
+        name: 'black',
+        image: resolveProductImage('beanies/black'),
+        inStock: true,
+      },
+      { name: 'red', image: resolveProductImage('beanies/red'), inStock: true },
+      {
+        name: 'green',
+        image: resolveProductImage('beanies/green'),
+        inStock: true,
+      },
+      {
+        name: 'gray',
+        image: resolveProductImage('beanies/gray'),
+        inStock: true,
+      },
     ],
     kindTitle: 'Select color:',
     price: 24.99,
     weight: 0.1,
-    image: resolveImage('beanies/blue'),
-    images: [resolveImage('beanies/blue')],
+    image: resolveProductImage('beanies/blue'),
+    images: [resolveProductImage('beanies/blue')],
   },
   {
     id: '6',
@@ -101,19 +113,39 @@ const enProducts: Product[] = [
     description:
       'Durable tape for protecting fingers while climbing. Made for crack climbing, sharp holds and long climbing sessions.',
     kind: [
-      { name: 'green', image: resolveImage('tape/green'), inStock: true },
-      { name: 'blue', image: resolveImage('tape/blue'), inStock: true },
-      { name: 'yellow', image: resolveImage('tape/yellow'), inStock: true },
-      { name: 'orange', image: resolveImage('tape/orange'), inStock: true },
-      { name: 'pink', image: resolveImage('tape/pink'), inStock: true },
-      { name: 'black', image: resolveImage('tape/black'), inStock: true },
-      { name: 'white', image: resolveImage('tape/white'), inStock: true },
+      {
+        name: 'green',
+        image: resolveProductImage('tape/green'),
+        inStock: true,
+      },
+      { name: 'blue', image: resolveProductImage('tape/blue'), inStock: true },
+      {
+        name: 'yellow',
+        image: resolveProductImage('tape/yellow'),
+        inStock: true,
+      },
+      {
+        name: 'orange',
+        image: resolveProductImage('tape/orange'),
+        inStock: true,
+      },
+      { name: 'pink', image: resolveProductImage('tape/pink'), inStock: true },
+      {
+        name: 'black',
+        image: resolveProductImage('tape/black'),
+        inStock: true,
+      },
+      {
+        name: 'white',
+        image: resolveProductImage('tape/white'),
+        inStock: true,
+      },
     ],
     kindTitle: 'Select color:',
     price: 7.99,
     weight: 0.05,
-    image: resolveImage('tape/green'),
-    images: [resolveImage('tape/green')],
+    image: resolveProductImage('tape/green'),
+    images: [resolveProductImage('tape/green')],
   },
 ]
 
@@ -128,11 +160,11 @@ const bgProducts: Product[] = [
       'Магнезий на бучка с едра структура, който се раздробява лесно и осигурява стабилно сцепление. Създаден за боулдър, спортни маршрути и дълги катерачни сесии. Отваряш. Натрошаваш. Катериш.',
     kind: [],
     price: 12.99,
-    image: resolveImage('dry-chalk/dry-chalk'),
+    image: resolveProductImage('dry-chalk/dry-chalk'),
     images: [
-      resolveImage('dry-chalk/dry-chalk'),
-      resolveImage('wet-chalk/dry-chalk'),
-      resolveImage('liquid-chalk/dry-chalk'),
+      resolveProductImage('dry-chalk/dry-chalk'),
+      resolveProductImage('wet-chalk/dry-chalk'),
+      resolveProductImage('liquid-chalk/dry-chalk'),
     ],
     productPageTitle: 'Сух магнезий на бучка – 250гр',
   },
@@ -146,8 +178,8 @@ const bgProducts: Product[] = [
       'Магнезий на бучка с по‑плътна структура, който се раздробява лесно и оставя равномерен слой по ръцете. Създаден за боулдър, спортни маршрути и дълги катерачни сесии. Отваряш. Натрошаваш. Катериш.',
     kind: [],
     price: 13.99,
-    image: resolveImage('wet-chalk/dry-chalk'),
-    images: [resolveImage('wet-chalk/dry-chalk')],
+    image: resolveProductImage('wet-chalk/dry-chalk'),
+    images: [resolveProductImage('wet-chalk/dry-chalk')],
     productPageTitle: 'Влажен магнезий на бучка – 250гр',
   },
   {
@@ -160,8 +192,8 @@ const bgProducts: Product[] = [
       'Течен магнезий, който изсъхва бързо и оставя равномерен слой по ръцете. Създаден за стабилно сцепление при катерене в зала и навън.',
     kind: [],
     price: 14.99,
-    image: resolveImage('liquid-chalk/dry-chalk'),
-    images: [resolveImage('liquid-chalk/dry-chalk')],
+    image: resolveProductImage('liquid-chalk/dry-chalk'),
+    images: [resolveProductImage('liquid-chalk/dry-chalk')],
     productPageTitle: 'Течен магнезий – 250 мл',
   },
   {
@@ -180,8 +212,8 @@ const bgProducts: Product[] = [
     kindTitle: 'Изберете размер:',
     price: 29.99,
     weight: 0.25,
-    image: resolveImage('tshirt/tshirt'),
-    images: [resolveImage('tshirt/tshirt')],
+    image: resolveProductImage('tshirt/tshirt'),
+    images: [resolveProductImage('tshirt/tshirt')],
   },
   {
     id: '5',
@@ -191,17 +223,37 @@ const bgProducts: Product[] = [
     description:
       'Топла шапка за студените дни в планината и в града. Удобна, семпла и създадена за катерачни приключения.',
     kind: [
-      { name: 'син', image: resolveImage('beanies/blue'), inStock: true },
-      { name: 'черен', image: resolveImage('beanies/black'), inStock: true },
-      { name: 'червен', image: resolveImage('beanies/red'), inStock: true },
-      { name: 'зелен', image: resolveImage('beanies/green'), inStock: true },
-      { name: 'сив', image: resolveImage('beanies/gray'), inStock: true },
+      {
+        name: 'син',
+        image: resolveProductImage('beanies/blue'),
+        inStock: true,
+      },
+      {
+        name: 'черен',
+        image: resolveProductImage('beanies/black'),
+        inStock: true,
+      },
+      {
+        name: 'червен',
+        image: resolveProductImage('beanies/red'),
+        inStock: true,
+      },
+      {
+        name: 'зелен',
+        image: resolveProductImage('beanies/green'),
+        inStock: true,
+      },
+      {
+        name: 'сив',
+        image: resolveProductImage('beanies/gray'),
+        inStock: true,
+      },
     ],
     kindTitle: 'Изберете цвят:',
     price: 24.99,
     weight: 0.1,
-    image: resolveImage('beanies/blue'),
-    images: [resolveImage('beanies/blue')],
+    image: resolveProductImage('beanies/blue'),
+    images: [resolveProductImage('beanies/blue')],
   },
   {
     id: '6',
@@ -211,19 +263,35 @@ const bgProducts: Product[] = [
     description:
       'Здрав тейп за защита на пръстите при катерене. Създаден за цепки, остри хватки и дълги катерачни сесии.',
     kind: [
-      { name: 'зелен', image: resolveImage('tape/green'), inStock: true },
-      { name: 'син', image: resolveImage('tape/blue'), inStock: true },
-      { name: 'жълт', image: resolveImage('tape/yellow'), inStock: true },
-      { name: 'оранжев', image: resolveImage('tape/orange'), inStock: true },
-      { name: 'розов', image: resolveImage('tape/pink'), inStock: true },
-      { name: 'черен', image: resolveImage('tape/black'), inStock: true },
-      { name: 'бял', image: resolveImage('tape/white'), inStock: true },
+      {
+        name: 'зелен',
+        image: resolveProductImage('tape/green'),
+        inStock: true,
+      },
+      { name: 'син', image: resolveProductImage('tape/blue'), inStock: true },
+      {
+        name: 'жълт',
+        image: resolveProductImage('tape/yellow'),
+        inStock: true,
+      },
+      {
+        name: 'оранжев',
+        image: resolveProductImage('tape/orange'),
+        inStock: true,
+      },
+      { name: 'розов', image: resolveProductImage('tape/pink'), inStock: true },
+      {
+        name: 'черен',
+        image: resolveProductImage('tape/black'),
+        inStock: true,
+      },
+      { name: 'бял', image: resolveProductImage('tape/white'), inStock: true },
     ],
     kindTitle: 'Изберете цвят:',
     price: 7.99,
     weight: 0.05,
-    image: resolveImage('tape/green'),
-    images: [resolveImage('tape/green')],
+    image: resolveProductImage('tape/green'),
+    images: [resolveProductImage('tape/green')],
   },
 ]
 
