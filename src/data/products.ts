@@ -1,13 +1,14 @@
-import type { ImageMetadata } from 'astro'
 import { getStripe } from '@services/stripe'
 import { getMockProducts } from './mockProducts'
-import { PRODUCT_IMAGES } from './productImages'
-import type { Product, ProductKind } from '@types'
+import type { Product } from '@types'
 import { isTestMode } from '@utils/func'
+import { mapStripeProductToProduct } from './productMapper'
 
-export const resolveImage = (key: string): ImageMetadata | string => {
-  const productImage = PRODUCT_IMAGES[key]
-  return productImage ? productImage.default : key
+const listStripeProducts = () => {
+  const stripe = getStripe()
+  return stripe.products.list({
+    expand: ['data.default_price'],
+  })
 }
 
 export const getProducts = async (lang: string): Promise<Product[]> => {
@@ -15,42 +16,8 @@ export const getProducts = async (lang: string): Promise<Product[]> => {
     return getMockProducts(lang)
   }
 
-  const stripe = getStripe()
-  const productsList = await stripe.products.list({
-    expand: ['data.default_price'],
-  })
-  return productsList.data.map((stripeProduct) => {
-    const { metadata } = stripeProduct
-    const { name, description, kind, kindTitle, inStock, productPageTitle } =
-      JSON.parse(metadata[lang])
-    const {
-      images,
-      'image-folder': imageFolder,
-      'main-image': mainImage,
-      weight,
-      slug,
-    } = metadata
-
-    return {
-      id: stripeProduct.id,
-      href: `/${lang}/products/${slug}/`,
-      slug,
-      name,
-      description: description ?? '',
-      kind: kind.map(({ name, image, inStock }: ProductKind) => ({
-        name,
-        image: resolveImage(`${imageFolder}${image}`),
-        inStock: inStock === undefined ? true : inStock,
-      })),
-      price: (stripeProduct.default_price as any).unit_amount / 100,
-      weight: parseFloat(weight),
-      image: resolveImage(`${imageFolder}${mainImage}`),
-      images: JSON.parse(images).map((img: string) =>
-        resolveImage(`${imageFolder}${img}`),
-      ),
-      kindTitle,
-      inStock: inStock === undefined ? true : inStock,
-      productPageTitle,
-    } as Product
-  })
+  const productsList = await listStripeProducts()
+  return productsList.data.map((stripeProduct) =>
+    mapStripeProductToProduct(stripeProduct, lang),
+  )
 }

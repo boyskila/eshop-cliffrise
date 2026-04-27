@@ -2,18 +2,20 @@ import type { CreateEmailOptions } from 'resend'
 import type { ImageMetadata } from 'astro'
 import en from '../public/locales/en/translations.json'
 
+export type ProductImage = ImageMetadata | string
+
 export type ProductKind = {
   name: string
-  image?: ImageMetadata | string
+  image?: ProductImage
   inStock: boolean
 }
 
 export type Product = {
   id: string
-  image: ImageMetadata | string
+  image: ProductImage
   name: string
   description: string
-  images: (ImageMetadata | string)[]
+  images: ProductImage[]
   price: number
   weight: number // actual product weight in kg, used for shipping calculation
   kind: ProductKind[]
@@ -21,6 +23,29 @@ export type Product = {
   href: string
   slug?: string // url friendly identifier, used for product pages
   productPageTitle?: string
+}
+
+export type ProductLocaleKindMetadata = {
+  name: string
+  image?: string
+  inStock?: boolean
+}
+
+export type ProductLocaleMetadata = {
+  name: string
+  description?: string | null
+  kind: ProductLocaleKindMetadata[]
+  kindTitle?: string
+  inStock?: boolean
+  productPageTitle?: string
+}
+
+export type ProductCatalogMetadata = {
+  images: string[]
+  imageFolder: string
+  mainImage: string
+  weight: number
+  slug: string
 }
 
 export type Translations = typeof en
