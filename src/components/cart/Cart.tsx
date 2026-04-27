@@ -37,14 +37,14 @@ export const Cart = (props: Props) => {
   return (
     <Show when={isCartOpen()}>
       <div
-        class="fixed inset-0 bg-black/50 z-50"
+        class="fixed inset-0 bg-black/50 z-[60]"
         onClick={toggleCart}
         aria-label="Close shopping cart"
       />
       <div
         role="dialog"
         aria-label="Shopping cart"
-        class="fixed right-0 top-0 h-full w-full md:max-w-md bg-white z-50 p-7 xl:p-8"
+        class="fixed right-0 top-0 h-full w-full md:max-w-md bg-white z-[70] p-7 xl:p-8"
       >
         <div class="flex flex-col h-[97%]">
           <CartHeader title={title} />
