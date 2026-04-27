@@ -10,6 +10,13 @@ const lang = getLang(Astro.params)
 const { header } = getTranslations(Astro.params)
 const { products, ourCause, tetevenClimb, aboutUs, contact } = header
 const cart = await Astro.session?.get('cart')
+const menuItems = [
+  { href: `/${lang}/#products`, title: products },
+  { href: `/${lang}/#our-cause`, title: ourCause },
+  { href: `/${lang}/#about-us`, title: aboutUs },
+  { href: `/${lang}/#events-section`, title: tetevenClimb },
+  { href: `/${lang}/#contact-us`, title: contact },
+]
 ---
 
 <header
@@ -26,41 +33,19 @@ const cart = await Astro.session?.get('cart')
         />
       </a>
       <div class="hidden lg:flex tablet-landscape:flex gap-8 xl:gap-[46px]">
-        <a
-          data-hash-link
-          href={`/${lang}/#our-cause`}
-          class="font-normal text-white text-[22px] whitespace-nowrap"
-        >
-          {ourCause}
-        </a>
-        <a
-          data-hash-link
-          href={`/${lang}/#about-us`}
-          class="font-normal text-white text-[22px] whitespace-nowrap"
-        >
-          {aboutUs}
-        </a>
-        <a
-          data-hash-link
-          href={`/${lang}/#events-section`}
-          class="font-normal text-white text-[22px] whitespace-nowrap"
-        >
-          {tetevenClimb}
-        </a>
-        <a
-          data-hash-link
-          href={`/${lang}/#products`}
-          class="font-normal text-white text-[22px] whitespace-nowrap"
-        >
-          {products}
-        </a>
-        <a
-          data-hash-link
-          href={`/${lang}/#contact-us`}
-          class="font-normal text-white text-[22px] whitespace-nowrap"
-        >
-          {contact}
-        </a>
+        {
+          menuItems.map(({ href, title }) => {
+            return (
+              <a
+                data-hash-link
+                href={href}
+                class="font-normal text-white text-[22px] whitespace-nowrap"
+              >
+                {title}
+              </a>
+            )
+          })
+        }
       </div>
       <div class="flex items-center gap-3 lg:gap-4">
         <a
@@ -89,16 +74,7 @@ const cart = await Astro.session?.get('cart')
       </div>
       <MobileMenuButton client:media="(max-width: 1023px)" />
     </div>
-    <MobileMenu
-      menuItems={[
-        { href: `/${lang}/#products`, title: products },
-        { href: `/${lang}/#our-cause`, title: ourCause },
-        { href: `/${lang}/#about-us`, title: aboutUs },
-        { href: `/${lang}/#events-section`, title: tetevenClimb },
-        { href: `/${lang}/#contact-us`, title: tetevenClimb },
-      ]}
-      client:media="(max-width: 1023px)"
-    />
+    <MobileMenu menuItems={menuItems} client:media="(max-width: 1023px)" />
   </nav>
 </header>
 
