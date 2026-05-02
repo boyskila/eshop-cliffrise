@@ -1,31 +1,13 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
 import { getProducts } from '@data/products'
-import { getImage } from 'astro:assets'
 import ProductsCarousel from '../ui/carousel/ProductsCarousel'
-import type { ImageMetadata } from 'astro'
-import { isString } from '@utils/func'
+import { prepareProductCards } from '@utils/image'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const products = await getProducts(lang)
-
-const carouselProducts = await Promise.all(
-  products.map(async (product) => {
-    const image = isString(product.image)
-      ? product.image
-      : (
-          await getImage({
-            src: product.image as ImageMetadata,
-            width: 800,
-            height: 800,
-            format: 'webp',
-            quality: 80,
-          })
-        ).src
-    return { ...product, image }
-  }),
-)
+const carouselProducts = await prepareProductCards(products)
 ---
 
 <section id="products" class="flex-col justify-center px-3 md:px-7 lg:px-10">

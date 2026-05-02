@@ -1,12 +1,11 @@
 import { For } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
-import type { Product } from '@types'
+import type { RenderedProductCard } from '@types'
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
-import { isString } from '@utils/func'
 
 export default (props: {
-  products: Product[]
+  products: RenderedProductCard[]
   buttonText: string
   lang: string
 }) => {
@@ -40,7 +39,9 @@ export default (props: {
                 >
                   <a class="w-full h-full" href={href}>
                     <img
-                      src={isString(image) ? image : image.src}
+                      src={image.src}
+                      srcset={image.srcSet}
+                      sizes={image.sizes}
                       width={400}
                       height={400}
                       alt={name}

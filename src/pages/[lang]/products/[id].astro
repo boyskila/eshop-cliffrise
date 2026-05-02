@@ -1,5 +1,4 @@
 ---
-import { getImage } from 'astro:assets'
 import MainLayout from '../../../layouts/MainLayout.astro'
 import { getTranslations, getLang } from '@utils/i18'
 import { getProducts } from '@data/products'
@@ -9,8 +8,12 @@ import KindSelector from '@components/products/KindSelector.astro'
 import { QuantityControls } from '@components/products/QuantityControls'
 import Divider from '@components/ui/Divider.astro'
 import ImageThumbnails from '@components/products/ImageThumbnails.astro'
-import { PRODUCT_IMAGE_SIZES } from '@constants'
-import { isString } from '@utils/func'
+import {
+  prepareProductCards,
+  prepareProductGalleryImages,
+  prepareProductKinds,
+  prepareProductMainImage,
+} from '@utils/image'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
@@ -23,33 +26,12 @@ if (!product) {
   return Astro.redirect(`/${lang}/products/`)
 }
 
-const mainImage = isString(product.images[0])
-  ? { src: product.images[0], srcSet: { attribute: '' } }
-  : await getImage({
-      src: product.images[0],
-      widths: [400, 800, 1200],
-      sizes: PRODUCT_IMAGE_SIZES,
-      format: 'webp',
-      quality: 80,
-    })
-
-const carouselProducts = await Promise.all(
-  products.map(async (p) => {
-    const img = isString(p.image)
-      ? p.image
-      : (
-          await getImage({
-            src: p.image,
-            width: 800,
-            height: 800,
-            format: 'webp',
-            quality: 80,
-          })
-        ).src
-    return { ...p, image: img }
-  }),
-)
----
+const productGalleryImages = await prepareProductGalleryImages(product.images)
+const mainImage =
+  productGalleryImages[0]?.full ?? (await prepareProductMainImage(product.image))
+const renderedProductKinds = await prepareProductKinds(product.kind)
+const carouselProducts = await prepareProductCards(products)
+--- 
 
 <MainLayout title={product.name} showHero={false}>
   <section class="pt-10 px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
@@ -63,8 +45,8 @@ const carouselProducts = await Promise.all(
             id="product-main-image"
             data-product-image
             src={mainImage.src}
-            srcset={mainImage.srcSet.attribute}
-            sizes={PRODUCT_IMAGE_SIZES}
+            srcset={mainImage.srcSet}
+            sizes={mainImage.sizes}
             alt={product.name}
             loading="eager"
             fetchpriority="high"
@@ -73,7 +55,7 @@ const carouselProducts = await Promise.all(
           />
         </div>
         <ImageThumbnails
-          productImages={product.images}
+          productImages={productGalleryImages}
           productName={product.name}
         />
       </div>
@@ -89,7 +71,12 @@ const carouselProducts = await Promise.all(
           {product.description}
         </p>
 
-        {product.kind.length > 0 && <KindSelector product={product} />}
+        {renderedProductKinds.length > 0 && (
+          <KindSelector
+            kindTitle={product.kindTitle}
+            productKinds={renderedProductKinds}
+          />
+        )}
 
         <div class="flex justify-between items-center">
           <QuantityControls productName={product.name} client:visible />

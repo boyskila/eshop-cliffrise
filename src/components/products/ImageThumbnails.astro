@@ -1,50 +1,24 @@
 ---
-import { getImage } from 'astro:assets'
-import type { Product } from '@types'
-import { PRODUCT_IMAGE_SIZES } from '@constants'
-import { isString } from '@utils/func'
+import type { ProductGalleryImage } from '@types'
 
 type Props = {
   productName: string
-  productImages: Product['images']
+  productImages: ProductGalleryImage[]
 }
 
 const { productName, productImages } = Astro.props
-
-const processedImages = await Promise.all(
-  productImages.map(async (src) => {
-    if (isString(src)) {
-      return { thumbSrc: src, fullSrc: src, fullSrcSet: undefined }
-    }
-    const [thumb, full] = await Promise.all([
-      getImage({ src, width: 56, height: 56 }),
-      getImage({
-        src,
-        widths: [400, 800, 1200],
-        sizes: PRODUCT_IMAGE_SIZES,
-        format: 'webp',
-        quality: 80,
-      }),
-    ])
-    return {
-      thumbSrc: thumb.src,
-      fullSrc: full.src,
-      fullSrcSet: full.srcSet.attribute,
-    }
-  }),
-)
 ---
 
 {
-  processedImages.length > 1 && (
+  productImages.length > 1 && (
     <ul class="flex gap-2 flex-wrap">
-      {processedImages.map(({ thumbSrc, fullSrc, fullSrcSet }) => (
+      {productImages.map(({ thumbnail, full }) => (
         <li>
           <button
             data-product-thumbnail
-            data-image-src={fullSrc}
-            data-image-srcset={fullSrcSet}
-            data-image-sizes={PRODUCT_IMAGE_SIZES}
+            data-image-src={full.src}
+            data-image-srcset={full.srcSet}
+            data-image-sizes={full.sizes}
             class="
               size-14
               rounded
@@ -53,7 +27,7 @@ const processedImages = await Promise.all(
               hover:border-black"
           >
             <img
-              src={thumbSrc}
+              src={thumbnail.src}
               alt={productName}
               class="size-full object-cover"
               width="56"
@@ -82,6 +56,14 @@ const processedImages = await Promise.all(
         return
       }
       const img = new Image()
+      const srcset = thumb.dataset.imageSrcset
+      const sizes = thumb.dataset.imageSizes
+      if (srcset) {
+        img.srcset = srcset
+      }
+      if (sizes) {
+        img.sizes = sizes
+      }
       img.src = src
     }
 
@@ -96,17 +78,33 @@ const processedImages = await Promise.all(
 
       thumb.addEventListener('click', async () => {
         const src = thumb.dataset.imageSrc
+        const srcset = thumb.dataset.imageSrcset ?? ''
+        const sizes = thumb.dataset.imageSizes ?? ''
         if (!mainImage || !src) {
           return
         }
 
         const preloader = new Image()
+        if (srcset.trim().length > 0) {
+          preloader.srcset = srcset
+        }
+        if (sizes.trim().length > 0) {
+          preloader.sizes = sizes
+        }
         preloader.src = src
         await preloader.decode().catch(() => {})
 
-        mainImage.removeAttribute('srcset')
-        mainImage.removeAttribute('sizes')
         mainImage.src = src
+        if (srcset.trim().length > 0) {
+          mainImage.srcset = srcset
+        } else {
+          mainImage.removeAttribute('srcset')
+        }
+        if (sizes.trim().length > 0) {
+          mainImage.sizes = sizes
+        } else {
+          mainImage.removeAttribute('sizes')
+        }
       })
     })
   })
