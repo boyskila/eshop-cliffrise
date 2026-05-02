@@ -1,6 +1,5 @@
 import { For } from 'solid-js'
 import { cartNotifications } from '@signals/cart'
-import { isString } from '@utils/func'
 
 type Props = {
   text: {
@@ -25,11 +24,7 @@ export const CartNotifications = ({ text }: Props) => {
                 <div class="p-4">
                   <div class="flex mb-5">
                     <img
-                      src={
-                        isString(notification.image)
-                          ? notification.image
-                          : notification.image.src
-                      }
+                      src={notification.image}
                       alt={notification.name}
                       width="80"
                       height="80"

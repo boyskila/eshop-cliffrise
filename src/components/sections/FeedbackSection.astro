@@ -2,16 +2,58 @@
 import { getImage } from 'astro:assets'
 import FeedbackCarousel from '../ui/carousel/FeedbackCarousel'
 import MateiImg from '@assets/images/matei.webp'
+import IvayloImg from '@assets/images/the_maniac.webp'
 
-const reviewerImage = await getImage({
+const MateiImage = await getImage({
   src: MateiImg,
   width: 160,
   height: 160,
   format: 'webp',
   quality: 80,
 })
+
+const IvayloImage = await getImage({
+  src: IvayloImg,
+  width: 160,
+  height: 160,
+  format: 'webp',
+  quality: 80,
+})
+
+const feedbacks = [
+  {
+    author: 'Matey Mitcev',
+    text: 'If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!',
+    image: MateiImage,
+  },
+  {
+    author: 'Ivaylo - The Maniac',
+    text: 'I am in love with the chalk texture. I have very dry skin and it is really hard to find something that stays on my hands. Super happy to have found this chalk, it has all the qualities I need and definitely boosts my confidence on the rock.',
+    image: IvayloImage,
+  },
+  {
+    author: 'Georgi Ivanov',
+    text: 'CliffRise offers an amazing selection of climbing gear at competitive prices. Their customer support is top-notch!',
+    image: MateiImage,
+  },
+  {
+    author: 'Elena Kolarova',
+    text: 'The team at CliffRise is knowledgeable and passionate about climbing. They helped me find the perfect gear for my needs.',
+    image: MateiImage,
+  },
+  {
+    author: 'Dimitar Stoyanov',
+    text: 'Fast shipping and great packaging! My order from CliffRise arrived quickly and in perfect condition.',
+    image: MateiImage,
+  },
+  {
+    author: 'Nina Petrova',
+    text: 'CliffRise is my go-to store for all things climbing. Their products are reliable, and their prices are unbeatable.',
+    image: IvayloImage,
+  },
+]
 ---
 
 <section class="px-3 md:px-10">
-  <FeedbackCarousel reviewerImageSrc={reviewerImage.src} client:visible />
+  <FeedbackCarousel reviews={feedbacks} client:visible />
 </section>

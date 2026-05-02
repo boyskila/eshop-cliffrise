@@ -1,45 +1,20 @@
 ---
-import { getImage } from 'astro:assets'
-import type { Product } from '@types'
-import { PRODUCT_IMAGE_SIZES } from '@constants'
-import { isString } from '@utils/func'
+import type { RenderedProductKind } from '@types'
 
 interface Props {
-  product: Product
+  kindTitle?: string
+  productKinds: RenderedProductKind[]
 }
 
-const { product } = Astro.props
-
-const processedKinds = await Promise.all(
-  product.kind.map(async ({ image, ...rest }) => {
-    let imageUrl: string | undefined
-    let imageSrcSet: string | undefined
-    if (image) {
-      if (isString(image)) {
-        imageUrl = image
-      } else {
-        const processed = await getImage({
-          src: image,
-          widths: [400, 800, 1200],
-          sizes: PRODUCT_IMAGE_SIZES,
-          format: 'webp',
-          quality: 80,
-        })
-        imageUrl = processed.src
-        imageSrcSet = processed.srcSet.attribute
-      }
-    }
-    return { ...rest, imageUrl, imageSrcSet }
-  }),
-)
+const { kindTitle, productKinds } = Astro.props
 ---
 
 {
-  product.kind.length > 0 && (
+  productKinds.length > 0 && (
     <div class="flex flex-col gap-4 flex-1">
-      <h3 class="text-xl underline underline-offset-2">{product.kindTitle}</h3>
+      <h3 class="text-xl underline underline-offset-2">{kindTitle}</h3>
       <ul class="flex flex-wrap gap-1 md:gap-2" data-kind-selector>
-        {processedKinds.map(({ name, imageUrl, imageSrcSet, inStock }, kindIndex) => (
+        {productKinds.map(({ name, image, inStock }, kindIndex) => (
           <li>
             <button
               disabled={!inStock}
@@ -48,9 +23,9 @@ const processedKinds = await Promise.all(
               data-kind-option
               data-kind-index={kindIndex}
               data-kind-name={name}
-              data-kind-image={imageUrl}
-              data-kind-image-srcset={imageSrcSet}
-              data-kind-image-sizes={PRODUCT_IMAGE_SIZES}
+              data-kind-image={image?.src}
+              data-kind-image-srcset={image?.srcSet}
+              data-kind-image-sizes={image?.sizes}
               class="
                 disabled:opacity-50
                 py-1 px-4

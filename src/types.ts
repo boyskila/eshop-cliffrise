@@ -4,6 +4,17 @@ import en from '../public/locales/en/translations.json'
 
 export type ProductImage = ImageMetadata | string
 
+export type RenderImage = {
+  src: string
+  srcSet?: string
+  sizes?: string
+}
+
+export type ProductGalleryImage = {
+  thumbnail: RenderImage
+  full: RenderImage
+}
+
 export type ProductKind = {
   name: string
   image?: ProductImage
@@ -23,6 +34,14 @@ export type Product = {
   href: string
   slug?: string // url friendly identifier, used for product pages
   productPageTitle?: string
+}
+
+export type RenderedProductKind = Omit<ProductKind, 'image'> & {
+  image?: RenderImage
+}
+
+export type RenderedProductCard = Omit<Product, 'image'> & {
+  image: RenderImage
 }
 
 export type ProductLocaleKindMetadata = {

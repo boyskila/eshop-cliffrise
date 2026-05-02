@@ -2,43 +2,19 @@ import { For } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
 import { CAROUSEL_OPTIONS } from './config'
 import Arrows from './ContainerWithArrows'
+import type { GetImageResult } from 'astro'
 
-const feedbacks = [
-  {
-    author: 'Matey Mitcev',
-    text: 'If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!',
-  },
-  {
-    author: 'Ivaylo - The Maniac',
-    text: 'I am in love with the chalk texture. I have very dry skin and it is really hard to find something that stays on my hands. Super happy to have found this chalk, it has all the qualities I need and definitely boosts my confidence on the rock.',
-  },
-  {
-    author: 'Georgi Ivanov',
-    text: 'CliffRise offers an amazing selection of climbing gear at competitive prices. Their customer support is top-notch!',
-  },
-  {
-    author: 'Elena Kolarova',
-    text: 'The team at CliffRise is knowledgeable and passionate about climbing. They helped me find the perfect gear for my needs.',
-  },
-  {
-    author: 'Dimitar Stoyanov',
-    text: 'Fast shipping and great packaging! My order from CliffRise arrived quickly and in perfect condition.',
-  },
-  {
-    author: 'Nina Petrova',
-    text: 'CliffRise is my go-to store for all things climbing. Their products are reliable, and their prices are unbeatable.',
-  },
-]
-
-export default (props: { reviewerImageSrc: string }) => {
+export default (props: {
+  reviews: { text: string; author: string; image: GetImageResult }[]
+}) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(CAROUSEL_OPTIONS)
 
   return (
     <Arrows api={emblaApi!}>
       <div class="overflow-hidden" ref={emblaRef}>
         <div class="flex touch-pan-y touch-pinch-zoom h-[260px] items-center">
-          <For each={feedbacks}>
-            {({ text, author }) => (
+          <For each={props.reviews}>
+            {({ text, author, image }) => (
               <div
                 classList={{
                   'landscape:flex-[0_0_45%] landscape:lg:flex-[0_0_40%] landscape:2xl:flex-[0_0_24.5%] me-3': true,
@@ -47,7 +23,7 @@ export default (props: { reviewerImageSrc: string }) => {
               >
                 <div class="p-4 bg-[#f7f7f7] mt-[40px] h-full">
                   <img
-                    src={props.reviewerImageSrc}
+                    src={image.src}
                     alt={author}
                     class="size-20 -mt-13 ml-2"
                     width="80"

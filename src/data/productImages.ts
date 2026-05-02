@@ -7,6 +7,5 @@ export const PRODUCT_IMAGES = import.meta.glob<{ default: ImageMetadata }>(
 )
 
 export const resolveProductImage = (relativePath: string): ProductImage => {
-  const key = `/src/assets/images/products/${relativePath.trim()}.webp`
-  return PRODUCT_IMAGES[key]?.default ?? relativePath
+  return PRODUCT_IMAGES[relativePath]?.default ?? relativePath
 }

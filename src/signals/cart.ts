@@ -1,19 +1,18 @@
 import type { CartItem } from '@actions'
-import type { Product } from '@types'
 import { createSignal } from 'solid-js'
 
 export const [cartCount, setCartCount] = createSignal(0)
 export const [cartNotifications, setCartNotifications] = createSignal<
-  Product[]
+  CartItem[]
 >([])
 
-export const addCartNotification = (product: Product) => {
-  const productId = product.id
+export const addCartNotification = (item: CartItem) => {
+  const productId = item.id
   const isProductAlreadyAdded = cartNotifications().find(
     (notification) => notification.id === productId,
   )
   if (!isProductAlreadyAdded) {
-    setCartNotifications((notifications) => [...notifications, product])
+    setCartNotifications((notifications) => [...notifications, item])
     setTimeout(() => {
       setCartNotifications((notifications) => {
         return notifications.filter(
