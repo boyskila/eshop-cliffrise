@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro'
 
-const PRODUCT_IMAGES = import.meta.glob<{ default: ImageMetadata }>(
+export const PRODUCT_IMAGES = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/images/products/**/*.webp',
   { eager: true },
 )
