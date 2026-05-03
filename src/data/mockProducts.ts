@@ -1,7 +1,11 @@
 import type { Product } from '@types'
-import { resolveProductImage } from './productImages'
+import { PRODUCT_IMAGES } from './productImages'
 
 type MockProductsMap = Record<string, Product[]>
+
+const resolveProductImage = (relativePath: string) => {
+  return PRODUCT_IMAGES[relativePath]?.default ?? relativePath
+}
 
 const enProducts: Product[] = [
   {
