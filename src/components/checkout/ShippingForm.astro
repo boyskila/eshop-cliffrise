@@ -1,12 +1,12 @@
 ---
-import type { ShippingInfo, Translations } from '@types'
+import type { Locale, ShippingInfo, Translations } from '@types'
 import OfficeSearch from './OfficeSearch.astro'
 import OfficeMap from './OfficeMap.astro'
 import SubmitButton from './SubmitButton.astro'
 import SelectedOffice from './SelectedOffice.astro'
 
 type Props = {
-  lang: string
+  lang: Locale
   text: Translations['shipping']
   initialShipping?: ShippingInfo
   isFreeShipping: boolean
@@ -88,7 +88,8 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
 
 <script>
   import { actions } from 'astro:actions'
-  import { isPresent } from '../../utils/func'
+  import { formatPrice, isPresent } from '../../utils/func'
+  import type { Locale } from '@types'
 
   const form = document.getElementById('shipping-form') as HTMLFormElement
   const { feeLabel, calculatingFee, freeShipping, totalWeight } =
@@ -135,7 +136,7 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
 
   const calculateFee = async (officeId: number) => {
     if (isFreeShipping) {
-      officeFeeElement.textContent = `${feeLabel} €0.00`
+      officeFeeElement.textContent = `${feeLabel} ${formatPrice(0, form.dataset.lang as Locale)}`
       return
     }
     officeFeeElement.textContent = calculatingFee
@@ -146,7 +147,7 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
       })
       const fee = data?.fee
       officeFeeElement.textContent = isPresent(fee)
-        ? `${feeLabel} €${fee.toFixed(2)}`
+        ? `${feeLabel} ${formatPrice(fee, form.dataset.lang as Locale)}`
         : ''
     } catch {
       officeFeeElement.textContent = ''

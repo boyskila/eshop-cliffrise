@@ -116,3 +116,5 @@ export type MapOffice = {
   workingTimeHalfFrom: string | null
   workingTimeHalfTo: string | null
 }
+
+export type Locale = 'en' | 'bg'

@@ -1,6 +1,10 @@
 import { z } from 'astro/zod'
 import type Stripe from 'stripe'
-import type { ProductCatalogMetadata, ProductLocaleMetadata } from '@types'
+import type {
+  Locale,
+  ProductCatalogMetadata,
+  ProductLocaleMetadata,
+} from '@types'
 
 const productLocaleKindMetadataSchema = z.object({
   name: z.string().min(1),
@@ -50,7 +54,7 @@ const parseJsonValue = <T>(
 
 export const parseProductLocaleMetadata = (
   metadata: Stripe.Metadata,
-  lang: string,
+  lang: Locale,
 ): ProductLocaleMetadata => {
   const rawMetadata = metadata[lang]
   if (!rawMetadata) {
@@ -82,7 +86,11 @@ export const parseProductCatalogMetadata = (
   const parsed = result.data
 
   return {
-    images: parseJsonValue(parsed.images, productImageListSchema, 'Product images'),
+    images: parseJsonValue(
+      parsed.images,
+      productImageListSchema,
+      'Product images',
+    ),
     imageFolder: parsed['image-folder'],
     mainImage: parsed['main-image'],
     weight: parsed.weight,

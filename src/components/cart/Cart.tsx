@@ -7,9 +7,10 @@ import { RemoveFromCartButton } from './RemoveFromCartButton'
 import { EmptyCart } from './EmptyCart'
 import { CartFooter } from './CartFooter'
 import { CartHeader } from './CartHeader'
+import type { Locale } from '@types'
 
 type Props = {
-  lang: string
+  lang: Locale
   text: {
     title: string
     empty: string

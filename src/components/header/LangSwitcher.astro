@@ -1,5 +1,7 @@
 ---
-const langFromParams = Astro.params.lang
+import { getLang } from '@utils/i18'
+
+const langFromParams = getLang(Astro.params)
 const lang = langFromParams === 'en' ? 'bg' : 'en'
 ---
 

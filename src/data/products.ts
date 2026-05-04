@@ -1,6 +1,6 @@
 import { getStripe } from '@services/stripe'
 import { getMockProducts } from './mockProducts'
-import type { Product } from '@types'
+import type { Locale, Product } from '@types'
 import { isTestMode } from '@utils/func'
 import { mapStripeProductToProduct } from './productMapper'
 
@@ -11,7 +11,7 @@ const listStripeProducts = () => {
   })
 }
 
-export const getProducts = async (lang: string): Promise<Product[]> => {
+export const getProducts = async (lang: Locale): Promise<Product[]> => {
   if (isTestMode) {
     return getMockProducts(lang)
   }
