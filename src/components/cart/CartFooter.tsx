@@ -1,9 +1,11 @@
 import { cart } from '@signals/cart'
 import { getTotalPrice } from '@utils/cart'
 import { CheckoutButton } from '@components/checkout/CheckoutButton'
+import type { Locale } from '@types'
+import { formatPrice } from '@utils/func'
 
 type Props = {
-  lang: string
+  lang: Locale
   text: {
     total: string
     checkout: string
@@ -12,6 +14,7 @@ type Props = {
 }
 export const CartFooter = (props: Props) => {
   const { checkout, routeFunding, total } = props.text
+  const { lang } = props
   return (
     <div class="border-t border-black pt-4 xl:pt-7">
       <div class="flex justify-between items-center mb-4 xl:mb-7">
@@ -22,10 +25,10 @@ export const CartFooter = (props: Props) => {
             text-2xl md:text-3xl
             font-bold text-stone-900"
         >
-          &euro;{getTotalPrice(cart()).toFixed(2)} EUR
+          {formatPrice(getTotalPrice(cart()), lang)}
         </span>
       </div>
-      <CheckoutButton lang={props.lang} text={checkout} />
+      <CheckoutButton lang={lang} text={checkout} />
       <p class="text-base text-center">{routeFunding}</p>
     </div>
   )

@@ -6,11 +6,12 @@ import {
   setQuantity,
   updateCart,
 } from '@signals/cart'
+import type { Locale } from '@types'
 
 export const AddToCartButton = (props: {
   productName: string
   productId: string
-  lang: string
+  lang: Locale
   label?: string
   disabled?: boolean
 }) => {

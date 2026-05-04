@@ -8,6 +8,7 @@ import CheckoutLayout from '../../../layouts/CheckoutLayout.astro'
 import { getTotalPrice, getTotalWeight } from '@utils/cart'
 import { calculateShippingFee } from '@utils/speedy'
 import { getFreeShippingThreshold } from '@utils/shipping'
+import { formatPrice } from '@utils/func'
 
 const lang = getLang(Astro.params)
 const translations = getTranslations(Astro.params)
@@ -113,7 +114,8 @@ if (!clientSecret) {
         </span>
       ) : (
         <span>
-          {translations.checkout.shippingFee}: €{shippingFeeEur.toFixed(2)}
+          {translations.checkout.shippingFee}:
+          {formatPrice(shippingFeeEur, lang)}
           <span class="text-gray-400 ml-2">
             — {translations.checkout.freeShippingThreshold}
           </span>

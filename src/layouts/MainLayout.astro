@@ -51,6 +51,7 @@ const cartFromSession = await Astro.session?.get('cart')
         addedToCart: notification.addedToCart,
         routeFunding: notification.routeFunding,
       }}
+      lang={lang}
     />
     {showHero && <Hero />}
     <main>

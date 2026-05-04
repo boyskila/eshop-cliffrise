@@ -1,10 +1,11 @@
 import { createSignal, Show, onMount, onCleanup } from 'solid-js'
 import { loadStripe } from '@stripe/stripe-js'
+import type { Locale } from '@types'
 
 type Props = {
   stripePublicKey: string
   clientSecret: string
-  lang: string
+  lang: Locale
   text: {
     loading: string
     error: string

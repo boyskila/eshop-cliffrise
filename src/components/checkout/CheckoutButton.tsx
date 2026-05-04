@@ -1,7 +1,8 @@
 import { cart, toggleCart } from '@signals/cart'
+import type { Locale } from '@types'
 
 type Props = {
-  lang: string
+  lang: Locale
   text: string
 }
 
