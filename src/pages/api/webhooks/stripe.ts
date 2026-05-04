@@ -3,12 +3,13 @@ import type Stripe from 'stripe'
 import { getStripe } from '@services/stripe'
 import { emailService } from '@services/email'
 import { getTranslations } from '@utils/i18'
-import { escapeHtml, isTestMode } from '@utils/func'
+import { escapeHtml, formatPrice, isTestMode } from '@utils/func'
+import type { Locale } from '@types'
 
 const buildEmailVariables = (
   session: Stripe.Checkout.Session,
 ): Record<string, string> => {
-  const lang = session.metadata?.lang
+  const lang = session.metadata?.lang as Locale
   const t = getTranslations({ lang }).email
   const name = escapeHtml(session.customer_details?.name ?? 'Customer')
   const amount = ((session.amount_total ?? 0) / 100).toFixed(2)
@@ -16,7 +17,7 @@ const buildEmailVariables = (
 
   const shippingFeeRaw = parseFloat(session.metadata?.shipping_fee ?? '0')
   const shippingFeeDisplay =
-    shippingFeeRaw > 0 ? `€${shippingFeeRaw.toFixed(2)}` : t.freeShipping
+    shippingFeeRaw > 0 ? `${formatPrice(shippingFeeRaw, lang)}` : t.freeShipping
   const productsAmount = (
     (session.amount_total ?? 0) / 100 -
     shippingFeeRaw
@@ -79,7 +80,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
     const customerEmail = session.customer_details?.email
-    const lang = session.metadata?.lang
+    const lang = session.metadata?.lang as Locale
     const t = getTranslations({ lang }).email
 
     if (customerEmail) {

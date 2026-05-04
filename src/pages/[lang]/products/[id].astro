@@ -14,6 +14,7 @@ import {
   prepareProductKinds,
   prepareProductMainImage,
 } from '@utils/image'
+import { formatPrice } from '@utils/func'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
@@ -28,10 +29,11 @@ if (!product) {
 
 const productGalleryImages = await prepareProductGalleryImages(product.images)
 const mainImage =
-  productGalleryImages[0]?.full ?? (await prepareProductMainImage(product.image))
+  productGalleryImages[0]?.full ??
+  (await prepareProductMainImage(product.image))
 const renderedProductKinds = await prepareProductKinds(product.kind)
 const carouselProducts = await prepareProductCards(products)
---- 
+---
 
 <MainLayout title={product.name} showHero={false}>
   <section class="pt-10 px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
@@ -71,17 +73,19 @@ const carouselProducts = await prepareProductCards(products)
           {product.description}
         </p>
 
-        {renderedProductKinds.length > 0 && (
-          <KindSelector
-            kindTitle={product.kindTitle}
-            productKinds={renderedProductKinds}
-          />
-        )}
+        {
+          renderedProductKinds.length > 0 && (
+            <KindSelector
+              kindTitle={product.kindTitle}
+              productKinds={renderedProductKinds}
+            />
+          )
+        }
 
         <div class="flex justify-between items-center">
           <QuantityControls productName={product.name} client:visible />
           <div class="flex items-center gap-2 font-bold text-2xl md:text-3xl">
-            &euro;{product.price.toFixed(2)} EUR
+            {formatPrice(product.price, lang)}
           </div>
         </div>
         <div class="flex items-center gap-4 mt-4">

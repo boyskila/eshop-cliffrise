@@ -1,3 +1,4 @@
+import type { Locale } from '@types'
 import validator from 'validator'
 
 export const escapeHtml = (value: string) => {
@@ -24,3 +25,21 @@ export const isString = (value: unknown): value is string => {
 }
 
 export const isTestMode = import.meta.env.MODE === 'test'
+
+const PRICE_LOCALE_MAP: Record<string, string> = {
+  bg: 'bg-BG',
+  en: 'en-GB',
+}
+
+export const formatPrice = (
+  price: number,
+  locale: Locale = 'en',
+  currency = 'EUR',
+) => {
+  const normalizedLocale = PRICE_LOCALE_MAP[locale] ?? locale
+  const formatter = new Intl.NumberFormat(normalizedLocale, {
+    style: 'currency',
+    currency,
+  })
+  return formatter.format(price)
+}

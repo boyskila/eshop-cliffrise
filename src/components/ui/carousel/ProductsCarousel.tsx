@@ -1,13 +1,14 @@
 import { For } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
-import type { RenderedProductCard } from '@types'
+import type { Locale, RenderedProductCard } from '@types'
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
+import { formatPrice } from '@utils/func'
 
 export default (props: {
   products: RenderedProductCard[]
   buttonText: string
-  lang: string
+  lang: Locale
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     CAROUSEL_OPTIONS,
@@ -65,7 +66,7 @@ export default (props: {
                         {name}
                       </a>
                       <div class="font-bold text-[19px] lg:text-xl xl:text-2xl">
-                        {price.toFixed(2)} &euro;
+                        {formatPrice(price, props.lang)}
                       </div>
                     </div>{' '}
                     <a

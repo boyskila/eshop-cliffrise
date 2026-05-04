@@ -1,4 +1,4 @@
-import type { Product } from '@types'
+import type { Locale, Product } from '@types'
 import { PRODUCT_IMAGES } from './productImages'
 
 type MockProductsMap = Record<string, Product[]>
@@ -304,6 +304,6 @@ const mockProducts: MockProductsMap = {
   bg: bgProducts,
 }
 
-export const getMockProducts = (lang: string): Product[] => {
+export const getMockProducts = (lang: Locale): Product[] => {
   return mockProducts[lang] ?? mockProducts.en
 }

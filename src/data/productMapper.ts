@@ -1,5 +1,5 @@
 import type Stripe from 'stripe'
-import type { Product } from '@types'
+import type { Locale, Product } from '@types'
 import { isString } from '@utils/func'
 import {
   parseProductCatalogMetadata,
@@ -21,7 +21,7 @@ const getStripeProductPrice = (
 
 export const mapStripeProductToProduct = (
   stripeProduct: Stripe.Product,
-  lang: string,
+  lang: Locale,
 ): Product => {
   const localizedMetadata = parseProductLocaleMetadata(
     stripeProduct.metadata,
