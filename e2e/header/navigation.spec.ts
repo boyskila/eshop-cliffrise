@@ -8,7 +8,7 @@ const VIEWPORTS = {
 } as const
 
 const NAV_LABELS = [
-  'Our Cause',
+  'Our Mission',
   'About Us',
   'Teteven Climb',
   'Products',
@@ -16,11 +16,19 @@ const NAV_LABELS = [
 ] as const
 
 const NAV_ITEMS = [
-  { name: 'Our Cause', href: '/en/#our-cause' },
+  { name: 'Our Mission', href: '/en/#our-cause' },
   { name: 'About Us', href: '/en/#about-us' },
   { name: 'Teteven Climb', href: '/en/#events-section' },
   { name: 'Products', href: '/en/#products' },
   { name: 'Contact us', href: '/en/#contact-us' },
+] as const
+
+const SECTION_IDS = [
+  'our-cause',
+  'about-us',
+  'events-section',
+  'products',
+  'contact-us',
 ] as const
 
 test.describe('Header navigation visibility across viewports', () => {
@@ -150,6 +158,31 @@ test.describe('Header navigation destinations', () => {
     }
   })
 
+  test('desktop: visible nav links target existing page sections', async ({
+    page,
+  }) => {
+    await page.setViewportSize(VIEWPORTS.desktop)
+    await page.goto('/en/')
+
+    for (const { href } of NAV_ITEMS) {
+      const hash = href.split('#').at(1)
+      expect(hash).toBeTruthy()
+      await expect(page.locator(`#${hash}`)).toHaveCount(1)
+    }
+  })
+
+  test('shared section anchors exist on each locale homepage', async ({
+    page,
+  }) => {
+    for (const locale of ['en', 'bg']) {
+      await page.goto(`/${locale}/`)
+
+      for (const id of SECTION_IDS) {
+        await expect(page.locator(`#${id}`)).toHaveCount(1)
+      }
+    }
+  })
+
   test('desktop: clicking a hash link updates the language switcher target', async ({
     page,
   }) => {
@@ -171,9 +204,7 @@ test.describe('Header navigation destinations', () => {
     await page.setViewportSize(VIEWPORTS.phone)
     await page.goto('/en/')
 
-    await page
-      .getByRole('button', { name: /open menu|close menu/i })
-      .click()
+    await page.getByRole('button', { name: /open menu|close menu/i }).click()
 
     const menu = page.getByRole('navigation', { name: /mobile navigation/i })
     await expect(menu).toBeVisible()
