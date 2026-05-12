@@ -1,14 +1,14 @@
 ---
-import { getLang, getTranslations } from '@utils/i18'
+import { getTranslations } from '@utils/i18'
 import GalleryCarousel from '../ui/carousel/GalleryCarousel'
 import YearToggle from './YearToggle.astro'
 import { getImage, Image } from 'astro:assets'
 import TtvnMeetup2026Img from '@assets/images/ttvn_meetup_2026.webp'
+import TtvnMeetup2026ImgDesktop from '@assets/images/ttvn_meetup_2026_desktop.webp'
 import { galleryImages } from '@data/carousel-images'
 import EventLink from './EventLink.astro'
-const { eventsSection } = getTranslations(Astro.params)
-const { boldedTextOne, boldedTextTwo, normalTextOne, normalTextTwo, seeEvent } =
-  eventsSection
+const { eventsSection, tetevenClimb } = getTranslations(Astro.params)
+const { seeEvent, text } = eventsSection
 
 const processedGalleryImages = await Promise.all(
   galleryImages.map((img) =>
@@ -23,48 +23,54 @@ const processedGalleryImages = await Promise.all(
 const galleryImageUrls = processedGalleryImages.map((img) => img.src)
 ---
 
-<section class="bg-gray-100 pt-15 pb-20">
+<section
+  class="bg-gray-100 pt-8 pb-6 md:pb-8 lg:pt-15 px-5 md:px-15 xl:px-55 mb-10"
+>
   <div
-    class="mb-3
-    xl:mb-5
-    flex flex-col lg:flex-row align-center
-    px-5 md:px-15 xl:px-55
-    gap-5 lg:gap-8"
+    class="mb-5 xl:mb-3 flex flex-col gap-5 lg:flex-row lg:gap-10 lg:items-center"
   >
-    <img
-      id="events-section"
-      class="w-[456px] h-[100px] sm:self-start lg:self-center"
-      src={`/titles/${getLang(Astro.params)}/teteven-climb.svg`}
-      alt="Teteven Climb Title"
-      loading="lazy"
-    />
-    <p class="text-base w-full font-normal leading-5">
-      <span class="font-bold">{boldedTextOne}</span>
-      {normalTextOne}
-      <span class="font-bold">{boldedTextTwo}</span>
-      {normalTextTwo}
+    <h1
+      class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] whitespace-nowrap lg:basis-1/3"
+    >
+      {tetevenClimb}
+    </h1>
+    <p
+      class="text-base font-normal leading-6 px-6 text-lg md:pl-10 lg:p-0 lg:basis-2/3"
+    >
+      {text}
     </p>
   </div>
 
-  <div class="relative
-px-10 md:px-15 xl:px-60">
+  <div class="relative">
     <YearToggle />
     <div class="overflow-x-hidden flex items-start justify-center">
-      <div data-year-panel="2026" class="w-full">
-        <div class="relative">
-          <Image
-            src={TtvnMeetup2026Img}
-            alt="Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
-            widths={[390, 600, 780, 1000]}
-            sizes="(max-width: 767px) calc(100vw - 24px), (max-width: 1279px) calc(80vw - 24px), calc(68vw - 24px)"
-            quality={65}
-            class="object-contain
+      <div
+        data-year-panel="2026"
+        class="w-full flex flex-col gap-6 md:gap-8 items-start"
+      >
+        <Image
+          src={TtvnMeetup2026Img}
+          alt="Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
+          widths={[390, 600, 780, 1000]}
+          sizes="(max-width: 767px) 100vw, (max-width: 1279px) calc(80vw - 24px), calc(68vw - 24px)"
+          quality={65}
+          class="object-contain
               w-full
-              px-3
-              md:max-h-[65%]"
-          />
-          <EventLink text={seeEvent} />
-        </div>
+              md:max-h-[65%]
+              lg:hidden"
+        />
+        <Image
+          src={TtvnMeetup2026ImgDesktop}
+          alt="Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
+          widths={[390, 600, 780, 1000]}
+          sizes="(max-width: 767px) 100vw, (max-width: 1279px) calc(80vw - 24px), calc(68vw - 24px)"
+          quality={65}
+          class="object-contain
+              w-full
+              md:max-h-[65%]
+              lg:block hidden"
+        />
+        <EventLink text={seeEvent} />
       </div>
       <div data-year-panel="2025" class="hidden w-full">
         <GalleryCarousel images={galleryImageUrls} client:idle />
