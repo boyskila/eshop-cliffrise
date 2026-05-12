@@ -103,14 +103,11 @@ const carouselProducts = await prepareProductCards(products)
   </section>
   <Divider class="my-10 w-full" />
   <section id="products" class="flex-col justify-center px-3 md:px-7 lg:px-10">
-    <h2 class="mb-7 lg:mb-10">
-      <img
-        class="w-[150px] lg:w-[235px] m-auto"
-        alt="See Also"
-        src={`/titles/${lang}/see-also.svg`}
-        loading="lazy"
-      />
-    </h2>
+    <h1
+      class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-4 text-center"
+    >
+      {translations.seeAlso}
+    </h1>
     <ProductsCarousel
       products={carouselProducts}
       buttonText={translations.buyNow}
