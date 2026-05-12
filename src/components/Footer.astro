@@ -1,8 +1,7 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
 
-const lang = getLang(Astro.params)
-const { footer } = getTranslations(Astro.params)
+const { footer, theCause } = getTranslations(Astro.params)
 ---
 
 <footer id="footer" class="relative h-[75vh] md:h-[50vh] landscape:h-[50vh]">
@@ -10,19 +9,18 @@ const { footer } = getTranslations(Astro.params)
     id="contact-us"
     class:list={{
       'flex flex-col items-center justify-center h-2/6': true,
-      'landscape:flex-row landscape:ml-10 landscape:md:ml-20 landscape:md:mt-20 landscape:lg:ml-45': true,
+      'landscape:flex-row md:flex-row landscape:ml-10 landscape:md:ml-20 landscape:md:mt-20': true,
     }}
   >
     <span
-      class="text-xl md:text-2xl mb-1 landscape:mb-0 landscape:mr-2 text-center font-bold"
+      class="text-xl md:text-2xl xl:text-4xl landscape:mb-0 md:mr-3 landscape:mr-4 text-center font-bold"
       >{footer.supportClimbing}</span
     >
-    <img
-      class="h-[50px] lg:h-[70px] mb-5 landscape:mb-0 landscape:mr-5 lg:landscape:mr-10"
-      src={`/titles/${lang}/cause.svg`}
-      alt="Cause Title"
-      loading="lazy"
-    />
+    <h1
+      class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-2 md:mr-7 leading-15 md:leading-20"
+    >
+      {theCause}
+    </h1>
     <button
       data-open-contact-form-modal
       class="bg-black text-white px-4 py-2 lg:px-6 md:py-3 text-base md:text-lg lg:text-2xl"
