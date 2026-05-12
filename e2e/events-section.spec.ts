@@ -15,7 +15,7 @@ test.describe('Events Section', () => {
     const description = title.locator('..').locator('..').locator('p')
     await expect(description).toContainText('Teteven Climb')
     await expect(description).toContainText(
-      'how strong and vibrant the climbing community is',
+      'the climbing community comes together naturally',
     )
   })
 
@@ -23,7 +23,7 @@ test.describe('Events Section', () => {
     const panel2026 = getPanel(page, '2026')
     await expect(panel2026).toBeVisible()
 
-    const poster = panel2026.locator('img')
+    const poster = panel2026.locator('img:visible')
     await expect(poster).toBeVisible()
     await expect(poster).toHaveAttribute('src', /ttvn_meetup_2026/)
   })
