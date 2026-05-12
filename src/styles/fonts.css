@@ -16,8 +16,36 @@
   font-display: swap;
 }
 
+/**
+ * @license
+ * MyFonts Webfont Build ID 3867246, 2020-12-16T11:57:38-0500
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: Nafta Brush Font by WildOnes
+ * URL: https://www.myfonts.com/collections/wildones-foundry
+ 
+ * © 2026 MyFonts Inc. */
+
+
+  
+@font-face {
+  font-family: "NaftaBrushFont";
+  src: url('/fonts/nafta.woff2') format('woff2'), url('/fonts/nafta.woff') format('woff');
+}
+
+
+
 /* Apply globally */
 body {
   font-family: 'Sofia Sans', system-ui, sans-serif;
   font-weight: 400; /* Default weight */
+}
+
+.nafta-brush {
+  font-family: "NaftaBrushFont", cursive;
 }
