@@ -12,7 +12,7 @@ export default (props: {
   return (
     <Arrows api={emblaApi!}>
       <div class="overflow-hidden" ref={emblaRef}>
-        <div class="flex touch-pan-y touch-pinch-zoom h-[260px] items-center">
+        <div class="flex touch-pan-y touch-pinch-zoom h-[300px] lg:h-[250px] xl:h-[230px] items-center">
           <For each={props.reviews}>
             {({ text, author, image }) => (
               <div
@@ -21,7 +21,7 @@ export default (props: {
                   'flex-[0_0_90%] md:flex-[0_0_40%] xl:flex-[0_0_33.33%] h-full': true,
                 }}
               >
-                <div class="p-4 bg-[#f7f7f7] mt-[40px] h-full">
+                <div class="p-4 px-7 bg-[#f7f7f7] mt-[40px] h-full">
                   <img
                     src={image.src}
                     alt={author}
@@ -31,7 +31,7 @@ export default (props: {
                     loading="lazy"
                   />
                   <p class="ml-25 -mt-7 text-xl font-bold">{author}</p>
-                  <p class="mt-5 lh-sm">{text}</p>
+                  <p class="mt-5 leading-5">{text}</p>
                 </div>
               </div>
             )}

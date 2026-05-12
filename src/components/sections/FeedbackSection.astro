@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets'
 import FeedbackCarousel from '../ui/carousel/FeedbackCarousel'
 import MateiImg from '@assets/images/matei.webp'
 import IvayloImg from '@assets/images/the_maniac.webp'
+import { getTranslations } from '@utils/i18'
 
 const MateiImage = await getImage({
   src: MateiImg,
@@ -11,6 +12,9 @@ const MateiImage = await getImage({
   format: 'webp',
   quality: 80,
 })
+
+const translation = await getTranslations(Astro.params)
+const { maniac, matey } = translation.feedbacks
 
 const IvayloImage = await getImage({
   src: IvayloImg,
@@ -23,12 +27,12 @@ const IvayloImage = await getImage({
 const feedbacks = [
   {
     author: 'Matey Mitcev',
-    text: 'If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!',
+    text: matey,
     image: MateiImage,
   },
   {
-    author: 'Ivaylo - The Maniac',
-    text: 'I am in love with the chalk texture. I have very dry skin and it is really hard to find something that stays on my hands. Super happy to have found this chalk, it has all the qualities I need and definitely boosts my confidence on the rock.',
+    author: 'The Maniac',
+    text: maniac,
     image: IvayloImage,
   },
   {
