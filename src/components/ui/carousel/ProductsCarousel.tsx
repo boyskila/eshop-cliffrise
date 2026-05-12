@@ -12,19 +12,19 @@ export default (props: {
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     CAROUSEL_OPTIONS,
-    CAROUSEL_PLUGINS,
+    // CAROUSEL_PLUGINS,
   )
 
   return (
     <div class="overflow-hidden" ref={emblaRef}>
-      <div class="flex touch-pan-y touch-pinch-zoom">
+      <div class="flex touch-pan-y touch-pinch-zoom gap-3">
         <For each={props.products}>
           {(product) => {
             const { image, name, price, href } = product
             return (
               <div
                 classList={{
-                  'flex-[0_0_70%] px-3': true,
+                  'flex-[0_0_70%] last:mr-3': true,
                   'landscape:flex-[0_0_33.33%] landscape:px-2': true,
                   'md:flex-[0_0_40%] md:landscape:flex-[0_0_40%]': true,
                   'xl:flex-[0_0_35%] xl:landscape:flex-[0_0_35%]': true,
@@ -38,7 +38,7 @@ export default (props: {
                     'xl:gap-5 xl:landscape:gap-5': true,
                   }}
                 >
-                  <a class="w-full h-full" href={href}>
+                  <a class="w-full h-full p-0" href={href}>
                     <img
                       src={image.src}
                       srcset={image.srcSet}
@@ -51,7 +51,7 @@ export default (props: {
                     />
                   </a>
                   <div class="flex justify-between w-full gap-2">
-                    <div class="flex flex-col gap-1 pl-1">
+                    <div class="flex flex-col gap-1 md:gap-2 lg:gap-3">
                       <a
                         href={href}
                         class="
@@ -61,11 +61,11 @@ export default (props: {
                           xl:text-2xl
                           underline-offset-4
                           font-semibold
-                          hover:underline"
+                          hover:underline leading-5"
                       >
                         {name}
                       </a>
-                      <div class="font-bold text-[19px] lg:text-xl xl:text-2xl">
+                      <div class="font-extrabold text-[19px] lg:text-xl xl:text-2xl">
                         {formatPrice(price, props.lang)}
                       </div>
                     </div>{' '}
@@ -76,7 +76,7 @@ export default (props: {
                         phone-portrait:h-7
                         phone-landscape:h-7
                         flex items-center justify-center
-                        max-h-10 w-32
+                        max-h-10 w-25
                         text-sm
                         md:text-base
                         bg-black text-white lg:text-lg

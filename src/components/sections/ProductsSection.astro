@@ -10,15 +10,12 @@ const products = await getProducts(lang)
 const carouselProducts = await prepareProductCards(products)
 ---
 
-<section id="products" class="flex-col justify-center px-3 md:px-7 lg:px-10">
-  <h2 class="mb-7 lg:mb-10 flex justify-center">
-    <img
-      class="w-[240px] h-[100px]"
-      alt="Products with mission"
-      src={`/titles/${lang}/products.svg`}
-      loading="lazy"
-    />
-  </h2>
+<section id="products" class="flex-col justify-center px-3 md:px-15">
+  <h1
+    class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-4 text-center leading:10 md:leading-20 md:mb-10"
+  >
+    {translations.products}
+  </h1>
   <ProductsCarousel
     products={carouselProducts}
     buttonText={translations.buyNow}
