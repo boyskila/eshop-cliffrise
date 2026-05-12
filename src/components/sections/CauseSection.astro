@@ -1,14 +1,13 @@
 ---
-import { getLang, getTranslations } from '@utils/i18'
+import { getTranslations } from '@utils/i18'
 import { Image } from 'astro:assets'
 import CityOfTetevenImg from '@assets/images/cliffrise-team.webp'
 
-const lang = getLang(Astro.params)
-const { causeP1, causeP2 } = getTranslations(Astro.params)
+const { causeP1, causeP2, ourMission } = getTranslations(Astro.params)
 ---
 
-<section class="px-5 md:px-15 xl:px-55">
-  <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+<section class="px-5 md:px-15 xl:px-55 mb-10">
+  <div class="flex flex-col lg:flex-row gap-8 lg:gap-30 items-start">
     <Image
       class="w-full lg:w-auto h-auto order-1 lg:order-2"
       src={CityOfTetevenImg}
@@ -19,19 +18,15 @@ const { causeP1, causeP2 } = getTranslations(Astro.params)
       loading="lazy"
       decoding="async"
     />
-    <div class="order-2 lg:order-1 space-y-6" id="our-cause">
-      <h1 aria-label="Our Cause">
-        <img
-          class="w-[220px] h-[100px]"
-          src={`/titles/${lang}/cause.svg`}
-          alt="Cause Title"
-          loading="eager"
-        />
-      </h1>
-      <article
-        class="font-normal text-black text-sm sm:text-base leading-6 pl-6 md:pl-10"
+    <div class="order-2 lg:order-1 space-y-2" id="our-cause">
+      <h1
+        aria-label="Our Cause"
+        class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-6"
       >
-        <p>
+        {ourMission}
+      </h1>
+      <article class="font-normal text-black text-lg leading-6 px-6 md:pl-10">
+        <p class="mb-5">
           {causeP1}
         </p>
         <p>
