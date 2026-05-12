@@ -3,6 +3,7 @@
     "addToCart": "Add to Cart",
     "buyNow": "Buy Now",
     "selectSize": "Select size:",
+    "ourMission": "Our Mission",
     "header": {
         "title": "CliffRise",
         "subtitle": "Funding Routes",
@@ -14,8 +15,8 @@
         "contact": "Contact us"
     },
     "heroTitle": "CliffRise is a way to give back to the rocks - every purchase supports the creation of new climbing routes.",
-    "causeP1": "It's very simple - by choosing Cliffrise magnesium or any of our other products, you support the development of climbing spots in Bulgaria and become part of something bigger.",
-    "causeP2": "Your support is valuable and motivates us to keep moving forward.",
+    "causeP1": "By choosing CliffRise chalk or any of our other products, you directly support the development of climbing areas in Bulgaria. Every purchase helps create new routes, maintain existing ones, and improve the places we all love to climb.",
+    "causeP2": "CliffRise is a way to give back to the rocks and the climbing community. Your support helps us keep moving forward, bring new ideas to life, and continue growing climbing in Bulgaria.",
     "aboutUsP1": " United by their love for climbing and a desire to give something back to the community, Boiko Lalov and Alex Yanev began working together in 2020, developing the Peshterata (The Cave) crag near Ribaritsa. Shortly after, while establishing routes at Teteven/Zaslona, the idea for CliffRise was born.",
     "aboutUsP2": " United by their love for climbing and a desire to give something back to the community, Boiko Lalov and Alex Yanev began working together in 2020, developing the Peshterata (The Cave) crag near Ribaritsa. Shortly after, while establishing routes at Teteven/Zaslona, the idea for CliffRise was born.",
     "footer": {
