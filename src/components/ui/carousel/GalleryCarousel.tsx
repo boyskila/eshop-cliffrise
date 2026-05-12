@@ -54,7 +54,7 @@ export default (props: { images: string[] }) => {
             <div
               classList={{
                 'flex-[0_0_100%] px-3': true,
-                'h-[50vh] sm:h-[65vh] md:h-[80vh] lg:h-[63vh]': true,
+                'h-[50vh] sm:h-[65vh] md:h-[39vh] lg:h-[63vh]': true,
               }}
             >
               {slide.images.length === 3 ? (

@@ -1,19 +1,19 @@
 ---
 import { getTranslations } from '@utils/i18'
 import { Image } from 'astro:assets'
-import CityOfTetevenImg from '@assets/images/cliffrise-team.webp'
+import mission from '@assets/images/our_mission.webp'
 
 const { causeP1, causeP2, ourMission } = getTranslations(Astro.params)
 ---
 
-<section class="px-5 md:px-15 xl:px-55 mb-10">
-  <div class="flex flex-col lg:flex-row gap-8 lg:gap-30 items-start">
+<section class="px-5 md:px-15 xl:px-55 mb-10 lg:mb-20">
+  <div class="flex flex-col lg:flex-row gap-8 lg:gap-15 xl:gap-30 items-start">
     <Image
-      class="w-full lg:w-auto h-auto order-1 lg:order-2"
-      src={CityOfTetevenImg}
+      class="w-full md:w-[90vw] lg:w-[45vw] xl:w-[35vw] h-auto order-1 lg:order-2 self-end"
+      src={mission}
       alt="Cliffrise Team"
       widths={[400, 800, 1200]}
-      sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1023px) calc(100vw - 200px), 35vw"
+      sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1023px) calc(100vw - 200px), (min-width: 1024px) 43vw"
       quality={80}
       loading="lazy"
       decoding="async"
@@ -21,7 +21,7 @@ const { causeP1, causeP2, ourMission } = getTranslations(Astro.params)
     <div class="order-2 lg:order-1 space-y-2" id="our-cause">
       <h1
         aria-label="Our Cause"
-        class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-6"
+        class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-4"
       >
         {ourMission}
       </h1>

@@ -4,6 +4,7 @@
     "buyNow": "Buy Now",
     "selectSize": "Select size:",
     "ourMission": "Our Mission",
+    "tetevenClimb": "Teteven climb",
     "header": {
         "title": "CliffRise",
         "subtitle": "Funding Routes",
@@ -38,10 +39,7 @@
         "routeFunding": "This purchase helps create new climbing routes"
     },
     "eventsSection": {
-        "boldedTextOne": "Teteven Climb",
-        "normalTextOne": " it was a weekend full of climbing, smiles, and time outdoors. Climbing during the day, yoga, and meeting cool people, sharing stories and ideas - all against the backdrop of beautiful Teteven. An event that showcased ",
-        "boldedTextTwo": "how strong and vibrant the climbing community is",
-        "normalTextTwo": " and left a desire for this to be just the beginning.",
+        "text": "Teteven Climbs brings together people who love climbing, movement, and time spent outdoors. Days on the rock, yoga, new connections, shared stories, and ideas - all surrounded by the beautiful nature of Teteven. The festival creates a space where the climbing community comes together naturally, with good vibes, shared projects, and the desire for more days on the rock.",
         "seeEvent": "See the event"
     },
     "shipping": {
