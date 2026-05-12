@@ -126,10 +126,7 @@ export const prepareProductGalleryImages = async (
 ): Promise<ProductGalleryImage[]> => {
   return Promise.all(
     images.map(async (image) => ({
-      thumbnail: await renderSizedImage(
-        image,
-        PRODUCT_THUMBNAIL_IMAGE_OPTIONS,
-      ),
+      thumbnail: await renderSizedImage(image, PRODUCT_THUMBNAIL_IMAGE_OPTIONS),
       full: await renderResponsiveImage(image, PRODUCT_DETAIL_IMAGE_OPTIONS),
     })),
   )

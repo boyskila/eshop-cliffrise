@@ -1,11 +1,12 @@
 {
     "productsWithMission": "Products with mission",
     "addToCart": "Add to Cart",
-    "buyNow": "Buy Now",
+    "buyNow": "Buy",
     "selectSize": "Select size:",
     "ourMission": "Our Mission",
     "tetevenClimb": "Teteven climb",
     "aboutUs": "About Us",
+    "products": "Products",
     "header": {
         "title": "CliffRise",
         "subtitle": "Funding Routes",
