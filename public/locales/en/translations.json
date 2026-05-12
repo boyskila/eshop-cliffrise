@@ -7,6 +7,7 @@
     "tetevenClimb": "Teteven climb",
     "aboutUs": "About Us",
     "products": "Products",
+    "theCause": "The Cause",
     "header": {
         "title": "CliffRise",
         "subtitle": "Funding Routes",
@@ -127,5 +128,11 @@
                 "part2": "We'll get back to you shortly."
             }
         }
+    },
+    "feedbacks": {
+        "maniacName": "The Maniac",
+        "mateyName": "Matey Mitcev",
+        "maniac": "I love the chalk texture. I have very dry skin, so it’s hard to find something that stays on my hands. I’m super happy to have found this chalk—it has everything I need and definitely boosts my confidence on the rock.",
+        "matey": "If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!"
     }
 }
