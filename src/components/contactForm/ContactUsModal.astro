@@ -16,7 +16,13 @@ import SuccessMsg from './SuccessMsg.astro'
 <script>
   import { actions } from 'astro:actions'
 
+  let contactFormController: AbortController | null = null
+
   document.addEventListener('astro:page-load', () => {
+    contactFormController?.abort()
+    contactFormController = new AbortController()
+    const { signal } = contactFormController
+
     const dialog =
       document.querySelector<HTMLDialogElement>('#contactFormModal')
     const form = dialog?.querySelector<HTMLFormElement>('form[contact-form]')
@@ -31,33 +37,37 @@ import SuccessMsg from './SuccessMsg.astro'
         submitButton.disabled = false
         delete dialog.dataset.submitting
       }
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault()
-        delete dialog.dataset.error
-        submitButton.disabled = true
-        dialog.dataset.submitting = 'true'
+      form.addEventListener(
+        'submit',
+        async (e) => {
+          e.preventDefault()
+          delete dialog.dataset.error
+          submitButton.disabled = true
+          dialog.dataset.submitting = 'true'
 
-        const formData = new FormData(form)
+          const formData = new FormData(form)
 
-        try {
-          const { error } = await actions.contact(formData)
+          try {
+            const { error } = await actions.contact(formData)
 
-          if (error) {
-            return handleError(error.message)
+            if (error) {
+              return handleError(error.message)
+            }
+
+            dialog.dataset.success = 'true'
+            setTimeout(() => {
+              form.reset()
+              submitButton.disabled = false
+              delete dialog.dataset.success
+              delete dialog.dataset.submitting
+              dialog?.close()
+            }, 4000)
+          } catch (error) {
+            handleError((error as Error)?.message)
           }
-
-          dialog.dataset.success = 'true'
-          setTimeout(() => {
-            form.reset()
-            submitButton.disabled = false
-            delete dialog.dataset.success
-            delete dialog.dataset.submitting
-            dialog?.close()
-          }, 4000)
-        } catch (error) {
-          handleError((error as Error)?.message)
-        }
-      })
+        },
+        { signal },
+      )
     }
   })
 </script>

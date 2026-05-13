@@ -58,23 +58,33 @@ const { footer, theCause } = getTranslations(Astro.params)
 </footer>
 
 <script>
+  let contactModalController: AbortController | null = null
+
   document.addEventListener('astro:page-load', () => {
+    contactModalController?.abort()
+    contactModalController = new AbortController()
+    const { signal } = contactModalController
+
     const button = document.querySelector('[data-open-contact-form-modal]')
     const dialog =
       document.querySelector<HTMLDialogElement>('#contactFormModal')
 
     if (button && dialog) {
-      button.addEventListener('click', () => {
-        dialog.showModal()
-        document.body.classList.add('overflow-hidden')
-      })
+      button.addEventListener(
+        'click',
+        () => {
+          dialog.showModal()
+          document.body.classList.add('overflow-hidden')
+        },
+        { signal },
+      )
 
       const handleClose = () => {
         document.body.classList.remove('overflow-hidden')
       }
 
-      dialog.addEventListener('close', handleClose)
-      dialog.addEventListener('cancel', handleClose)
+      dialog.addEventListener('close', handleClose, { signal })
+      dialog.addEventListener('cancel', handleClose, { signal })
     }
   })
 </script>
