@@ -47,6 +47,7 @@ export const mapStripeProductToProduct = (
     image: resolveProductImage(
       `${catalogMetadata.imageFolder}${catalogMetadata.mainImage}`,
     ),
+    hoverImage: resolveProductImage(`${catalogMetadata.imageFolder}hover.webp`),
     images: catalogMetadata.images.map((image) =>
       resolveProductImage(`${catalogMetadata.imageFolder}${image}`),
     ),

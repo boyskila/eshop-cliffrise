@@ -7,7 +7,7 @@ test.describe('Products Carousel - Links', () => {
 
   test('each product image links to its product page', async ({ page }) => {
     const carousel = page.locator('#products')
-    const imageLinks = carousel.locator('a:has(img[loading="lazy"])')
+    const imageLinks = carousel.locator('a:has([data-product-card-image])')
     const count = await imageLinks.count()
 
     expect(count).toBeGreaterThan(0)
@@ -16,6 +16,18 @@ test.describe('Products Carousel - Links', () => {
       const href = await imageLinks.nth(i).getAttribute('href')
       expect(href).toEqual(`/en/products/${i + 1}/`)
     }
+  })
+
+  test('hover image uses Tailwind-only delayed visibility', async ({ page }) => {
+    const carousel = page.locator('#products')
+    const imageLink = carousel.locator('a:has([data-product-card-image])').first()
+    const hoverImage = imageLink.locator('[data-product-card-hover-image]')
+
+    await expect(imageLink).toHaveClass(/hover:opacity-100/)
+    await expect(imageLink).toHaveClass(/transition-none/)
+    await expect(hoverImage).toHaveClass(/opacity-0/)
+    await expect(hoverImage).toHaveClass(/duration-0/)
+    await expect(hoverImage).toHaveClass(/group-hover:delay-350/)
   })
 
   test('each product buy button links to its product page', async ({

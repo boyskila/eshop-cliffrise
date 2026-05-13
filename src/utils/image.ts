@@ -104,6 +104,12 @@ export const prepareProductCards = async (
         product.image,
         PRODUCT_CARD_IMAGE_OPTIONS,
       ),
+      hoverImage: product.hoverImage
+        ? await renderResponsiveImage(
+            product.hoverImage,
+            PRODUCT_CARD_IMAGE_OPTIONS,
+          )
+        : undefined,
     })),
   )
 }
