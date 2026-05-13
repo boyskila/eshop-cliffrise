@@ -1,19 +1,19 @@
 ---
-import { getLang, getTranslations } from '@utils/i18'
+import { getTranslations } from '@utils/i18'
 
-const lang = getLang(Astro.params)
 const translations = getTranslations(Astro.params)
 ---
 
-<h2 class="flex items-center justify-center text-3xl font-bold mb-7">
-  <span> {translations.contactForm.support} </span>
-  <img
-    class="h-[40px] lg:h-[50px] w-fit ml-2 lg:ml-4"
-    src={`/titles/${lang}/cause.svg`}
-    alt="Cause Title"
-    loading="lazy"
-  />
-</h2>
+<h1
+  class="flex items-center justify-center text-3xl font-bold mb-7 gap-3"
+>
+  <span>{translations.contactForm.support}</span>
+  <span
+    class="nafta-brush text-[45px] md:text-[55px] lg:text-[55px] mb-2 md:mr-7 leading-15 md:leading-20"
+  >
+    {translations.theCause}
+  </span>
+</h1>
 <p class="text-center mb-5">
   <b class="text-xl">{translations.contactForm.description1}</b>
   <span class="text-lg lg:text-xl block">
