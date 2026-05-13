@@ -53,5 +53,6 @@ export const mapStripeProductToProduct = (
     ),
     kindTitle: localizedMetadata.kindTitle,
     productPageTitle: localizedMetadata.productPageTitle,
+    carouselOrder: catalogMetadata.carouselOrder,
   }
 }

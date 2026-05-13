@@ -27,6 +27,7 @@ const stripeProductMetadataSchema = z.object({
   'main-image': z.string().min(1),
   weight: z.coerce.number().positive(),
   slug: z.string().min(1),
+  'carousel-order': z.string().optional(),
 })
 
 const productImageListSchema = z.array(z.string().min(1))
@@ -95,5 +96,8 @@ export const parseProductCatalogMetadata = (
     mainImage: parsed['main-image'],
     weight: parsed.weight,
     slug: parsed.slug,
+    carouselOrder: parsed['carousel-order']
+      ? Number(parsed['carousel-order'])
+      : undefined,
   }
 }
