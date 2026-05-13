@@ -3,6 +3,7 @@ import MainLayout from '../../../layouts/MainLayout.astro'
 import { getTranslations, getLang } from '@utils/i18'
 import { getProducts } from '@data/products'
 import { AddToCartButton } from '@components/products/AddToCartButton'
+import { BuyNowButton } from '@components/products/BuyNowButton'
 import ProductsCarousel from '@components/ui/carousel/ProductsCarousel'
 import KindSelector from '@components/products/KindSelector.astro'
 import { QuantityControls } from '@components/products/QuantityControls'
@@ -33,16 +34,18 @@ const mainImage =
   (await prepareProductMainImage(product.image))
 const renderedProductKinds = await prepareProductKinds(product.kind)
 const carouselProducts = await prepareProductCards(products)
+const productRequiresKindSelection = product.kind.length > 0
+const productOutOfStock = product.outOfStock ?? false
 ---
 
 <MainLayout title={product.name} showHero={false}>
   <section class="pt-10 px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
     <div
       data-product-container
-      class="flex phone-landscape:flex-row flex-col md:flex-row gap-8 md:gap-12"
+      class="flex phone-landscape:flex-row flex-col md:flex-row gap-5 md:gap-12"
     >
       <div class="flex-1 min-w-0">
-        <div class="aspect-square overflow-hidden mb-4">
+        <div class="relative aspect-square mb-4">
           <img
             id="product-main-image"
             data-product-image
@@ -55,6 +58,18 @@ const carouselProducts = await prepareProductCards(products)
             decoding="async"
             class="w-full h-full object-cover"
           />
+          {
+            productOutOfStock && (
+              <div
+                data-product-stock-banner
+                class="absolute top-5 -left-5 md:-left-16 bg-black
+                text-white px-8 md:px-10 py-3 md:py-4 text-lg
+                md:text-2xl font-medium uppercase tracking-[2px] z-10"
+              >
+                {translations.commingSoon}
+              </div>
+            )
+          }
         </div>
         <ImageThumbnails
           productImages={productGalleryImages}
@@ -63,11 +78,11 @@ const carouselProducts = await prepareProductCards(products)
       </div>
 
       <div class="flex-1 flex flex-col gap-4">
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold">
+        <h1 class="text-3xl md:text-4xl lg:text-[45px] font-bold xl:mb-3">
           {product.productPageTitle ?? product.name}
         </h1>
         <p
-          class="text-gray-600 leading-relaxed"
+          class="text-gray-600 xl:text-xl/7"
           class:list={{ 'flex-1': product.kind.length === 0 }}
         >
           {product.description}
@@ -78,6 +93,7 @@ const carouselProducts = await prepareProductCards(products)
             <KindSelector
               kindTitle={product.kindTitle}
               productKinds={renderedProductKinds}
+              disabled={productOutOfStock}
             />
           )
         }
@@ -94,7 +110,15 @@ const carouselProducts = await prepareProductCards(products)
             productId={product.id}
             lang={lang}
             label={translations.addToCart}
-            disabled={product.kind.length > 0}
+            disabled={productRequiresKindSelection || productOutOfStock}
+            client:load
+          />
+          <BuyNowButton
+            productName={product.name}
+            productId={product.id}
+            lang={lang}
+            label={translations.buyNow}
+            disabled={productRequiresKindSelection || productOutOfStock}
             client:load
           />
         </div>
@@ -104,7 +128,7 @@ const carouselProducts = await prepareProductCards(products)
   <Divider class="my-10 w-full" />
   <section id="products" class="flex-col justify-center px-3 md:px-7 lg:px-10">
     <h1
-      class="nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-4 text-center"
+      class="leading-10 nafta-brush text-[45px] md:text-[55px] lg:text-[80px] mb-7 xl:mb-15 text-center"
     >
       {translations.seeAlso}
     </h1>

@@ -1,14 +1,9 @@
 import { actions } from 'astro:actions'
 import { createSignal, onCleanup, onMount } from 'solid-js'
-import {
-  addCartNotification,
-  quantity,
-  setQuantity,
-  updateCart,
-} from '@signals/cart'
+import { quantity } from '@signals/cart'
 import type { Locale } from '@types'
 
-export const AddToCartButton = (props: {
+export const BuyNowButton = (props: {
   productName: string
   productId: string
   lang: Locale
@@ -30,7 +25,7 @@ export const AddToCartButton = (props: {
     onCleanup(() => window.removeEventListener('kind-changed', handler))
   })
 
-  const handleAddToCart = async () => {
+  const handleBuyNow = async () => {
     setIsBusy(true)
     try {
       const { data } = await actions.addToCart({
@@ -39,11 +34,9 @@ export const AddToCartButton = (props: {
         kind: kind(),
         quantity: quantity(),
       })
-      const { cart, addedItem } = data ?? {}
-      if (cart) {
-        updateCart(cart)
-        addedItem && addCartNotification(addedItem)
-        setQuantity(1)
+
+      if (data?.cart) {
+        window.location.href = `/${props.lang}/checkout/shipping/`
       }
     } finally {
       setIsBusy(false)
@@ -52,16 +45,16 @@ export const AddToCartButton = (props: {
 
   return (
     <button
-      onClick={handleAddToCart}
-      data-add-to-cart-button
+      onClick={handleBuyNow}
+      data-buy-now-button
       disabled={isDisabled() || isBusy()}
-      aria-label={`Add ${props.productName} to cart`}
+      aria-label={`Buy ${props.productName} now`}
       class="p-2 md:p-3
         flex items-center justify-center flex-1
-        border border-black bg-white text-black
+        border border-black bg-black text-white
         text-base md:text-lg leading-none
         tracking-[2px] uppercase
-        disabled:opacity-40 disabled:cursor-not-allowed"
+        disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
     >
       {props.label}
     </button>

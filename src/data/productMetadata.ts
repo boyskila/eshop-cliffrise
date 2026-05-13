@@ -28,6 +28,7 @@ const stripeProductMetadataSchema = z.object({
   weight: z.coerce.number().positive(),
   slug: z.string().min(1),
   'carousel-order': z.string().optional(),
+  'out-of-stock': z.string().optional(),
 })
 
 const productImageListSchema = z.array(z.string().min(1))
@@ -99,5 +100,6 @@ export const parseProductCatalogMetadata = (
     carouselOrder: parsed['carousel-order']
       ? Number(parsed['carousel-order'])
       : undefined,
+    outOfStock: parsed['out-of-stock'] === 'true',
   }
 }

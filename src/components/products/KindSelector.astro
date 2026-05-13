@@ -4,9 +4,10 @@ import type { RenderedProductKind } from '@types'
 interface Props {
   kindTitle?: string
   productKinds: RenderedProductKind[]
+  disabled?: boolean
 }
 
-const { kindTitle, productKinds } = Astro.props
+const { kindTitle, productKinds, disabled = false } = Astro.props
 ---
 
 {
@@ -17,8 +18,8 @@ const { kindTitle, productKinds } = Astro.props
         {productKinds.map(({ name, image, inStock }, kindIndex) => (
           <li>
             <button
-              disabled={!inStock}
-              title={!inStock ? 'Out of stock' : undefined}
+              disabled={disabled || !inStock}
+              title={disabled || !inStock ? 'Out of stock' : undefined}
               type="button"
               data-kind-option
               data-kind-index={kindIndex}
