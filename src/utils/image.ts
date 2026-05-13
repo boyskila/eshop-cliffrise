@@ -98,19 +98,25 @@ export const prepareProductCards = async (
   products: Product[],
 ): Promise<RenderedProductCard[]> => {
   return Promise.all(
-    products.map(async (product) => ({
-      ...product,
-      image: await renderResponsiveImage(
-        product.image,
-        PRODUCT_CARD_IMAGE_OPTIONS,
-      ),
-      hoverImage: product.hoverImage
-        ? await renderResponsiveImage(
-            product.hoverImage,
-            PRODUCT_CARD_IMAGE_OPTIONS,
-          )
-        : undefined,
-    })),
+    products
+      .sort((a, b) => {
+        const orderA = a.carouselOrder ?? Number.POSITIVE_INFINITY
+        const orderB = b.carouselOrder ?? Number.POSITIVE_INFINITY
+        return orderA - orderB
+      })
+      .map(async (product) => ({
+        ...product,
+        image: await renderResponsiveImage(
+          product.image,
+          PRODUCT_CARD_IMAGE_OPTIONS,
+        ),
+        hoverImage: product.hoverImage
+          ? await renderResponsiveImage(
+              product.hoverImage,
+              PRODUCT_CARD_IMAGE_OPTIONS,
+            )
+          : undefined,
+      })),
   )
 }
 
