@@ -68,9 +68,17 @@ test.describe('Quantity Controls - Functionality', () => {
     const output = page.locator('output')
 
     await increaseBtn.click()
+    await page.waitForFunction(
+      () => document.querySelector('output')?.textContent?.trim() === '2',
+      { timeout: 10000 },
+    )
     await expect(output).toHaveText('2')
 
     await increaseBtn.click()
+    await page.waitForFunction(
+      () => document.querySelector('output')?.textContent?.trim() === '3',
+      { timeout: 10000 },
+    )
     await expect(output).toHaveText('3')
   })
 
@@ -84,10 +92,24 @@ test.describe('Quantity Controls - Functionality', () => {
     const output = page.locator('output')
 
     await increaseBtn.click()
+    await page.waitForFunction(
+      () => document.querySelector('output')?.textContent?.trim() === '2',
+      { timeout: 10000 },
+    )
+    await expect(output).toHaveText('2')
+
     await increaseBtn.click()
+    await page.waitForFunction(
+      () => document.querySelector('output')?.textContent?.trim() === '3',
+      { timeout: 10000 },
+    )
     await expect(output).toHaveText('3')
 
     await decreaseBtn.click()
+    await page.waitForFunction(
+      () => document.querySelector('output')?.textContent?.trim() === '2',
+      { timeout: 10000 },
+    )
     await expect(output).toHaveText('2')
   })
 

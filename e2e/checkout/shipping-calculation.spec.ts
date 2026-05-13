@@ -49,6 +49,24 @@ test.describe('Checkout - Shipping', () => {
     await expect(page.locator('#shipping-form')).toBeVisible()
   })
 
+  test('buy now adds the product and goes straight to shipping form', async ({
+    page,
+  }) => {
+    await page.goto(PRODUCT_URL)
+
+    await Promise.all([
+      page.waitForResponse(
+        (response) =>
+          response.url().includes('_actions/addToCart') &&
+          response.request().method() === 'POST',
+      ),
+      page.waitForURL('**/checkout/shipping/**'),
+      page.getByRole('button', { name: /buy chunky chalk.*now/i }).click(),
+    ])
+
+    await expect(page.locator('#shipping-form')).toBeVisible()
+  })
+
   test('calculates shipping fee after Bourgas office is selected', async ({
     page,
   }) => {

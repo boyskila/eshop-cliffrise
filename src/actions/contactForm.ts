@@ -4,12 +4,12 @@ import { emailService } from '@services/email'
 import { checkRateLimit } from '@services/rateLimit'
 import { escapeHtml, sanitizeInput, sanitizeMessage } from '@utils/func'
 
-const getClientIp = (request: Request) => {
-  const forwardedFor = request.headers.get('x-forwarded-for')
+const getClientIp = (headers: Headers) => {
+  const forwardedFor = headers.get('x-forwarded-for')
   if (forwardedFor) {
     return forwardedFor.split(',')[0]?.trim() || 'unknown'
   }
-  return request.headers.get('cf-connecting-ip') ?? 'unknown'
+  return headers.get('cf-connecting-ip') ?? 'unknown'
 }
 
 const rateLimitMax = Number(import.meta.env.CONTACT_RATE_LIMIT_MAX ?? 5)
@@ -35,7 +35,7 @@ export const contact = defineAction({
       return { success: true }
     }
 
-    const ip = getClientIp(ctx.request)
+    const ip = getClientIp(ctx.request.headers)
     const rateLimit = checkRateLimit({
       key: `contact:${ip}`,
       limit: rateLimitMax,

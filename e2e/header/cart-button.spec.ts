@@ -7,13 +7,19 @@ const waitForActionResponse = (page: Page, actionName: string) =>
       response.url().includes(`_actions/${actionName}`),
   )
 
-const addProductToCart = async (page: Page, productSlug: string) => {
-  await page.goto(`/en/products/${productSlug}/`)
-  const addToCartButton = page.getByRole('button', { name: /Add .* to cart/i })
-  await Promise.all([
-    waitForActionResponse(page, 'addToCart'),
-    addToCartButton.click(),
-  ])
+const addProductToCart = async (page: Page, productId: string) => {
+  const ok = await page.evaluate(async (id) => {
+    const response = await fetch('/_actions/addToCart/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productId: id, lang: 'en', quantity: 1 }),
+    })
+
+    return response.ok
+  }, productId)
+
+  expect(ok).toBeTruthy()
+  await page.goto('/en/')
 }
 
 test.describe('Accessibility', () => {
