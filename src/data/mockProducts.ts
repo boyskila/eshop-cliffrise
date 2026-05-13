@@ -18,7 +18,8 @@ const enProducts: Product[] = [
     kind: [],
     price: 12.99,
     weight: 0.3,
-    image: resolveProductImage('dry-chalk/dry-chalk'),
+    image: resolveProductImage('dry-chalk/irl1'),
+    hoverImage: resolveProductImage('dry-chalk/hover'),
     images: [
       resolveProductImage('dry-chalk/dry-chalk'),
       resolveProductImage('wet-chalk/dry-chalk'),
@@ -36,8 +37,9 @@ const enProducts: Product[] = [
     kind: [],
     price: 13.99,
     weight: 0.3,
-    image: resolveProductImage('wet-chalk/dry-chalk'),
-    images: [resolveProductImage('wet-chalk/dry-chalk')],
+    image: resolveProductImage('wet-chalk/wet-chalk'),
+    hoverImage: resolveProductImage('wet-chalk/hover'),
+    images: [resolveProductImage('wet-chalk/wet-chalk')],
     productPageTitle: 'Moist Chunky Chalk – 250g',
   },
   {
@@ -50,8 +52,9 @@ const enProducts: Product[] = [
     kind: [],
     price: 14.99,
     weight: 0.3,
-    image: resolveProductImage('liquid-chalk/dry-chalk'),
-    images: [resolveProductImage('liquid-chalk/dry-chalk')],
+    image: resolveProductImage('liquid-chalk/irl1'),
+    hoverImage: resolveProductImage('liquid-chalk/hover'),
+    images: [resolveProductImage('liquid-chalk/irl1')],
     productPageTitle: 'Liquid Chalk – 250 ml',
   },
   {
@@ -70,8 +73,9 @@ const enProducts: Product[] = [
     kindTitle: 'Select size:',
     price: 29.99,
     weight: 0.25,
-    image: resolveProductImage('tshirt/tshirt'),
-    images: [resolveProductImage('tshirt/tshirt')],
+    image: resolveProductImage('tshirt/irl1'),
+    hoverImage: resolveProductImage('tshirt/hover'),
+    images: [resolveProductImage('tshirt/irl1')],
   },
   {
     id: '5',
@@ -107,6 +111,7 @@ const enProducts: Product[] = [
     price: 24.99,
     weight: 0.1,
     image: resolveProductImage('beanies/blue'),
+    hoverImage: resolveProductImage('beanies/hover'),
     images: [resolveProductImage('beanies/blue')],
   },
   {
@@ -149,6 +154,7 @@ const enProducts: Product[] = [
     price: 7.99,
     weight: 0.05,
     image: resolveProductImage('tape/green'),
+    hoverImage: resolveProductImage('tape/hover'),
     images: [resolveProductImage('tape/green')],
   },
 ]
@@ -164,7 +170,8 @@ const bgProducts: Product[] = [
       'Магнезий на бучка с едра структура, който се раздробява лесно и осигурява стабилно сцепление. Създаден за боулдър, спортни маршрути и дълги катерачни сесии. Отваряш. Натрошаваш. Катериш.',
     kind: [],
     price: 12.99,
-    image: resolveProductImage('dry-chalk/dry-chalk'),
+    image: resolveProductImage('dry-chalk/irl1'),
+    hoverImage: resolveProductImage('dry-chalk/hover'),
     images: [
       resolveProductImage('dry-chalk/dry-chalk'),
       resolveProductImage('wet-chalk/dry-chalk'),
@@ -182,8 +189,9 @@ const bgProducts: Product[] = [
       'Магнезий на бучка с по‑плътна структура, който се раздробява лесно и оставя равномерен слой по ръцете. Създаден за боулдър, спортни маршрути и дълги катерачни сесии. Отваряш. Натрошаваш. Катериш.',
     kind: [],
     price: 13.99,
-    image: resolveProductImage('wet-chalk/dry-chalk'),
-    images: [resolveProductImage('wet-chalk/dry-chalk')],
+    image: resolveProductImage('wet-chalk/wet-chalk'),
+    hoverImage: resolveProductImage('wet-chalk/hover'),
+    images: [resolveProductImage('wet-chalk/wet-chalk')],
     productPageTitle: 'Влажен магнезий на бучка – 250гр',
   },
   {
@@ -196,8 +204,9 @@ const bgProducts: Product[] = [
       'Течен магнезий, който изсъхва бързо и оставя равномерен слой по ръцете. Създаден за стабилно сцепление при катерене в зала и навън.',
     kind: [],
     price: 14.99,
-    image: resolveProductImage('liquid-chalk/dry-chalk'),
-    images: [resolveProductImage('liquid-chalk/dry-chalk')],
+    image: resolveProductImage('liquid-chalk/irl1'),
+    hoverImage: resolveProductImage('liquid-chalk/hover'),
+    images: [resolveProductImage('liquid-chalk/irl1')],
     productPageTitle: 'Течен магнезий – 250 мл',
   },
   {
@@ -216,8 +225,9 @@ const bgProducts: Product[] = [
     kindTitle: 'Изберете размер:',
     price: 29.99,
     weight: 0.25,
-    image: resolveProductImage('tshirt/tshirt'),
-    images: [resolveProductImage('tshirt/tshirt')],
+    image: resolveProductImage('tshirt/irl1'),
+    hoverImage: resolveProductImage('tshirt/hover'),
+    images: [resolveProductImage('tshirt/irl1')],
   },
   {
     id: '5',
@@ -257,6 +267,7 @@ const bgProducts: Product[] = [
     price: 24.99,
     weight: 0.1,
     image: resolveProductImage('beanies/blue'),
+    hoverImage: resolveProductImage('beanies/hover'),
     images: [resolveProductImage('beanies/blue')],
   },
   {
@@ -295,6 +306,7 @@ const bgProducts: Product[] = [
     price: 7.99,
     weight: 0.05,
     image: resolveProductImage('tape/green'),
+    hoverImage: resolveProductImage('tape/hover'),
     images: [resolveProductImage('tape/green')],
   },
 ]

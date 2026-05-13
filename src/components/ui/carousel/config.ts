@@ -12,6 +12,7 @@ export const CAROUSEL_PLUGINS = () => [
     delay: 3000,
     playOnInit: true,
     stopOnMouseEnter: true,
+    stopOnFocusIn: true,
     stopOnInteraction: false,
   }),
 ]

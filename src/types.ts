@@ -24,6 +24,7 @@ export type ProductKind = {
 export type Product = {
   id: string
   image: ProductImage
+  hoverImage?: ProductImage
   name: string
   description: string
   images: ProductImage[]
@@ -40,8 +41,9 @@ export type RenderedProductKind = Omit<ProductKind, 'image'> & {
   image?: RenderImage
 }
 
-export type RenderedProductCard = Omit<Product, 'image'> & {
+export type RenderedProductCard = Omit<Product, 'image' | 'hoverImage'> & {
   image: RenderImage
+  hoverImage?: RenderImage
 }
 
 export type ProductLocaleKindMetadata = {

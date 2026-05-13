@@ -12,7 +12,7 @@ export default (props: {
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     CAROUSEL_OPTIONS,
-    // CAROUSEL_PLUGINS,
+    CAROUSEL_PLUGINS,
   )
 
   return (
@@ -20,7 +20,7 @@ export default (props: {
       <div class="flex touch-pan-y touch-pinch-zoom gap-3">
         <For each={props.products}>
           {(product) => {
-            const { image, name, price, href } = product
+            const { image, hoverImage, name, price, href } = product
             return (
               <div
                 classList={{
@@ -38,8 +38,12 @@ export default (props: {
                     'xl:gap-5 xl:landscape:gap-5': true,
                   }}
                 >
-                  <a class="w-full h-full p-0" href={href}>
+                  <a
+                    class="group relative block w-full h-full p-0 hover:opacity-100 transition-none"
+                    href={href}
+                  >
                     <img
+                      data-product-card-image
                       src={image.src}
                       srcset={image.srcSet}
                       sizes={image.sizes}
@@ -49,6 +53,20 @@ export default (props: {
                       class="w-full h-auto object-cover object-center"
                       loading="lazy"
                     />
+                    {hoverImage && (
+                      <img
+                        data-product-card-hover-image
+                        src={hoverImage.src}
+                        srcset={hoverImage.srcSet}
+                        sizes={hoverImage.sizes}
+                        width={400}
+                        height={400}
+                        alt=""
+                        aria-hidden="true"
+                        class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-0 delay-0 group-hover:opacity-100 group-hover:delay-350 group-focus-visible:opacity-100 group-focus-visible:delay-100"
+                        loading="lazy"
+                      />
+                    )}
                   </a>
                   <div class="flex justify-between w-full gap-2">
                     <div class="flex flex-col gap-1 md:gap-2 lg:gap-3">
@@ -61,7 +79,7 @@ export default (props: {
                           xl:text-2xl
                           underline-offset-4
                           font-semibold
-                          hover:underline leading-5"
+                          leading-5"
                       >
                         {name}
                       </a>
