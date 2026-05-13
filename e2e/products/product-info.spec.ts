@@ -37,4 +37,37 @@ test.describe('Product Info', () => {
     await expect(addToCart).toBeVisible()
     await expect(addToCart).toBeEnabled()
   })
+
+  test('buy now button is visible and enabled for products without kind', async ({
+    page,
+  }) => {
+    const buyNow = page.locator('[data-buy-now-button]')
+    await expect(buyNow).toBeVisible()
+    await expect(buyNow).toBeEnabled()
+  })
+
+  test('add to cart and buy now buttons are disabled when product is out of stock', async ({
+    page,
+  }) => {
+    await page.goto('/en/products/3/')
+
+    await expect(page.locator('[data-add-to-cart-button]')).toBeDisabled()
+    await expect(page.locator('[data-buy-now-button]')).toBeDisabled()
+  })
+
+  test('coming soon banner is shown on out-of-stock product image', async ({
+    page,
+  }) => {
+    await page.goto('/en/products/3/')
+
+    const banner = page.locator('[data-product-stock-banner]')
+    await expect(banner).toBeVisible()
+    await expect(banner).toHaveText('Comming soon')
+  })
+
+  test('coming soon banner is hidden for in-stock product image', async ({
+    page,
+  }) => {
+    await expect(page.locator('[data-product-stock-banner]')).toHaveCount(0)
+  })
 })

@@ -1,11 +1,7 @@
 import type { Locale, Product } from '@types'
-import { PRODUCT_IMAGES } from './productImages'
+import { resolveProductImage } from './productImages'
 
 type MockProductsMap = Record<string, Product[]>
-
-const resolveProductImage = (relativePath: string) => {
-  return PRODUCT_IMAGES[relativePath]?.default ?? relativePath
-}
 
 const enProducts: Product[] = [
   {
@@ -21,9 +17,8 @@ const enProducts: Product[] = [
     image: resolveProductImage('dry-chalk/irl1'),
     hoverImage: resolveProductImage('dry-chalk/hover'),
     images: [
-      resolveProductImage('dry-chalk/dry-chalk'),
-      resolveProductImage('wet-chalk/dry-chalk'),
-      resolveProductImage('liquid-chalk/dry-chalk'),
+      resolveProductImage('dry-chalk/irl1'),
+      resolveProductImage('dry-chalk/irl2'),
     ],
     productPageTitle: 'Chunky Chalk – 250 g',
   },
@@ -50,6 +45,7 @@ const enProducts: Product[] = [
     description:
       'Liquid chalk that dries quickly and leaves an even layer on the hands. Made for reliable friction both indoors and outdoors.',
     kind: [],
+    outOfStock: true,
     price: 14.99,
     weight: 0.3,
     image: resolveProductImage('liquid-chalk/irl1'),
@@ -151,6 +147,7 @@ const enProducts: Product[] = [
       },
     ],
     kindTitle: 'Select color:',
+    outOfStock: true,
     price: 7.99,
     weight: 0.05,
     image: resolveProductImage('tape/green'),
@@ -173,9 +170,8 @@ const bgProducts: Product[] = [
     image: resolveProductImage('dry-chalk/irl1'),
     hoverImage: resolveProductImage('dry-chalk/hover'),
     images: [
-      resolveProductImage('dry-chalk/dry-chalk'),
-      resolveProductImage('wet-chalk/dry-chalk'),
-      resolveProductImage('liquid-chalk/dry-chalk'),
+      resolveProductImage('dry-chalk/irl1'),
+      resolveProductImage('dry-chalk/irl2'),
     ],
     productPageTitle: 'Сух магнезий на бучка – 250гр',
   },
@@ -203,6 +199,7 @@ const bgProducts: Product[] = [
     description:
       'Течен магнезий, който изсъхва бързо и оставя равномерен слой по ръцете. Създаден за стабилно сцепление при катерене в зала и навън.',
     kind: [],
+    outOfStock: true,
     price: 14.99,
     image: resolveProductImage('liquid-chalk/irl1'),
     hoverImage: resolveProductImage('liquid-chalk/hover'),
@@ -249,7 +246,7 @@ const bgProducts: Product[] = [
       },
       {
         name: 'червен',
-        image: resolveProductImage('beanies/red'),
+        image: resolveProductImage('beanies/blue'),
         inStock: true,
       },
       {
@@ -303,6 +300,7 @@ const bgProducts: Product[] = [
       { name: 'бял', image: resolveProductImage('tape/green'), inStock: true },
     ],
     kindTitle: 'Изберете цвят:',
+    outOfStock: true,
     price: 7.99,
     weight: 0.05,
     image: resolveProductImage('tape/green'),

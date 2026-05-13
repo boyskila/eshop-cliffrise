@@ -36,6 +36,7 @@ export type Product = {
   slug?: string // url friendly identifier, used for product pages
   productPageTitle?: string
   carouselOrder?: number // optional field to specify the order of products in a carousel, lower numbers are shown first
+  outOfStock?: boolean
 }
 
 export type RenderedProductKind = Omit<ProductKind, 'image'> & {
@@ -69,6 +70,7 @@ export type ProductCatalogMetadata = {
   weight: number
   slug: string
   carouselOrder?: number // optional field to specify the order of products in a carousel, lower numbers are shown first
+  outOfStock?: boolean
 }
 
 export type Translations = typeof en

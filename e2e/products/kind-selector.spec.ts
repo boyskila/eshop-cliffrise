@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 
 const TSHIRT_URL = '/en/products/4/'
 const BEANIE_URL = '/en/products/5/'
+const OUT_OF_STOCK_WITH_KIND_URL = '/en/products/6/'
 
 test.describe('Kind Selector', () => {
   test.beforeEach(async ({ page }) => {
@@ -22,6 +23,13 @@ test.describe('Kind Selector', () => {
   }) => {
     const addToCart = page.locator('[data-add-to-cart-button]')
     await expect(addToCart).toBeDisabled()
+  })
+
+  test('buy now button is disabled by default for products with kind', async ({
+    page,
+  }) => {
+    const buyNow = page.locator('[data-buy-now-button]')
+    await expect(buyNow).toBeDisabled()
   })
 
   test('clicking a kind option selects it and deselects others', async ({
@@ -45,6 +53,49 @@ test.describe('Kind Selector', () => {
 
     await kindOptions.first().click()
     await expect(addToCart).toBeEnabled()
+  })
+
+  test('clicking a kind option enables buy now button', async ({ page }) => {
+    const kindOptions = page.locator('[data-kind-option]')
+    const buyNow = page.locator('[data-buy-now-button]')
+
+    await kindOptions.first().click()
+    await expect(buyNow).toBeEnabled()
+  })
+
+  test('clicking a kind option keeps buttons disabled when product is out of stock', async ({
+    page,
+  }) => {
+    await page.goto(OUT_OF_STOCK_WITH_KIND_URL)
+
+    const kindOptions = page.locator('[data-kind-option]')
+    const addToCart = page.locator('[data-add-to-cart-button]')
+    const buyNow = page.locator('[data-buy-now-button]')
+
+    await expect(kindOptions.first()).toBeDisabled()
+    await kindOptions.first().click({ force: true })
+
+    await expect(addToCart).toBeDisabled()
+    await expect(buyNow).toBeDisabled()
+  })
+
+  test('kind options are disabled when product is out of stock', async ({
+    page,
+  }) => {
+    await page.goto(OUT_OF_STOCK_WITH_KIND_URL)
+
+    const kindOptions = page.locator('[data-kind-option]')
+    const count = await kindOptions.count()
+
+    expect(count).toBeGreaterThan(0)
+
+    for (let i = 0; i < count; i++) {
+      await expect(kindOptions.nth(i)).toBeDisabled()
+      await expect(kindOptions.nth(i)).toHaveAttribute('aria-pressed', 'false')
+    }
+
+    await kindOptions.first().click({ force: true })
+    await expect(kindOptions.first()).toHaveAttribute('aria-pressed', 'false')
   })
 
   test('switching kind options updates the selection', async ({ page }) => {
@@ -108,15 +159,18 @@ test.describe('Kind Selector - AbortController cleanup', () => {
 
     const kindOptions2 = page.locator('[data-kind-option]')
     const addToCart = page.locator('[data-add-to-cart-button]')
+    const buyNow = page.locator('[data-buy-now-button]')
 
     const count = await kindOptions2.count()
     for (let i = 0; i < count; i++) {
       await expect(kindOptions2.nth(i)).toHaveAttribute('aria-pressed', 'false')
     }
     await expect(addToCart).toBeDisabled()
+    await expect(buyNow).toBeDisabled()
 
     await kindOptions2.first().click()
     await expect(kindOptions2.first()).toHaveAttribute('aria-pressed', 'true')
     await expect(addToCart).toBeEnabled()
+    await expect(buyNow).toBeEnabled()
   })
 })
