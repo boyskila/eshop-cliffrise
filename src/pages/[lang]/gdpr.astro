@@ -1,0 +1,42 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro'
+import { getTranslations } from '@utils/i18'
+
+const { gdpr } = getTranslations(Astro.params)
+---
+
+<MainLayout title={gdpr.title} showHero={false}>
+  <section class="mx-auto max-w-4xl px-6 py-16 text-lg leading-8">
+    <h1 class="mb-8 text-3xl font-bold">{gdpr.title}</h1>
+
+    <p class="mb-8">{gdpr.intro}</p>
+
+    <div class="mb-8">
+      <p>{gdpr.company}</p>
+      {
+        gdpr.companyDetails.map((detail) => (
+          <p>{detail}</p>
+        ))
+      }
+    </div>
+
+    <h2 class="mb-4 text-2xl font-bold">{gdpr.dataTitle}</h2>
+    <ul class="mb-8 list-disc space-y-2 pl-6">
+      {
+        gdpr.dataItems.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+
+    <h2 class="mb-4 text-2xl font-bold">{gdpr.rightsTitle}</h2>
+    <p class="mb-4">{gdpr.rightsIntro}</p>
+    <ul class="list-disc space-y-2 pl-6">
+      {
+        gdpr.rightsItems.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+  </section>
+</MainLayout>

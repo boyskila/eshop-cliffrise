@@ -1,0 +1,60 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro'
+import { getTranslations } from '@utils/i18'
+
+const { privacyPolicy } = getTranslations(Astro.params)
+---
+
+<MainLayout title={privacyPolicy.title} showHero={false}>
+  <section class="mx-auto max-w-4xl px-6 py-16 text-lg leading-8">
+    <h1 class="mb-8 text-3xl font-bold">{privacyPolicy.title}</h1>
+
+    <p class="mb-8">{privacyPolicy.intro}</p>
+
+    <h2 class="mb-4 text-2xl font-bold">
+      {privacyPolicy.administratorTitle}
+    </h2>
+    <div class="mb-8">
+      <p>{privacyPolicy.company}</p>
+      {
+        privacyPolicy.companyDetails.map((detail) => (
+          <p>{detail}</p>
+        ))
+      }
+      <p class="mt-6">{privacyPolicy.administratorText}</p>
+    </div>
+
+    <h2 class="mb-4 text-2xl font-bold">{privacyPolicy.dataTitle}</h2>
+    <p class="mb-4">{privacyPolicy.dataIntro}</p>
+    <ul class="mb-6 list-disc space-y-2 pl-6">
+      {
+        privacyPolicy.dataItems.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+    <p class="mb-8">{privacyPolicy.noPaymentData}</p>
+
+    <h2 class="mb-4 text-2xl font-bold">{privacyPolicy.stripeTitle}</h2>
+    <p>{privacyPolicy.stripeText}</p>
+    <p class="mb-8">
+      {privacyPolicy.moreInfo}
+      <a class="underline" href={privacyPolicy.stripeUrl}>
+        {privacyPolicy.stripeUrl}
+      </a>
+    </p>
+
+    <h2 class="mb-4 text-2xl font-bold">{privacyPolicy.rightsTitle}</h2>
+    <p class="mb-4">{privacyPolicy.rightsIntro}</p>
+    <ul class="mb-8 list-disc space-y-2 pl-6">
+      {
+        privacyPolicy.rightsItems.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+
+    <h2 class="mb-4 text-2xl font-bold">{privacyPolicy.cookiesTitle}</h2>
+    <p>{privacyPolicy.cookiesText}</p>
+  </section>
+</MainLayout>

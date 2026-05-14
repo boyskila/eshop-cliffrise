@@ -28,7 +28,12 @@
     "footer": {
         "supportClimbing": "Want to support",
         "contactUs": "Contact us",
-        "copyright": "2024 CliffRise © All rights reserved"
+        "termsAndConditions": "Terms and Conditions",
+        "privacyPolicy": "Privacy Policy",
+        "gdpr": "GDPR",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "copyright": "2026 CliffRise © All rights reserved"
     },
     "notification": {
         "addedToCart": "Added",
@@ -136,5 +141,106 @@
         "mateyName": "Matey Mitcev",
         "maniac": "I love the chalk texture. I have very dry skin, so it’s hard to find something that stays on my hands. I’m super happy to have found this chalk—it has everything I need and definitely boosts my confidence on the rock.",
         "matey": "If you want to take care of your climbing experience and make it with most pleasure, Cliffrise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!"
+    },
+    "termsAndConditions": {
+        "title": "Terms and Conditions for Using the Online Store",
+        "intro": "These Terms and Conditions govern the relationship between “SOLUTION 83” EOOD and users of the online store.",
+        "merchantTitle": "1. Merchant details",
+        "company": "“SOLUTION 83” EOOD",
+        "companyDetails": [
+            "UIC: 200511527",
+            "Representative: Boyko Lalov",
+            "Email: rise@cliffrise.com"
+        ],
+        "ordersTitle": "2. Orders",
+        "ordersText": [
+            "Orders can be placed 24/7 through the site.",
+            "After a successful order, the customer receives confirmation by email."
+        ],
+        "paymentTitle": "3. Prices and payment",
+        "paymentIntro": "Payments can be made by:",
+        "paymentItems": [
+            "bank card;",
+            "Stripe;"
+        ],
+        "deliveryTitle": "4. Delivery",
+        "deliveryText": "Deliveries are made to a Speedy office.",
+        "withdrawalTitle": "5. Right of withdrawal",
+        "withdrawalText": "Under the Consumer Protection Act, the customer has the right to withdraw from the placed order within 14 days.",
+        "disputesTitle": "6. Online dispute resolution"
+    },
+    "privacyPolicy": {
+        "title": "Privacy Policy and Personal Data Protection",
+        "intro": "This policy governs the processing of personal data when using the online store and website owned by “SOLUTION 83” EOOD.",
+        "administratorTitle": "1. Data controller details",
+        "company": "“SOLUTION 83” EOOD",
+        "companyDetails": [
+            "UIC: 200511527",
+            "Representative: Boyko Lalov",
+            "Email: rise@cliffrise.com"
+        ],
+        "administratorText": "“SOLUTION 83” EOOD is a personal data controller within the meaning of Regulation (EU) 2016/679 (GDPR) and the Personal Data Protection Act.",
+        "dataTitle": "2. What data we collect",
+        "dataIntro": "When using the site and online store, we may collect the following personal data:",
+        "dataItems": [
+            "first and last name;",
+            "email address;",
+            "phone number;",
+            "delivery and billing address;",
+            "order information;",
+            "IP address;",
+            "data through cookies;",
+            "information sent through contact forms or email communication."
+        ],
+        "noPaymentData": "We do not store bank card or payment instrument data.",
+        "stripeTitle": "3. Payments through Stripe",
+        "stripeText": "Online payments are processed through Stripe Payments Europe Ltd.",
+        "moreInfo": "More information: ",
+        "stripeUrl": "https://stripe.com/privacy",
+        "rightsTitle": "4. User rights",
+        "rightsIntro": "Every user has the right:",
+        "rightsItems": [
+            "to access their data;",
+            "to rectification;",
+            "to erasure;",
+            "to restriction of processing;",
+            "to object;",
+            "to data portability;",
+            "to file a complaint with the Commission for Personal Data Protection."
+        ],
+        "cookiesTitle": "5. Cookies",
+        "cookiesText": "The site uses cookies for proper operation, analytics, and improving the user experience."
+    },
+    "gdpr": {
+        "title": "Information about personal data processing under GDPR",
+        "intro": "By using this site, you agree that “SOLUTION 83” EOOD may process your personal data in accordance with Regulation (EU) 2016/679 (GDPR).",
+        "company": "“SOLUTION 83” EOOD",
+        "companyDetails": [
+            "UIC: 200511527",
+            "Representative: Boyko Lalov",
+            "Email: rise@cliffrise.com"
+        ],
+        "dataTitle": "What data we process",
+        "dataItems": [
+            "names;",
+            "phone number;",
+            "email address;",
+            "delivery address;",
+            "IP address;",
+            "order data;",
+            "technical information about the device and browser;",
+            "information through cookies."
+        ],
+        "rightsTitle": "Your rights",
+        "rightsIntro": "Under GDPR, you have the right:",
+        "rightsItems": [
+            "to receive information about the stored data;",
+            "to request correction or deletion;",
+            "to restrict processing;",
+            "to object to processing;",
+            "to request data portability;",
+            "to withdraw given consent;",
+            "to file a complaint with a supervisory authority."
+        ]
     }
 }
