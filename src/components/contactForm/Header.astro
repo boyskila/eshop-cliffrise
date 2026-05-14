@@ -4,19 +4,21 @@ import { getTranslations } from '@utils/i18'
 const translations = getTranslations(Astro.params)
 ---
 
-<h1
-  class="flex items-center justify-center text-3xl font-bold mb-7 gap-3"
->
-  <span>{translations.contactForm.support}</span>
+<h1 class="flex items-center justify-center text-[25px] font-bold mb-2 gap-2">
+  <span class="md:text-4xl">{translations.contactForm.support}</span>
   <span
-    class="nafta-brush text-[45px] md:text-[55px] lg:text-[55px] mb-2 md:mr-7 leading-15 md:leading-20"
+    class="nafta-brush text-[40px] md:text-[55px] lg:text-[55px] md:mr-7 leading-15 md:leading-20"
   >
     {translations.theCause}
   </span>
 </h1>
-<p class="text-center mb-5">
-  <b class="text-xl">{translations.contactForm.description1}</b>
-  <span class="text-lg lg:text-xl block">
+<p
+  class="text-center mb-5 short-screen-portrait:text-base
+  short-screen-portrait:leading-5 text-lg/6 md:text-2xl
+  landscape:md:text-xl xl:text-[23px]/7 landscape:xl:text-[23px]/7"
+>
+  <b>{translations.contactForm.description1}</b>
+  <span class="text-center block">
     {translations.contactForm.description2}
   </span>
 </p>
