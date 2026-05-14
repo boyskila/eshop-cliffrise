@@ -1,14 +1,21 @@
 ---
-import { getTranslations } from '@utils/i18'
+import { getLang, getTranslations } from '@utils/i18'
 import GalleryCarousel from '../ui/carousel/GalleryCarousel'
 import YearToggle from './YearToggle.astro'
 import { getImage, Image } from 'astro:assets'
-import TtvnMeetup2026Img from '@assets/images/ttvn_meetup_2026.webp'
+import TtvnMeetup2026Img from '@assets/images/ttvn_meetup_2026_mobile.webp'
 import TtvnMeetup2026ImgDesktop from '@assets/images/ttvn_meetup_2026_desktop.webp'
+import TtvnMeetup2026ImgEn from '@assets/images/ttvn_meetup_2026_mobile_en.webp'
+import TtvnMeetup2026ImgDesktopEn from '@assets/images/ttvn_meetup_2026_desktop_en.webp'
 import { galleryImages } from '@data/carousel-images'
 import EventLink from './EventLink.astro'
+const lang = getLang(Astro.params)
 const { eventsSection, tetevenClimb } = getTranslations(Astro.params)
-const { seeEvent, text } = eventsSection
+const { seeEvent, text, meetup2026Alt } = eventsSection
+const meetup2026MobileImage =
+  lang === 'bg' ? TtvnMeetup2026Img : TtvnMeetup2026ImgEn
+const meetup2026DesktopImage =
+  lang === 'bg' ? TtvnMeetup2026ImgDesktop : TtvnMeetup2026ImgDesktopEn
 
 const processedGalleryImages = await Promise.all(
   galleryImages.map((img) =>
@@ -50,26 +57,14 @@ const galleryImageUrls = processedGalleryImages.map((img) => img.src)
         class="w-full flex flex-col gap-6 md:gap-8 items-start"
       >
         <Image
-          src={TtvnMeetup2026Img}
-          alt="Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
-          widths={[390, 600, 780, 1000]}
-          sizes="(max-width: 767px) 100vw, (max-width: 1279px) calc(80vw - 24px), calc(68vw - 24px)"
-          quality={65}
-          class="object-contain
-              w-full
-              md:max-h-[65%]
-              lg:hidden"
+          src={meetup2026MobileImage}
+          alt={meetup2026Alt}
+          class="object-contain w-full lg:hidden"
         />
         <Image
-          src={TtvnMeetup2026ImgDesktop}
-          alt="Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
-          widths={[390, 600, 780, 1000]}
-          sizes="(max-width: 767px) 100vw, (max-width: 1279px) calc(80vw - 24px), calc(68vw - 24px)"
-          quality={65}
-          class="object-contain
-              w-full
-              md:max-h-[65%]
-              lg:block hidden"
+          src={meetup2026DesktopImage}
+          alt={meetup2026Alt}
+          class="object-contain w-full lg:block hidden"
         />
         <EventLink text={seeEvent} />
       </div>
