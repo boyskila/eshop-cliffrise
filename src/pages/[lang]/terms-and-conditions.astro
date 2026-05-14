@@ -1,0 +1,52 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro'
+import { getTranslations } from '@utils/i18'
+
+const { termsAndConditions } = getTranslations(Astro.params)
+---
+
+<MainLayout title={termsAndConditions.title} showHero={false}>
+  <section class="mx-auto max-w-4xl px-6 py-16 text-lg leading-8">
+    <h1 class="mb-8 text-3xl font-bold">{termsAndConditions.title}</h1>
+
+    <p class="mb-8">{termsAndConditions.intro}</p>
+
+    <h2 class="mb-4 text-2xl font-bold">
+      {termsAndConditions.merchantTitle}
+    </h2>
+    <div class="mb-8">
+      <p>{termsAndConditions.company}</p>
+      {termsAndConditions.companyDetails.map((detail) => <p>{detail}</p>)}
+    </div>
+
+    <h2 class="mb-4 text-2xl font-bold">{termsAndConditions.ordersTitle}</h2>
+    {termsAndConditions.ordersText.map((text) => <p>{text}</p>)}
+
+    <h2 class="mb-4 mt-8 text-2xl font-bold">
+      {termsAndConditions.paymentTitle}
+    </h2>
+    <p class="mb-4">{termsAndConditions.paymentIntro}</p>
+    <ul class="mb-8 list-disc space-y-2 pl-6">
+      {termsAndConditions.paymentItems.map((item) => <li>{item}</li>)}
+    </ul>
+
+    <h2 class="mb-4 text-2xl font-bold">
+      {termsAndConditions.deliveryTitle}
+    </h2>
+    <p class="mb-8">{termsAndConditions.deliveryText}</p>
+
+    <h2 class="mb-4 text-2xl font-bold">
+      {termsAndConditions.withdrawalTitle}
+    </h2>
+    <p class="mb-8">{termsAndConditions.withdrawalText}</p>
+
+    <h2 class="mb-4 text-2xl font-bold">
+      {termsAndConditions.disputesTitle}
+    </h2>
+    <p class="mb-8">
+      <a href="https://ec.europa.eu/consumers/odr" target="_blank"
+        >https://ec.europa.eu/consumers/odr</a
+      >
+    </p>
+  </section>
+</MainLayout>
