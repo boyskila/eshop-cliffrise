@@ -14,7 +14,10 @@ export default (props: { images: string[] }) => {
     'mobile' | 'tablet' | 'desktop'
   >('desktop')
 
-  const [emblaRef] = useEmblaCarousel(CAROUSEL_OPTIONS, CAROUSEL_PLUGINS)
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    CAROUSEL_OPTIONS,
+    CAROUSEL_PLUGINS,
+  )
 
   const groupedSlides = createMemo(() => {
     const imagesPerSlide = imagesPerSlideMap[screenSize()]
@@ -108,6 +111,10 @@ export default (props: { images: string[] }) => {
           )}
         </For>
       </div>
+      <CarouselDots
+        className="opacity-0 md:opacity-100 py-0 md:py-5"
+        api={emblaApi}
+      />
     </div>
   )
 }

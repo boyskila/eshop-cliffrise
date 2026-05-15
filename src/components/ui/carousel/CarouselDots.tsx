@@ -3,6 +3,7 @@ import { type EmblaCarouselType } from 'embla-carousel'
 
 export const CarouselDots = (props: {
   api: Accessor<EmblaCarouselType | undefined>
+  className?: string
 }) => {
   const [scrollSnaps, setScrollSnaps] = createSignal<number[]>([])
   const [selectedIndex, setSelectedIndex] = createSignal(
@@ -26,12 +27,13 @@ export const CarouselDots = (props: {
     }
   })
   return (
-    <div class="flex justify-center gap-2 mt-7">
+    <div class={`flex justify-center gap-2 mt-7 ${props.className || ''}`}>
       <For each={scrollSnaps()}>
         {(_, index) => {
           return (
             <button
               classList={{
+                'cursor-pointer': true,
                 embla__dot: true,
                 'w-7 h-2 transition-colors': true,
                 'bg-black': index() === selectedIndex(),
