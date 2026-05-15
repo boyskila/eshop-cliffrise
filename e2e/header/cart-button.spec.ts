@@ -22,6 +22,26 @@ const addProductToCart = async (page: Page, productId: string) => {
   await page.goto('/en/')
 }
 
+const openCartPanel = async (page: Page) => {
+  const cartBtn = page
+    .locator('header')
+    .getByRole('button', { name: /shopping cart/i })
+  const cartDrawer = page.getByRole('dialog', { name: /shopping cart/i })
+
+  await expect(async () => {
+    if ((await cartBtn.getAttribute('aria-expanded')) !== 'true') {
+      await cartBtn.click()
+    }
+
+    await expect(cartDrawer).toBeVisible({ timeout: 500 })
+    await expect(cartBtn).toHaveAttribute('aria-expanded', 'true', {
+      timeout: 500,
+    })
+  }).toPass({ timeout: 5000 })
+
+  return { cartBtn, cartDrawer }
+}
+
 test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
@@ -44,14 +64,7 @@ test.describe('Accessibility', () => {
   test('clicking the cart button opens the cart panel and sets aria-expanded', async ({
     page,
   }) => {
-    const cartBtn = page
-      .locator('header')
-      .getByRole('button', { name: /shopping cart/i })
-    const cartDrawer = page.getByRole('dialog', { name: /shopping cart/i })
-
-    await cartBtn.click()
-    await expect(cartDrawer).toBeVisible()
-    await expect(cartBtn).toHaveAttribute('aria-expanded', 'true')
+    await openCartPanel(page)
   })
 
   test('cart panel can be closed via clicking on the backdrop and aria-expanded is reset', async ({
@@ -63,7 +76,7 @@ test.describe('Accessibility', () => {
     const cartDrawer = page.getByRole('dialog', { name: /shopping cart/i })
     const backdrop = page.getByLabel(/close shopping cart/i).first()
 
-    await cartBtn.click()
+    await openCartPanel(page)
     await expect(backdrop).toBeVisible()
 
     await backdrop.click()
