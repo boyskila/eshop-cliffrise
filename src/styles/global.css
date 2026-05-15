@@ -27,6 +27,7 @@
 @layer base {
   html {
     scroll-padding-top: 100px; /* Height of the fixed header */
+    scrollbar-gutter: stable; /* Prevents layout shift when scrollbar appears/disappears */
   }
 
   a {
