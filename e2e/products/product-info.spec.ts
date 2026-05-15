@@ -30,6 +30,14 @@ test.describe('Product Info', () => {
     await expect(container).toContainText('12.99')
   })
 
+  test('displays the free delivery banner', async ({ page }) => {
+    const banner = page.locator('[data-product-free-delivery-banner]')
+
+    await expect(banner).toBeVisible()
+    await expect(banner).toContainText('Free Delivery over')
+    await expect(banner).toContainText('€30.00')
+  })
+
   test('add to cart button is visible and enabled for products without kind', async ({
     page,
   }) => {
