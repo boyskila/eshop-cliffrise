@@ -1,14 +1,37 @@
-import { isMobileMenuOpen } from '@signals/mobileMenu'
-import type { Translations } from '@types'
+import { isMobileMenuOpen, setIsMobileMenuOpen } from '@signals/mobileMenu'
+import { onCleanup, onMount } from 'solid-js'
 
 type Props = {
   menuItems: { href: string; title: string }[]
 }
 
 export const MobileMenu = (props: Props) => {
+  onMount(() => {
+    const closeOnOutsidePointerDown = (event: PointerEvent) => {
+      if (!isMobileMenuOpen()) return
+
+      const target = event.target instanceof Element ? event.target : null
+      if (
+        target?.closest('[data-mobile-menu]') ||
+        target?.closest('[data-mobile-menu-button]')
+      ) {
+        return
+      }
+
+      setIsMobileMenuOpen(false)
+    }
+
+    document.addEventListener('pointerdown', closeOnOutsidePointerDown)
+
+    onCleanup(() => {
+      document.removeEventListener('pointerdown', closeOnOutsidePointerDown)
+    })
+  })
+
   return (
     <div
-      class="bg-black/95 w-full lg:hidden py-4 border-t border-stone-200 bg-gray-900 absolute top-full left-0 z-20"
+      data-mobile-menu
+      class="bg-black w-full lg:hidden py-4 border-t border-stone-200 absolute top-full left-0 z-20"
       role="navigation"
       aria-label="Mobile navigation"
       classList={{ hidden: !isMobileMenuOpen() }}

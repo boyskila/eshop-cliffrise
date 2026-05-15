@@ -6,6 +6,7 @@ export const MobileMenuButton = () => {
   return (
     <div class="lg:hidden tablet-landscape:hidden flex items-center space-x-2">
       <button
+        data-mobile-menu-button
         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
         aria-label={isMobileMenuOpen() ? 'Close Menu' : 'Open Menu'}
         aria-expanded={isMobileMenuOpen()}
