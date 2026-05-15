@@ -77,6 +77,7 @@ export default (props: {
                           text-base
                           md:text-lg
                           xl:text-2xl
+                          hover:underline
                           underline-offset-4
                           font-semibold
                           leading-5"
