@@ -14,7 +14,10 @@ export const CheckoutButton = (props: Props) => {
 
   return (
     <button
-      class="w-full bg-black text-center p-3 mb-3 text-white text-lg md:text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+      class="w-full bg-black text-center
+      p-3 mb-3 text-white text-lg md:text-xl
+      disabled:opacity-50
+      disabled:cursor-not-allowed cursor-pointer"
       onClick={handleCheckout}
       disabled={cart().length === 0}
     >

@@ -61,7 +61,7 @@ export const AddToCartButton = (props: {
         border border-black bg-white text-black
         text-base md:text-lg leading-none
         tracking-[2px] uppercase
-        disabled:opacity-40 disabled:cursor-not-allowed"
+        disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
     >
       {props.label}
     </button>
