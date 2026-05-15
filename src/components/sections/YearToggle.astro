@@ -47,7 +47,9 @@
     yearToggles.forEach((btn) => {
       btn.addEventListener('click', () => {
         const year = btn.dataset.yearToggle
-        if (!year) return
+        if (!year) {
+          return
+        }
 
         yearToggles.forEach((b) => {
           b.setAttribute(
