@@ -55,7 +55,7 @@
         "meetup2026Alt": "Тетевен Катери Vol. 2 - Катерачен Фестивал 2026"
     },
     "shipping": {
-        "title": "Доставка",
+        "title": "Доставка до офис/автомат",
         "courierLabel": "Изберете куриер",
         "speedy": "Speedy",
         "ekont": "Еконт",
@@ -80,7 +80,7 @@
         "sat": "Съб",
         "selectOffice": "Избери офис",
         "loadingMap": "Зареждане на офиси...",
-        "searchPlaceholder": "Търси по име на офис...",
+        "searchPlaceholder": "Търси по име на офис или автомат",
         "noResults": "Няма намерени офиси",
         "searchLabel": "Офис",
         "orBrowseMap": "Или разгледай на картата:",

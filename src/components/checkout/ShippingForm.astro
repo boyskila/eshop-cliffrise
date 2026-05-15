@@ -17,6 +17,12 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
 ---
 
 <div class="size-full max-w-4xl mx-auto px-4 py-8 flex flex-col">
+  <img
+    src="/speedy-logo.png"
+    alt="Speedy logo"
+    class="h-auto mb-6 w-40"
+    fetchpriority="high"
+  />
   <h1 class="text-2xl md:text-3xl font-bold mb-8">{text.title}</h1>
 
   <form
@@ -32,7 +38,7 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
     data-selected-office-name={initialShipping?.office ?? ''}
   >
     <div class="flex flex-col flex-1">
-      <label class="block text-sm font-medium mb-2">{text.searchLabel}</label>
+      <label class="block text-lg font-medium mb-2">{text.searchLabel}</label>
 
       <div
         id="office-combined"
@@ -55,7 +61,7 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
         />
       </div>
 
-      <p class="text-sm text-gray-500 mt-2 mb-2">{text.orBrowseMap}</p>
+      <p class="text-lg text-gray-500 mt-2 mb-2">{text.orBrowseMap}</p>
 
       <OfficeMap
         lang={lang}
@@ -79,7 +85,7 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
 
     <a
       href={`/${lang}/`}
-      class="text-center text-sm text-gray-500 hover:text-black"
+      class="text-center text-lg text-gray-500 hover:text-black"
     >
       {text.backToShop}
     </a>

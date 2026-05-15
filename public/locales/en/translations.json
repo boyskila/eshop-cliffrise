@@ -55,7 +55,7 @@
         "meetup2026Alt": "Teteven Climbs Vol. 2 - Climbing Festival 2026"
     },
     "shipping": {
-        "title": "Shipping",
+        "title": "Shipping to office/automat",
         "courierLabel": "Select courier",
         "speedy": "Speedy",
         "ekont": "Ekont",
@@ -80,7 +80,7 @@
         "sat": "Sat",
         "selectOffice": "Select this office",
         "loadingMap": "Loading offices...",
-        "searchPlaceholder": "Search by office name...",
+        "searchPlaceholder": "Search by office name or automat",
         "noResults": "No offices found",
         "searchLabel": "Office",
         "orBrowseMap": "Or browse on the map:",
