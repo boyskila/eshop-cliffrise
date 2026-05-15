@@ -3,6 +3,8 @@ import { getImage } from 'astro:assets'
 import FeedbackCarousel from '../ui/carousel/FeedbackCarousel'
 import MateiImg from '@assets/images/matei.webp'
 import IvayloImg from '@assets/images/the_maniac.webp'
+import CvetyImg from '@assets/images/cvety.webp'
+import XeniaImg from '@assets/images/xenia.webp'
 import { getTranslations } from '@utils/i18'
 
 const MateiImage = await getImage({
@@ -10,18 +12,30 @@ const MateiImage = await getImage({
   width: 160,
   height: 160,
   format: 'webp',
-  quality: 80,
 })
 
-const translation = await getTranslations(Astro.params)
-const { maniac, matey } = translation.feedbacks
+const translation = getTranslations(Astro.params)
+const { maniac, matey, cvety, xenia } = translation.feedbacks
 
 const IvayloImage = await getImage({
   src: IvayloImg,
   width: 160,
   height: 160,
   format: 'webp',
-  quality: 80,
+})
+
+const CvetyImage = await getImage({
+  src: CvetyImg,
+  width: 160,
+  height: 160,
+  format: 'webp',
+})
+
+const XeniaImage = await getImage({
+  src: XeniaImg,
+  width: 160,
+  height: 160,
+  format: 'webp',
 })
 
 const feedbacks = [
@@ -36,14 +50,14 @@ const feedbacks = [
     image: IvayloImage,
   },
   {
-    author: 'Georgi Ivanov',
-    text: 'CliffRise offers an amazing selection of climbing gear at competitive prices. Their customer support is top-notch!',
-    image: MateiImage,
+    author: 'Cveta Paunova',
+    text: cvety,
+    image: CvetyImage,
   },
   {
-    author: 'Elena Kolarova',
-    text: 'The team at CliffRise is knowledgeable and passionate about climbing. They helped me find the perfect gear for my needs.',
-    image: MateiImage,
+    author: 'Xenia Cotlearova',
+    text: xenia,
+    image: XeniaImage,
   },
   {
     author: 'Dimitar Stoyanov',
