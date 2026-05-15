@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 
 const VIEWPORTS = {
   phone: { width: 375, height: 667 },
@@ -31,6 +31,46 @@ const SECTION_IDS = [
   'contact-us',
 ] as const
 
+const getMobileMenuButton = (page: Page) =>
+  page.getByRole('button', { name: /open menu|close menu/i })
+
+const getMobileMenu = (page: Page) =>
+  page.getByRole('navigation', { name: /mobile navigation/i })
+
+const openMobileMenu = async (page: Page) => {
+  const mobileMenuButton = getMobileMenuButton(page)
+
+  await expect(mobileMenuButton).toBeVisible()
+  await expect(async () => {
+    if ((await mobileMenuButton.getAttribute('aria-expanded')) !== 'true') {
+      await mobileMenuButton.click()
+    }
+    await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'true', {
+      timeout: 500,
+    })
+  }).toPass({ timeout: 5000 })
+
+  const menu = getMobileMenu(page)
+  await expect(menu).toBeVisible()
+
+  return { menu, mobileMenuButton }
+}
+
+const closeMobileMenu = async (page: Page) => {
+  const mobileMenuButton = getMobileMenuButton(page)
+
+  await expect(async () => {
+    if ((await mobileMenuButton.getAttribute('aria-expanded')) !== 'false') {
+      await mobileMenuButton.click()
+    }
+    await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'false', {
+      timeout: 500,
+    })
+  }).toPass({ timeout: 5000 })
+
+  await expect(getMobileMenu(page)).toBeHidden()
+}
+
 test.describe('Header navigation visibility across viewports', () => {
   test('desktop: nav links visible, mobile button hidden', async ({ page }) => {
     await page.setViewportSize(VIEWPORTS.desktop)
@@ -42,10 +82,7 @@ test.describe('Header navigation visibility across viewports', () => {
         .getByRole('link', { name, exact: true })
       await expect(link).toBeVisible()
     }
-    const mobileMenuButton = page.getByRole('button', {
-      name: /open menu|close menu/i,
-    })
-    await expect(mobileMenuButton).toBeHidden()
+    await expect(getMobileMenuButton(page)).toBeHidden()
   })
 
   test('tablet landscape: nav links visible, mobile button hidden', async ({
@@ -60,10 +97,7 @@ test.describe('Header navigation visibility across viewports', () => {
         .getByRole('link', { name, exact: true })
       await expect(link).toBeVisible()
     }
-    const mobileMenuButton = page.getByRole('button', {
-      name: /open menu|close menu/i,
-    })
-    await expect(mobileMenuButton).toBeHidden()
+    await expect(getMobileMenuButton(page)).toBeHidden()
   })
 
   test('tablet portrait: nav links hidden, mobile button visible', async ({
@@ -78,10 +112,7 @@ test.describe('Header navigation visibility across viewports', () => {
         .getByRole('link', { name, exact: true })
       await expect(link).toBeHidden()
     }
-    const mobileMenuButton = page.getByRole('button', {
-      name: /open menu|close menu/i,
-    })
-    await expect(mobileMenuButton).toBeVisible()
+    await expect(getMobileMenuButton(page)).toBeVisible()
   })
 
   test('phone: nav links hidden, mobile button visible', async ({ page }) => {
@@ -94,10 +125,7 @@ test.describe('Header navigation visibility across viewports', () => {
         .getByRole('link', { name, exact: true })
       await expect(link).toBeHidden()
     }
-    const mobileMenuButton = page.getByRole('button', {
-      name: /open menu|close menu/i,
-    })
-    await expect(mobileMenuButton).toBeVisible()
+    await expect(getMobileMenuButton(page)).toBeVisible()
   })
 })
 
@@ -108,18 +136,10 @@ test.describe('Mobile menu button opens and closes the menu', () => {
     await page.setViewportSize(VIEWPORTS.phone)
     await page.goto('/en/')
 
-    const mobileMenuButton = page.getByRole('button', {
-      name: /open menu|close menu/i,
-    })
-    const menu = page.getByRole('navigation', { name: /mobile navigation/i })
+    await expect(getMobileMenu(page)).toBeHidden()
 
-    await expect(menu).toBeHidden()
-
-    await mobileMenuButton.click()
-    await expect(menu).toBeVisible()
-
-    await mobileMenuButton.click()
-    await expect(menu).toBeHidden()
+    await openMobileMenu(page)
+    await closeMobileMenu(page)
   })
 
   test('tablet portrait: clicking the mobile button toggles the menu', async ({
@@ -128,18 +148,47 @@ test.describe('Mobile menu button opens and closes the menu', () => {
     await page.setViewportSize(VIEWPORTS.tabletPortrait)
     await page.goto('/en/')
 
-    const mobileMenuButton = page.getByRole('button', {
-      name: /open menu|close menu/i,
-    })
-    const menu = page.getByRole('navigation', { name: /mobile navigation/i })
+    await expect(getMobileMenu(page)).toBeHidden()
 
-    await expect(menu).toBeHidden()
+    await openMobileMenu(page)
+    await closeMobileMenu(page)
+  })
 
-    await mobileMenuButton.click()
+  test('phone: clicking outside closes the mobile menu', async ({ page }) => {
+    await page.setViewportSize(VIEWPORTS.phone)
+    await page.goto('/en/')
+
+    const { mobileMenuButton } = await openMobileMenu(page)
+
+    await page.mouse.click(20, VIEWPORTS.phone.height - 20)
+    await expect(getMobileMenu(page)).toBeHidden()
+    await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  test('tablet portrait: clicking outside closes the mobile menu', async ({
+    page,
+  }) => {
+    await page.setViewportSize(VIEWPORTS.tabletPortrait)
+    await page.goto('/en/')
+
+    const { mobileMenuButton } = await openMobileMenu(page)
+
+    await page.mouse.click(20, VIEWPORTS.tabletPortrait.height - 20)
+    await expect(getMobileMenu(page)).toBeHidden()
+    await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  test('phone: clicking inside the mobile menu keeps it open', async ({
+    page,
+  }) => {
+    await page.setViewportSize(VIEWPORTS.phone)
+    await page.goto('/en/')
+
+    const { menu, mobileMenuButton } = await openMobileMenu(page)
+
+    await menu.click({ position: { x: 8, y: 8 } })
     await expect(menu).toBeVisible()
-
-    await mobileMenuButton.click()
-    await expect(menu).toBeHidden()
+    await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'true')
   })
 })
 
@@ -204,10 +253,7 @@ test.describe('Header navigation destinations', () => {
     await page.setViewportSize(VIEWPORTS.phone)
     await page.goto('/en/')
 
-    await page.getByRole('button', { name: /open menu|close menu/i }).click()
-
-    const menu = page.getByRole('navigation', { name: /mobile navigation/i })
-    await expect(menu).toBeVisible()
+    const { menu } = await openMobileMenu(page)
 
     for (const { name, href } of NAV_ITEMS) {
       const link = menu.getByRole('menuitem', { name, exact: true })

@@ -8,6 +8,7 @@ import { EmptyCart } from './EmptyCart'
 import { CartFooter } from './CartFooter'
 import { CartHeader } from './CartHeader'
 import type { Locale } from '@types'
+import { formatPrice } from '@utils/func'
 
 type Props = {
   lang: Locale
@@ -58,18 +59,29 @@ export const Cart = (props: Props) => {
                       className="absolute -left-2 -top-2"
                     />
                     <img src={item.image} alt={item.name} class="size-20" />
-                    <div class="flex items-center justify-between flex-1">
-                      <div>
-                        <h3 class="text-lg font-medium mb-2">{item.name}</h3>
-                        <p class="text-lg font-bold">${item.price}</p>
-                      </div>
+                    <div class="flex flex-col flex-1">
+                      <a
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          window.location.href = item.href
+                        }}
+                        class="text-lg font-medium mb-2 hover:underline underline-offset-4 leading-5 cursor-pointer"
+                      >
+                        {item.name}
+                      </a>
+                      <div class="flex justify-between">
+                        <p class="text-lg font-bold ml-1">
+                          {formatPrice(item.price, props.lang)}
+                        </p>
 
-                      <div class="flex space-x-2 self-end">
-                        <DecreaseQuantityButton item={item} />
-                        <span class="border border-gray size-7 flex items-center justify-center text-sm font-medium">
-                          {item.quantity}
-                        </span>
-                        <IncreaseQuantityButton item={item} />
+                        <div class="flex space-x-2 self-end">
+                          <DecreaseQuantityButton item={item} />
+                          <span class="border border-gray size-7 flex items-center justify-center text-sm font-medium">
+                            {item.quantity}
+                          </span>
+                          <IncreaseQuantityButton item={item} />
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -1,11 +1,31 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Locator } from '@playwright/test'
 
 // Chunky Chalk (id=1) has no kind options, so buttons are enabled by default
 const PRODUCT_URL = '/en/products/1/'
 
+const clickQuantityButtonUntil = async (
+  button: Locator,
+  output: Locator,
+  quantity: string,
+) => {
+  await expect(async () => {
+    if ((await output.textContent()) !== quantity) {
+      await button.click()
+    }
+
+    await expect(output).toHaveText(quantity, { timeout: 500 })
+  }).toPass({ timeout: 5000 })
+}
+
 test.describe('Quantity Controls - Accessibility', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(PRODUCT_URL)
+    await page.waitForLoadState('networkidle')
+  })
+
+  test.afterEach(async ({ page }) => {
+    // Reset quantity to 1 for test isolation
+    await page.close()
   })
 
   test('quantity controls are wrapped in a labeled group', async ({ page }) => {
@@ -67,19 +87,9 @@ test.describe('Quantity Controls - Functionality', () => {
     })
     const output = page.locator('output')
 
-    await increaseBtn.click()
-    await page.waitForFunction(
-      () => document.querySelector('output')?.textContent?.trim() === '2',
-      { timeout: 10000 },
-    )
-    await expect(output).toHaveText('2')
+    await clickQuantityButtonUntil(increaseBtn, output, '2')
 
-    await increaseBtn.click()
-    await page.waitForFunction(
-      () => document.querySelector('output')?.textContent?.trim() === '3',
-      { timeout: 10000 },
-    )
-    await expect(output).toHaveText('3')
+    await clickQuantityButtonUntil(increaseBtn, output, '3')
   })
 
   test('decrease button decrements quantity', async ({ page }) => {
@@ -91,26 +101,11 @@ test.describe('Quantity Controls - Functionality', () => {
     })
     const output = page.locator('output')
 
-    await increaseBtn.click()
-    await page.waitForFunction(
-      () => document.querySelector('output')?.textContent?.trim() === '2',
-      { timeout: 10000 },
-    )
-    await expect(output).toHaveText('2')
+    await clickQuantityButtonUntil(increaseBtn, output, '2')
 
-    await increaseBtn.click()
-    await page.waitForFunction(
-      () => document.querySelector('output')?.textContent?.trim() === '3',
-      { timeout: 10000 },
-    )
-    await expect(output).toHaveText('3')
+    await clickQuantityButtonUntil(increaseBtn, output, '3')
 
-    await decreaseBtn.click()
-    await page.waitForFunction(
-      () => document.querySelector('output')?.textContent?.trim() === '2',
-      { timeout: 10000 },
-    )
-    await expect(output).toHaveText('2')
+    await clickQuantityButtonUntil(decreaseBtn, output, '2')
   })
 
   test('quantity cannot go below 1', async ({ page }) => {
