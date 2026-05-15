@@ -28,12 +28,6 @@ export const Cart = (props: Props) => {
     props.initialCart && updateCart(props.initialCart)
   })
 
-  createEffect(() => {
-    isCartOpen()
-      ? document.body.classList.add('overflow-hidden')
-      : document.body.classList.remove('overflow-hidden')
-  })
-
   return (
     <Show when={isCartOpen()}>
       <div
@@ -42,6 +36,7 @@ export const Cart = (props: Props) => {
         aria-label="Close shopping cart"
       />
       <div
+        data-cart-dialog
         role="dialog"
         aria-label="Shopping cart"
         class="fixed right-0 top-0 h-full w-full md:max-w-md bg-white z-[70] p-7 xl:p-8"

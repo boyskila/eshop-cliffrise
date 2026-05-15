@@ -11,7 +11,7 @@ export const QuantityControls = ({ productName }: Props) => {
     <div
       role="group"
       aria-label={`Quantity for ${productName}`}
-      class="flex space-x-2 self-end"
+      class="flex space-x-2"
     >
       <button
         aria-label={`Decrease quantity of ${productName}`}

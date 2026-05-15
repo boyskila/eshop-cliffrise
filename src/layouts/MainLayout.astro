@@ -30,7 +30,7 @@ const cartFromSession = await Astro.session?.get('cart')
     <title>Cliffrise eshop | {title}</title>
     <ClientRouter />
   </head>
-  <body>
+  <body class="[&:has([data-cart-dialog])]:overflow-hidden">
     <Header />
     <Cart
       lang={lang}

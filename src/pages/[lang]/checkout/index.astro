@@ -106,20 +106,22 @@ if (!clientSecret) {
 ---
 
 <CheckoutLayout>
-  <div class="text-center py-2 px-4 text-sm border-b border-gray-200">
+  <div
+    class="text-center p-4 short-screen-portrait:text-sm text-base md:text-lg border-b border-gray-200"
+  >
     {
       isFreeShipping ? (
-        <span class="text-green-700 font-medium">
-          {translations.checkout.freeShipping}
-        </span>
+        <span class="font-medium">{translations.checkout.freeShipping}</span>
       ) : (
-        <span>
-          {translations.checkout.shippingFee}:
-          {formatPrice(shippingFeeEur, lang)}
-          <span class="text-gray-400 ml-2">
+        <div>
+          <span class="text-black">
+            {translations.checkout.shippingFee}:
+            {formatPrice(shippingFeeEur, lang)}
+          </span>
+          <span class="text-gray-500 ml-2">
             — {translations.checkout.freeShippingThreshold}
           </span>
-        </span>
+        </div>
       )
     }
   </div>
@@ -134,4 +136,5 @@ if (!clientSecret) {
       retry: translations.checkout.retry,
     }}
   />
+  fjkdfkjdkfk
 </CheckoutLayout>
