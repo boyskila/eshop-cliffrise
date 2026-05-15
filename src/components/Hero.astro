@@ -7,7 +7,7 @@ const { heroTitle, productsWithMission } = getTranslations(Astro.params)
 <section
   class="w-full bg-[url(/assets/mobile/hero.svg)]
   sm:bg-[url(/assets/hero.svg)]
-  bg-no-repeat bg-cover pt-3 pb-15 sm:pb-25 tablet-landscape:pb-50 tablet-landscape:pb-[130px] mt-[-1px] lg:pb-[200px] lg:pt-15"
+  bg-no-repeat bg-cover pt-3 pb-15 sm:pb-25 tablet-landscape:pb-50 tablet-landscape:pb-[130px] mt-[-1px] lg:pb-[200px] lg:pt-15 relative z-10 overflow-visible"
 >
   <div class="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
     <div
@@ -41,10 +41,33 @@ const { heroTitle, productsWithMission } = getTranslations(Astro.params)
     </div>
   </div>
   <img
-    class="hidden lg:block absolute bottom-[-190px] right-12 xl:right-40 max-h-[800px]"
+    class="hidden lg:block absolute bottom-[-200px] z-[100] right-40 xl:right-70 w-40 h-80 climber-sway"
     alt="Climber"
-    src="/hanging-climber.svg"
+    src="/climber.svg"
     loading="eager"
     fetchpriority="high"
   />
 </section>
+
+<style>
+  .climber-sway {
+    transform-origin: top center;
+    animation: climber-sway 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes climber-sway {
+    from {
+      transform: rotate(-4deg);
+    }
+
+    to {
+      transform: rotate(4deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .climber-sway {
+      animation: none;
+    }
+  }
+</style>
