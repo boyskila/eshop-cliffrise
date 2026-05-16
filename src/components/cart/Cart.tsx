@@ -1,4 +1,5 @@
-import { For, Show, createEffect } from 'solid-js'
+import { actions } from 'astro:actions'
+import { For, Show, createEffect, onCleanup, onMount } from 'solid-js'
 import { cart, isCartOpen, toggleCart, updateCart } from '@signals/cart'
 import type { CartItem } from '@actions'
 import { DecreaseQuantityButton } from './DecreaseQuantityButton'
@@ -25,8 +26,40 @@ type Props = {
 
 export const Cart = (props: Props) => {
   const { title, empty, emptyDesc, total, checkout, routeFunding } = props.text
+
+  const syncCartFromSession = async () => {
+    const { data } = await actions.getCart()
+    data && updateCart(data)
+  }
+
   createEffect(() => {
-    props.initialCart && updateCart(props.initialCart)
+    updateCart(props.initialCart ?? [])
+  })
+
+  onMount(() => {
+    const handleCartSync = () => {
+      void syncCartFromSession()
+    }
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        handleCartSync()
+      }
+    }
+
+    void syncCartFromSession()
+    window.addEventListener('pageshow', handleCartSync)
+    window.addEventListener('popstate', handleCartSync)
+    window.addEventListener('focus', handleCartSync)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    document.addEventListener('astro:page-load', handleCartSync)
+
+    onCleanup(() => {
+      window.removeEventListener('pageshow', handleCartSync)
+      window.removeEventListener('popstate', handleCartSync)
+      window.removeEventListener('focus', handleCartSync)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      document.removeEventListener('astro:page-load', handleCartSync)
+    })
   })
 
   return (

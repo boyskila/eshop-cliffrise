@@ -19,6 +19,8 @@ const { showHero = true, title } = Astro.props
 const { notification, cart } = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
+
+Astro.response.headers.set('Cache-Control', 'no-store')
 ---
 
 <!doctype html>
@@ -64,6 +66,16 @@ const cartFromSession = await Astro.session?.get('cart')
 </html>
 
 <script>
+  window.addEventListener('pageshow', (event) => {
+    const navigationEntry = performance.getEntriesByType(
+      'navigation',
+    )[0] as PerformanceNavigationTiming | undefined
+
+    if (event.persisted || navigationEntry?.type === 'back_forward') {
+      window.location.reload()
+    }
+  })
+
   document.addEventListener('astro:page-load', () => {
     if (window.location.hash) {
       document.querySelector(window.location.hash)?.scrollIntoView()
