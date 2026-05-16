@@ -41,7 +41,10 @@ const { heroTitle, productsWithMission } = getTranslations(Astro.params)
     </div>
   </div>
   <img
-    class="hidden lg:block absolute bottom-[-200px] z-[100] right-40 xl:right-70 w-40 h-80 climber-sway"
+    class="lg:block absolute bottom-[-140px] right-10
+    h-40
+    md:bottom-[-180px] xl:bottom-[-215px] z-[100] md:right-40
+    xl:right-70 md:w-40 md:h-80"
     alt="Climber"
     src="/climber.svg"
     loading="eager"
@@ -52,16 +55,16 @@ const { heroTitle, productsWithMission } = getTranslations(Astro.params)
 <style>
   .climber-sway {
     transform-origin: top center;
-    animation: climber-sway 2s ease-in-out infinite alternate;
+    animation: climber-sway 10s ease-in-out infinite alternate;
   }
 
   @keyframes climber-sway {
     from {
-      transform: rotate(-4deg);
+      transform: rotate(-20deg);
     }
 
     to {
-      transform: rotate(4deg);
+      transform: rotate(50deg);
     }
   }
 
