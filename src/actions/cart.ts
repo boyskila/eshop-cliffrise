@@ -70,6 +70,11 @@ export const cart = {
       return { count: cart.reduce((sum, i) => sum + i.quantity, 0) }
     },
   }),
+  getCart: defineAction({
+    handler: async (_, { session }) => {
+      return (await session?.get('cart')) ?? []
+    },
+  }),
   removeFromCart: defineAction({
     input: z.object({ productId: z.string() }),
     handler: async ({ productId }, { session }) => {
