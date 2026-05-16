@@ -5,6 +5,7 @@ import MateiImg from '@assets/images/matei.webp'
 import IvayloImg from '@assets/images/the_maniac.webp'
 import CvetyImg from '@assets/images/cvety.webp'
 import XeniaImg from '@assets/images/xenia.webp'
+import BatDidoImg from '@assets/images/bat-dido.webp'
 import { getTranslations } from '@utils/i18'
 
 const MateiImage = await getImage({
@@ -15,7 +16,18 @@ const MateiImage = await getImage({
 })
 
 const translation = getTranslations(Astro.params)
-const { maniac, matey, cvety, xenia } = translation.feedbacks
+const {
+  maniac,
+  matey,
+  cvety,
+  xenia,
+  'bat-dido': batDido,
+  maniacName,
+  mateyName,
+  cvetyName,
+  xeniaName,
+  'bat-didoName': batDidoName,
+} = translation.feedbacks
 
 const IvayloImage = await getImage({
   src: IvayloImg,
@@ -38,36 +50,38 @@ const XeniaImage = await getImage({
   format: 'webp',
 })
 
+const BatDidoImage = await getImage({
+  src: BatDidoImg,
+  width: 160,
+  height: 160,
+  format: 'webp',
+})
+
 const feedbacks = [
   {
-    author: 'Matey Mitcev',
+    author: mateyName,
     text: matey,
     image: MateiImage,
   },
   {
-    author: 'The Maniac',
+    author: maniacName,
     text: maniac,
     image: IvayloImage,
   },
   {
-    author: 'Cveta Paunova',
+    author: cvetyName,
     text: cvety,
     image: CvetyImage,
   },
   {
-    author: 'Xenia Cotlearova',
+    author: xeniaName,
     text: xenia,
     image: XeniaImage,
   },
   {
-    author: 'Dimitar Stoyanov',
-    text: 'Fast shipping and great packaging! My order from CliffRise arrived quickly and in perfect condition.',
-    image: MateiImage,
-  },
-  {
-    author: 'Nina Petrova',
-    text: 'CliffRise is my go-to store for all things climbing. Their products are reliable, and their prices are unbeatable.',
-    image: IvayloImage,
+    author: batDidoName,
+    text: batDido,
+    image: BatDidoImage,
   },
 ]
 ---
