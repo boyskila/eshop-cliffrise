@@ -26,7 +26,7 @@ const className = 'w-full p-2 border-b border-black bg-[#f7f7f7] h-13'
     name="name"
     required
     minlength="2"
-    class={className}
+    class:list={{ [className]: className, 'md:text-xl': true }}
   />
   <input
     placeholder={contactForm.emailPlaceholder}
@@ -34,7 +34,7 @@ const className = 'w-full p-2 border-b border-black bg-[#f7f7f7] h-13'
     id="email"
     name="email"
     required
-    class={className}
+    class:list={{ [className]: className, 'md:text-xl': true }}
   />
   <textarea
     placeholder={contactForm.messagePlaceholder}
@@ -42,12 +42,12 @@ const className = 'w-full p-2 border-b border-black bg-[#f7f7f7] h-13'
     name="message"
     required
     minlength="10"
-    class={`${className} flex-1`}></textarea>
+    class={`${className} flex-1 md:text-xl`}></textarea>
   <ErrorMsg />
   <button
     type="submit"
     data-submit-contact-form
-    class="m-auto bg-black text-white text-xl px-11 py-2 uppercase cursor-pointer"
+    class="m-auto bg-black text-white text-xl px-11 py-2 uppercase cursor-pointer tracking-widest"
   >
     <span class="hidden group-data-[submitting]:block"
       >{contactForm.submited}</span

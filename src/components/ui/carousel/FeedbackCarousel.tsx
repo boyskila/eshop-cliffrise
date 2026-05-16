@@ -16,18 +16,14 @@ export default (props: {
           <For each={props.reviews}>
             {({ text, author, image }) => (
               <div
-                classList={{
-                  'landscape:flex-[0_0_45%] landscape:lg:flex-[0_0_40%] landscape:2xl:flex-[0_0_24.5%] me-3': true,
-                  'flex-[0_0_90%] md:flex-[0_0_40%] xl:flex-[0_0_33.33%] h-full': true,
-                }}
+                class="landscape:flex-[0_0_45%] landscape:lg:flex-[0_0_40%] landscape:2xl:flex-[0_0_24.5%] me-3
+                flex-[0_0_90%] md:flex-[0_0_40%] xl:flex-[0_0_33.33%] h-full"
               >
                 <div class="p-4 px-7 bg-[#f7f7f7] mt-[40px] h-full">
                   <img
                     src={image.src}
                     alt={author}
                     class="size-20 -mt-13 ml-2"
-                    width="80"
-                    height="80"
                     loading="lazy"
                   />
                   <p class="ml-25 -mt-7 text-xl font-bold">{author}</p>
