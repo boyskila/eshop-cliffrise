@@ -44,6 +44,24 @@ let stripeRedirect: string | null = null
 
 const stripe = getStripe()
 
+const productsSummary = cart
+  .map((item) => {
+    return `${item.name} x ${item.quantity} - ${formatPrice(
+      item.price * item.quantity,
+      lang,
+    )}`
+  })
+  .join('\n')
+const productMetadata = Object.fromEntries(
+  cart.slice(0, 20).map((item, index) => [
+    `product_${index + 1}`,
+    `${item.name} x ${item.quantity} - ${formatPrice(
+      item.price * item.quantity,
+      lang,
+    )}`.slice(0, 500),
+  ]),
+)
+
 if (sessionId) {
   const session = await stripe.checkout.sessions.retrieve(sessionId)
   clientSecret = session.client_secret ?? null
@@ -65,6 +83,7 @@ if (sessionId) {
   const created = await stripe.checkout.sessions.create({
     mode: 'payment',
     ui_mode: 'embedded_page',
+    allow_promotion_codes: true,
     line_items: lineItems,
     billing_address_collection: 'required',
     phone_number_collection: {
@@ -89,6 +108,9 @@ if (sessionId) {
     metadata: {
       shipping_office: shipping.office,
       shipping_fee: shippingFeeEur.toFixed(2),
+      product_count: String(cart.length),
+      ...productMetadata,
+      products: productsSummary.slice(0, 500),
       lang,
     },
   })

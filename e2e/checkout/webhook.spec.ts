@@ -4,11 +4,18 @@ const makeSessionCompletedEvent = (
   overrides: Partial<{
     id: string
     amount_total: number
+    amount_discount: number
     currency: string
     customer_name: string
     customer_email: string | null
     customer_phone: string | null
     metadata: Record<string, string>
+    line_items: {
+      description: string
+      quantity: number
+      amount_total: number
+      currency: string
+    }[]
   }> = {},
 ) => ({
   type: 'checkout.session.completed',
@@ -19,6 +26,9 @@ const makeSessionCompletedEvent = (
       status: 'complete',
       amount_total: overrides.amount_total ?? 2999,
       currency: overrides.currency ?? 'eur',
+      total_details: {
+        amount_discount: overrides.amount_discount ?? 0,
+      },
       customer_details:
         overrides.customer_email !== null
           ? {
@@ -32,6 +42,16 @@ const makeSessionCompletedEvent = (
         shipping_fee: '5.00',
         shipping_office: 'Sofia Office 1',
         lang: 'en',
+      },
+      line_items: {
+        data: overrides.line_items ?? [
+          {
+            description: 'Chunky Chalk',
+            quantity: 2,
+            amount_total: 2499,
+            currency: 'eur',
+          },
+        ],
       },
     },
   },
@@ -90,6 +110,88 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
     expect(customerEmail.html).toContain('Sofia Office 1')
     expect(customerEmail.html).toContain('CLIFFRISE')
     expect(customerEmail.html).toContain('Order Confirmed!')
+    expect(customerEmail.html).toContain('Items')
+    expect(customerEmail.html).toContain('Chunky Chalk')
+    expect(customerEmail.html).toContain('x 2')
+  })
+
+  test('includes purchased products in the confirmation template variables', async ({
+    request,
+  }) => {
+    const response = await request.post('/api/webhooks/stripe/', {
+      data: makeSessionCompletedEvent({
+        amount_total: 4498,
+        metadata: {
+          shipping_fee: '0',
+          shipping_office: 'Sofia Office 1',
+          product_count: '2',
+          product_1: 'Chunky Chalk x 1 - €24.99',
+          product_2: 'CliffRise Tape x 2 - €19.99',
+          products: 'Chunky Chalk x 1 - €24.99\nCliffRise Tape x 2 - €19.99',
+          lang: 'en',
+        },
+      }),
+    })
+
+    expect(response.ok()).toBeTruthy()
+
+    await expect
+      .poll(
+        async () => {
+          const res = await request.get('/api/test/sent-emails/')
+          const data = await res.json()
+          return data.emails
+        },
+        { timeout: 5000 },
+      )
+      .toHaveLength(1)
+
+    const res = await request.get('/api/test/sent-emails/')
+    const { emails } = await res.json()
+    const variables = emails[0].template.variables
+
+    expect(variables.products).toContain('Chunky Chalk x 1')
+    expect(variables.products).toContain('CliffRise Tape x 2')
+    expect(emails[0].html).toContain('Chunky Chalk x 1')
+    expect(emails[0].html).toContain('CliffRise Tape x 2')
+  })
+
+  test('includes promotion code discount in the confirmation template variables', async ({
+    request,
+  }) => {
+    const response = await request.post('/api/webhooks/stripe/', {
+      data: makeSessionCompletedEvent({
+        amount_total: 2499,
+        amount_discount: 500,
+        metadata: {
+          shipping_fee: '0',
+          shipping_office: 'Sofia Office 1',
+          product_count: '1',
+          product_1: 'Chunky Chalk x 1 - €29.99',
+          lang: 'en',
+        },
+      }),
+    })
+
+    expect(response.ok()).toBeTruthy()
+
+    await expect
+      .poll(
+        async () => {
+          const res = await request.get('/api/test/sent-emails/')
+          const data = await res.json()
+          return data.emails
+        },
+        { timeout: 5000 },
+      )
+      .toHaveLength(1)
+
+    const res = await request.get('/api/test/sent-emails/')
+    const { emails } = await res.json()
+    const variables = emails[0].template.variables
+
+    expect(variables.discountLine).toContain('Discount:')
+    expect(variables.discountLine).toContain('€5.00')
   })
 
   test('bccs both owner inboxes on customer confirmation', async ({
