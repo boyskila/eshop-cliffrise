@@ -3,7 +3,7 @@ import type Stripe from 'stripe'
 import { getStripe } from '@services/stripe'
 import { emailService } from '@services/email'
 import { getTranslations } from '@utils/i18'
-import { escapeHtml, formatPrice, isTestMode } from '@utils/func'
+import { escapeHtml, formatPrice, isPresent, isTestMode } from '@utils/func'
 import type { Locale } from '@types'
 
 type EmailLineItem = {
@@ -107,7 +107,7 @@ const buildEmailVariables = async (
   const discountDisplay =
     discountRaw > 0 ? `-${formatPrice(discountRaw, lang, currency)}` : ''
   const productsAmount = (
-    session.amount_subtotal !== null
+    isPresent(session.amount_subtotal)
       ? (session.amount_subtotal ?? 0) / 100
       : (session.amount_total ?? 0) / 100 - shippingFeeRaw + discountRaw
   ).toFixed(2)

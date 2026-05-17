@@ -210,6 +210,14 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
           shipping_office: 'Plovdiv Office 3',
           lang: 'en',
         },
+        line_items: [
+          {
+            description: 'Chunky Chalk',
+            quantity: 4,
+            amount_total: 4499,
+            currency: 'eur',
+          },
+        ],
       }),
     })
 
