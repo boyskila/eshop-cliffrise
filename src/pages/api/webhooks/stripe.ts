@@ -6,23 +6,111 @@ import { getTranslations } from '@utils/i18'
 import { escapeHtml, formatPrice, isTestMode } from '@utils/func'
 import type { Locale } from '@types'
 
-const buildEmailVariables = (
+type EmailLineItem = {
+  name: string
+  quantity: number
+  amount: number
+  currency: string
+}
+
+const getSessionLineItems = async (
   session: Stripe.Checkout.Session,
-): Record<string, string> => {
+): Promise<EmailLineItem[]> => {
+  if (session.line_items?.data?.length) {
+    return session.line_items.data.map((item) => ({
+      name: item.description ?? 'Product',
+      quantity: item.quantity ?? 1,
+      amount: item.amount_total ?? 0,
+      currency: item.currency ?? session.currency ?? 'eur',
+    }))
+  }
+
+  const stripe = getStripe()
+  const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+    limit: 100,
+  })
+
+  return lineItems.data.map((item) => ({
+    name: item.description ?? 'Product',
+    quantity: item.quantity ?? 1,
+    amount: item.amount_total ?? 0,
+    currency: item.currency ?? session.currency ?? 'eur',
+  }))
+}
+
+const buildProductsText = (items: EmailLineItem[], lang: Locale) => {
+  return items
+    .map((item) => {
+      const amount = formatPrice(
+        item.amount / 100,
+        lang,
+        item.currency.toUpperCase(),
+      )
+      return `${escapeHtml(item.name)} x ${item.quantity} - ${amount}`
+    })
+    .join('\n')
+}
+
+const getMetadataProductsText = (metadata?: Stripe.Metadata | null) => {
+  const productCount = Number(metadata?.product_count ?? 0)
+  const products = Array.from({ length: productCount }, (_, index) => {
+    return metadata?.[`product_${index + 1}`]
+  }).filter((product): product is string => Boolean(product))
+
+  return products.length > 0 ? escapeHtml(products.join('\n')) : ''
+}
+
+const getProductsText = async (
+  session: Stripe.Checkout.Session,
+  lang: Locale,
+) => {
+  const metadataProducts = getMetadataProductsText(session.metadata)
+  if (metadataProducts) {
+    return metadataProducts
+  }
+
+  if (session.metadata?.products) {
+    return escapeHtml(session.metadata.products)
+  }
+
+  try {
+    const lineItems = await getSessionLineItems(session)
+    return buildProductsText(lineItems, lang)
+  } catch (err) {
+    console.error('Failed to load Stripe line items:', err)
+    return ''
+  }
+}
+
+const buildEmailVariables = async (
+  session: Stripe.Checkout.Session,
+): Promise<Record<string, string>> => {
   const lang = session.metadata?.lang as Locale
-  const t = getTranslations({ lang }).email
+  const translations = getTranslations({ lang })
+  const t = translations.email
   const name = escapeHtml(session.customer_details?.name ?? 'Customer')
   const amount = ((session.amount_total ?? 0) / 100).toFixed(2)
   const currency = (session.currency ?? 'EUR').toUpperCase()
+  const products = await getProductsText(session, lang)
+  if (!products) {
+    console.error('Order confirmation email has no products', {
+      sessionId: session.id,
+      metadataKeys: Object.keys(session.metadata ?? {}),
+      hasExpandedLineItems: Boolean(session.line_items?.data?.length),
+    })
+  }
 
   const shippingFeeRaw = parseFloat(session.metadata?.shipping_fee ?? '0')
   const shippingFeeDisplay =
     shippingFeeRaw > 0 ? `${formatPrice(shippingFeeRaw, lang)}` : t.freeShipping
+  const discountRaw = (session.total_details?.amount_discount ?? 0) / 100
+  const discountDisplay =
+    discountRaw > 0 ? `-${formatPrice(discountRaw, lang, currency)}` : ''
   const productsAmount = (
-    (session.amount_total ?? 0) / 100 -
-    shippingFeeRaw
+    session.amount_subtotal !== null
+      ? (session.amount_subtotal ?? 0) / 100
+      : (session.amount_total ?? 0) / 100 - shippingFeeRaw + discountRaw
   ).toFixed(2)
-
   return {
     storeName: 'CLIFFRISE',
     orderConfirmedHeading: t.orderConfirmedHeading,
@@ -30,12 +118,16 @@ const buildEmailVariables = (
     thankYou: t.thankYou.replace('{name}', name),
     orderReferenceLabel: t.orderReference,
     sessionId: `#${session.id.slice(-8).toUpperCase()}`,
+    itemsHeading: t.itemsHeading,
+    products,
     productsAmountLabel: t.productsAmount,
     productsAmount,
+    discountLine: discountRaw > 0 ? `${t.discount} ${discountDisplay}` : '',
     totalLabel: t.total,
     amount,
     currency,
     shippingHeading: t.shippingHeading,
+    courierDelivery: t.courierDelivery,
     recipientLabel: t.recipient,
     shippingName: escapeHtml(session.customer_details?.name ?? ''),
     phoneLabel: t.phone,
@@ -78,7 +170,13 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.Checkout.Session
+    let session = event.data.object as Stripe.Checkout.Session
+    if (!isTestMode) {
+      const stripe = getStripe()
+      session = await stripe.checkout.sessions.retrieve(session.id, {
+        expand: ['line_items'],
+      })
+    }
     const customerEmail = session.customer_details?.email
     const lang = session.metadata?.lang as Locale
     const t = getTranslations({ lang }).email
@@ -91,7 +189,7 @@ export const POST: APIRoute = async ({ request }) => {
         subject: t.orderConfirmedSubject,
         template: {
           id: import.meta.env.RESEND_TEMPLATE_ID,
-          variables: buildEmailVariables(session),
+          variables: await buildEmailVariables(session),
         },
       })
 
