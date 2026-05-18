@@ -94,7 +94,7 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
     expect(customerEmail).toMatchObject({
       to: 'customer@example.com',
       subject: 'Order Confirmed – CliffRise',
-      from: 'CliffRise Orders <onboarding@resend.dev>',
+      from: 'CliffRise <hello@cliffrise.com>',
     })
     expect(customerEmail.bcc).toEqual(['rise@cliffrise.com'])
 
@@ -236,7 +236,7 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
     expect(customerEmail).toMatchObject({
       to: 'jane@example.com',
       subject: 'Order Confirmed – CliffRise',
-      from: 'CliffRise Orders <onboarding@resend.dev>',
+      from: 'CliffRise <hello@cliffrise.com>',
     })
     expect(customerEmail.bcc).toEqual(['rise@cliffrise.com'])
 
