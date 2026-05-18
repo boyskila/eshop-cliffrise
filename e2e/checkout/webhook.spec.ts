@@ -96,10 +96,7 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
       subject: 'Order Confirmed – CliffRise',
       from: 'CliffRise Orders <onboarding@resend.dev>',
     })
-    expect(customerEmail.bcc).toEqual([
-      'tancheva.design@gmail.com',
-      'boiskila@gmail.com',
-    ])
+    expect(customerEmail.bcc).toEqual(['rise@cliffrise.com'])
 
     expect(customerEmail.html).toContain('Test Customer')
     expect(customerEmail.html).toContain('+359888000111')
@@ -194,9 +191,7 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
     expect(variables.discountLine).toContain('€5.00')
   })
 
-  test('bccs both owner inboxes on customer confirmation', async ({
-    request,
-  }) => {
+  test('bccs owner inboxes on customer confirmation', async ({ request }) => {
     const response = await request.post('/api/webhooks/stripe/', {
       data: makeSessionCompletedEvent({
         id: 'cs_test_owner_456',
@@ -243,10 +238,7 @@ test.describe('Stripe Webhook - Order Confirmation Email', () => {
       subject: 'Order Confirmed – CliffRise',
       from: 'CliffRise Orders <onboarding@resend.dev>',
     })
-    expect(customerEmail.bcc).toEqual([
-      'tancheva.design@gmail.com',
-      'boiskila@gmail.com',
-    ])
+    expect(customerEmail.bcc).toEqual(['rise@cliffrise.com'])
 
     expect(customerEmail.html).toContain('Jane Doe')
     expect(customerEmail.html).toContain('+359888123456')
