@@ -32,7 +32,6 @@ if (sessionId) {
   if (orderEmail !== undefined) {
     status = 'complete'
     customerEmail = orderEmail ?? null
-    Astro.session?.set('orderEmail', undefined)
   }
 }
 ---
