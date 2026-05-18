@@ -57,7 +57,7 @@ export const contact = defineAction({
         from: import.meta.env.OWNER_EMAIL,
         to: safeEmail,
         subject: `[CliffRise] New message from ${safeName}`,
-        bcc: [import.meta.env.BCC_EMAIL_ONE, import.meta.env.BCC_EMAIL_TWO],
+        bcc: [import.meta.env.BCC_EMAIL],
         template: {
           id: import.meta.env.RESEND_CONTACT_TEMPLATE_ID,
           variables: {
@@ -66,7 +66,6 @@ export const contact = defineAction({
             message: escapeHtml(message).replace(/\n/g, '<br>'),
           },
         },
-        replyTo: email,
       })
 
       if (!result.success) {
