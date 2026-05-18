@@ -185,7 +185,7 @@ export const POST: APIRoute = async ({ request }) => {
       const result = await emailService.get().send({
         from: import.meta.env.OWNER_EMAIL,
         to: customerEmail,
-        bcc: [import.meta.env.BCC_EMAIL_ONE, import.meta.env.BCC_EMAIL_TWO],
+        bcc: [import.meta.env.BCC_EMAIL],
         subject: t.orderConfirmedSubject,
         template: {
           id: import.meta.env.RESEND_TEMPLATE_ID,
