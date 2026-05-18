@@ -56,6 +56,7 @@ export const contact = defineAction({
       const result = await emailService.get().send({
         from: import.meta.env.OWNER_EMAIL,
         to: safeEmail,
+        replyTo: safeEmail,
         subject: `[CliffRise] New message from ${safeName}`,
         bcc: [import.meta.env.BCC_EMAIL],
         template: {
