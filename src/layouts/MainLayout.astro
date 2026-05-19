@@ -67,9 +67,9 @@ Astro.response.headers.set('Cache-Control', 'no-store')
 
 <script>
   window.addEventListener('pageshow', (event) => {
-    const navigationEntry = performance.getEntriesByType(
-      'navigation',
-    )[0] as PerformanceNavigationTiming | undefined
+    const navigationEntry = performance.getEntriesByType('navigation')[0] as
+      | PerformanceNavigationTiming
+      | undefined
 
     if (event.persisted || navigationEntry?.type === 'back_forward') {
       window.location.reload()
