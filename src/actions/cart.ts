@@ -1,7 +1,7 @@
 import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { getProducts } from '@data/products'
-import type { Product } from '@types'
+import type { Locale, Product } from '@types'
 import { renderSizedImage } from '@utils/image'
 
 export type CartItem = Omit<Product, 'image'> & {
@@ -33,7 +33,7 @@ export const cart = {
         context.session?.set('cart', next)
         return { cart: next, addedItem: existingItem }
       }
-      const product = (await getProducts(lang)).find(
+      const product = (await getProducts(lang as Locale)).find(
         (product) => product.id === productId,
       )
       if (product) {
@@ -88,7 +88,7 @@ export const cart = {
     input: z.object({ productId: z.string(), quantity: z.number() }),
     handler: async ({ productId, quantity }, { session }) => {
       const cart = (await session?.get('cart')) ?? []
-      if (quantity < 0) {
+      if (quantity < 1) {
         return cart
       }
       const nextCart = cart.map((item) => {
