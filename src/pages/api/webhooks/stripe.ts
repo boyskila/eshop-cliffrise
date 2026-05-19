@@ -137,7 +137,7 @@ const buildEmailVariables = async (
     shippingFeeLabel: t.shippingFee,
     shippingFee: shippingFeeDisplay,
     supportMessage: t.supportMessage,
-    copyright: `© ${new Date().getFullYear()} Cliffrise. ${t.allRightsReserved}`,
+    copyright: `© ${new Date().getFullYear()} CliffRise. ${t.allRightsReserved}`,
   }
 }
 
