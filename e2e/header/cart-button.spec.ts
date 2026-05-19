@@ -160,7 +160,7 @@ test.describe('Functionallity', () => {
     await expect(badge).toHaveCount(0)
   })
 
-  test('cart button updates cart count when increased/decreased items from the cart', async ({
+  test('cart button updates cart count when increased/decreased items from the cart(should not go below 1)', async ({
     page,
   }) => {
     const header = page.locator('header')
@@ -193,11 +193,9 @@ test.describe('Functionallity', () => {
       waitForActionResponse(page, 'updateQuantity'),
       decreaseButton.click(),
     ])
-    await expect(header.getByLabel(/0 items/i)).toBeVisible()
+    await expect(header.getByLabel(/1 item/i)).toBeVisible()
 
-    const badge = header
-      .getByLabel(/0 items/i)
-      .locator('span', { hasText: '0' })
-    await expect(badge).toHaveCount(0)
+    const badge = header.getByLabel(/1 item/i).locator('span', { hasText: '1' })
+    await expect(badge).toHaveCount(1)
   })
 })
