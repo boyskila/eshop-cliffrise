@@ -12,7 +12,8 @@
       "@signals/*": ["./src/signals/*"],
       "@services/*": ["./src/services/*"],
       "@components/*": ["./src/components/*"],
-      "@assets/*": ["./src/assets/*"]
+      "@assets/*": ["./src/assets/*"],
+      "@layouts/*": ["./src/layouts/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"
