@@ -5,6 +5,43 @@ const BOURGAS_OFFICE_NAME = 'БУРГАС - ИВАН БОГОРОВ'
 
 const PRODUCT_URL = '/en/products/1/'
 
+const addProductFromProductPage = async (page: Page) => {
+  await page.goto(PRODUCT_URL)
+
+  const addResponsePromise = page.waitForResponse(
+    (response) =>
+      response.url().includes('_actions/addToCart') &&
+      response.request().method() === 'POST',
+  )
+
+  await page.getByRole('button', { name: /add chunky chalk.*to cart/i }).click()
+
+  const addResponse = await addResponsePromise
+  expect(addResponse.ok()).toBeTruthy()
+
+  return page
+    .locator('header')
+    .getByRole('button', { name: /shopping cart with 1 item/i })
+}
+
+const openCartAndProceedToShipping = async (page: Page) => {
+  const cartButton = await addProductFromProductPage(page)
+  await expect(cartButton).toBeVisible()
+  await cartButton.click()
+
+  const cartDialog = page.getByRole('dialog', { name: /shopping cart/i })
+  await expect(cartDialog).toBeVisible()
+
+  const checkoutButton = cartDialog.getByRole('button', {
+    name: /proceed to checkout/i,
+  })
+  await expect(checkoutButton).toBeVisible()
+  await expect(checkoutButton).toBeEnabled()
+  await checkoutButton.click()
+
+  await page.waitForURL('**/checkout/shipping/**')
+}
+
 const selectOffice = (page: Page, officeId: number, officeName: string) =>
   page.evaluate(
     ({ officeId, officeName }) => {
@@ -22,31 +59,31 @@ test.describe('Checkout - Shipping', () => {
   test('navigates from product page through cart to shipping form', async ({
     page,
   }) => {
-    await page.goto(PRODUCT_URL)
-
-    await Promise.all([
-      page.waitForResponse(
-        (response) =>
-          response.url().includes('_actions/addToCart') &&
-          response.request().method() === 'POST',
-      ),
-      page.getByRole('button', { name: /add chunky chalk.*to cart/i }).click(),
-    ])
-
-    await page
-      .locator('header')
-      .getByRole('button', { name: /shopping cart/i })
-      .click()
-
-    const cartDialog = page.getByRole('dialog', { name: /shopping cart/i })
-    await expect(cartDialog).toBeVisible()
-
-    await cartDialog
-      .getByRole('button', { name: /proceed to checkout/i })
-      .click()
-
-    await page.waitForURL('**/checkout/shipping/**')
+    await openCartAndProceedToShipping(page)
     await expect(page.locator('#shipping-form')).toBeVisible()
+  })
+
+  test('back to shop returns to checkout origin page', async ({ page }) => {
+    await openCartAndProceedToShipping(page)
+    await page.locator('#back-to-shop').click()
+
+    await expect(page).toHaveURL(new RegExp(`${PRODUCT_URL}$`))
+  })
+
+  test('back to shop falls back to products section on direct shipping visit', async ({
+    page,
+  }) => {
+    const addResponse = await page.request.post('/_actions/addToCart/', {
+      data: { productId: '1', lang: 'en', quantity: 1 },
+    })
+    expect(addResponse.ok()).toBeTruthy()
+
+    await page.goto('/en/checkout/shipping/')
+    await expect(page.locator('#shipping-form')).toBeVisible()
+
+    await page.locator('#back-to-shop').click()
+
+    await expect(page).toHaveURL(/\/en\/#products$/)
   })
 
   test('calculates shipping fee after Bourgas office is selected', async ({
