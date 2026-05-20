@@ -84,7 +84,8 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
     <SubmitButton text={text.continue} />
 
     <a
-      href={`/${lang}/`}
+      id="back-to-shop"
+      href={`/${lang}/#products`}
       class="text-center text-lg text-gray-500 hover:text-black"
     >
       {text.backToShop}
@@ -96,6 +97,19 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
   import { actions } from 'astro:actions'
   import { formatPrice, isPresent } from '../../utils/func'
   import type { Locale } from '@types'
+
+  const backLink = document.getElementById('back-to-shop') as HTMLAnchorElement
+  backLink.addEventListener('click', (event) => {
+    const referrer = document.referrer
+    const isSameSiteReferrer = referrer.startsWith(`${window.location.origin}/`)
+
+    if (!isSameSiteReferrer || referrer === window.location.href) {
+      return
+    }
+
+    event.preventDefault()
+    window.location.href = referrer
+  })
 
   const form = document.getElementById('shipping-form') as HTMLFormElement
   const { feeLabel, calculatingFee, freeShipping, totalWeight } =
