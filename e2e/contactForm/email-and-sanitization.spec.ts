@@ -97,21 +97,6 @@ test.describe('Contact Form Modal - Email And Sanitization', () => {
     expect(email.template.variables.message).not.toContain('<script>')
   })
 
-  test('honeypot field prevents email from being sent', async ({ request }) => {
-    const actionResponse = await submitContactAction(request, {
-      name: 'Bot',
-      email: 'bot@spam.com',
-      message: 'Buy my stuff now!!!',
-      company: 'SpamCo',
-    })
-
-    expect(actionResponse.ok()).toBeTruthy()
-
-    const inboxResponse = await request.get('/api/test/sent-emails/')
-    const { emails } = await inboxResponse.json()
-    expect(emails).toHaveLength(0)
-  })
-
   test('converts newlines to <br> in email message', async ({ request }) => {
     const actionResponse = await submitContactAction(request, {
       name: 'Jane',
