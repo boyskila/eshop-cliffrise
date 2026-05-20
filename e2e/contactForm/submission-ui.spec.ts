@@ -74,9 +74,12 @@ test.describe('Contact Form Modal - Submission UI', () => {
     const submitButton = dialog.getByRole('button', {
       name: 'Send',
     })
-    await submitButton.click()
+    const closeButton = dialog.getByRole('button', { name: 'Close modal' })
 
-    await expect(dialog).toBeHidden({ timeout: 7000 })
+    await submitButton.click()
+    await expect(dialog).toHaveAttribute('data-submitting', 'true')
+    await expect(dialog).not.toHaveAttribute('data-submitting', 'true')
+    await closeButton.click()
 
     const reopened = await openContactFormModal(page)
     const submitButtonReopened = reopened.getByRole('button', { name: 'Send' })

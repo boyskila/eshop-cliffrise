@@ -29,6 +29,9 @@ import SuccessMsg from './SuccessMsg.astro'
     const submitButton = form?.querySelector<HTMLButtonElement>(
       'button[type="submit"]',
     )
+    const closeModalButton = dialog?.querySelector<HTMLButtonElement>(
+      '[aria-label="Close modal"]',
+    )
 
     if (form && submitButton && dialog) {
       const handleError = (message = 'An unexpected error occurred') => {
@@ -37,6 +40,10 @@ import SuccessMsg from './SuccessMsg.astro'
         submitButton.disabled = false
         delete dialog.dataset.submitting
       }
+      closeModalButton?.addEventListener('click', () => {
+        delete dialog.dataset.error
+        delete dialog.dataset.success
+      })
       form.addEventListener(
         'submit',
         async (e) => {
@@ -58,9 +65,7 @@ import SuccessMsg from './SuccessMsg.astro'
             setTimeout(() => {
               form.reset()
               submitButton.disabled = false
-              delete dialog.dataset.success
               delete dialog.dataset.submitting
-              dialog?.close()
             }, 4000)
           } catch (error) {
             handleError((error as Error)?.message)
