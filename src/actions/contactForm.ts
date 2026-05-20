@@ -30,19 +30,9 @@ export const contact = defineAction({
       .string()
       .transform(sanitizeMessage)
       .pipe(z.string().min(10).max(5000)),
-    company: z.string().optional(),
-    contact_extra_info: z.string().optional(),
   }),
 
-  handler: async (
-    { name, email, message, company, contact_extra_info },
-    ctx,
-  ) => {
-    // Honeypot spam protection
-    if (company || contact_extra_info) {
-      return { success: true }
-    }
-
+  handler: async ({ name, email, message }, ctx) => {
     const ip = getClientIp(ctx.request.headers)
     const rateLimit = checkRateLimit({
       key: `contact:${ip}`,
