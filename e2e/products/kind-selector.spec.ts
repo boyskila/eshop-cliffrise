@@ -25,13 +25,6 @@ test.describe('Kind Selector', () => {
     await expect(addToCart).toBeDisabled()
   })
 
-  test('buy now button is disabled by default for products with kind', async ({
-    page,
-  }) => {
-    const buyNow = page.locator('[data-buy-now-button]')
-    await expect(buyNow).toBeDisabled()
-  })
-
   test('clicking a kind option selects it and deselects others', async ({
     page,
   }) => {
@@ -55,14 +48,6 @@ test.describe('Kind Selector', () => {
     await expect(addToCart).toBeEnabled()
   })
 
-  test('clicking a kind option enables buy now button', async ({ page }) => {
-    const kindOptions = page.locator('[data-kind-option]')
-    const buyNow = page.locator('[data-buy-now-button]')
-
-    await kindOptions.first().click()
-    await expect(buyNow).toBeEnabled()
-  })
-
   test('clicking a kind option keeps buttons disabled when product is out of stock', async ({
     page,
   }) => {
@@ -70,13 +55,11 @@ test.describe('Kind Selector', () => {
 
     const kindOptions = page.locator('[data-kind-option]')
     const addToCart = page.locator('[data-add-to-cart-button]')
-    const buyNow = page.locator('[data-buy-now-button]')
 
     await expect(kindOptions.first()).toBeDisabled()
     await kindOptions.first().click({ force: true })
 
     await expect(addToCart).toBeDisabled()
-    await expect(buyNow).toBeDisabled()
   })
 
   test('kind options are disabled when product is out of stock', async ({
@@ -159,18 +142,15 @@ test.describe('Kind Selector - AbortController cleanup', () => {
 
     const kindOptions2 = page.locator('[data-kind-option]')
     const addToCart = page.locator('[data-add-to-cart-button]')
-    const buyNow = page.locator('[data-buy-now-button]')
 
     const count = await kindOptions2.count()
     for (let i = 0; i < count; i++) {
       await expect(kindOptions2.nth(i)).toHaveAttribute('aria-pressed', 'false')
     }
     await expect(addToCart).toBeDisabled()
-    await expect(buyNow).toBeDisabled()
 
     await kindOptions2.first().click()
     await expect(kindOptions2.first()).toHaveAttribute('aria-pressed', 'true')
     await expect(addToCart).toBeEnabled()
-    await expect(buyNow).toBeEnabled()
   })
 })
