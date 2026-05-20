@@ -9,13 +9,14 @@ const className = 'w-full p-2 border-b border-black bg-[#f7f7f7] h-13'
 <form
   method="POST"
   contact-form
+  autocomplete="off"
   class="flex flex-col gap-5 lg:gap-7 flex-1 group-data-[success]:hidden"
 >
   <input
     type="text"
-    name="company"
+    name="contact_extra_info"
     tabindex="-1"
-    autocomplete="off"
+    autocomplete="new-password"
     style="position: absolute; left: -9999px;"
     aria-hidden="true"
   />
