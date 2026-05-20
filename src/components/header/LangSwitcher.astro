@@ -3,10 +3,13 @@ import { getLang } from '@utils/i18'
 
 const langFromParams = getLang(Astro.params)
 const lang = langFromParams === 'en' ? 'bg' : 'en'
+
+const currentPath = Astro.url.pathname
+const newPath = currentPath.replace(`/${langFromParams}/`, `/${lang}/`)
 ---
 
 <a
-  href={`/${lang}/`}
+  href={newPath}
   data-lang-switcher
   data-next-lang={lang}
   data-lang={langFromParams}
@@ -24,7 +27,12 @@ const lang = langFromParams === 'en' ? 'bg' : 'en'
     const { hash } = window.location
     if (langSwitcher && hash) {
       const nextLang = langSwitcher.dataset.nextLang ?? ''
-      langSwitcher.href = nextHref || `/${nextLang}/${hash}`
+      const currentLang = langSwitcher.dataset.lang ?? ''
+      const pathname = window.location.pathname.replace(
+        `/${currentLang}/`,
+        `/${nextLang}/`,
+      )
+      langSwitcher.href = nextHref || `${pathname}${hash}`
     }
   })
   document.addEventListener('click', (e) => {
@@ -37,9 +45,12 @@ const lang = langFromParams === 'en' ? 'bg' : 'en'
         e.preventDefault()
         const nextLang = langSwitcher.dataset.nextLang ?? ''
         const currentLang = langSwitcher.dataset.lang ?? ''
-        const pathname = window.location.pathname.replace(currentLang, nextLang)
-        nextHref = `${window.location.pathname}${hash}` // current pathname become next candidate
-        history.pushState(null, '', `${pathname}${hash}`)
+        const pathname = window.location.pathname.replace(
+          `/${currentLang}/`,
+          `/${nextLang}/`,
+        )
+        nextHref = `${pathname}${hash}`
+        history.pushState(null, '', nextHref)
       }
     }
   })
