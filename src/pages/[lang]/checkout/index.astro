@@ -53,13 +53,15 @@ const productsSummary = cart
   })
   .join('\n')
 const productMetadata = Object.fromEntries(
-  cart.slice(0, 20).map((item, index) => [
-    `product_${index + 1}`,
-    `${item.name} x ${item.quantity} - ${formatPrice(
-      item.price * item.quantity,
-      lang,
-    )}`.slice(0, 500),
-  ]),
+  cart
+    .slice(0, 20)
+    .map((item, index) => [
+      `product_${index + 1}`,
+      `${item.name} x ${item.quantity} - ${formatPrice(
+        item.price * item.quantity,
+        lang,
+      )}`.slice(0, 500),
+    ]),
 )
 
 if (sessionId) {
