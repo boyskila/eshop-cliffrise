@@ -17,6 +17,10 @@ const rateLimitWindowMs = Number(
   import.meta.env.CONTACT_RATE_LIMIT_WINDOW_MS ?? 60_000,
 )
 
+const getEmailAddress = (value: string) => {
+  return value.match(/<([^>]+)>/)?.[1] ?? value
+}
+
 export const contact = defineAction({
   accept: 'form',
   input: z.object({
@@ -27,11 +31,15 @@ export const contact = defineAction({
       .transform(sanitizeMessage)
       .pipe(z.string().min(10).max(5000)),
     company: z.string().optional(),
+    contact_extra_info: z.string().optional(),
   }),
 
-  handler: async ({ name, email, message, company }, ctx) => {
+  handler: async (
+    { name, email, message, company, contact_extra_info },
+    ctx,
+  ) => {
     // Honeypot spam protection
-    if (company) {
+    if (company || contact_extra_info) {
       return { success: true }
     }
 
@@ -51,12 +59,14 @@ export const contact = defineAction({
 
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
+    const ownerEmail = import.meta.env.OWNER_EMAIL
+    const ownerEmailAddress = getEmailAddress(ownerEmail)
 
     try {
       const result = await emailService.get().send({
-        from: import.meta.env.OWNER_EMAIL,
-        to: safeEmail,
-        replyTo: safeEmail,
+        from: ownerEmail,
+        to: ownerEmailAddress,
+        replyTo: email,
         subject: `[CliffRise] New message from ${safeName}`,
         bcc: [import.meta.env.BCC_EMAIL],
         template: {

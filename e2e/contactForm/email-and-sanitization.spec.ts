@@ -48,7 +48,8 @@ test.describe('Contact Form Modal - Email And Sanitization', () => {
     const data = await response.json()
 
     expect(data.emails[0]).toMatchObject({
-      to: 'test@example.com',
+      to: 'hello@cliffrise.com',
+      replyTo: 'test@example.com',
       subject: '[CliffRise] New message from Test User',
       template: {
         variables: {
@@ -89,6 +90,7 @@ test.describe('Contact Form Modal - Email And Sanitization', () => {
     expect(email.subject).toBe(
       '[CliffRise] New message from &lt;b&gt;Test User&lt;&#x2F;b&gt;',
     )
+    expect(email.replyTo).toBe('test@example.com')
     expect(email.template.variables.message).toContain(
       'Hello &lt;script&gt;alert(1)&lt;&#x2F;script&gt;<br>Line 2',
     )
