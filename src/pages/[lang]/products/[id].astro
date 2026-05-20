@@ -3,7 +3,6 @@ import MainLayout from '@layouts/MainLayout.astro'
 import { getTranslations, getLang } from '@utils/i18'
 import { getProducts } from '@data/products'
 import { AddToCartButton } from '@components/products/AddToCartButton'
-import { BuyNowButton } from '@components/products/BuyNowButton'
 import ProductsCarousel from '@components/ui/carousel/ProductsCarousel'
 import KindSelector from '@components/products/KindSelector.astro'
 import { QuantityControls } from '@components/products/QuantityControls'
@@ -116,14 +115,6 @@ const productOutOfStock = product.outOfStock ?? false
             productId={product.id}
             lang={lang}
             label={translations.addToCart}
-            disabled={productRequiresKindSelection || productOutOfStock}
-            client:load
-          />
-          <BuyNowButton
-            productName={product.name}
-            productId={product.id}
-            lang={lang}
-            label={translations.buyNow}
             disabled={productRequiresKindSelection || productOutOfStock}
             client:load
           />
