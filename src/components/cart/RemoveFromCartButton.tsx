@@ -29,7 +29,7 @@ export const RemoveFromCartButton = ({ item, className }: Props) => {
         viewBox="0 0 20 20"
         fill="none"
       >
-        <circle cx="10" cy="10" r="10" fill="#919191" />
+        <circle cx="10" cy="10" r="10" class="fill-[#000] hover:fill-[#333]" />
         <path
           d="M14 6L6 14"
           stroke="white"
