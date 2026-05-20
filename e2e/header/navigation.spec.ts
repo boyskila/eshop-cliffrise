@@ -247,6 +247,34 @@ test.describe('Header navigation destinations', () => {
     )
   })
 
+  test('desktop: language switcher preserves current static page path', async ({
+    page,
+  }) => {
+    await page.setViewportSize(VIEWPORTS.desktop)
+    await page.goto('/en/privacy-policy/')
+
+    const langSwitcher = page.locator('[data-lang-switcher]')
+    await expect(langSwitcher).toHaveAttribute('href', '/bg/privacy-policy/')
+
+    await langSwitcher.click()
+
+    await expect(page).toHaveURL(/\/bg\/privacy-policy\/$/)
+  })
+
+  test('desktop: language switcher preserves current product page path', async ({
+    page,
+  }) => {
+    await page.setViewportSize(VIEWPORTS.desktop)
+    await page.goto('/en/products/1/')
+
+    const langSwitcher = page.locator('[data-lang-switcher]')
+    await expect(langSwitcher).toHaveAttribute('href', '/bg/products/1/')
+
+    await langSwitcher.click()
+
+    await expect(page).toHaveURL(/\/bg\/products\/1\/$/)
+  })
+
   test('mobile menu: items match expected labels and destinations', async ({
     page,
   }) => {
