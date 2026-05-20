@@ -12,12 +12,12 @@ export default (props: {
   return (
     <Arrows api={emblaApi!}>
       <div class="overflow-hidden" ref={emblaRef}>
-        <div class="flex touch-pan-y touch-pinch-zoom items-center">
+        <div class="flex touch-pan-y touch-pinch-zoom items-stretch">
           <For each={props.reviews}>
             {({ text, author, image }) => (
               <div
                 class="landscape:flex-[0_0_45%] landscape:lg:flex-[0_0_40%] landscape:2xl:flex-[0_0_24.5%] me-3
-                flex-[0_0_90%] md:flex-[0_0_40%] xl:flex-[0_0_33.33%] h-[-webkit-fill-available]"
+                flex-[0_0_90%] md:flex-[0_0_40%] xl:flex-[0_0_33.33%]"
               >
                 <div class="p-4 px-7 bg-[#f7f7f7] mt-[40px] h-full">
                   <img
