@@ -17,10 +17,6 @@ const rateLimitWindowMs = Number(
   import.meta.env.CONTACT_RATE_LIMIT_WINDOW_MS ?? 60_000,
 )
 
-const getEmailAddress = (value: string) => {
-  return value.match(/<([^>]+)>/)?.[1] ?? value
-}
-
 export const contact = defineAction({
   accept: 'form',
   input: z.object({
@@ -50,12 +46,11 @@ export const contact = defineAction({
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
     const ownerEmail = import.meta.env.OWNER_EMAIL
-    const ownerEmailAddress = getEmailAddress(ownerEmail)
 
     try {
       const result = await emailService.get().send({
         from: ownerEmail,
-        to: ownerEmailAddress,
+        to: ownerEmail,
         replyTo: email,
         subject: `[CliffRise] New message from ${safeName}`,
         bcc: [import.meta.env.BCC_EMAIL],
