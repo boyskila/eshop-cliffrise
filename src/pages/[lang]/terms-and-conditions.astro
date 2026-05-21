@@ -33,12 +33,27 @@ const { termsAndConditions } = getTranslations(Astro.params)
     <h2 class="mb-4 text-2xl font-bold">
       {termsAndConditions.deliveryTitle}
     </h2>
-    <p class="mb-8">{termsAndConditions.deliveryText}</p>
+    <div class="mb-8 space-y-4">
+      {termsAndConditions.deliveryText.map((text) => <p>{text}</p>)}
+    </div>
 
     <h2 class="mb-4 text-2xl font-bold">
       {termsAndConditions.withdrawalTitle}
     </h2>
-    <p class="mb-8">{termsAndConditions.withdrawalText}</p>
+    <div class="mb-8 space-y-4">
+      <p>{termsAndConditions.withdrawalText.intro}</p>
+      <p>{termsAndConditions.withdrawalText.requirementsIntro}</p>
+      <ul class="list-disc space-y-2 pl-6">
+        {
+          termsAndConditions.withdrawalText.requirements.map((requirement) => (
+            <li>{requirement}</li>
+          ))
+        }
+      </ul>
+      <p>{termsAndConditions.withdrawalText.returnCost}</p>
+      <p>{termsAndConditions.withdrawalText.refusal}</p>
+      <p>{termsAndConditions.withdrawalText.refund}</p>
+    </div>
 
     <h2 class="mb-4 text-2xl font-bold">
       {termsAndConditions.disputesTitle}
