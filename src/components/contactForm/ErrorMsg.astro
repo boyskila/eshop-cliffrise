@@ -9,6 +9,8 @@ const { contactForm } = translations
   class="hidden group-data-[error]:block text-center"
   role="alert"
   data-form-error-msg
+  data-default-error={contactForm.message.error}
+  data-message-limit-reached-error={contactForm.message.messageLimitReached}
 >
   {contactForm.message.error}
 </div>
