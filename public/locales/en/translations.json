@@ -134,6 +134,7 @@
         "submited": "Sending...",
         "message": {
             "error": "Something went wrong, Please try again.",
+            "messageTooLong": "Message must be 5000 characters or fewer.",
             "success": {
                 "part1": "Thanks for reaching out!",
                 "part2": "We'll get back to you shortly."
@@ -176,9 +177,26 @@
             "Stripe;"
         ],
         "deliveryTitle": "4. Delivery",
-        "deliveryText": "Deliveries are made to a Speedy office.",
+        "deliveryText": [
+            "Deliveries are made through Speedy courier service to an office or address specified by the customer when completing the order.",
+            "The delivery time is up to 2 business days for in-stock products, counted from order confirmation. Delays may occur during public holidays, busy periods, or circumstances beyond the merchant's control.",
+            "Delivery costs are calculated at checkout and are borne by the customer, unless otherwise stated.",
+            "The customer is required to inspect the shipment upon receipt. In case of visible damage or discrepancies, this must be noted with the courier when receiving the shipment."
+        ],
         "withdrawalTitle": "5. Right of withdrawal",
-        "withdrawalText": "Under the Consumer Protection Act, the customer has the right to withdraw from the placed order within 14 days.",
+        "withdrawalText": {
+            "intro": "Under the Consumer Protection Act, the customer has the right to withdraw from the placed order within 14 days from the date of receiving the goods, without giving a reason.",
+            "requirementsIntro": "For the return to be accepted, the products must be:",
+            "requirements": [
+                "in their original commercial condition;",
+                "without signs of use;",
+                "without damage, dirt, or compromised integrity;",
+                "with the original packaging, if any."
+            ],
+            "returnCost": "The cost of returning the goods is borne by the customer, except in cases of an incorrectly sent or defective product.",
+            "refusal": "The merchant reserves the right to refuse acceptance of returned goods when they do not meet the above conditions.",
+            "refund": "The amount for an approved return will be refunded using the same payment method used for the original payment, within 14 days after receiving and inspecting the returned product."
+        },
         "disputesTitle": "6. Online dispute resolution"
     },
     "privacyPolicy": {
