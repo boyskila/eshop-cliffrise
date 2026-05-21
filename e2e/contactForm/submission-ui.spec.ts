@@ -48,6 +48,31 @@ test.describe('Contact Form Modal - Submission UI', () => {
     )
   })
 
+  test('shows message length notice as soon as content reaches 5000 characters', async ({
+    page,
+  }) => {
+    const dialog = await openContactFormModal(page)
+    const messageInput = dialog.getByPlaceholder('Message')
+    const errorMessage = dialog.locator('[data-form-error-msg]')
+
+    await messageInput.fill('M'.repeat(4999))
+    await expect(errorMessage).toBeHidden()
+
+    await messageInput.fill('M'.repeat(5000))
+    await expect(errorMessage).toHaveText(
+      'Message limit reached: 5000 characters.',
+    )
+
+    await messageInput.fill('M'.repeat(5001))
+    await expect(messageInput).toHaveValue('M'.repeat(5000))
+    await expect(errorMessage).toHaveText(
+      'Message limit reached: 5000 characters.',
+    )
+
+    await messageInput.fill('M'.repeat(4999))
+    await expect(errorMessage).toBeHidden()
+  })
+
   test('submit button disabled during form submission', async ({ page }) => {
     const dialog = await openContactFormModal(page)
 

@@ -134,7 +134,7 @@
         "submited": "Sending...",
         "message": {
             "error": "Something went wrong, Please try again.",
-            "messageTooLong": "Message must be 5000 characters or fewer.",
+            "messageLimitReached": "Message limit reached: 5000 characters.",
             "success": {
                 "part1": "Thanks for reaching out!",
                 "part2": "We'll get back to you shortly."
