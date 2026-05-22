@@ -112,7 +112,7 @@ export default (props: { images: string[] }) => {
         </For>
       </div>
       <CarouselDots
-        className="opacity-0 md:opacity-100 py-0 md:py-5"
+        class="opacity-0 md:opacity-100 py-0 md:py-5"
         api={emblaApi}
       />
     </div>

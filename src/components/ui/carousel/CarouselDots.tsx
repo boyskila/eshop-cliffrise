@@ -1,14 +1,18 @@
-import { For, createSignal, createEffect, type Accessor } from 'solid-js'
+import {
+  For,
+  createSignal,
+  createEffect,
+  type Accessor,
+  onMount,
+} from 'solid-js'
 import { type EmblaCarouselType } from 'embla-carousel'
 
 export const CarouselDots = (props: {
   api: Accessor<EmblaCarouselType | undefined>
-  className?: string
+  class?: string
 }) => {
   const [scrollSnaps, setScrollSnaps] = createSignal<number[]>([])
-  const [selectedIndex, setSelectedIndex] = createSignal(
-    props.api()?.selectedScrollSnap(),
-  )
+  const [selectedIndex, setSelectedIndex] = createSignal(0)
 
   const onSelect = (api: EmblaCarouselType) => {
     setSelectedIndex(api.selectedScrollSnap())
@@ -18,6 +22,13 @@ export const CarouselDots = (props: {
     setScrollSnaps(api.scrollSnapList())
   }
 
+  onMount(() => {
+    const api = props.api()
+    if (api) {
+      setSelectedIndex(api.selectedScrollSnap())
+    }
+  })
+
   createEffect(() => {
     const api = props.api()
     if (api) {
@@ -26,8 +37,9 @@ export const CarouselDots = (props: {
       api.on('reInit', onInit).on('reInit', onSelect).on('select', onSelect)
     }
   })
+
   return (
-    <div class={`flex justify-center gap-2 mt-7 ${props.className || ''}`}>
+    <div class={`flex justify-center gap-2 mt-7 ${props.class || ''}`}>
       <For each={scrollSnaps()}>
         {(_, index) => {
           return (

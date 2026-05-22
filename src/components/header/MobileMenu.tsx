@@ -1,5 +1,5 @@
 import { isMobileMenuOpen, setIsMobileMenuOpen } from '@signals/mobileMenu'
-import { onCleanup, onMount } from 'solid-js'
+import { onCleanup, onMount, For } from 'solid-js'
 
 type Props = {
   menuItems: { href: string; title: string }[]
@@ -37,13 +37,15 @@ export const MobileMenu = (props: Props) => {
       classList={{ hidden: !isMobileMenuOpen() }}
     >
       <nav class="flex flex-col space-y-3 text-center" role="menu">
-        {props.menuItems.map(({ href, title }) => {
-          return (
-            <a href={href} role="menuitem" class="text-white font-medium">
-              {title}
-            </a>
-          )
-        })}
+        <For each={props.menuItems}>
+          {({ href, title }) => {
+            return (
+              <a href={href} role="menuitem" class="text-white font-medium">
+                {title}
+              </a>
+            )
+          }}
+        </For>
       </nav>
     </div>
   )

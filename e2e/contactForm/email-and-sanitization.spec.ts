@@ -172,14 +172,10 @@ test.describe('Contact Form Modal - Email And Sanitization', () => {
 
     const inboxResponse = await request.get('/api/test/sent-emails/')
     const { emails } = await inboxResponse.json()
-    expect(emails[0].html).toContain(
-      'Line one<br>Line two<br>Line three',
-    )
+    expect(emails[0].html).toContain('Line one<br>Line two<br>Line three')
   })
 
-  test('sends maximum length contact message', async ({
-    request,
-  }) => {
+  test('sends maximum length contact message', async ({ request }) => {
     const maxMessage = 'L'.repeat(5000)
     const actionResponse = await submitContactAction(request, {
       name: 'Long Message Sender',

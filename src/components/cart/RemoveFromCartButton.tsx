@@ -4,10 +4,10 @@ import type { CartItem } from '@actions'
 
 type Props = {
   item: CartItem
-  className?: string
+  class?: string
 }
 
-export const RemoveFromCartButton = ({ item, className }: Props) => {
+export const RemoveFromCartButton = ({ item, ...rest }: Props) => {
   return (
     <button
       aria-label={`Remove ${item.name} from cart`}
@@ -18,7 +18,7 @@ export const RemoveFromCartButton = ({ item, className }: Props) => {
         data && updateCart(data)
       }}
       classList={{
-        [className ?? '']: true,
+        [rest.class ?? '']: true,
         'text-md font-bold self-end cursor-pointer': true,
       }}
     >

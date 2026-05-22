@@ -1,282 +1,278 @@
 {
-    "productsWithMission": "Products with mission",
-    "addToCart": "Buy",
-    "buyNow": "View",
-    "selectSize": "Select size:",
-    "ourMission": "Our Mission",
-    "tetevenClimb": "Teteven climb",
-    "aboutUs": "About Us",
+  "productsWithMission": "Products with mission",
+  "addToCart": "Buy",
+  "buyNow": "View",
+  "selectSize": "Select size:",
+  "ourMission": "Our Mission",
+  "tetevenClimb": "Teteven climb",
+  "aboutUs": "About Us",
+  "products": "Products",
+  "theCause": "The Cause",
+  "seeAlso": "See Also",
+  "comingSoon": "Coming soon",
+  "freeDelivery": "Free Delivery over",
+  "header": {
+    "title": "CliffRise",
+    "subtitle": "Funding Routes",
     "products": "Products",
-    "theCause": "The Cause",
-    "seeAlso": "See Also",
-    "comingSoon": "Coming soon",
-    "freeDelivery": "Free Delivery over",
-    "header": {
-        "title": "CliffRise",
-        "subtitle": "Funding Routes",
-        "products": "Products",
-        "ourCause": "Our Mission",
-        "tetevenClimb": "Teteven Climb",
-        "aboutUs": "About Us",
-        "cart": "Cart",
-        "contact": "Contact us"
-    },
-    "heroTitle": "CliffRise is a way to give back to the rocks - every purchase supports the creation of new climbing routes.",
-    "causeP1": "By choosing CliffRise chalk or any of our other products, you directly support the development of climbing areas in Bulgaria. Every purchase helps create new routes, maintain existing ones, and improve the places we all love to climb.",
-    "causeP2": "CliffRise is a way to give back to the rocks and the climbing community. Your support helps us keep moving forward, bring new ideas to life, and continue growing climbing in Bulgaria.",
-    "aboutUsP1": "The guys behind the idea are well-known climbers in Bulgaria, with a long list of difficult ascents behind them.",
-    "aboutUsP2": "United by their love for climbing and the desire to give something back to the community, Boyko Lalov and Alex Yanev began working together in 2020, when they developed 'The Cave' crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
-    "footer": {
-        "supportClimbing": "Want to support",
-        "contactUs": "Contact us",
-        "termsAndConditions": "Terms and Conditions",
-        "privacyPolicy": "Privacy Policy",
-        "gdpr": "GDPR",
-        "facebook": "Facebook",
-        "instagram": "Instagram",
-        "copyright": "2026 CliffRise © All rights reserved"
-    },
-    "notification": {
-        "addedToCart": "Added",
-        "routeFunding": "This purchase helps fund new climbing routes!"
-    },
-    "cart": {
-        "title": "Your Cart",
-        "empty": "Your cart is empty",
-        "emptyDesc": "Add some products to get started",
-        "remove": "Remove",
-        "total": "Total",
-        "checkout": "Proceed to Checkout",
-        "routeFunding": "This purchase helps create new climbing routes"
-    },
-    "eventsSection": {
-        "text": "Teteven Climb brings together people who love climbing, movement, and time spent outdoors. Days on the rock, yoga, new connections, shared stories, and ideas - all surrounded by the beautiful nature of Teteven. The festival creates a space where the climbing community comes together naturally, with good vibes, shared projects, and the desire for more days on the rock.",
-        "seeEvent": "See the event",
-        "meetup2026Alt": "Teteven Climb Vol. 2 - Climbing Festival 2026"
-    },
-    "shipping": {
-        "title": "Shipping to office/automat",
-        "courierLabel": "Select courier",
-        "speedy": "Speedy",
-        "ekont": "Ekont",
-        "nameLabel": "Recipient name",
-        "namePlaceholder": "Full name",
-        "phoneLabel": "Phone number",
-        "phonePlaceholder": "+359...",
-        "officeLabel": "Courier office",
-        "officePlaceholder": "Office name or address",
-        "selectedOffice": "Selected office",
-        "changeOffice": "Change",
-        "continue": "Continue to Payment",
-        "backToShop": "\u2190 Continue Shopping",
-        "loading": "Loading...",
-        "error": "Something went wrong. Please try again.",
-        "required": "This field is required",
-        "shippingFeeLabel": "Shipping fee:",
-        "calculatingFee": "Calculating...",
-        "selectCaption": "Select this office",
-        "workingTime": "Working time:",
-        "monFri": "Mon-Fri",
-        "sat": "Sat",
-        "selectOffice": "Select this office",
-        "loadingMap": "Loading offices...",
-        "searchPlaceholder": "Search by office name or automat",
-        "noResults": "No offices found",
-        "searchLabel": "Office",
-        "orBrowseMap": "Or browse on the map:",
-        "mapUnavailable": "Map unavailable"
-    },
-    "checkout": {
-        "title": "Checkout",
-        "loading": "Loading checkout...",
-        "error": "Something went wrong. Please try again.",
-        "retry": "Back to Shop",
-        "backToShop": "\u2190 Continue Shopping",
-        "successTitle": "Thank You!",
-        "successMessage": "Your order has been placed successfully.",
-        "confirmationEmail": "A confirmation has been sent to",
-        "continueShopping": "Continue Shopping",
-        "shippingFee": "Shipping",
-        "freeShipping": "Free shipping",
-        "freeShippingThreshold": "Free shipping on orders over \u20ac30"
-    },
-    "email": {
-        "orderConfirmedSubject": "Order Confirmed – CliffRise",
-        "orderConfirmedHeading": "Order Confirmed!",
-        "thankYou": "Thank you for your order.",
-        "orderReference": "Order reference:",
-        "itemsHeading": "Items",
-        "itemColumn": "Item",
-        "qtyColumn": "Qty",
-        "priceColumn": "Price",
-        "shippingHeading": "Shipping",
-        "courierDelivery": "The order will be delivered by Speedy courier service within 2 working days.",
-        "recipient": "Recipient:",
-        "phone": "Phone:",
-        "office": "Office:",
-        "productsAmount": "Products:",
-        "discount": "Discount:",
-        "shippingFee": "Shipping fee:",
-        "freeShipping": "Free",
-        "total": "Total:",
-        "supportMessage": "Thank you for supporting new climbing routes in Bulgaria!",
-        "allRightsReserved": "All rights reserved.",
-        "greeting": "Hi"
-    },
-    "contactForm": {
-        "support": "Support",
-        "description1": "We develop climbing routes and maintain climbing areas.",
-        "description2": "If you’d like to get involved, support the work, or simply ask a question, write to us and we’ll get back to you.",
-        "namePlaceholder": "Name",
-        "emailPlaceholder": "Email",
-        "messagePlaceholder": "Message",
-        "submit": "Send",
-        "submited": "Sending...",
-        "message": {
-            "error": "Something went wrong, Please try again.",
-            "messageLimitReached": "Message limit reached: 5000 characters.",
-            "success": {
-                "part1": "Thanks for reaching out!",
-                "part2": "We'll get back to you shortly."
-            }
-        }
-    },
-    "feedbacks": {
-        "maniacName": "The Maniac",
-        "mateyName": "Matey Mitcev",
-        "cvetyName": "Cvety Paunova",
-        "xeniaName": "Xenia Kotleva",
-        "bat-didoName": "Dilyan Petrov",
-        "maniac": "I love the chalk texture. I have very dry skin, so it’s hard to find something that stays on my hands. I’m super happy to have found this chalk—it has everything I need and definitely boosts my confidence on the rock.",
-        "matey": "If you want to take care of your climbing experience and make it with most pleasure, CliffRise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!",
-        "cvety": "Not only is CliffRise the first brand that makes extra moist quality climbing chalk which saved my dry skin in the harsh winter, but also is the only one that has such a huge social impact. This is not just a chalk, it is an investment in the future of climbing.",
-        "xenia": "CliffRise is the chalk that helps you send big time. It sticks perfectly to my dry skin while giving maximum grip on the wall. It’s such a difference!",
-        "bat-dido": "CliffRise is not a product, it’s a passion and when there is passion, there is progress! Everything the team do is with heart and soul. Sustainable and with ideas, everything is made by climbers for climbers - from chalk, to merchandise… to creating new routes. Keep up the great work!"
-
-    },
-    "termsAndConditions": {
-        "title": "Terms and Conditions for Using the Online Store",
-        "intro": "These Terms and Conditions govern the relationship between “SOLUTION 83” EOOD and users of the online store.",
-        "merchantTitle": "1. Merchant details",
-        "company": "“SOLUTION 83” EOOD",
-        "companyDetails": [
-            "UIC: 200511527",
-            "NRA e-shop registration number: F0006586",
-            "Representative: Boyko Lalov",
-            "Email: rise@cliffrise.com"
-        ],
-        "ordersTitle": "2. Orders",
-        "ordersText": [
-            "Orders can be placed 24/7 through the site.",
-            "After a successful order, the customer receives confirmation by email."
-        ],
-        "paymentTitle": "3. Prices and payment",
-        "paymentIntro": "Payments can be made by:",
-        "paymentItems": [
-            "bank card;",
-            "Stripe;"
-        ],
-        "deliveryTitle": "4. Delivery",
-        "deliveryText": [
-            "Deliveries are made through Speedy courier service to an office or address specified by the customer when completing the order.",
-            "The delivery time is up to 2 business days for in-stock products, counted from order confirmation. Delays may occur during public holidays, busy periods, or circumstances beyond the merchant's control.",
-            "Delivery costs are calculated at checkout and are borne by the customer, unless otherwise stated.",
-            "The customer is required to inspect the shipment upon receipt. In case of visible damage or discrepancies, this must be noted with the courier when receiving the shipment."
-        ],
-        "withdrawalTitle": "5. Right of withdrawal",
-        "withdrawalText": {
-            "intro": "Under the Consumer Protection Act, the customer has the right to withdraw from the placed order within 14 days from the date of receiving the goods, without giving a reason.",
-            "requirementsIntro": "For the return to be accepted, the products must be:",
-            "requirements": [
-                "in their original commercial condition;",
-                "without signs of use;",
-                "without damage, dirt, or compromised integrity;",
-                "with the original packaging, if any."
-            ],
-            "returnCost": "The cost of returning the goods is borne by the customer, except in cases of an incorrectly sent or defective product.",
-            "refusal": "The merchant reserves the right to refuse acceptance of returned goods when they do not meet the above conditions.",
-            "refund": "The amount for an approved return will be refunded using the same payment method used for the original payment, within 14 days after receiving and inspecting the returned product."
-        },
-        "disputesTitle": "6. Online dispute resolution",
-        "billingManagementTitle": "7. Payment management",
-        "billingManagementTextBeforeLink": "Payments, payment methods, and invoices can be managed through Stripe's secure customer ",
-        "billingManagementLinkText": "portal",
-        "billingManagementTextAfterLink": "",
-        "billingManagementUrl": "https://billing.stripe.com/p/login/cNi00leyD6TS7Dy91q9k400",
-        "billingManagementNote": "Access to the portal may require confirmation via email address."
-    },
-    "privacyPolicy": {
-        "title": "Privacy Policy and Personal Data Protection",
-        "intro": "This policy governs the processing of personal data when using the online store and website owned by “SOLUTION 83” EOOD.",
-        "administratorTitle": "1. Data controller details",
-        "company": "“SOLUTION 83” EOOD",
-        "companyDetails": [
-            "UIC: 200511527",
-            "Representative: Boyko Lalov",
-            "Email: rise@cliffrise.com"
-        ],
-        "administratorText": "“SOLUTION 83” EOOD is a personal data controller within the meaning of Regulation (EU) 2016/679 (GDPR) and the Personal Data Protection Act.",
-        "dataTitle": "2. What data we collect",
-        "dataIntro": "When using the site and online store, we may collect the following personal data:",
-        "dataItems": [
-            "first and last name;",
-            "email address;",
-            "phone number;",
-            "delivery and billing address;",
-            "order information;",
-            "IP address;",
-            "data through cookies;",
-            "information sent through contact forms or email communication."
-        ],
-        "noPaymentData": "We do not store bank card or payment instrument data.",
-        "stripeTitle": "3. Payments through Stripe",
-        "stripeText": "Online payments are processed through Stripe Payments Europe Ltd.",
-        "moreInfo": "More information: ",
-        "stripeUrl": "https://stripe.com/privacy",
-        "rightsTitle": "4. User rights",
-        "rightsIntro": "Every user has the right:",
-        "rightsItems": [
-            "to access their data;",
-            "to rectification;",
-            "to erasure;",
-            "to restriction of processing;",
-            "to object;",
-            "to data portability;",
-            "to file a complaint with the Commission for Personal Data Protection."
-        ],
-        "cookiesTitle": "5. Cookies",
-        "cookiesText": "The site uses cookies for proper operation, analytics, and improving the user experience."
-    },
-    "gdpr": {
-        "title": "Information about personal data processing under GDPR",
-        "intro": "By using this site, you agree that “SOLUTION 83” EOOD may process your personal data in accordance with Regulation (EU) 2016/679 (GDPR).",
-        "company": "“SOLUTION 83” EOOD",
-        "companyDetails": [
-            "UIC: 200511527",
-            "Representative: Boyko Lalov",
-            "Email: rise@cliffrise.com"
-        ],
-        "dataTitle": "What data we process",
-        "dataItems": [
-            "names;",
-            "phone number;",
-            "email address;",
-            "delivery address;",
-            "IP address;",
-            "order data;",
-            "technical information about the device and browser;",
-            "information through cookies."
-        ],
-        "rightsTitle": "Your rights",
-        "rightsIntro": "Under GDPR, you have the right:",
-        "rightsItems": [
-            "to receive information about the stored data;",
-            "to request correction or deletion;",
-            "to restrict processing;",
-            "to object to processing;",
-            "to request data portability;",
-            "to withdraw given consent;",
-            "to file a complaint with a supervisory authority."
-        ]
+    "ourCause": "Our Mission",
+    "tetevenClimb": "Teteven Climb",
+    "aboutUs": "About Us",
+    "cart": "Cart",
+    "contact": "Contact us"
+  },
+  "heroTitle": "CliffRise is a way to give back to the rocks - every purchase supports the creation of new climbing routes.",
+  "causeP1": "By choosing CliffRise chalk or any of our other products, you directly support the development of climbing areas in Bulgaria. Every purchase helps create new routes, maintain existing ones, and improve the places we all love to climb.",
+  "causeP2": "CliffRise is a way to give back to the rocks and the climbing community. Your support helps us keep moving forward, bring new ideas to life, and continue growing climbing in Bulgaria.",
+  "aboutUsP1": "The guys behind the idea are well-known climbers in Bulgaria, with a long list of difficult ascents behind them.",
+  "aboutUsP2": "United by their love for climbing and the desire to give something back to the community, Boyko Lalov and Alex Yanev began working together in 2020, when they developed 'The Cave' crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
+  "footer": {
+    "supportClimbing": "Want to support",
+    "contactUs": "Contact us",
+    "termsAndConditions": "Terms and Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "gdpr": "GDPR",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "copyright": "2026 CliffRise © All rights reserved"
+  },
+  "notification": {
+    "addedToCart": "Added",
+    "routeFunding": "This purchase helps fund new climbing routes!"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "emptyDesc": "Add some products to get started",
+    "remove": "Remove",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "routeFunding": "This purchase helps create new climbing routes"
+  },
+  "eventsSection": {
+    "text": "Teteven Climb brings together people who love climbing, movement, and time spent outdoors. Days on the rock, yoga, new connections, shared stories, and ideas - all surrounded by the beautiful nature of Teteven. The festival creates a space where the climbing community comes together naturally, with good vibes, shared projects, and the desire for more days on the rock.",
+    "seeEvent": "See the event",
+    "meetup2026Alt": "Teteven Climb Vol. 2 - Climbing Festival 2026"
+  },
+  "shipping": {
+    "title": "Shipping to office/automat",
+    "courierLabel": "Select courier",
+    "speedy": "Speedy",
+    "ekont": "Ekont",
+    "nameLabel": "Recipient name",
+    "namePlaceholder": "Full name",
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "+359...",
+    "officeLabel": "Courier office",
+    "officePlaceholder": "Office name or address",
+    "selectedOffice": "Selected office",
+    "changeOffice": "Change",
+    "continue": "Continue to Payment",
+    "backToShop": "\u2190 Continue Shopping",
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again.",
+    "required": "This field is required",
+    "shippingFeeLabel": "Shipping fee:",
+    "calculatingFee": "Calculating...",
+    "selectCaption": "Select this office",
+    "workingTime": "Working time:",
+    "monFri": "Mon-Fri",
+    "sat": "Sat",
+    "selectOffice": "Select this office",
+    "loadingMap": "Loading offices...",
+    "searchPlaceholder": "Search by office name or automat",
+    "noResults": "No offices found",
+    "searchLabel": "Office",
+    "orBrowseMap": "Or browse on the map:",
+    "mapUnavailable": "Map unavailable"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "loading": "Loading checkout...",
+    "error": "Something went wrong. Please try again.",
+    "retry": "Back to Shop",
+    "backToShop": "\u2190 Continue Shopping",
+    "successTitle": "Thank You!",
+    "successMessage": "Your order has been placed successfully.",
+    "confirmationEmail": "A confirmation has been sent to",
+    "continueShopping": "Continue Shopping",
+    "shippingFee": "Shipping",
+    "freeShipping": "Free shipping",
+    "freeShippingThreshold": "Free shipping on orders over \u20ac30"
+  },
+  "email": {
+    "orderConfirmedSubject": "Order Confirmed – CliffRise",
+    "orderConfirmedHeading": "Order Confirmed!",
+    "thankYou": "Thank you for your order.",
+    "orderReference": "Order reference:",
+    "itemsHeading": "Items",
+    "itemColumn": "Item",
+    "qtyColumn": "Qty",
+    "priceColumn": "Price",
+    "shippingHeading": "Shipping",
+    "courierDelivery": "The order will be delivered by Speedy courier service within 2 working days.",
+    "recipient": "Recipient:",
+    "phone": "Phone:",
+    "office": "Office:",
+    "productsAmount": "Products:",
+    "discount": "Discount:",
+    "shippingFee": "Shipping fee:",
+    "freeShipping": "Free",
+    "total": "Total:",
+    "supportMessage": "Thank you for supporting new climbing routes in Bulgaria!",
+    "allRightsReserved": "All rights reserved.",
+    "greeting": "Hi"
+  },
+  "contactForm": {
+    "support": "Support",
+    "description1": "We develop climbing routes and maintain climbing areas.",
+    "description2": "If you’d like to get involved, support the work, or simply ask a question, write to us and we’ll get back to you.",
+    "namePlaceholder": "Name",
+    "emailPlaceholder": "Email",
+    "messagePlaceholder": "Message",
+    "submit": "Send",
+    "submited": "Sending...",
+    "message": {
+      "error": "Something went wrong, Please try again.",
+      "messageLimitReached": "Message limit reached: 5000 characters.",
+      "success": {
+        "part1": "Thanks for reaching out!",
+        "part2": "We'll get back to you shortly."
+      }
     }
+  },
+  "feedbacks": {
+    "maniacName": "The Maniac",
+    "mateyName": "Matey Mitcev",
+    "cvetyName": "Cvety Paunova",
+    "xeniaName": "Xenia Kotleva",
+    "bat-didoName": "Dilyan Petrov",
+    "maniac": "I love the chalk texture. I have very dry skin, so it’s hard to find something that stays on my hands. I’m super happy to have found this chalk—it has everything I need and definitely boosts my confidence on the rock.",
+    "matey": "If you want to take care of your climbing experience and make it with most pleasure, CliffRise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!",
+    "cvety": "Not only is CliffRise the first brand that makes extra moist quality climbing chalk which saved my dry skin in the harsh winter, but also is the only one that has such a huge social impact. This is not just a chalk, it is an investment in the future of climbing.",
+    "xenia": "CliffRise is the chalk that helps you send big time. It sticks perfectly to my dry skin while giving maximum grip on the wall. It’s such a difference!",
+    "bat-dido": "CliffRise is not a product, it’s a passion and when there is passion, there is progress! Everything the team do is with heart and soul. Sustainable and with ideas, everything is made by climbers for climbers - from chalk, to merchandise… to creating new routes. Keep up the great work!"
+  },
+  "termsAndConditions": {
+    "title": "Terms and Conditions for Using the Online Store",
+    "intro": "These Terms and Conditions govern the relationship between “SOLUTION 83” EOOD and users of the online store.",
+    "merchantTitle": "1. Merchant details",
+    "company": "“SOLUTION 83” EOOD",
+    "companyDetails": [
+      "UIC: 200511527",
+      "NRA e-shop registration number: F0006586",
+      "Representative: Boyko Lalov",
+      "Email: rise@cliffrise.com"
+    ],
+    "ordersTitle": "2. Orders",
+    "ordersText": [
+      "Orders can be placed 24/7 through the site.",
+      "After a successful order, the customer receives confirmation by email."
+    ],
+    "paymentTitle": "3. Prices and payment",
+    "paymentIntro": "Payments can be made by:",
+    "paymentItems": ["bank card;", "Stripe;"],
+    "deliveryTitle": "4. Delivery",
+    "deliveryText": [
+      "Deliveries are made through Speedy courier service to an office or address specified by the customer when completing the order.",
+      "The delivery time is up to 2 business days for in-stock products, counted from order confirmation. Delays may occur during public holidays, busy periods, or circumstances beyond the merchant's control.",
+      "Delivery costs are calculated at checkout and are borne by the customer, unless otherwise stated.",
+      "The customer is required to inspect the shipment upon receipt. In case of visible damage or discrepancies, this must be noted with the courier when receiving the shipment."
+    ],
+    "withdrawalTitle": "5. Right of withdrawal",
+    "withdrawalText": {
+      "intro": "Under the Consumer Protection Act, the customer has the right to withdraw from the placed order within 14 days from the date of receiving the goods, without giving a reason.",
+      "requirementsIntro": "For the return to be accepted, the products must be:",
+      "requirements": [
+        "in their original commercial condition;",
+        "without signs of use;",
+        "without damage, dirt, or compromised integrity;",
+        "with the original packaging, if any."
+      ],
+      "returnCost": "The cost of returning the goods is borne by the customer, except in cases of an incorrectly sent or defective product.",
+      "refusal": "The merchant reserves the right to refuse acceptance of returned goods when they do not meet the above conditions.",
+      "refund": "The amount for an approved return will be refunded using the same payment method used for the original payment, within 14 days after receiving and inspecting the returned product."
+    },
+    "disputesTitle": "6. Online dispute resolution",
+    "billingManagementTitle": "7. Payment management",
+    "billingManagementTextBeforeLink": "Payments, payment methods, and invoices can be managed through Stripe's secure customer ",
+    "billingManagementLinkText": "portal",
+    "billingManagementTextAfterLink": "",
+    "billingManagementUrl": "https://billing.stripe.com/p/login/cNi00leyD6TS7Dy91q9k400",
+    "billingManagementNote": "Access to the portal may require confirmation via email address."
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy and Personal Data Protection",
+    "intro": "This policy governs the processing of personal data when using the online store and website owned by “SOLUTION 83” EOOD.",
+    "administratorTitle": "1. Data controller details",
+    "company": "“SOLUTION 83” EOOD",
+    "companyDetails": [
+      "UIC: 200511527",
+      "Representative: Boyko Lalov",
+      "Email: rise@cliffrise.com"
+    ],
+    "administratorText": "“SOLUTION 83” EOOD is a personal data controller within the meaning of Regulation (EU) 2016/679 (GDPR) and the Personal Data Protection Act.",
+    "dataTitle": "2. What data we collect",
+    "dataIntro": "When using the site and online store, we may collect the following personal data:",
+    "dataItems": [
+      "first and last name;",
+      "email address;",
+      "phone number;",
+      "delivery and billing address;",
+      "order information;",
+      "IP address;",
+      "data through cookies;",
+      "information sent through contact forms or email communication."
+    ],
+    "noPaymentData": "We do not store bank card or payment instrument data.",
+    "stripeTitle": "3. Payments through Stripe",
+    "stripeText": "Online payments are processed through Stripe Payments Europe Ltd.",
+    "moreInfo": "More information: ",
+    "stripeUrl": "https://stripe.com/privacy",
+    "rightsTitle": "4. User rights",
+    "rightsIntro": "Every user has the right:",
+    "rightsItems": [
+      "to access their data;",
+      "to rectification;",
+      "to erasure;",
+      "to restriction of processing;",
+      "to object;",
+      "to data portability;",
+      "to file a complaint with the Commission for Personal Data Protection."
+    ],
+    "cookiesTitle": "5. Cookies",
+    "cookiesText": "The site uses cookies for proper operation, analytics, and improving the user experience."
+  },
+  "gdpr": {
+    "title": "Information about personal data processing under GDPR",
+    "intro": "By using this site, you agree that “SOLUTION 83” EOOD may process your personal data in accordance with Regulation (EU) 2016/679 (GDPR).",
+    "company": "“SOLUTION 83” EOOD",
+    "companyDetails": [
+      "UIC: 200511527",
+      "Representative: Boyko Lalov",
+      "Email: rise@cliffrise.com"
+    ],
+    "dataTitle": "What data we process",
+    "dataItems": [
+      "names;",
+      "phone number;",
+      "email address;",
+      "delivery address;",
+      "IP address;",
+      "order data;",
+      "technical information about the device and browser;",
+      "information through cookies."
+    ],
+    "rightsTitle": "Your rights",
+    "rightsIntro": "Under GDPR, you have the right:",
+    "rightsItems": [
+      "to receive information about the stored data;",
+      "to request correction or deletion;",
+      "to restrict processing;",
+      "to object to processing;",
+      "to request data portability;",
+      "to withdraw given consent;",
+      "to file a complaint with a supervisory authority."
+    ]
+  }
 }

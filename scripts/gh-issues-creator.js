@@ -161,9 +161,7 @@ const parseIssues = (content) => {
     .slice(1)
     .map((block) => `### ${block}`.trim())
 
-  return issueBlocks
-    .map(parseIssueBlock)
-    .filter((issue) => issue !== null)
+  return issueBlocks.map(parseIssueBlock).filter((issue) => issue !== null)
 }
 
 const createLabels = (issues) => {
@@ -195,7 +193,9 @@ const createLabels = (issues) => {
         labelsWorking = false
         break
       } else {
-        console.error(`\nFailed to create label "${labelName}": ${message.trim()}`)
+        console.error(
+          `\nFailed to create label "${labelName}": ${message.trim()}`,
+        )
       }
     }
   }

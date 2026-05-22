@@ -1,7 +1,8 @@
 /* Main variable font - replaces Regular, Medium, SemiBold, Bold */
 @font-face {
   font-family: 'Sofia Sans';
-  src: url('/fonts/SofiaSans-VariableFont_wght.woff2') format('truetype-variations');
+  src: url('/fonts/SofiaSans-VariableFont_wght.woff2')
+    format('truetype-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -10,7 +11,8 @@
 /* Italic variable font - replaces Italic */
 @font-face {
   font-family: 'Sofia Sans';
-  src: url('/fonts/SofiaSans-Italic-VariableFont_wght.woff2') format('truetype-variations');
+  src: url('/fonts/SofiaSans-Italic-VariableFont_wght.woff2')
+    format('truetype-variations');
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
@@ -31,14 +33,12 @@
  
  * © 2026 MyFonts Inc. */
 
-
-  
 @font-face {
-  font-family: "NaftaBrushFont";
-  src: url('/fonts/nafta.woff2') format('woff2'), url('/fonts/nafta.woff') format('woff');
+  font-family: 'NaftaBrushFont';
+  src:
+    url('/fonts/nafta.woff2') format('woff2'),
+    url('/fonts/nafta.woff') format('woff');
 }
-
-
 
 /* Apply globally */
 body {
@@ -47,5 +47,5 @@ body {
 }
 
 .nafta-brush {
-  font-family: "NaftaBrushFont", cursive;
+  font-family: 'NaftaBrushFont', cursive;
 }
