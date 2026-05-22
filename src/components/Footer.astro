@@ -7,7 +7,7 @@ const lang = getLang(Astro.params)
 
 <footer
   id="footer"
-  class="relative isolate h-[75vh] md:h-[50vh] landscape:h-[40vh]
+  class="relative isolate h-[75vh] md:h-[50vh] phone-landscape:h-[70vh] md:landscape:h-[40vh]
   xl:h-[50vh] xl:landscape:h-[50vh]"
 >
   <div
@@ -110,19 +110,23 @@ const lang = getLang(Astro.params)
     contactModalController = new AbortController()
     const { signal } = contactModalController
 
-    const button = document.querySelector('[data-open-contact-form-modal]')
+    const openButtons = document.querySelectorAll(
+      '[data-open-contact-form-modal]',
+    )
     const dialog =
       document.querySelector<HTMLDialogElement>('#contactFormModal')
 
-    if (button && dialog) {
-      button.addEventListener(
-        'click',
-        () => {
-          dialog.showModal()
-          document.body.classList.add('overflow-hidden')
-        },
-        { signal },
-      )
+    if (openButtons.length && dialog) {
+      openButtons.forEach((button) => {
+        button.addEventListener(
+          'click',
+          () => {
+            dialog.showModal()
+            document.body.classList.add('overflow-hidden')
+          },
+          { signal },
+        )
+      })
 
       const handleClose = () => {
         document.body.classList.remove('overflow-hidden')

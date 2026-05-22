@@ -197,7 +197,13 @@
             "refusal": "The merchant reserves the right to refuse acceptance of returned goods when they do not meet the above conditions.",
             "refund": "The amount for an approved return will be refunded using the same payment method used for the original payment, within 14 days after receiving and inspecting the returned product."
         },
-        "disputesTitle": "6. Online dispute resolution"
+        "disputesTitle": "6. Online dispute resolution",
+        "billingManagementTitle": "7. Payment management",
+        "billingManagementTextBeforeLink": "Payments, payment methods, and invoices can be managed through Stripe's secure customer ",
+        "billingManagementLinkText": "portal",
+        "billingManagementTextAfterLink": "",
+        "billingManagementUrl": "https://billing.stripe.com/p/login/cNi00leyD6TS7Dy91q9k400",
+        "billingManagementNote": "Access to the portal may require confirmation via email address."
     },
     "privacyPolicy": {
         "title": "Privacy Policy and Personal Data Protection",
