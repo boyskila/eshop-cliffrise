@@ -59,9 +59,31 @@ const { termsAndConditions } = getTranslations(Astro.params)
       {termsAndConditions.disputesTitle}
     </h2>
     <p class="mb-8">
-      <a href="https://ec.europa.eu/consumers/odr" target="_blank"
+      <a
+        href="https://ec.europa.eu/consumers/odr"
+        target="_blank"
+        class="font-semibold underline underline-offset-4"
         >https://ec.europa.eu/consumers/odr</a
       >
     </p>
+
+    <h2 class="mb-4 text-2xl font-bold">
+      {termsAndConditions.billingManagementTitle}
+    </h2>
+    <div class="mb-8 space-y-4">
+      <p>
+        {termsAndConditions.billingManagementTextBeforeLink}
+        <a
+          href={termsAndConditions.billingManagementUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-semibold underline underline-offset-4"
+        >
+          {termsAndConditions.billingManagementLinkText}
+        </a>
+        {termsAndConditions.billingManagementTextAfterLink}
+      </p>
+      <p>{termsAndConditions.billingManagementNote}</p>
+    </div>
   </section>
 </MainLayout>

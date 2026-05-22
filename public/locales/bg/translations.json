@@ -197,7 +197,13 @@
             "refund": "Сумата по одобреното връщане се възстановява по същия начин, по който е извършено плащането, в срок до 14 дни след получаване и проверка на върнатия продукт."
         },
         "disputesTitle": "6. Онлайн решаване на спорове",
-        "disputesText": "https://ec.europa.eu/consumers/odr"
+        "disputesText": "https://ec.europa.eu/consumers/odr",
+        "billingManagementTitle": "7. Управление на плащанията",
+        "billingManagementTextBeforeLink": "Плащанията, методите за плащане и фактурите могат да бъдат управлявани чрез защитения клиентски ",
+        "billingManagementLinkText": "портал",
+        "billingManagementTextAfterLink": " на Stripe.",
+        "billingManagementUrl": "https://billing.stripe.com/p/login/cNi00leyD6TS7Dy91q9k400",
+        "billingManagementNote": "Достъпът до портала може да изисква потвърждение чрез имейл адрес."
     },
     "privacyPolicy": {
         "title": "Политика за поверителност и защита на личните данни",
