@@ -18,9 +18,13 @@ test.describe('Products Carousel - Links', () => {
     }
   })
 
-  test('hover image uses Tailwind-only delayed visibility', async ({ page }) => {
+  test('hover image uses Tailwind-only delayed visibility', async ({
+    page,
+  }) => {
     const carousel = page.locator('#products')
-    const imageLink = carousel.locator('a:has([data-product-card-image])').first()
+    const imageLink = carousel
+      .locator('a:has([data-product-card-image])')
+      .first()
     const hoverImage = imageLink.locator('[data-product-card-hover-image]')
 
     await expect(imageLink).toHaveClass(/hover:opacity-100/)

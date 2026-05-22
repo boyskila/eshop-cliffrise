@@ -40,9 +40,7 @@ export default function CartButton(props: Props) {
       </svg>
       <Show
         when={count()}
-        fallback={
-          <span class="absolute -top-2 -right-2 h-5 w-5 opacity-0"></span>
-        }
+        fallback={<span class="absolute -top-2 -right-2 h-5 w-5 opacity-0" />}
       >
         <span class="absolute top-[-4px] -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
           {count()}

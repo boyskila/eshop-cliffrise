@@ -19,7 +19,7 @@
       <div style="background:#f5f5f5;border-radius:6px;padding:14px 20px;margin-bottom:32px">
         <p style="margin:0;font-size:14px;line-height:1.7;color:#333;white-space:pre-line">{{products}}</p>
       </div>
-      
+
       <div style="background:#1a1a1a;border-radius:6px;padding:16px 20px;margin-bottom:32px">
         <p style="margin:0;font-size:13px;color:#aaa;letter-spacing:1px">{{productsAmountLabel}}</p>
         <p style="margin:4px 0 12px;font-size:16px;font-weight:bold;color:#ffffff">{{productsAmount}} {{currency}}</p>
@@ -36,7 +36,7 @@
       </div>
 
       <hr style="border:none;border-top:1px solid #eee;margin:0 0 32px">
-      
+
       <h3 style="margin:0 0 16px;font-size:13px;letter-spacing:1px;color:#999">{{shippingHeading}}</h3>
       <div style="background:#f5f5f5;border-radius:6px;padding:14px 20px;margin-bottom:20px">
         <p style="margin:0;font-size:14px;line-height:1.6;color:#333">{{courierDelivery}}</p>
@@ -58,10 +58,11 @@
         </tbody>
       </table>
     </div>
-    
+
     <div style="background:#f5f5f5;padding:24px 40px;text-align:center;border-top:1px solid #eee">
       <p style="margin:0;font-size:12px;color:#999">{{supportMessage}}</p>
       <p style="margin:8px 0 0;font-size:11px;color:#bbb">{{copyright}}</p>
     </div>
+
   </div>
 </div>

@@ -1,6 +1,6 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @source "../../src/**/*.{astro,tsx,ts}";
-@import "./fonts.css";
+@import './fonts.css';
 
 @custom-variant phone-landscape (@media (orientation: landscape) and (max-height: 500px));
 @custom-variant tablet-landscape (@media (orientation: landscape) and (min-height: 501px) and (max-width: 1024px));

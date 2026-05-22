@@ -10,11 +10,12 @@ export const BuyNowButton = (props: {
   label?: string
   disabled?: boolean
 }) => {
-  const [isDisabled, setIsDisabled] = createSignal(props.disabled ?? false)
+  const [isDisabled, setIsDisabled] = createSignal(false)
   const [isBusy, setIsBusy] = createSignal(false)
   const [kind, setKind] = createSignal<string | undefined>(undefined)
 
   onMount(() => {
+    setIsDisabled(props.disabled ?? false)
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail
       const selectedKind = detail?.kind as string

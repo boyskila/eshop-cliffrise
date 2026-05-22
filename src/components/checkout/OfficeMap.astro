@@ -211,12 +211,9 @@ const { lang, text, initialOfficeId } = Astro.props
       markersByOfficeId.set(office.id, marker)
     }
 
-    let selectedOfficeId: number | null = null
-
     const initialId = Number(wrapper.dataset.initialOfficeId) || null
 
     if (initialId) {
-      selectedOfficeId = initialId
       const marker = markersByOfficeId.get(initialId)
       const office = officeDataById.get(initialId)
       if (marker && office) {
@@ -228,7 +225,6 @@ const { lang, text, initialOfficeId } = Astro.props
 
     document.addEventListener('office-selected', ((event: CustomEvent) => {
       const id = event.detail?.id
-      selectedOfficeId = id
 
       markersByOfficeId.forEach((marker, markerId) => {
         const office = officeDataById.get(markerId)

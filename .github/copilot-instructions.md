@@ -17,26 +17,29 @@ Enforces the user's personal JS/TS coding style preferences on all code Claude w
 **Always use arrow functions instead of regular `function` declarations.**
 
 ❌ Avoid:
+
 ```js
 function add(a, b) {
-  return a + b;
+  return a + b
 }
 
 function handleClick(event) {
-  console.log(event);
+  console.log(event)
 }
 ```
 
 ✅ Prefer:
+
 ```js
-const add = (a, b) => a + b;
+const add = (a, b) => a + b
 
 const handleClick = (event) => {
-  console.log(event);
-};
+  console.log(event)
+}
 ```
 
 **Exceptions (do NOT convert to arrow functions):**
+
 - Generator functions (`function*`) — cannot be arrow functions
 - Class methods — arrow functions in classes are fine but not required
 
@@ -47,20 +50,23 @@ const handleClick = (event) => {
 **Always use `const` by default. Only use `let` when the variable needs to be reassigned.**
 
 ❌ Avoid:
+
 ```js
-let name = 'John';
-let items = [];
-let count = 0; // if count is never reassigned
+let name = 'John'
+let items = []
+let count = 0 // if count is never reassigned
 ```
 
 ✅ Prefer:
+
 ```js
-const name = 'John';
-const items = [];
-let count = 0; // only if count is reassigned later e.g. count++
+const name = 'John'
+const items = []
+let count = 0 // only if count is reassigned later e.g. count++
 ```
 
 **Rules:**
+
 - `const` for all variables that are never reassigned
 - `const` for arrays and objects (even if their contents change — the reference stays the same)
 - `let` only when the variable is explicitly reassigned (loops, counters, accumulators)
@@ -73,20 +79,17 @@ let count = 0; // only if count is reassigned later e.g. count++
 **Use curly braces `{}` when the function body spans multiple lines.**
 
 ❌ Avoid:
+
 ```js
-const process = (data) =>
-  data
-    .filter(x => x.active)
-    .map(x => x.value);
+const process = (data) => data.filter((x) => x.active).map((x) => x.value)
 ```
 
 ✅ Prefer:
+
 ```js
 const process = (data) => {
-  return data
-    .filter(x => x.active)
-    .map(x => x.value);
-};
+  return data.filter((x) => x.active).map((x) => x.value)
+}
 ```
 
 ---
@@ -96,28 +99,32 @@ const process = (data) => {
 **Skip curly braces and `return` when the entire function fits on one line.**
 
 ❌ Avoid:
+
 ```js
 const double = (x) => {
-  return x * 2;
-};
+  return x * 2
+}
 
 const getName = (user) => {
-  return user.name;
-};
+  return user.name
+}
 ```
 
 ✅ Prefer:
-```js
-const double = (x) => x * 2;
 
-const getName = (user) => user.name;
+```js
+const double = (x) => x * 2
+
+const getName = (user) => user.name
 ```
 
 **Decision rule — use implicit return when:**
+
 - The entire expression fits comfortably on one line (~80 chars)
 - There is only one expression to return (no intermediate variables)
 
 **Use curly braces + explicit return when:**
+
 - The function has multiple statements
 - There are intermediate variables
 - The expression is too long for one line
@@ -129,28 +136,31 @@ const getName = (user) => user.name;
 **Always use clear, descriptive names. Never use single-letter or cryptic abbreviations.**
 
 ❌ Avoid:
+
 ```js
-const ta = document.querySelector('textarea');
-const btn = document.getElementById('submit');
-const cb = (e) => console.log(e);
-const res = await fetch('/api');
-const el = document.querySelector('.card');
-const msg = 'Hello';
-const val = input.value;
+const ta = document.querySelector('textarea')
+const btn = document.getElementById('submit')
+const cb = (e) => console.log(e)
+const res = await fetch('/api')
+const el = document.querySelector('.card')
+const msg = 'Hello'
+const val = input.value
 ```
 
 ✅ Prefer:
+
 ```js
-const textArea = document.querySelector('textarea');
-const submitButton = document.getElementById('submit');
-const handleChange = (event) => console.log(event);
-const response = await fetch('/api');
-const cardElement = document.querySelector('.card');
-const message = 'Hello';
-const inputValue = input.value;
+const textArea = document.querySelector('textarea')
+const submitButton = document.getElementById('submit')
+const handleChange = (event) => console.log(event)
+const response = await fetch('/api')
+const cardElement = document.querySelector('.card')
+const message = 'Hello'
+const inputValue = input.value
 ```
 
 **Rules:**
+
 - Names should convey meaning at a glance — a reader shouldn't need to look up what a variable holds
 - Use camelCase with full words: `officeNameElement`, not `offNameEl`
 - Loop iterators (`i`, `j`) and arrow-function parameters in short callbacks (`x => x * 2`) are acceptable exceptions
@@ -163,32 +173,35 @@ const inputValue = input.value;
 **Always use `if/else` blocks with curly braces. Avoid short-circuit evaluation (`&&`, `||`) for control flow. Ternary operators are preferred for value assignments.**
 
 ❌ Avoid:
+
 ```js
-isValid && doSomething();
-hasError || setDefault();
-if (done) return;
-const label = condition ? (isAdmin ? 'Admin' : 'User') : 'Guest';
+isValid && doSomething()
+hasError || setDefault()
+if (done) return
+const label = condition ? (isAdmin ? 'Admin' : 'User') : 'Guest'
 ```
 
 ✅ Prefer:
+
 ```js
 if (isValid) {
-  doSomething();
+  doSomething()
 }
 
 if (!hasError) {
-  setDefault();
+  setDefault()
 }
 
 if (done) {
-  return;
+  return
 }
 
-const value = condition ? 'yes' : 'no';
-const label = isActive ? 'On' : 'Off';
+const value = condition ? 'yes' : 'no'
+const label = isActive ? 'On' : 'Off'
 ```
 
 **Rules:**
+
 - Ternary operators are preferred for simple value assignments: `const x = condition ? a : b`
 - Only one level of ternary nesting — never nest ternaries inside ternaries
 - Nullish coalescing (`??`) and optional chaining (`?.`) are fine — they are value expressions, not control flow
@@ -198,20 +211,18 @@ const label = isActive ? 'On' : 'Off';
 
 ---
 
-
-
 ## Quick Reference
 
-| Situation | Style |
-|---|---|
-| Simple one-liner | `const fn = (x) => x * 2` |
-| Multi-line body | `const fn = (x) => { return ... }` |
-| Variable never reassigned | `const x = 1` |
-| Variable reassigned | `let x = 1` |
-| Naming | `textArea` not `ta`, `submitButton` not `btn` |
-| Conditionals | `if (x) { ... }` not `x && doThing()`, ternaries OK |
-| Regular function | ❌ convert to arrow |
-| `var` | ❌ never use |
+| Situation                 | Style                                               |
+| ------------------------- | --------------------------------------------------- |
+| Simple one-liner          | `const fn = (x) => x * 2`                           |
+| Multi-line body           | `const fn = (x) => { return ... }`                  |
+| Variable never reassigned | `const x = 1`                                       |
+| Variable reassigned       | `let x = 1`                                         |
+| Naming                    | `textArea` not `ta`, `submitButton` not `btn`       |
+| Conditionals              | `if (x) { ... }` not `x && doThing()`, ternaries OK |
+| Regular function          | ❌ convert to arrow                                 |
+| `var`                     | ❌ never use                                        |
 
 ---
 

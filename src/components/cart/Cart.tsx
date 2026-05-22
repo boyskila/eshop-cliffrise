@@ -25,8 +25,6 @@ type Props = {
 }
 
 export const Cart = (props: Props) => {
-  const { title, empty, emptyDesc, total, checkout, routeFunding } = props.text
-
   const syncCartFromSession = async () => {
     const { data } = await actions.getCart()
     data && updateCart(data)
@@ -76,20 +74,25 @@ export const Cart = (props: Props) => {
         class="fixed right-0 top-0 h-full w-full md:max-w-md bg-white z-[70] p-7 xl:p-8"
       >
         <div class="flex flex-col h-[97%]">
-          <CartHeader title={title} />
+          <CartHeader title={props.text.title} />
           <div class="mb-5 mt-3 xl:mb-5 xl:mt-5 h-[1px] bg-black" />
 
           <div class="flex-1 overflow-y-auto">
             <Show
               when={cart().length}
-              fallback={<EmptyCart empty={empty} emptyDesc={emptyDesc} />}
+              fallback={
+                <EmptyCart
+                  empty={props.text.empty}
+                  emptyDesc={props.text.emptyDesc}
+                />
+              }
             >
               <For each={cart()}>
                 {(item) => (
                   <div class="flex items-center space-x-3 relative ml-3 first:mt-4 not-first:my-6">
                     <RemoveFromCartButton
                       item={item}
-                      className="absolute -left-2 -top-2"
+                      class="absolute -left-2 -top-2"
                     />
                     <img src={item.image} alt={item.name} class="size-20" />
                     <div class="flex flex-col flex-1">
@@ -127,9 +130,9 @@ export const Cart = (props: Props) => {
             <CartFooter
               lang={props.lang}
               text={{
-                total,
-                checkout,
-                routeFunding,
+                total: props.text.total,
+                checkout: props.text.checkout,
+                routeFunding: props.text.routeFunding,
               }}
             />
           </Show>

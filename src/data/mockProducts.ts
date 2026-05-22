@@ -91,7 +91,11 @@ const enProducts: Product[] = [
         image: resolveProductImage('beanies/black'),
         inStock: true,
       },
-      { name: 'red', image: resolveProductImage('beanies/blue'), inStock: true },
+      {
+        name: 'red',
+        image: resolveProductImage('beanies/blue'),
+        inStock: true,
+      },
       {
         name: 'green',
         image: resolveProductImage('beanies/green'),
