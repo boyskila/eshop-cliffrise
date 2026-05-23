@@ -2,10 +2,10 @@ import { For } from 'solid-js'
 import useEmblaCarousel from 'embla-carousel-solid'
 import { CAROUSEL_OPTIONS } from './config'
 import Arrows from './ContainerWithArrows'
-import type { GetImageResult } from 'astro'
+import type { RenderImage } from '@types'
 
 export default (props: {
-  reviews: { text: string; author: string; image: GetImageResult }[]
+  reviews: { text: string; author: string; image: RenderImage }[]
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(CAROUSEL_OPTIONS)
 
@@ -23,7 +23,7 @@ export default (props: {
                   <img
                     src={image.src}
                     alt={author}
-                    class="size-20 -mt-13 ml-2"
+                    class="bg-shimmer size-20 -mt-13 ml-2 object-cover rounded-full"
                     loading="lazy"
                   />
                   <p class="ml-25 -mt-7 text-xl font-bold">{author}</p>

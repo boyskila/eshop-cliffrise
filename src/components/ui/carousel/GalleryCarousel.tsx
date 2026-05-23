@@ -63,27 +63,17 @@ export default (props: { images: string[] }) => {
               {slide.images.length === 3 ? (
                 <div class="flex flex-col md:flex-row gap-4 h-full">
                   <div class="flex flex-col md:flex-row flex-1 gap-4 h-full">
-                    <div class="flex-1 overflow-hidden">
-                      <img
-                        src={slide.images[0]}
-                        class="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div class="flex-1 overflow-hidden">
-                      <img
-                        src={slide.images[1]}
-                        class="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div class="flex-1 overflow-hidden">
-                      <img
-                        src={slide.images[2]}
-                        class="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
+                    <For each={slide.images}>
+                      {(image) => (
+                        <div class="flex-1 overflow-hidden">
+                          <img
+                            src={image}
+                            class="bg-shimmer w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                    </For>
                   </div>
                 </div>
               ) : (
@@ -99,7 +89,7 @@ export default (props: { images: string[] }) => {
                       <div class="flex-1 overflow-hidden flex items-center justify-center h-full">
                         <img
                           src={image}
-                          class="w-full h-full object-cover object-center"
+                          class="bg-shimmer w-full h-full object-cover object-center"
                           loading="lazy"
                         />
                       </div>

@@ -24,6 +24,28 @@
   animation: slide-in-right 0.3s ease-out;
 }
 
+/* @keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.bg-shimmer {
+  background-color: #e5e7eb;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.5s infinite linear;
+} */
+
 @layer base {
   html {
     scroll-padding-top: 100px; /* Height of the fixed header */
@@ -32,5 +54,31 @@
 
   a {
     @apply p-1 hover:opacity-80 transition-opacity cursor-pointer;
+  }
+}
+
+@theme {
+  --animate-shimmer: shimmer 1.5s linear infinite;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+}
+
+@layer utilities {
+  .bg-shimmer {
+    @apply animate-shimmer bg-neutral-200 bg-[length:200%_100%] bg-no-repeat;
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      transparent 100%
+    );
   }
 }

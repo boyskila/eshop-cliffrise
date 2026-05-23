@@ -94,7 +94,11 @@ export const Cart = (props: Props) => {
                       item={item}
                       class="absolute -left-2 -top-2"
                     />
-                    <img src={item.image} alt={item.name} class="size-20" />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      class="bg-shimmer size-20 object-cover"
+                    />
                     <div class="flex flex-col flex-1">
                       <a
                         href={item.href}
