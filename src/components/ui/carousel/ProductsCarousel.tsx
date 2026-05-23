@@ -50,7 +50,7 @@ export default (props: {
                       width={400}
                       height={400}
                       alt={name}
-                      class="w-full h-auto object-cover object-center"
+                      class="bg-shimmer w-full h-auto object-cover object-center"
                       loading="lazy"
                     />
                     {hoverImage && (

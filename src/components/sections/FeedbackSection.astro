@@ -1,5 +1,5 @@
 ---
-import { getImage } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
 import FeedbackCarousel from '../ui/carousel/FeedbackCarousel'
 import MateiImg from '@assets/images/matei.webp'
 import IvayloImg from '@assets/images/the_maniac.webp'
@@ -7,13 +7,7 @@ import CvetyImg from '@assets/images/cvety.webp'
 import XeniaImg from '@assets/images/xenia.webp'
 import BatDidoImg from '@assets/images/bat-dido.webp'
 import { getTranslations } from '@utils/i18'
-
-const MateiImage = await getImage({
-  src: MateiImg,
-  width: 160,
-  height: 160,
-  format: 'webp',
-})
+import { renderSizedImage } from '@utils/image'
 
 const translation = getTranslations(Astro.params)
 const {
@@ -29,60 +23,24 @@ const {
   'bat-didoName': batDidoName,
 } = translation.feedbacks
 
-const IvayloImage = await getImage({
-  src: IvayloImg,
-  width: 160,
-  height: 160,
-  format: 'webp',
-})
+const renderPortrait = (image: ImageMetadata) =>
+  renderSizedImage(image, { width: 160, height: 160 })
 
-const CvetyImage = await getImage({
-  src: CvetyImg,
-  width: 160,
-  height: 160,
-  format: 'webp',
-})
-
-const XeniaImage = await getImage({
-  src: XeniaImg,
-  width: 160,
-  height: 160,
-  format: 'webp',
-})
-
-const BatDidoImage = await getImage({
-  src: BatDidoImg,
-  width: 160,
-  height: 160,
-  format: 'webp',
-})
+const [BatDidoImage, CvetyImage, IvayloImage, XeniaImage, MateiImage] =
+  await Promise.all([
+    renderPortrait(BatDidoImg),
+    renderPortrait(CvetyImg),
+    renderPortrait(IvayloImg),
+    renderPortrait(XeniaImg),
+    renderPortrait(MateiImg),
+  ])
 
 const feedbacks = [
-  {
-    author: batDidoName,
-    text: batDido,
-    image: BatDidoImage,
-  },
-  {
-    author: cvetyName,
-    text: cvety,
-    image: CvetyImage,
-  },
-  {
-    author: maniacName,
-    text: maniac,
-    image: IvayloImage,
-  },
-  {
-    author: xeniaName,
-    text: xenia,
-    image: XeniaImage,
-  },
-  {
-    author: mateyName,
-    text: matey,
-    image: MateiImage,
-  },
+  { author: batDidoName, text: batDido, image: BatDidoImage },
+  { author: cvetyName, text: cvety, image: CvetyImage },
+  { author: maniacName, text: maniac, image: IvayloImage },
+  { author: xeniaName, text: xenia, image: XeniaImage },
+  { author: mateyName, text: matey, image: MateiImage },
 ]
 ---
 

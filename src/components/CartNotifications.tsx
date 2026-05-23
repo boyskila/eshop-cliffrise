@@ -32,7 +32,7 @@ export const CartNotifications = ({ text, lang }: Props) => {
                     width="80"
                     height="80"
                     loading="lazy"
-                    class="size-20 object-cover"
+                    class="bg-shimmer size-20 object-cover"
                   />
                   <div class="ml-3 flex flex-col justify-center">
                     <h4 class="font-bold text-lg">{notification.name}</h4>
