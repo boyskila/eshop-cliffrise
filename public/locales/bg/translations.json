@@ -34,7 +34,7 @@
       "title": "Бойко Лалов",
       "facts": [
         "Катери от 1996",
-        "Спортно катерене / Трад",
+        "Спортно катерене / Традиционно катерене / Болдър / Драй тулинг",
         "8c+ спортно катерене",
         "8b болдър",
         "M13 драй тулинг",
@@ -63,10 +63,10 @@
         },
         {
           "items": [
-            "Hip-Hop 8c+ - Карлуково",
-            "Pop Folk 8b+ - Карлуково",
+            "Хип-Хоп 8c+ - Карлуково",
+            "Поп фолк 8b+ - Карлуково",
             "Цлъ 8c - Лакатник",
-            "Printer Problematiko 8b+ - Карлуково",
+            "Printer Problematico 8b+ - Карлуково",
             "Amuerte to the Top 8b+ - Враца",
             "Доматито на звяра 8b+ - Враца"
           ]
@@ -87,14 +87,14 @@
       "quote": "Добрите катерачни обекти се изграждат от общности, не от отделни хора."
     },
     "alexYanev": {
-      "name": "Alex Ianev",
-      "title": "Alex Ianev",
+      "name": "Алекс Янев",
+      "title": "Алекс Янев",
       "facts": [
-        "Climbing since 2004",
-        "Sport climbing / Trad",
-        "8b sport climbing",
-        "Route developer with 60+ lines",
-        "Based in Bulgaria"
+        "Катери от 2004",
+        "Спортно катерене / Традиционно катерене",
+        "8b спортно катерене",
+        "60+ разработени линии",
+        "Базиран в България"
       ],
       "content": [
         {
@@ -132,7 +132,7 @@
           "linkHref": "https://www.facebook.com/profile.php?id=61581767309346"
         }
       ],
-      "quote": "Climbing is not a sport, it is a way of life"
+      "quote": "Катеренето не е спорт, а начин на живот"
     }
   },
   "footer": {
