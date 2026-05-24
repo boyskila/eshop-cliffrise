@@ -39,16 +39,15 @@ const carouselImageUrls = carouselImages.map((img) => img.src)
 ---
 
 <MainLayout title={profile.title} showHero={false}>
-  <section class="mx-auto max-w-6xl px-6 pt-10 md:pt-16">
+  <section class="mx-auto max-w-6xl px-6 pt-10 md:pt-16 md:px-10">
     <div class="flex flex-col gap-7 md:flex-row md:items-stretch md:gap-10">
       <aside class="space-y-7 md:w-[42%] md:space-y-9 md:pt-2">
         <Image
           src={profileImage}
           alt={`${profile.name} - CliffRise`}
-          class="bg-shimmer mx-auto aspect-square w-full max-w-[430px] object-cover"
+          class="bg-shimmer mx-auto aspect-square w-full object-cover"
           widths={[400, 800, 1200]}
           sizes="(max-width: 1023px) min(100vw - 48px, 430px), 34vw"
-          quality={80}
           loading="eager"
           decoding="async"
         />
@@ -58,14 +57,14 @@ const carouselImageUrls = carouselImages.map((img) => img.src)
         </h1>
 
         <blockquote
-          class="border-b border-neutral-400 pb-5 text-2xl font-semibold leading-tight text-neutral-500 md:text-3xl"
+          class="border-b border-neutral-400 pb-5 text-[21px] font-semibold leading-tight text-neutral-500 md:text-[25px]"
         >
           &quot;{profile.quote}&quot;
         </blockquote>
         <ul
-          class="space-y-3 text-lg font-bold md:text-xl pb-5 border-b md:border-none border-neutral-400"
+          class="list-disc pl-6 space-y-3 text-lg font-bold md:text-xl pb-5 border-b md:border-none border-neutral-400"
         >
-          {profile.facts.map((fact) => <li>&bull; {fact}</li>)}
+          {profile.facts.map((fact) => <li>{fact}</li>)}
         </ul>
 
         <FounderImageCarousel

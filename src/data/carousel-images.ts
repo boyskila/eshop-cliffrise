@@ -19,6 +19,12 @@ import aliBabatch from '@assets/images/founders/boyko/gallery/ali-babatch.webp'
 import klisuraGreece from '@assets/images/founders/boyko/gallery/klisura-greece.webp'
 import ribaritsaBolting from '@assets/images/founders/boyko/gallery/ribaritsa-bolting.webp'
 
+import alex1 from '@assets/images/founders/alex/gallery/Alex-1.webp'
+import alex2 from '@assets/images/founders/alex/gallery/Alex-2.webp'
+import alex3 from '@assets/images/founders/alex/gallery/Alex-3.webp'
+import alex4 from '@assets/images/founders/alex/gallery/Alex-4.webp'
+import alex5 from '@assets/images/founders/alex/gallery/Alex-5.webp'
+
 export const galleryImages: ImageMetadata[] = [
   img056,
   img072,
@@ -42,4 +48,5 @@ export const boykoImages: ImageMetadata[] = [
   aliBabatch,
   ribaritsaBolting,
 ]
-export const alexImages: ImageMetadata[] = [...galleryImages]
+
+export const alexImages: ImageMetadata[] = [alex1, alex2, alex3, alex4, alex5]
