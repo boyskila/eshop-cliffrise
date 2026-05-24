@@ -25,7 +25,92 @@
   "causeP1": "By choosing CliffRise chalk or any of our other products, you directly support the development of climbing areas in Bulgaria. Every purchase helps create new routes, maintain existing ones, and improve the places we all love to climb at.",
   "causeP2": "CliffRise is a way to give back to the rocks and the climbing community. Your support helps us keep moving forward, bring new ideas to life, and continue developing climbing in Bulgaria.",
   "aboutUsP1": "The guys behind the idea are well-known climbers in Bulgaria, with a long list of difficult ascents behind them.",
-  "aboutUsP2": "United by their love for climbing and the desire to give something back to the community, Boyko Lalov and Alex Yanev began working together in 2020, when they developed 'The Cave' crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
+  "aboutUsP2BeforeBoyko": "United by their love for climbing and the desire to give something back to the community, ",
+  "aboutUsP2BetweenFounders": " and ",
+  "aboutUsP2AfterAlex": " began working together in 2020, when they developed 'The Cave' crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
+  "founders": {
+    "backToAbout": "Back to About Us",
+    "boykoLalov": {
+      "name": "Boyko Lalov",
+      "title": "Boyko Lalov",
+      "facts": [
+        "Climbing since 1996",
+        "Sport climbing / Trad",
+        "8c+ sport climbing",
+        "8b boulder",
+        "M13 dry tooling",
+        "Route developer with 100+ lines",
+        "Based in Bulgaria"
+      ],
+      "content": [
+        {
+          "text": "Boyko Lalov started climbing in 1996, when at just 14 years old he joined the Nepiast caving club in Burgas. Before long, his interest shifted toward rock climbing, and his first serious steps in the sport were on the cliffs near Aytos. Later, he trained under Georgi Temelkov."
+        },
+        {
+          "text": "By the age of 16, he had already completed a significant number of alpine routes in the Sliven Balkan, and in 1998 he competed for the first time at the Bulgarian National Sport Climbing Championship."
+        },
+        {
+          "text": "During his competition career, Boyko became:"
+        },
+        {
+          "items": [
+            "multiple Bulgarian and Balkan national bouldering champion;",
+            "runner-up at the European Youth Cup in Veliko Tarnovo;",
+            "9th place finisher at the Bouldering World Cup in Konitsa, Greece, in 2000y."
+          ]
+        },
+        {
+          "text": "Alongside competition climbing, he has climbed some of the hardest sport routes in Bulgaria - more than 200 routes graded 7c and above, including:"
+        },
+        {
+          "items": [
+            "Hip-Hop 8c+ - Karlukovo",
+            "Pop Folk 8b+ - Karlukovo",
+            "Tsla 8c - Lakatnik",
+            "Printer Problematiko 8b+ - Karlukovo",
+            "Amuerte to the Top 8b+ - Vratsa",
+            "Domatito na zvyara 8b+ - Vratsa"
+          ]
+        },
+        {
+          "text": "He has also made serious ascents in Spain, where in 2007 he climbed the iconic Welcome to Tijuana 8c in Rodellar and El Salt de Angel 8b+."
+        },
+        {
+          "text": "His interests cover nearly every climbing discipline - sport climbing, bouldering, trad, and dry tooling. In 2015, he climbed Ali Babach M13 in Bezhanovo, one of the hardest dry tooling routes in the world at the time. In bouldering, he has climbed up to 8b."
+        },
+        {
+          "textBeforeLink": "Over the years, Boyko has developed more than 100 rock climbing lines in Bulgaria. Since 2023, together with Alex Yanev, he has focused his main efforts on developing the climbing around Teteven and organizing the ",
+          "linkText": "Teteven Climb",
+          "linkHref": "https://www.facebook.com/profile.php?id=61581767309346",
+          "textAfterLink": " festival."
+        }
+      ],
+      "quote": "Good climbing areas are built by communities, not individuals."
+    },
+    "alexYanev": {
+      "name": "Alex Yanev",
+      "title": "Alex Yanev",
+      "facts": [
+        "Sport climber",
+        "Route developer",
+        "Climbing community builder",
+        "Teteven climbing advocate",
+        "Based in Bulgaria"
+      ],
+      "content": [
+        {
+          "text": "Alex is one of the climbers behind CliffRise and the development of new routes around Teteven."
+        },
+        {
+          "text": "His work is shaped by time on the rock, attention to the climbing community, and the belief that local areas grow through shared effort."
+        },
+        {
+          "text": "Together with Boyko, Alex helped develop 'The Cave' crag in Ribaritsa and continues to support projects that make climbing in Bulgaria more accessible and alive."
+        }
+      ],
+      "quote": "The best routes start with care for the place and the people who climb there."
+    }
+  },
   "footer": {
     "supportClimbing": "Want to support",
     "contactUs": "Contact us",
