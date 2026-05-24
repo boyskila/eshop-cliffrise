@@ -86,7 +86,7 @@ test.describe('Checkout - Shipping', () => {
     await expect(page).toHaveURL(/\/en\/#products$/)
   })
 
-  test('calculates shipping fee after Bourgas office is selected', async ({
+  test('shows Stripe shipping rate after Bourgas office is selected', async ({
     page,
   }) => {
     const addResponse = await page.request.post('/_actions/addToCart/', {

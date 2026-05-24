@@ -35,6 +35,7 @@ const renderedProductKinds = await prepareProductKinds(product.kind)
 const carouselProducts = await prepareProductCards(products)
 const productRequiresKindSelection = product.kind.length > 0
 const productOutOfStock = product.outOfStock ?? false
+const freeShippingThreshold = await getFreeShippingThreshold()
 ---
 
 <MainLayout title={product.name} showHero={false}>
@@ -43,7 +44,7 @@ const productOutOfStock = product.outOfStock ?? false
     class="uppercase text-center bg-gray-100 py-4 text-2xl tracking-widest"
   >
     {translations.freeDelivery}
-    {formatPrice(getFreeShippingThreshold(), lang)}
+    {formatPrice(freeShippingThreshold, lang)}
   </div>
   <section class="pt-10 px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
     <div

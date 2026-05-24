@@ -185,7 +185,7 @@
     "continueShopping": "Continue Shopping",
     "shippingFee": "Shipping",
     "freeShipping": "Free shipping",
-    "freeShippingThreshold": "Free shipping on orders over \u20ac30"
+    "freeShippingThreshold": "Free shipping on orders over"
   },
   "email": {
     "orderConfirmedSubject": "Order Confirmed – CliffRise",
