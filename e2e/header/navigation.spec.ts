@@ -190,6 +190,20 @@ test.describe('Mobile menu button opens and closes the menu', () => {
     await expect(menu).toBeVisible()
     await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'true')
   })
+
+  test('phone: selecting a section from the mobile menu closes it', async ({
+    page,
+  }) => {
+    await page.setViewportSize(VIEWPORTS.phone)
+    await page.goto('/en/')
+
+    const { menu, mobileMenuButton } = await openMobileMenu(page)
+    await menu.getByRole('menuitem', { name: 'Products' }).click()
+
+    await expect(page).toHaveURL(/\/en\/#products$/)
+    await expect(menu).toBeHidden()
+    await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'false')
+  })
 })
 
 test.describe('Header navigation destinations', () => {

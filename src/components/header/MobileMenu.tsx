@@ -40,7 +40,12 @@ export const MobileMenu = (props: Props) => {
         <For each={props.menuItems}>
           {({ href, title }) => {
             return (
-              <a href={href} role="menuitem" class="text-white font-medium">
+              <a
+                href={href}
+                role="menuitem"
+                class="text-white font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 {title}
               </a>
             )
