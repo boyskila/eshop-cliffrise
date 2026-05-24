@@ -16,7 +16,9 @@ type Props = {
   text: {
     title: string
     empty: string
-    emptyDesc: string
+    emptyDescBeforeProducts: string
+    emptyDescProductsLink: string
+    emptyDescAfterProducts: string
     total: string
     checkout: string
     routeFunding: string
@@ -83,7 +85,12 @@ export const Cart = (props: Props) => {
               fallback={
                 <EmptyCart
                   empty={props.text.empty}
-                  emptyDesc={props.text.emptyDesc}
+                  emptyDescBeforeProducts={
+                    props.text.emptyDescBeforeProducts
+                  }
+                  emptyDescProductsLink={props.text.emptyDescProductsLink}
+                  emptyDescAfterProducts={props.text.emptyDescAfterProducts}
+                  productsHref={`/${props.lang}/#products`}
                 />
               }
             >

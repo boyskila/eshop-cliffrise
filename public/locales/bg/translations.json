@@ -43,7 +43,9 @@
   "cart": {
     "title": "Вашата количка",
     "empty": "Вашата количка е празна",
-    "emptyDesc": "Добавете продукти, за да започнете",
+    "emptyDescBeforeProducts": "Добавете ",
+    "emptyDescProductsLink": "продукти",
+    "emptyDescAfterProducts": ", за да започнете",
     "remove": "Премахни",
     "total": "Общо",
     "checkout": "Продължи към плащане",
