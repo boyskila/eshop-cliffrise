@@ -19,6 +19,8 @@ jobs:
       STRIPE_WEBHOOK_SECRET: ${{ vars.STRIPE_WEBHOOK_SECRET }}
       OWNER_EMAIL: ${{ vars.OWNER_EMAIL }}
       BCC_EMAIL: ${{ vars.BCC_EMAIL }}
+      STRIPE_SHIPPING_RATE_FREE: ${{ vars.STRIPE_SHIPPING_RATE_FREE }}
+      STRIPE_SHIPPING_RATE_STANDARD: ${{ vars.STRIPE_SHIPPING_RATE_STANDARD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
