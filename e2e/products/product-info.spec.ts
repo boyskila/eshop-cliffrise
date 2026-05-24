@@ -35,7 +35,7 @@ test.describe('Product Info', () => {
 
     await expect(banner).toBeVisible()
     await expect(banner).toContainText('Free Delivery over')
-    await expect(banner).toContainText('€30.00')
+    await expect(banner).toContainText('€15.00')
   })
 
   test('add to cart button is visible and enabled for products without kind', async ({

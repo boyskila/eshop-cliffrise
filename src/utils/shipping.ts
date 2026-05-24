@@ -1,4 +1,4 @@
-const DEFAULT_THRESHOLD = 30
+const DEFAULT_THRESHOLD = 15
 
 export const getFreeShippingThreshold = () => {
   const raw = import.meta.env.FREE_SHIPPING_THRESHOLD
