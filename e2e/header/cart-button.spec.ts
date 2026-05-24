@@ -67,6 +67,19 @@ test.describe('Accessibility', () => {
     await openCartPanel(page)
   })
 
+  test('empty cart products text links to products section', async ({
+    page,
+  }) => {
+    const { cartDrawer } = await openCartPanel(page)
+    const productsLink = cartDrawer.getByRole('link', { name: 'products' })
+
+    await expect(productsLink).toHaveAttribute('href', '/en/#products')
+    await productsLink.click()
+
+    await expect(page).toHaveURL(/\/en\/#products$/)
+    await expect(cartDrawer).toBeHidden()
+  })
+
   test('cart panel can be closed via clicking on the backdrop and aria-expanded is reset', async ({
     page,
   }) => {

@@ -39,7 +39,9 @@ Astro.response.headers.set('Cache-Control', 'no-store')
       text={{
         title: cart.title,
         empty: cart.empty,
-        emptyDesc: cart.emptyDesc,
+        emptyDescBeforeProducts: cart.emptyDescBeforeProducts,
+        emptyDescProductsLink: cart.emptyDescProductsLink,
+        emptyDescAfterProducts: cart.emptyDescAfterProducts,
         total: cart.total,
         checkout: cart.checkout,
         routeFunding: cart.routeFunding,

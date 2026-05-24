@@ -22,8 +22,8 @@
     "contact": "Contact us"
   },
   "heroTitle": "CliffRise is a way to give back to the rocks - every purchase supports the creation of new climbing routes.",
-  "causeP1": "By choosing CliffRise chalk or any of our other products, you directly support the development of climbing areas in Bulgaria. Every purchase helps create new routes, maintain existing ones, and improve the places we all love to climb.",
-  "causeP2": "CliffRise is a way to give back to the rocks and the climbing community. Your support helps us keep moving forward, bring new ideas to life, and continue growing climbing in Bulgaria.",
+  "causeP1": "By choosing CliffRise chalk or any of our other products, you directly support the development of climbing areas in Bulgaria. Every purchase helps create new routes, maintain existing ones, and improve the places we all love to climb at.",
+  "causeP2": "CliffRise is a way to give back to the rocks and the climbing community. Your support helps us keep moving forward, bring new ideas to life, and continue developing climbing in Bulgaria.",
   "aboutUsP1": "The guys behind the idea are well-known climbers in Bulgaria, with a long list of difficult ascents behind them.",
   "aboutUsP2": "United by their love for climbing and the desire to give something back to the community, Boyko Lalov and Alex Yanev began working together in 2020, when they developed 'The Cave' crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
   "footer": {
@@ -43,7 +43,9 @@
   "cart": {
     "title": "Your Cart",
     "empty": "Your cart is empty",
-    "emptyDesc": "Add some products to get started",
+    "emptyDescBeforeProducts": "Add some ",
+    "emptyDescProductsLink": "products",
+    "emptyDescAfterProducts": " to get started",
     "remove": "Remove",
     "total": "Total",
     "checkout": "Proceed to Checkout",
@@ -145,7 +147,7 @@
     "maniacName": "The Maniac",
     "mateyName": "Matey Mitcev",
     "cvetyName": "Cvety Paunova",
-    "xeniaName": "Xenia Kotleva",
+    "xeniaName": "Xenia Cotlearova",
     "bat-didoName": "Dilyan Petrov",
     "maniac": "I love the chalk texture. I have very dry skin, so it’s hard to find something that stays on my hands. I’m super happy to have found this chalk—it has everything I need and definitely boosts my confidence on the rock.",
     "matey": "If you want to take care of your climbing experience and make it with most pleasure, CliffRise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!",
