@@ -1,9 +1,17 @@
 ---
 import { Image } from 'astro:assets'
-import { getTranslations } from '@utils/i18'
+import { getLang, getTranslations } from '@utils/i18'
 import CliffriseTeamImg from '@assets/images/me_and_alex.webp'
 
-const { aboutUsP1, aboutUsP2, aboutUs } = getTranslations(Astro.params)
+const {
+  aboutUsP1,
+  aboutUsP2BeforeBoyko,
+  aboutUsP2BetweenFounders,
+  aboutUsP2AfterAlex,
+  aboutUs,
+  founders,
+} = getTranslations(Astro.params)
+const lang = getLang(Astro.params)
 ---
 
 <section id="about-us" class="px-5 md:px-15 xl:px-55">
@@ -29,7 +37,21 @@ const { aboutUsP1, aboutUsP2, aboutUs } = getTranslations(Astro.params)
           {aboutUsP1}
         </p>
         <p>
-          {aboutUsP2}
+          {aboutUsP2BeforeBoyko}
+          <a
+            href={`/${lang}/people/boyko-lalov/`}
+            class="font-semibold underline underline-offset-4"
+          >
+            {founders.boykoLalov.name}
+          </a>
+          {aboutUsP2BetweenFounders}
+          <a
+            href={`/${lang}/people/alex-yanev/`}
+            class="font-semibold underline underline-offset-4"
+          >
+            {founders.alexYanev.name}
+          </a>
+          {aboutUsP2AfterAlex}
         </p>
       </article>
     </div>

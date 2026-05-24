@@ -1,0 +1,119 @@
+---
+import { getImage, Image } from 'astro:assets'
+import MainLayout from '@layouts/MainLayout.astro'
+import { getTranslations } from '@utils/i18'
+import { boykoImages, alexImages } from '@data/carousel-images'
+import FounderImageCarousel from './FounderImageCarousel'
+import AlexImg from '@assets/images/founders/alex/main.webp'
+import BoykoImg from '@assets/images/founders/boyko/main.webp'
+
+interface Props {
+  founder: 'boykoLalov' | 'alexYanev'
+}
+
+const founderMap = {
+  boykoLalov: {
+    images: boykoImages,
+    profileImage: BoykoImg,
+  },
+  alexYanev: {
+    images: alexImages,
+    profileImage: AlexImg,
+  },
+}
+
+const { founder } = Astro.props
+const { founders } = getTranslations(Astro.params)
+const profile = founders[founder]
+const { profileImage } = founderMap[founder]
+const carouselImages = await Promise.all(
+  founderMap[founder].images.map((img) => {
+    return getImage({
+      src: img,
+      widths: [320, 640, 960],
+      format: 'webp',
+    })
+  }),
+)
+const carouselImageUrls = carouselImages.map((img) => img.src)
+---
+
+<MainLayout title={profile.title} showHero={false}>
+  <section class="mx-auto max-w-6xl px-6 pt-10 md:pt-16">
+    <div class="flex flex-col gap-7 md:flex-row md:items-stretch md:gap-10">
+      <aside class="space-y-7 md:w-[42%] md:space-y-9 md:pt-2">
+        <Image
+          src={profileImage}
+          alt={`${profile.name} - CliffRise`}
+          class="bg-shimmer mx-auto aspect-square w-full max-w-[430px] object-cover"
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 1023px) min(100vw - 48px, 430px), 34vw"
+          quality={80}
+          loading="eager"
+          decoding="async"
+        />
+
+        <h1 class="nafta-brush text-[48px] leading-none md:hidden">
+          {profile.title}
+        </h1>
+
+        <blockquote
+          class="border-b border-neutral-400 pb-5 text-2xl font-semibold leading-tight text-neutral-500 md:text-3xl"
+        >
+          &quot;{profile.quote}&quot;
+        </blockquote>
+        <ul
+          class="space-y-3 text-lg font-bold md:text-xl pb-5 border-b md:border-none border-neutral-400"
+        >
+          {profile.facts.map((fact) => <li>&bull; {fact}</li>)}
+        </ul>
+
+        <FounderImageCarousel
+          images={carouselImageUrls}
+          alt={profile.name}
+          client:visible
+        />
+      </aside>
+
+      <div class="hidden min-h-[560px] w-px shrink-0 bg-neutral-500 md:block">
+      </div>
+
+      <article class="space-y-7 md:flex-1 md:pt-1">
+        <h1
+          class="nafta-brush hidden text-[56px] leading-none md:block lg:text-[76px] xl:text-[88px]"
+        >
+          {profile.title}
+        </h1>
+
+        <div class="space-y-5 text-base font-semibold leading-7 md:text-lg">
+          {
+            profile.content.map((block) =>
+              'items' in block ? (
+                <ul class="list-disc space-y-2 pl-6">
+                  {block.items?.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              ) : 'linkText' in block ? (
+                <p>
+                  {block.textBeforeLink}
+                  <a
+                    href={block.linkHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="p-0 underline underline-offset-4"
+                  >
+                    {block.linkText}
+                  </a>
+                  {block.textAfterLink}
+                </p>
+              ) : (
+                <p>{block.text}</p>
+              ),
+            )
+          }
+        </div>
+      </article>
+    </div>
+  </section>
+</MainLayout>

@@ -12,6 +12,13 @@ import img425 from '@assets/images/gallery/CliffriseTetevenMeetup2025-425.webp'
 import img427 from '@assets/images/gallery/CliffriseTetevenMeetup2025-427.webp'
 import img428 from '@assets/images/gallery/CliffriseTetevenMeetup2025-428.webp'
 
+import boltingImg from '@assets/images/founders/boyko/gallery/bolting.webp'
+import tetevenImg from '@assets/images/founders/boyko/gallery/teteven.webp'
+import dryTooling from '@assets/images/founders/boyko/gallery/dry-tooling.webp'
+import aliBabatch from '@assets/images/founders/boyko/gallery/ali-babatch.webp'
+import klisuraGreece from '@assets/images/founders/boyko/gallery/klisura-greece.webp'
+import ribaritsaBolting from '@assets/images/founders/boyko/gallery/ribaritsa-bolting.webp'
+
 export const galleryImages: ImageMetadata[] = [
   img056,
   img072,
@@ -26,3 +33,13 @@ export const galleryImages: ImageMetadata[] = [
   img427,
   img428,
 ]
+
+export const boykoImages: ImageMetadata[] = [
+  klisuraGreece,
+  boltingImg,
+  tetevenImg,
+  dryTooling,
+  aliBabatch,
+  ribaritsaBolting,
+]
+export const alexImages: ImageMetadata[] = [...galleryImages]
