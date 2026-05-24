@@ -5,9 +5,9 @@ import { getStripe } from '@services/stripe'
 import type { CartItem } from '@actions'
 import type { ShippingInfo } from '@types'
 import CheckoutLayout from '@layouts/CheckoutLayout.astro'
-import { getTotalPrice, getTotalWeight } from '@utils/cart'
-import { calculateShippingFee } from '@utils/speedy'
+import { getTotalPrice } from '@utils/cart'
 import { getFreeShippingThreshold } from '@utils/shipping'
+import { getStripeShippingRate } from '@utils/stripeShipping'
 import { formatPrice } from '@utils/func'
 
 const lang = getLang(Astro.params)
@@ -34,9 +34,10 @@ if (!stripePublicKey) {
 const cartTotal = getTotalPrice(cart)
 const freeShippingThreshold = await getFreeShippingThreshold()
 const isFreeShipping = cartTotal >= freeShippingThreshold
-const shippingFeeEur = isFreeShipping
-  ? 0
-  : await calculateShippingFee(shipping.officeId, getTotalWeight(cart))
+const shippingRate = await getStripeShippingRate(
+  isFreeShipping ? 'free' : 'standard',
+)
+const shippingFeeEur = shippingRate.amountEur
 
 const sessionId = Astro.url.searchParams.get('session_id')
 let clientSecret: string | null = null
@@ -93,16 +94,7 @@ if (sessionId) {
     },
     shipping_options: [
       {
-        shipping_rate_data: {
-          type: 'fixed_amount',
-          fixed_amount: {
-            amount: Math.round(shippingFeeEur * 100),
-            currency: 'eur',
-          },
-          display_name: isFreeShipping
-            ? translations.checkout.freeShipping
-            : translations.checkout.shippingFee,
-        },
+        shipping_rate: shippingRate.id,
       },
     ],
     return_url: `${siteUrl}/${lang}/checkout/success/?session_id={CHECKOUT_SESSION_ID}`,
@@ -143,7 +135,8 @@ if (!clientSecret) {
             {formatPrice(shippingFeeEur, lang)}
           </span>
           <span class="text-gray-500 ml-2">
-            — {translations.checkout.freeShippingThreshold}
+            — {translations.checkout.freeShippingThreshold}{' '}
+            {formatPrice(freeShippingThreshold, lang)}
           </span>
         </div>
       )

@@ -10,10 +10,9 @@ type Props = {
   text: Translations['shipping']
   initialShipping?: ShippingInfo
   isFreeShipping: boolean
-  totalWeight: number
 }
 
-const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
+const { lang, text, initialShipping, isFreeShipping } = Astro.props
 ---
 
 <div class="size-full max-w-4xl mx-auto px-4 py-8 flex flex-col">
@@ -33,7 +32,6 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
     data-fee-label={text.shippingFeeLabel}
     data-calculating-fee={text.calculatingFee}
     data-free-shipping={isFreeShipping ? 'true' : 'false'}
-    data-total-weight={totalWeight}
     data-selected-office-id={initialShipping?.officeId ?? ''}
     data-selected-office-name={initialShipping?.office ?? ''}
   >
@@ -112,13 +110,11 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
   })
 
   const form = document.getElementById('shipping-form') as HTMLFormElement
-  const { feeLabel, calculatingFee, freeShipping, totalWeight } =
-    form.dataset as {
-      feeLabel: string
-      calculatingFee: string
-      freeShipping: string
-      totalWeight: string
-    }
+  const { feeLabel, calculatingFee, freeShipping } = form.dataset as {
+    feeLabel: string
+    calculatingFee: string
+    freeShipping: string
+  }
   const isFreeShipping = freeShipping === 'true'
 
   const officeNameElement = document.getElementById(
@@ -161,9 +157,8 @@ const { lang, text, initialShipping, isFreeShipping, totalWeight } = Astro.props
     }
     officeFeeElement.textContent = calculatingFee
     try {
-      const { data } = await actions.calculateShipping({
+      const { data } = await actions.getShippingRate({
         officeId,
-        totalWeight: parseFloat(totalWeight),
       })
       const fee = data?.fee
       officeFeeElement.textContent = isPresent(fee)

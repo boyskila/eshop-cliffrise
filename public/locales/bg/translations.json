@@ -184,7 +184,7 @@
     "continueShopping": "Продължи пазаруването",
     "shippingFee": "Доставка",
     "freeShipping": "Безплатна доставка",
-    "freeShippingThreshold": "Безплатна доставка при поръчки над \u20ac30"
+    "freeShippingThreshold": "Безплатна доставка при поръчки над"
   },
   "email": {
     "orderConfirmedSubject": "Поръчката е потвърдена – CliffRise",

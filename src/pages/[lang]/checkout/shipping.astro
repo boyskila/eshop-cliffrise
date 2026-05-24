@@ -4,7 +4,7 @@ import ShippingForm from '@components/checkout/ShippingForm.astro'
 import type { CartItem } from '@actions'
 import type { ShippingInfo } from '@types'
 import CheckoutLayout from '@layouts/CheckoutLayout.astro'
-import { getTotalPrice, getTotalWeight } from '@utils/cart'
+import { getTotalPrice } from '@utils/cart'
 import { getFreeShippingThreshold } from '@utils/shipping'
 
 const lang = getLang(Astro.params)
@@ -19,8 +19,7 @@ if (cart.length === 0) {
 }
 
 const cartTotal = getTotalPrice(cart)
-const totalWeight = getTotalWeight(cart)
-const freeShippingThreshold = await getFreeShippingThreshold()
+const freeShippingThreshold = getFreeShippingThreshold()
 const isFreeShipping = cartTotal >= freeShippingThreshold
 
 const savedShipping: ShippingInfo | undefined =
@@ -33,6 +32,5 @@ const savedShipping: ShippingInfo | undefined =
     text={translations.shipping}
     initialShipping={savedShipping}
     isFreeShipping={isFreeShipping}
-    totalWeight={totalWeight}
   />
 </CheckoutLayout>

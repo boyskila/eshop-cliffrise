@@ -1,16 +1,15 @@
 import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { getStripe } from '@services/stripe'
-import { calculateShippingFee } from '@utils/speedy'
+import { getStripeShippingRate } from '@utils/stripeShipping'
 
 export const checkout = {
-  calculateShipping: defineAction({
+  getShippingRate: defineAction({
     input: z.object({
       officeId: z.coerce.number(),
-      totalWeight: z.coerce.number().optional(),
     }),
-    handler: async ({ officeId, totalWeight }) => {
-      const fee = await calculateShippingFee(officeId, totalWeight ?? 1)
+    handler: async () => {
+      const { amountEur: fee } = await getStripeShippingRate('standard')
       return { fee }
     },
   }),
