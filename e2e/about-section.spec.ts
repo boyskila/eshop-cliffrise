@@ -9,8 +9,8 @@ test.describe('About section profile links', () => {
       aboutSection.getByRole('link', { name: 'Boyko Lalov' }),
     ).toHaveAttribute('href', '/en/people/boyko-lalov/')
     await expect(
-      aboutSection.getByRole('link', { name: 'Alex Yanev' }),
-    ).toHaveAttribute('href', '/en/people/alex-yanev/')
+      aboutSection.getByRole('link', { name: 'Alex Ianev' }),
+    ).toHaveAttribute('href', '/en/people/alex-ianev/')
   })
 
   test('clicking a founder name opens the dedicated profile page', async ({

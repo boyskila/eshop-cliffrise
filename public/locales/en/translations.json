@@ -27,9 +27,8 @@
   "aboutUsP1": "The guys behind the idea are well-known climbers in Bulgaria, with a long list of difficult ascents behind them.",
   "aboutUsP2BeforeBoyko": "United by their love for climbing and the desire to give something back to the community, ",
   "aboutUsP2BetweenFounders": " and ",
-  "aboutUsP2AfterAlex": " began working together in 2020, when they developed 'The Cave' crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
+  "aboutUsP2AfterAlex": " began working together in 2020, when they developed \"The Cave\" crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
   "founders": {
-    "backToAbout": "Back to About Us",
     "boykoLalov": {
       "name": "Boyko Lalov",
       "title": "Boyko Lalov",
@@ -44,23 +43,23 @@
       ],
       "content": [
         {
-          "text": "Boyko Lalov started climbing in 1996, when at just 14 years old he joined the Nepiast caving club in Burgas. Before long, his interest shifted toward rock climbing, and his first serious steps in the sport were on the cliffs near Aytos. Later, he trained under Georgi Temelkov."
+          "text": "Boyko Lalov started climbing in 1996, when at the age of just 14 he joined the \"Nepiast\" caving club in Burgas. Not long after, his interest shifted toward rock climbing, with the cliffs near Aytos becoming his first serious training ground. Later, he trained under the guidance of Georgi Temelkov."
         },
         {
-          "text": "By the age of 16, he had already completed a significant number of alpine routes in the Sliven Balkan, and in 1998 he competed for the first time at the Bulgarian National Sport Climbing Championship."
+          "text": "By the age of 16, he had already completed a significant number of alpine climbs in the Sliven Balkan Mountains, and in 1998 he competed for the first time in the Bulgarian National Sport Climbing Championship."
         },
         {
-          "text": "During his competition career, Boyko became:"
+          "text": "During his competitive career, Boyko became:"
         },
         {
           "items": [
-            "multiple Bulgarian and Balkan national bouldering champion;",
-            "runner-up at the European Youth Cup in Veliko Tarnovo;",
-            "9th place finisher at the Bouldering World Cup in Konitsa, Greece, in 2000y."
+            "multiple-time Bulgarian and Balkan bouldering champion;",
+            "silver medalist in speed climbing at the European Youth Cup in Veliko Tarnovo;",
+            "9th place finisher at the 2000 Bouldering World Cup in Konnitsa, Greece."
           ]
         },
         {
-          "text": "Alongside competition climbing, he has climbed some of the hardest sport routes in Bulgaria - more than 200 routes graded 7c and above, including:"
+          "text": "Alongside competition climbing, he established himself as one of Bulgaria's strongest sport climbers, with more than 200 ascents graded 7c and harder, including:"
         },
         {
           "items": [
@@ -73,13 +72,13 @@
           ]
         },
         {
-          "text": "He has also made serious ascents in Spain, where in 2007 he climbed the iconic Welcome to Tijuana 8c in Rodellar and El Salt de Angel 8b+."
+          "text": "He also achieved notable ascents in Spain, where in 2007 he climbed the iconic Welcome to Tijuana 8c in Rodellar, as well as El Salt de Angel 8b+."
         },
         {
-          "text": "His interests cover nearly every climbing discipline - sport climbing, bouldering, trad, and dry tooling. In 2015, he climbed Ali Babach M13 in Bezhanovo, one of the hardest dry tooling routes in the world at the time. In bouldering, he has climbed up to 8b."
+          "text": "His interests span nearly every climbing discipline - sport climbing, bouldering, trad climbing, and dry tooling. In 2015, he completed \"Ali Babach\" M13 in Bezhanovo, considered one of the hardest dry tooling routes in the world at the time. In bouldering, he has climbed up to grade 8b."
         },
         {
-          "textBeforeLink": "Over the years, Boyko has developed more than 100 rock climbing lines in Bulgaria. Since 2023, together with Alex Yanev, he has focused his main efforts on developing the climbing around Teteven and organizing the ",
+          "textBeforeLink": "Over the years, Boyko has developed more than 100 climbing routes across Bulgaria. Since 2023, together with Alex Ianev, he has focused primarily on developing the climbing areas around Teteven and organizing the",
           "linkText": "Teteven Climb",
           "linkHref": "https://www.facebook.com/profile.php?id=61581767309346",
           "textAfterLink": " festival."
@@ -88,27 +87,50 @@
       "quote": "Good climbing areas are built by communities, not individuals."
     },
     "alexYanev": {
-      "name": "Alex Yanev",
-      "title": "Alex Yanev",
+      "name": "Alex Ianev",
+      "title": "Alex Ianev",
       "facts": [
-        "Sport climber",
-        "Route developer",
-        "Climbing community builder",
-        "Teteven climbing advocate",
+        "Climbing since 2004",
+        "Sport climbing / Trad",
+        "8b sport climbing",
+        "Route developer with 60+ lines",
         "Based in Bulgaria"
       ],
       "content": [
         {
-          "text": "Alex is one of the climbers behind CliffRise and the development of new routes around Teteven."
+          "text": "Alex Ianev had a natural love for mountains and outdoor activities. During his childhood he had spent most of his free time hiking and exploring the Bulgarian wilderness."
         },
         {
-          "text": "His work is shaped by time on the rock, attention to the climbing community, and the belief that local areas grow through shared effort."
+          "text": "In 2004, at the age of 14 he started climbing in the oldest gym in Sofia - the one in Sofia University. It did not take long for him to realize that, as he says \"climbing outdoors is the real deal, the gym just keeps you fit\"."
         },
         {
-          "text": "Together with Boyko, Alex helped develop 'The Cave' crag in Ribaritsa and continues to support projects that make climbing in Bulgaria more accessible and alive."
+          "text": "From then on he was mainly concentrated in climbing outdoors-both sport and traditional."
+        },
+        {
+          "text": "Some of his sport climbing achievements:"
+        },
+        {
+          "items": [
+            "Robotsapiens 8b - Lakatnik",
+            "Jackpot 8b - Lakatnik",
+            "Enjoy the Silence 8b - Geyikbayiry, Turkey",
+            "Olympos games 8b - Geyikbayiry, Turkey"
+          ]
+        },
+        {
+          "text": "Apart from sport climbing Alex had done many traditional ascents in Bulgaria, and also the Italian Alps (mainly the Dolomites). In this period of his career he also summited Mont Blank (4792m) via route from Italy's side which included a mixture of ice and rock climbing as well as a lot of hiking."
+        },
+        {
+          "text": "Climbing trips are another chapter of Alex's career. Greece, Turkey, Spain, Austria, Germany are some of the places he had visited. \"Being in different countries helps compare grades, bolting and developing climbing areas as a whole\""
+        },
+        {
+          "textBeforeLink": "This bring us to the current state of his climbing career. Alex has bolted more than 60 lines in the last 10 years. Since 2022 he has been working alongside Boyko Lalov in the Teteven area in Bulgaria, discovering and developing new climbing gems. They both dream big and last year they organized the first climbing festival in Bulgaria - ",
+          "linkText": "Teteven Climb",
+          "linkHref": "https://www.facebook.com/profile.php?id=61581767309346",
+          "textAfterLink": ""
         }
       ],
-      "quote": "The best routes start with care for the place and the people who climb there."
+      "quote": "Climbing is not a sport, it is a way of life"
     }
   },
   "footer": {

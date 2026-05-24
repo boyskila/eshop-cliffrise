@@ -19,7 +19,7 @@ if (cart.length === 0) {
 }
 
 const cartTotal = getTotalPrice(cart)
-const freeShippingThreshold = getFreeShippingThreshold()
+const freeShippingThreshold = await getFreeShippingThreshold()
 const isFreeShipping = cartTotal >= freeShippingThreshold
 
 const savedShipping: ShippingInfo | undefined =
