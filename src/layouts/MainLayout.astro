@@ -1,4 +1,5 @@
 ---
+import SEO from '@components/SEO.astro'
 import { ClientRouter } from 'astro:transitions'
 import { getLang, getTranslations } from '@utils/i18'
 import Header from '@components/header/Header.astro'
@@ -15,6 +16,16 @@ interface Props {
   showHero?: boolean
 }
 
+const defaults = {
+  name: 'CliffRise Shop',
+  description:
+    'CliffRise is a climbing brand supporting real work on the rock in Bulgaria - helping create new routes and maintain climbing areas for the community.',
+  image: {
+    src: new URL('/CR_Featured_Image.webp', Astro.site).href,
+    alt: 'CliffRise Shop',
+  },
+} as const
+
 const { showHero = true, title } = Astro.props
 const { notification, cart } = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
@@ -30,6 +41,19 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <title>CliffRise eshop | {title}</title>
+    <SEO {...defaults} {title} />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9DXQP66G4"
+    ></script>
+    <script>
+      ;(window as any).dataLayer = (window as any).dataLayer || []
+      function gtag(...args: any[]) {
+        ;(window as any).dataLayer.push(args)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-D9DXQP66G4')
+    </script>
     <ClientRouter />
   </head>
   <body class="[&:has([data-cart-dialog])]:overflow-hidden">
