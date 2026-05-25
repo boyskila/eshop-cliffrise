@@ -27,7 +27,7 @@
   "aboutUsP1": "The guys behind the idea are well-known climbers in Bulgaria, with a long list of difficult ascents behind them.",
   "aboutUsP2BeforeBoyko": "United by their love for climbing and the desire to give something back to the community, ",
   "aboutUsP2BetweenFounders": " and ",
-  "aboutUsP2AfterAlex": " began working together in 2020, when they developed \"The Cave\" crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
+  "aboutUsP2AfterAlex": " began working together in 2022, when they developed \"The Cave\" crag in Ribaritsa. Shortly after, alongside the many routes they established around Teteven, the idea for the CliffRise brand was born.",
   "founders": {
     "boykoLalov": {
       "name": "Boyko Lalov",
@@ -38,8 +38,7 @@
         "8c+ sport climbing",
         "8b boulder",
         "M13 dry tooling",
-        "Route developer with 100+ lines",
-        "Based in Bulgaria"
+        "Route developer with 100+ lines"
       ],
       "content": [
         {
@@ -68,17 +67,18 @@
             "Tsla 8c - Lakatnik",
             "Printer Problematico 8b+ - Karlukovo",
             "Amuerte to the Top 8b+ - Vratsa",
-            "Domatito na zvyara 8b+ - Vratsa"
+            "Domatito na zvyara 8b+ - Vratsa",
+            "Dunera 8b boulder - Beli Iskar" 
           ]
         },
         {
-          "text": "He also achieved notable ascents in Spain, where in 2007 he climbed the iconic Welcome to Tijuana 8c in Rodellar, as well as El Salt de Angel 8b+."
+          "text": "He also achieved notable ascents in Spain, where in 2007 he climbed the iconic \"Welcome to Tijuana\" 8c in Rodellar, as well as \"El Salto del Angel\" 8b+."
         },
         {
-          "text": "His interests span nearly every climbing discipline - sport climbing, bouldering, trad climbing, and dry tooling. In 2015, he completed \"Ali Babach\" M13 in Bezhanovo, considered one of the hardest dry tooling routes in the world at the time. In bouldering, he has climbed up to grade 8b."
+          "text": "His interests span nearly every climbing discipline - sport climbing, bouldering, trad climbing, and dry tooling. In 2011, he completed \"Ali Babach\" M13 in Bezhanovo, considered one of the hardest dry tooling routes in the world at the time. In bouldering, he has climbed up to grade 8b."
         },
         {
-          "textBeforeLink": "Over the years, Boyko has developed more than 100 climbing routes across Bulgaria. Since 2023, together with Alex Ianev, he has focused primarily on developing the climbing areas around Teteven and organizing the",
+          "textBeforeLink": "Over the years, Boyko has developed more than 100 climbing routes across Bulgaria. Since 2022, together with Alex Ianev, he has focused primarily on developing the climbing areas around Teteven and organizing the",
           "linkText": "Teteven Climb",
           "linkHref": "https://www.facebook.com/profile.php?id=61581767309346",
           "textAfterLink": " festival."
@@ -93,8 +93,7 @@
         "Climbing since 2004",
         "Sport climbing / Trad",
         "8b sport climbing",
-        "Route developer with 60+ lines",
-        "Based in Bulgaria"
+        "Route developer with 60+ lines"
       ],
       "content": [
         {
@@ -121,13 +120,16 @@
           "text": "Apart from sport climbing Alex had done many traditional ascents in Bulgaria, and also the Italian Alps (mainly the Dolomites). In this period of his career he also summited Mont Blank (4792m) via route from Italy's side which included a mixture of ice and rock climbing as well as a lot of hiking."
         },
         {
-          "text": "Climbing trips are another chapter of Alex's career. Greece, Turkey, Spain, Austria, Germany are some of the places he had visited. \"Being in different countries helps compare grades, bolting and developing climbing areas as a whole\""
+          "text": "Climbing trips are another chapter of Alex's career. Greece, Turkey, Spain, Austria, Germany are some of the places he had visited."
+        },
+        {
+          "text": "\"Being in different countries helps compare grades, bolting and developing climbing areas as a whole.\""
         },
         {
           "textBeforeLink": "This bring us to the current state of his climbing career. Alex has bolted more than 60 lines in the last 10 years. Since 2022 he has been working alongside Boyko Lalov in the Teteven area in Bulgaria, discovering and developing new climbing gems. They both dream big and last year they organized the first climbing festival in Bulgaria - ",
           "linkText": "Teteven Climb",
           "linkHref": "https://www.facebook.com/profile.php?id=61581767309346",
-          "textAfterLink": ""
+          "textAfterLink": "."
         }
       ],
       "quote": "Climbing is not a sport, it is a way of life"
@@ -145,7 +147,7 @@
   },
   "notification": {
     "addedToCart": "Added",
-    "routeFunding": "This purchase helps fund new climbing routes!"
+    "routeFunding": "This purchase helps fund new climbing routes."
   },
   "cart": {
     "title": "Your Cart",
@@ -156,10 +158,10 @@
     "remove": "Remove",
     "total": "Total",
     "checkout": "Proceed to Checkout",
-    "routeFunding": "This purchase helps create new climbing routes"
+    "routeFunding": "This purchase helps create new climbing routes."
   },
   "eventsSection": {
-    "text": "Teteven Climb brings together people who love climbing, movement, and time spent outdoors. Days on the rock, yoga, new connections, shared stories, and ideas - all surrounded by the beautiful nature of Teteven. The festival creates a space where the climbing community comes together naturally, with good vibes, shared projects, and the desire for more days on the rock.",
+    "text": "Teteven Climb brings together people who love climbing, movement, and time spent outdoors. Rock climbing, yoga, new connections, shared stories, and ideas - all surrounded by the beautiful nature of Teteven. The festival creates a space where the climbing community comes together naturally, with good vibes, shared projects, and the desire for more time on the rocks.",
     "seeEvent": "See the event",
     "meetup2026Alt": "Teteven Climb Vol. 2 - Climbing Festival 2026"
   },
@@ -167,7 +169,6 @@
     "title": "Shipping to office/automat",
     "courierLabel": "Select courier",
     "speedy": "Speedy",
-    "ekont": "Ekont",
     "nameLabel": "Recipient name",
     "namePlaceholder": "Full name",
     "phoneLabel": "Phone number",
@@ -210,7 +211,7 @@
     "freeShippingThreshold": "Free shipping on orders over"
   },
   "email": {
-    "orderConfirmedSubject": "Order Confirmed – CliffRise",
+    "orderConfirmedSubject": "Order Confirmed - CliffRise",
     "orderConfirmedHeading": "Order Confirmed!",
     "thankYou": "Thank you for your order.",
     "orderReference": "Order reference:",
@@ -228,14 +229,14 @@
     "shippingFee": "Shipping fee:",
     "freeShipping": "Free",
     "total": "Total:",
-    "supportMessage": "Thank you for supporting new climbing routes in Bulgaria!",
+    "supportMessage": "Thank you for supporting new climbing routes in Bulgaria.",
     "allRightsReserved": "All rights reserved.",
     "greeting": "Hi"
   },
   "contactForm": {
     "support": "Support",
     "description1": "We develop climbing routes and maintain climbing areas.",
-    "description2": "If you’d like to get involved, support the work, or simply ask a question, write to us and we’ll get back to you.",
+    "description2": "If you'd like to get involved, support the work, or simply ask a question, write to us and we'll get back to you.",
     "namePlaceholder": "Name",
     "emailPlaceholder": "Email",
     "messagePlaceholder": "Message",
@@ -256,17 +257,17 @@
     "cvetyName": "Cvety Paunova",
     "xeniaName": "Xenia Cotlearova",
     "bat-didoName": "Dilyan Petrov",
-    "maniac": "I love the chalk texture. I have very dry skin, so it’s hard to find something that stays on my hands. I’m super happy to have found this chalk—it has everything I need and definitely boosts my confidence on the rock.",
+    "maniac": "I love the chalk texture. I have very dry skin, so it's hard to find something that stays on my hands. I'm super happy to have found this chalk—it has everything I need and definitely boosts my confidence on the rock.",
     "matey": "If you want to take care of your climbing experience and make it with most pleasure, CliffRise is your way to do it, they offer quality climbing tape, clothing, varieties of climbing chalk and so on!",
     "cvety": "Not only is CliffRise the first brand that makes extra moist quality climbing chalk which saved my dry skin in the harsh winter, but also is the only one that has such a huge social impact. This is not just a chalk, it is an investment in the future of climbing.",
-    "xenia": "CliffRise is the chalk that helps you send big time. It sticks perfectly to my dry skin while giving maximum grip on the wall. It’s such a difference!",
-    "bat-dido": "CliffRise is not a product, it’s a passion and when there is passion, there is progress! Everything the team do is with heart and soul. Sustainable and with ideas, everything is made by climbers for climbers - from chalk, to merchandise… to creating new routes. Keep up the great work!"
+    "xenia": "CliffRise is the chalk that helps you send big time. It sticks perfectly to my dry skin while giving maximum grip on the wall. It's such a difference!",
+    "bat-dido": "CliffRise is not a product, it's a passion and when there is passion, there is progress! Everything the team do is with heart and soul. Sustainable and with ideas, everything is made by climbers for climbers - from chalk, to merchandise… to creating new routes. Keep up the great work!"
   },
   "termsAndConditions": {
     "title": "Terms and Conditions for Using the Online Store",
-    "intro": "These Terms and Conditions govern the relationship between “SOLUTION 83” EOOD and users of the online store.",
+    "intro": "These Terms and Conditions govern the relationship between \"SOLUTION 83\" EOOD and users of the online store.",
     "merchantTitle": "1. Merchant details",
-    "company": "“SOLUTION 83” EOOD",
+    "company": "\"SOLUTION 83\" EOOD",
     "companyDetails": [
       "UIC: 200511527",
       "NRA e-shop registration number: F0006586",
@@ -312,15 +313,15 @@
   },
   "privacyPolicy": {
     "title": "Privacy Policy and Personal Data Protection",
-    "intro": "This policy governs the processing of personal data when using the online store and website owned by “SOLUTION 83” EOOD.",
+    "intro": "This policy governs the processing of personal data when using the online store and website owned by \"SOLUTION 83\" EOOD.",
     "administratorTitle": "1. Data controller details",
-    "company": "“SOLUTION 83” EOOD",
+    "company": "\"SOLUTION 83\" EOOD",
     "companyDetails": [
       "UIC: 200511527",
       "Representative: Boyko Lalov",
       "Email: rise@cliffrise.com"
     ],
-    "administratorText": "“SOLUTION 83” EOOD is a personal data controller within the meaning of Regulation (EU) 2016/679 (GDPR) and the Personal Data Protection Act.",
+    "administratorText": "\"SOLUTION 83\" EOOD is a personal data controller within the meaning of Regulation (EU) 2016/679 (GDPR) and the Personal Data Protection Act.",
     "dataTitle": "2. What data we collect",
     "dataIntro": "When using the site and online store, we may collect the following personal data:",
     "dataItems": [
@@ -354,8 +355,8 @@
   },
   "gdpr": {
     "title": "Information about personal data processing under GDPR",
-    "intro": "By using this site, you agree that “SOLUTION 83” EOOD may process your personal data in accordance with Regulation (EU) 2016/679 (GDPR).",
-    "company": "“SOLUTION 83” EOOD",
+    "intro": "By using this site, you agree that \"SOLUTION 83\" EOOD may process your personal data in accordance with Regulation (EU) 2016/679 (GDPR).",
+    "company": "\"SOLUTION 83\" EOOD",
     "companyDetails": [
       "UIC: 200511527",
       "Representative: Boyko Lalov",
