@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Products Carousel - Links', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/bg/')
   })
 
   test('each product image links to its product page', async ({ page }) => {
@@ -14,7 +14,7 @@ test.describe('Products Carousel - Links', () => {
 
     for (let i = 0; i < count; i++) {
       const href = await imageLinks.nth(i).getAttribute('href')
-      expect(href).toEqual(`/en/products/${i + 1}/`)
+      expect(href).toEqual(`/bg/products/${i + 1}/`)
     }
   })
 
@@ -45,11 +45,26 @@ test.describe('Products Carousel - Links', () => {
 
     for (let i = 0; i < count; i++) {
       const href = await buyLinks.nth(i).getAttribute('href')
-      expect(href).toEqual(`/en/products/${i + 1}/`)
+      expect(href).toEqual(`/bg/products/${i + 1}/`)
     }
   })
 
-  test('product links use the current language', async ({ page }) => {
+  test('product links use the explicit English language', async ({ page }) => {
+    await page.goto('/en/')
+
+    const carousel = page.locator('#products')
+    const allLinks = carousel.locator('a[href*="/products/"]')
+    const count = await allLinks.count()
+
+    expect(count).toBeGreaterThan(0)
+
+    for (let i = 0; i < count; i++) {
+      const href = await allLinks.nth(i).getAttribute('href')
+      expect(href).toMatch(/^\/en\/products\/\d+\/$/)
+    }
+  })
+
+  test('product links use the explicit Bulgarian language', async ({ page }) => {
     await page.goto('/bg/')
 
     const carousel = page.locator('#products')

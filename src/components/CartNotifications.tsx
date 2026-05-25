@@ -1,6 +1,6 @@
 import { For } from 'solid-js'
 import { cartNotifications } from '@signals/cart'
-import { formatPrice } from '@utils/func'
+import { Price } from '@components/ui/Price'
 import type { Locale } from '@types'
 
 type Props = {
@@ -36,9 +36,12 @@ export const CartNotifications = ({ text, lang }: Props) => {
                   />
                   <div class="ml-3 flex flex-col justify-center">
                     <h4 class="font-bold text-lg">{notification.name}</h4>
-                    <div class="flex items-center gap-2 font-bold text-[19px]">
-                      {formatPrice(notification.price, lang)}
-                    </div>
+                    <Price
+                      amount={notification.price}
+                      amountBgn={notification.priceBgn}
+                      lang={lang}
+                      class="text-[19px] font-bold"
+                    />
                   </div>
                 </div>
                 <p class="text-xs pt-2 border-t border-black">

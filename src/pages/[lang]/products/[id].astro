@@ -7,13 +7,13 @@ import ProductsCarousel from '@components/ui/carousel/ProductsCarousel'
 import KindSelector from '@components/products/KindSelector.astro'
 import { QuantityControls } from '@components/products/QuantityControls'
 import ImageThumbnails from '@components/products/ImageThumbnails.astro'
+import { Price } from '@components/ui/Price'
 import {
   prepareProductCards,
   prepareProductGalleryImages,
   prepareProductKinds,
   prepareProductMainImage,
 } from '@utils/image'
-import { formatPrice } from '@utils/func'
 import { getFreeShippingThreshold } from '@utils/shipping'
 
 const translations = getTranslations(Astro.params)
@@ -44,7 +44,7 @@ const freeShippingThreshold = await getFreeShippingThreshold()
     class="uppercase text-center bg-gray-100 py-4 text-2xl tracking-widest"
   >
     {translations.freeDelivery}
-    {formatPrice(freeShippingThreshold, lang)}
+    <Price amount={freeShippingThreshold} lang={lang} />
   </div>
   <section class="pt-10 px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
     <div
@@ -107,9 +107,13 @@ const freeShippingThreshold = await getFreeShippingThreshold()
 
         <div class="flex justify-between items-center">
           <QuantityControls productName={product.name} client:visible />
-          <div class="flex items-center gap-2 font-bold text-2xl md:text-3xl">
-            {formatPrice(product.price, lang)}
-          </div>
+          <Price
+            amount={product.price}
+            amountBgn={product.priceBgn}
+            lang={lang}
+            bgnClass="md:text-xl"
+            class="font-bold text-2xl md:text-3xl"
+          />
         </div>
         <div class="flex items-center gap-4 mt-4">
           <AddToCartButton

@@ -37,6 +37,7 @@ export type Product = {
   productPageTitle?: string
   carouselOrder?: number // optional field to specify the order of products in a carousel, lower numbers are shown first
   outOfStock?: boolean
+  priceBgn?: number
 }
 
 export type RenderedProductKind = Omit<ProductKind, 'image'> & {
@@ -71,6 +72,7 @@ export type ProductCatalogMetadata = {
   slug: string
   carouselOrder?: number // optional field to specify the order of products in a carousel, lower numbers are shown first
   outOfStock?: boolean
+  bgnPrice?: number
 }
 
 export type Translations = typeof en

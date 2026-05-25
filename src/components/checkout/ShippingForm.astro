@@ -93,7 +93,7 @@ const { lang, text, initialShipping, isFreeShipping } = Astro.props
 
 <script>
   import { actions } from 'astro:actions'
-  import { formatPrice, isPresent } from '../../utils/func'
+  import { formatPriceWithBgn, isPresent } from '../../utils/func'
   import type { Locale } from '@types'
 
   const backLink = document.getElementById('back-to-shop') as HTMLAnchorElement
@@ -152,7 +152,7 @@ const { lang, text, initialShipping, isFreeShipping } = Astro.props
 
   const calculateFee = async (officeId: number) => {
     if (isFreeShipping) {
-      officeFeeElement.textContent = `${feeLabel} ${formatPrice(0, form.dataset.lang as Locale)}`
+      officeFeeElement.textContent = `${feeLabel} ${formatPriceWithBgn(0, form.dataset.lang as Locale, 0)}`
       return
     }
     officeFeeElement.textContent = calculatingFee
@@ -162,7 +162,7 @@ const { lang, text, initialShipping, isFreeShipping } = Astro.props
       })
       const fee = data?.fee
       officeFeeElement.textContent = isPresent(fee)
-        ? `${feeLabel} ${formatPrice(fee, form.dataset.lang as Locale)}`
+        ? `${feeLabel} ${formatPriceWithBgn(fee, form.dataset.lang as Locale, data?.feeBgn)}`
         : ''
     } catch {
       officeFeeElement.textContent = ''

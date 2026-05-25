@@ -44,7 +44,7 @@ const openCartPanel = async (page: Page) => {
 
 test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/bg/')
   })
   test('cart button is visible and has expected accessibility attributes', async ({
     page,
@@ -71,12 +71,12 @@ test.describe('Accessibility', () => {
     page,
   }) => {
     const { cartDrawer } = await openCartPanel(page)
-    const productsLink = cartDrawer.getByRole('link', { name: 'products' })
+    const productsLink = cartDrawer.locator('a[href$="#products"]')
 
-    await expect(productsLink).toHaveAttribute('href', '/en/#products')
+    await expect(productsLink).toHaveAttribute('href', '/bg/#products')
     await productsLink.click()
 
-    await expect(page).toHaveURL(/\/en\/#products$/)
+    await expect(page).toHaveURL(/\/bg\/#products$/)
     await expect(cartDrawer).toBeHidden()
   })
 
@@ -210,5 +210,36 @@ test.describe('Functionallity', () => {
 
     const badge = header.getByLabel(/1 item/i).locator('span', { hasText: '1' })
     await expect(badge).toHaveCount(1)
+  })
+
+  test('cart total updates when item quantity changes', async ({ page }) => {
+    const header = page.locator('header')
+
+    await addProductToCart(page, '1')
+    await header.getByLabel(/1 item/).click()
+
+    const shoppingCartDialog = page.getByRole('dialog', {
+      name: /shopping cart/i,
+    })
+    const increaseButton = shoppingCartDialog.getByRole('button', {
+      name: /increase/i,
+    })
+    const decreaseButton = shoppingCartDialog.getByRole('button', {
+      name: /decrease/i,
+    })
+
+    await expect(shoppingCartDialog).toContainText('€12.99')
+
+    await Promise.all([
+      waitForActionResponse(page, 'updateQuantity'),
+      increaseButton.click(),
+    ])
+    await expect(shoppingCartDialog).toContainText('€25.98')
+
+    await Promise.all([
+      waitForActionResponse(page, 'updateQuantity'),
+      decreaseButton.click(),
+    ])
+    await expect(shoppingCartDialog).toContainText('€12.99')
   })
 })

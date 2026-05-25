@@ -9,7 +9,7 @@ import { EmptyCart } from './EmptyCart'
 import { CartFooter } from './CartFooter'
 import { CartHeader } from './CartHeader'
 import type { Locale } from '@types'
-import { formatPrice } from '@utils/func'
+import { Price } from '@components/ui/Price'
 
 type Props = {
   lang: Locale
@@ -85,9 +85,7 @@ export const Cart = (props: Props) => {
               fallback={
                 <EmptyCart
                   empty={props.text.empty}
-                  emptyDescBeforeProducts={
-                    props.text.emptyDescBeforeProducts
-                  }
+                  emptyDescBeforeProducts={props.text.emptyDescBeforeProducts}
                   emptyDescProductsLink={props.text.emptyDescProductsLink}
                   emptyDescAfterProducts={props.text.emptyDescAfterProducts}
                   productsHref={`/${props.lang}/#products`}
@@ -118,9 +116,12 @@ export const Cart = (props: Props) => {
                         {item.name}
                       </a>
                       <div class="flex justify-between">
-                        <p class="text-lg font-bold ml-1">
-                          {formatPrice(item.price, props.lang)}
-                        </p>
+                        <Price
+                          amount={item.price}
+                          amountBgn={item.priceBgn}
+                          lang={props.lang}
+                          class="font-bold text-xl ml-1"
+                        />
 
                         <div class="flex space-x-2 self-end">
                           <DecreaseQuantityButton item={item} />

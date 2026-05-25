@@ -5,7 +5,7 @@ test('not throwig error when no hash is not present', async ({ page }) => {
   page.on('pageerror', ({ message }) => {
     errors.push(message)
   })
-  await page.goto('/')
+  await page.goto('/bg/')
 
   expect(
     errors.includes(

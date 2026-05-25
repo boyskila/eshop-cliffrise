@@ -3,7 +3,7 @@ import { openContactFormModal } from './helpers'
 
 test.describe('Contact Form Modal - Basic UI', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/en/')
   })
 
   test.afterEach(async ({ request }) => {
