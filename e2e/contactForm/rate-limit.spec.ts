@@ -3,7 +3,7 @@ import { submitContactAction } from './helpers'
 
 test.describe('Contact Form Modal - Rate Limit', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/en/')
   })
 
   test.afterEach(async ({ request }) => {

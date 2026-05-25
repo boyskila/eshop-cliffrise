@@ -43,3 +43,17 @@ export const formatPrice = (
   })
   return formatter.format(price)
 }
+
+export const formatPriceWithBgn = (
+  price: number,
+  locale: Locale = 'en',
+  priceBgn?: number,
+) => {
+  const eurPrice = formatPrice(price, locale)
+
+  if (!isPresent(priceBgn)) {
+    return [eurPrice]
+  }
+
+  return [eurPrice, formatPrice(priceBgn, locale, 'BGN')]
+}

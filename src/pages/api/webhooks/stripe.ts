@@ -3,7 +3,13 @@ import type Stripe from 'stripe'
 import { getStripe } from '@services/stripe'
 import { emailService } from '@services/email'
 import { getTranslations } from '@utils/i18'
-import { escapeHtml, formatPrice, isPresent, isTestMode } from '@utils/func'
+import {
+  escapeHtml,
+  formatPrice,
+  formatPriceWithBgn,
+  isPresent,
+  isTestMode,
+} from '@utils/func'
 import type { Locale } from '@types'
 
 type EmailLineItem = {
@@ -102,7 +108,9 @@ const buildEmailVariables = async (
 
   const shippingFeeRaw = parseFloat(session.metadata?.shipping_fee ?? '0')
   const shippingFeeDisplay =
-    shippingFeeRaw > 0 ? `${formatPrice(shippingFeeRaw, lang)}` : t.freeShipping
+    shippingFeeRaw > 0
+      ? `${formatPriceWithBgn(shippingFeeRaw, lang)}`
+      : t.freeShipping
   const discountRaw = (session.total_details?.amount_discount ?? 0) / 100
   const discountDisplay =
     discountRaw > 0 ? `-${formatPrice(discountRaw, lang, currency)}` : ''

@@ -3,7 +3,7 @@ import useEmblaCarousel from 'embla-carousel-solid'
 import type { Locale, RenderedProductCard } from '@types'
 import { CarouselDots } from './CarouselDots'
 import { CAROUSEL_OPTIONS, CAROUSEL_PLUGINS } from './config'
-import { formatPrice } from '@utils/func'
+import { Price } from '@components/ui/Price'
 
 export default (props: {
   products: RenderedProductCard[]
@@ -20,7 +20,7 @@ export default (props: {
       <div class="flex touch-pan-y touch-pinch-zoom gap-3">
         <For each={props.products}>
           {(product) => {
-            const { image, hoverImage, name, price, href } = product
+            const { image, hoverImage, name, price, priceBgn, href } = product
             return (
               <div
                 classList={{
@@ -85,19 +85,23 @@ export default (props: {
                         {name}
                       </a>
                       <div class="font-extrabold text-[19px] lg:text-xl xl:text-2xl">
-                        {formatPrice(price, props.lang)}
+                        <Price
+                          amount={price}
+                          amountBgn={priceBgn}
+                          lang={props.lang}
+                          bgnClass="text-sm md:text-base"
+                        />
                       </div>
                     </div>{' '}
                     <a
                       href={href}
                       aria-label={`Buy ${name} now`}
                       class="
-                        phone-portrait:h-7
-                        phone-landscape:h-7
+                        phone-portrait:h-9
+                        phone-landscape:h-9
                         flex items-center justify-center
-                        max-h-10 w-25
-                        text-sm
-                        md:text-base
+                        max-h-10 w-20
+                        text-base
                         bg-black text-white lg:text-lg
                         leading-none tracking-[2px] uppercase"
                     >

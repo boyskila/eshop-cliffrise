@@ -9,8 +9,9 @@ export const checkout = {
       officeId: z.coerce.number(),
     }),
     handler: async () => {
-      const { amountEur: fee } = await getStripeShippingRate('standard')
-      return { fee }
+      const { amountEur: fee, amountBgn: feeBgn } =
+        await getStripeShippingRate('standard')
+      return { fee, feeBgn }
     },
   }),
   saveShipping: defineAction({

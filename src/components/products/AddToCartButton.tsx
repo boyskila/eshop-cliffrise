@@ -57,10 +57,10 @@ export const AddToCartButton = (props: {
       data-add-to-cart-button
       disabled={isDisabled() || isBusy()}
       aria-label={`Add ${props.productName} to cart`}
-      class="p-2 md:p-3
+      class="p-2 md:p-3 py-3
         flex items-center justify-center flex-1
         border border-black bg-black text-white
-        text-base md:text-lg leading-none
+        text-xl leading-none
         tracking-[2px] uppercase
         disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
     >
