@@ -9,6 +9,7 @@ import { CartNotifications } from '@components/CartNotifications'
 import { Cart } from '@components/cart/Cart'
 import Divider from '@components/ui/Divider.astro'
 import ContactUsModal from '@components/contactForm/ContactUsModal.astro'
+import CookieBanner from '@components/CookieBanner.astro'
 import '../styles/global.css'
 
 interface Props {
@@ -27,7 +28,7 @@ const defaults = {
 } as const
 
 const { showHero = true, title } = Astro.props
-const { notification, cart } = getTranslations(Astro.params)
+const { notification, cart, cookieBanner } = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
 
@@ -42,17 +43,8 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <title>CliffRise eshop | {title}</title>
     <SEO {...defaults} {title} />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9DXQP66G4"
-    ></script>
     <script>
-      ;(window as any).dataLayer = (window as any).dataLayer || []
-      function gtag(...args: any[]) {
-        ;(window as any).dataLayer.push(args)
-      }
-      gtag('js', new Date())
-
-      gtag('config', 'G-D9DXQP66G4')
+      import '../scripts/google-analytics'
     </script>
     <ClientRouter />
   </head>
@@ -88,6 +80,7 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <Divider />
     <Footer />
     <ContactUsModal />
+    <CookieBanner lang={lang} text={cookieBanner} />
   </body>
 </html>
 
