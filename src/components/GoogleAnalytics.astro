@@ -1,0 +1,72 @@
+<script is:inline>
+  const googleAnalyticsId = 'G-D9DXQP66G4'
+  const cookieConsentKey = 'cliffrise_cookie_consent'
+  const cookieConsentValue = 'accepted'
+  let lastTrackedPageUrl = null
+
+  const hasCookieConsent = () => {
+    try {
+      return (
+        window.localStorage.getItem(cookieConsentKey) === cookieConsentValue
+      )
+    } catch {
+      return false
+    }
+  }
+
+  const getGtag = () => {
+    window.dataLayer = window.dataLayer || []
+    window.gtag =
+      window.gtag ||
+      ((...args) => {
+        window.dataLayer.push(args)
+      })
+
+    return window.gtag
+  }
+
+  const loadGoogleAnalytics = () => {
+    const gtag = getGtag()
+
+    if (window.__cliffriseGoogleAnalyticsLoaded) {
+      return
+    }
+
+    window.__cliffriseGoogleAnalyticsLoaded = true
+
+    const script = document.createElement('script')
+    script.async = true
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`
+    document.head.append(script)
+
+    gtag('js', new Date())
+    gtag('config', googleAnalyticsId, { send_page_view: false })
+  }
+
+  const trackPageView = () => {
+    if (!hasCookieConsent()) {
+      return
+    }
+
+    loadGoogleAnalytics()
+
+    const pageUrl = window.location.href
+
+    if (pageUrl === lastTrackedPageUrl) {
+      return
+    }
+
+    lastTrackedPageUrl = pageUrl
+
+    getGtag()('event', 'page_view', {
+      page_title: document.title,
+      page_location: pageUrl,
+      page_path: `${window.location.pathname}${window.location.search}`,
+    })
+  }
+
+  trackPageView()
+
+  document.addEventListener('astro:page-load', trackPageView)
+  window.addEventListener('cliffrise:cookie-consent', trackPageView)
+</script>

@@ -10,6 +10,7 @@ import { Cart } from '@components/cart/Cart'
 import Divider from '@components/ui/Divider.astro'
 import ContactUsModal from '@components/contactForm/ContactUsModal.astro'
 import CookieBanner from '@components/CookieBanner.astro'
+import GoogleAnalytics from '@components/GoogleAnalytics.astro'
 import '../styles/global.css'
 
 interface Props {
@@ -43,9 +44,7 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <title>CliffRise eshop | {title}</title>
     <SEO {...defaults} {title} />
-    <script>
-      import '../scripts/google-analytics'
-    </script>
+    <GoogleAnalytics />
     <ClientRouter />
   </head>
   <body class="[&:has([data-cart-dialog])]:overflow-hidden">
