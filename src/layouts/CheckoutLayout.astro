@@ -1,5 +1,12 @@
 ---
+import CookieBanner from '@components/CookieBanner.astro'
+import GoogleAnalytics from '@components/GoogleAnalytics.astro'
+import { getLang, getTranslations } from '@utils/i18'
 import '../styles/global.css'
+
+const lang = getLang(Astro.params)
+const { cookieBanner } = getTranslations(Astro.params)
+
 Astro.response.headers.set('Cache-Control', 'no-store')
 ---
 
@@ -10,9 +17,10 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <title>CliffRise eshop | Checkout</title>
-    <script>
-      import '../scripts/google-analytics'
-    </script>
+    <GoogleAnalytics />
   </head>
-  <body class="h-full"><slot /></body>
+  <body class="h-full">
+    <slot />
+    <CookieBanner lang={lang} text={cookieBanner} />
+  </body>
 </html>
