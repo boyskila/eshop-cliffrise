@@ -68,7 +68,7 @@
             "Printer Problematico 8b+ - Karlukovo",
             "Amuerte to the Top 8b+ - Vratsa",
             "Domatito na zvyara 8b+ - Vratsa",
-            "Dunera 8b boulder - Beli Iskar" 
+            "Dunera 8b boulder - Beli Iskar"
           ]
         },
         {
@@ -144,6 +144,11 @@
     "facebook": "Facebook",
     "instagram": "Instagram",
     "copyright": "2026 CliffRise © All rights reserved"
+  },
+  "cookieBanner": {
+    "message": "We use cookies to improve the website experience, analyze traffic, and provide you with a better user experience. You can read more in our",
+    "privacyPolicy": "Privacy Policy",
+    "accept": "Accept"
   },
   "notification": {
     "addedToCart": "Added",

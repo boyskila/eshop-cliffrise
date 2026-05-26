@@ -1,0 +1,89 @@
+---
+import type { Locale, Translations } from '@types'
+
+interface Props {
+  lang: Locale
+  text: Translations['cookieBanner']
+}
+
+const { lang, text } = Astro.props
+---
+
+<div
+  data-cookie-banner
+  class="fixed right-4 bottom-4 left-4 z-[90] hidden border border-gray-200 bg-white p-4 text-black shadow-2xl md:right-6 md:bottom-6 md:left-auto md:max-w-xl md:p-5"
+>
+  <div class="flex flex-col gap-4 md:flex-row md:items-center">
+    <p class="text-sm/5 md:text-base/5">
+      {text.message}
+      <a
+        class="font-semibold underline underline-offset-4"
+        href={`/${lang}/privacy-policy/`}
+      >
+        {text.privacyPolicy}
+      </a>
+    </p>
+    <button
+      type="button"
+      data-accept-cookies
+      class="shrink-0 bg-black px-6 py-3 text-sm font-bold whitespace-nowrap text-white uppercase transition-colors hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:outline-none"
+    >
+      {text.accept}
+    </button>
+  </div>
+</div>
+
+<script>
+  const cookieConsentKey = 'cliffrise_cookie_consent'
+  const cookieConsentValue = 'accepted'
+  let cookieBannerController: AbortController | null = null
+
+  const hasStoredCookieConsent = () => {
+    try {
+      return (
+        window.localStorage.getItem(cookieConsentKey) === cookieConsentValue
+      )
+    } catch {
+      return false
+    }
+  }
+
+  const hasCookieConsent = () => hasStoredCookieConsent()
+
+  const storeCookieConsent = () => {
+    try {
+      window.localStorage.setItem(cookieConsentKey, cookieConsentValue)
+    } catch {
+      // Persisting the browser cookie below is enough when localStorage is unavailable.
+    }
+  }
+
+  const setupCookieBanner = () => {
+    cookieBannerController?.abort()
+    cookieBannerController = new AbortController()
+
+    const banner = document.querySelector<HTMLElement>('[data-cookie-banner]')
+    const acceptButton = document.querySelector<HTMLButtonElement>(
+      '[data-accept-cookies]',
+    )
+
+    if (!banner || !acceptButton) {
+      return
+    }
+
+    banner.classList.toggle('hidden', hasCookieConsent())
+
+    acceptButton.addEventListener(
+      'click',
+      () => {
+        storeCookieConsent()
+        banner.classList.add('hidden')
+        window.dispatchEvent(new Event('cliffrise:cookie-consent'))
+      },
+      { signal: cookieBannerController.signal },
+    )
+  }
+
+  setupCookieBanner()
+  document.addEventListener('astro:page-load', setupCookieBanner)
+</script>
