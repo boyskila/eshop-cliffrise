@@ -111,8 +111,8 @@ if (sessionId) {
       product_count: String(cart.length),
       ...productMetadata,
       products: productsSummary.slice(0, 500),
-      locale: lang,
     },
+    locale: lang,
   })
 
   stripeRedirect = `/${lang}/checkout/?session_id=${created.id}`
