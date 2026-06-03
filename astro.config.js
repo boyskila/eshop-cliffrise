@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import node from '@astrojs/node'
-import { DEFAULT_LANG } from './src/constants'
+import { DEFAULT_LANG, SUPPORTED_LANGS } from './src/constants'
 import solidJs from '@astrojs/solid-js'
 
 const siteUrl = new URL(process.env.SITE_URL || 'http://localhost:4321')
@@ -18,7 +18,7 @@ export default defineConfig({
   },
   i18n: {
     defaultLocale: DEFAULT_LANG,
-    locales: ['en', 'bg'],
+    locales: [...SUPPORTED_LANGS],
     routing: {
       prefixDefaultLocale: true,
     },

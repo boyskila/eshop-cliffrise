@@ -111,7 +111,7 @@ if (sessionId) {
       product_count: String(cart.length),
       ...productMetadata,
       products: productsSummary.slice(0, 500),
-      lang,
+      locale: lang,
     },
   })
 
