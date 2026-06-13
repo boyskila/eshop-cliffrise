@@ -24,6 +24,7 @@
     "astro": "^5.17.1",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-solid": "^8.6.0",
+    "ioredis": "^5.11.1",
     "leaflet": "^1.9.4",
     "lucide-solid": "0.562.0",
     "resend": "^6.9.1",
