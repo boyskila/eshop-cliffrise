@@ -5,6 +5,7 @@ import { DEFAULT_LANG, SUPPORTED_LANGS } from './src/constants'
 import solidJs from '@astrojs/solid-js'
 
 const siteUrl = new URL(process.env.SITE_URL || 'http://localhost:4321')
+const sessionTtlSeconds = 60 * 60 * 24 * 30
 
 export default defineConfig({
   site: siteUrl.href,
@@ -25,6 +26,17 @@ export default defineConfig({
   },
   output: 'server',
   adapter: node({ mode: 'standalone' }),
+  session: {
+    driver: 'redis',
+    options: {
+      url: process.env.REDIS_URL || 'redis://localhost:6379',
+      base: 'cliffrise:sessions',
+      ttl: sessionTtlSeconds,
+      connectTimeout: 1000,
+      maxRetriesPerRequest: 1,
+    },
+    ttl: sessionTtlSeconds,
+  },
   integrations: [solidJs()],
   security: {
     allowedDomains: [
