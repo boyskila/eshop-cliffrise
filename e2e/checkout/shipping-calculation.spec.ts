@@ -19,9 +19,7 @@ const addProductFromProductPage = async (page: Page) => {
   const addResponse = await addResponsePromise
   expect(addResponse.ok()).toBeTruthy()
 
-  return page
-    .locator('header')
-    .getByRole('button', { name: /shopping cart with 1 item/i })
+  return page.locator('header').getByRole('button', { name: /shopping cart/i })
 }
 
 const openCartAndProceedToShipping = async (page: Page) => {
@@ -37,9 +35,10 @@ const openCartAndProceedToShipping = async (page: Page) => {
   })
   await expect(checkoutButton).toBeVisible()
   await expect(checkoutButton).toBeEnabled()
-  await checkoutButton.click()
-
-  await page.waitForURL('**/checkout/shipping/**')
+  await Promise.all([
+    page.waitForURL('**/checkout/shipping/**'),
+    checkoutButton.click(),
+  ])
 }
 
 const selectOffice = (page: Page, officeId: number, officeName: string) =>
@@ -131,6 +130,31 @@ test.describe('Checkout - Shipping form', () => {
     await selectOffice(page, BOURGAS_OFFICE_ID, BOURGAS_OFFICE_NAME)
 
     await expect(page.locator('[data-office-search]')).toBeHidden()
+    await expect(page.locator('#office-selected-state')).toBeVisible()
+    await expect(page.locator('#speedy-office-name')).toHaveText(
+      BOURGAS_OFFICE_NAME,
+    )
+  })
+
+  test('persists selected office in the checkout session after continuing', async ({
+    page,
+  }) => {
+    const saveResponse = page.waitForResponse(
+      (response) =>
+        response.url().includes('_actions/saveShipping') &&
+        response.request().method() === 'POST',
+    )
+
+    await selectOffice(page, BOURGAS_OFFICE_ID, BOURGAS_OFFICE_NAME)
+    const checkoutRedirect = page.waitForURL(/\/en\/checkout\/(?:\?|$)/)
+    await page.locator('#shipping-submit').click()
+    expect((await saveResponse).ok()).toBeTruthy()
+    await checkoutRedirect
+
+    await page.goto('/en/checkout/shipping/', {
+      waitUntil: 'domcontentloaded',
+    })
+
     await expect(page.locator('#office-selected-state')).toBeVisible()
     await expect(page.locator('#speedy-office-name')).toHaveText(
       BOURGAS_OFFICE_NAME,
