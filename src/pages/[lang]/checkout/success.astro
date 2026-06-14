@@ -18,7 +18,6 @@ if (sessionId) {
 
     if (session.status === 'complete') {
       Astro.session?.set('cart', [])
-      Astro.session?.set('shipping', undefined)
       Astro.session?.set('orderEmail', session.customer_details?.email ?? null)
       return Astro.redirect(`/${lang}/checkout/success/`)
     }
