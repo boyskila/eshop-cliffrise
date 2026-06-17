@@ -15,6 +15,12 @@ import {
   prepareProductMainImage,
 } from '@utils/image'
 import { getFreeShippingThreshold } from '@utils/shipping'
+import {
+  getOrganizationId,
+  getProductId,
+  getSchemaLanguage,
+  getWebPageId,
+} from '@utils/schema'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
@@ -36,9 +42,107 @@ const carouselProducts = await prepareProductCards(products)
 const productRequiresKindSelection = product.kind.length > 0
 const productOutOfStock = product.outOfStock ?? false
 const freeShippingThreshold = await getFreeShippingThreshold()
+const baseUrl = Astro.site ?? Astro.url
+const canonicalURL = new URL(product.href, baseUrl)
+const productImageUrl = new URL(mainImage.src, baseUrl).href
+const productImageUrls = productGalleryImages.map(
+  ({ full }) => new URL(full.src, baseUrl).href,
+)
+const productSeo = translations.seo.product
+const replaceProductSeoPlaceholders = (value: string) =>
+  value.replaceAll('{productName}', product.name)
+const productSummary =
+  product.description ||
+  replaceProductSeoPlaceholders(productSeo.fallbackDescription)
+const productDescription = replaceProductSeoPlaceholders(
+  productSeo.description,
+).replaceAll('{productDescription}', productSummary)
+const seoTitle = replaceProductSeoPlaceholders(productSeo.title)
+const seoDescription =
+  productDescription.length > 155
+    ? `${productDescription.slice(0, 152).trim()}...`
+    : productDescription
+const breadcrumbLabels = {
+  en: {
+    home: 'Home',
+  },
+  bg: {
+    home: 'Начало',
+  },
+} as const
+const labels = breadcrumbLabels[lang]
+const homeLabel = labels.home
+const organizationId = getOrganizationId(baseUrl)
+const productId = getProductId(canonicalURL)
+const productJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  '@id': productId,
+  name: product.name,
+  sku: product.id,
+  url: canonicalURL.href,
+  description: productDescription,
+  image: productImageUrls.length > 0 ? productImageUrls : [productImageUrl],
+  category: 'Climbing equipment',
+  inLanguage: getSchemaLanguage(lang),
+  mainEntityOfPage: {
+    '@id': getWebPageId(canonicalURL),
+  },
+  brand: {
+    '@id': organizationId,
+  },
+  offers: {
+    '@type': 'Offer',
+    '@id': `${productId}-offer`,
+    url: canonicalURL.href,
+    priceCurrency: 'EUR',
+    price: product.price.toFixed(2),
+    availability: productOutOfStock
+      ? 'https://schema.org/OutOfStock'
+      : 'https://schema.org/InStock',
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: {
+      '@id': organizationId,
+    },
+  },
+}
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  '@id': `${productId}-breadcrumb`,
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: homeLabel,
+      item: new URL(`/${lang}/`, baseUrl).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: translations.products,
+      item: new URL(`/${lang}/#products`, baseUrl).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: product.name,
+      item: canonicalURL.href,
+    },
+  ],
+}
 ---
 
-<MainLayout title={product.name} showHero={false}>
+<MainLayout
+  title={product.name}
+  {seoTitle}
+  description={seoDescription}
+  image={{ src: productImageUrl, alt: product.name }}
+  {canonicalURL}
+  jsonLd={[productJsonLd, breadcrumbJsonLd]}
+  og={{ type: 'product' }}
+  showHero={false}
+>
   <div
     data-product-free-delivery-banner
     class="uppercase text-center bg-gray-100 py-4 text-2xl tracking-widest"

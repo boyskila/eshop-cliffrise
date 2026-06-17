@@ -2,10 +2,15 @@
 import MainLayout from '@layouts/MainLayout.astro'
 import { getTranslations } from '@utils/i18'
 
-const { termsAndConditions } = getTranslations(Astro.params)
+const { termsAndConditions, seo } = getTranslations(Astro.params)
 ---
 
-<MainLayout title={termsAndConditions.title} showHero={false}>
+<MainLayout
+  title={termsAndConditions.title}
+  seoTitle={seo.termsAndConditions.title}
+  description={termsAndConditions.intro}
+  showHero={false}
+>
   <section class="mx-auto max-w-4xl px-6 py-16 text-lg leading-8">
     <h1 class="mb-8 text-3xl font-bold">{termsAndConditions.title}</h1>
 

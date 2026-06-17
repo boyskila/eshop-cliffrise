@@ -8,9 +8,14 @@ import {
   FeedbackSection,
 } from '@components/sections'
 import Divider from '@components/ui/Divider.astro'
+import { getTranslations } from '@utils/i18'
+
+const translations = getTranslations(Astro.params)
+const title = translations.seo.home.title
+const description = translations.seo.home.description
 ---
 
-<MainLayout title="Home">
+<MainLayout {title} {description}>
   <CauseSection />
   <EventsSection />
   <AboutSection />

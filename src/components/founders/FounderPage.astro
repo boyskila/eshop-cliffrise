@@ -23,8 +23,12 @@ const founderMap = {
 }
 
 const { founder } = Astro.props
-const { founders } = getTranslations(Astro.params)
+const { founders, seo } = getTranslations(Astro.params)
 const profile = founders[founder]
+const replaceFounderSeoPlaceholders = (value: string) =>
+  value.replaceAll('{name}', profile.name).replaceAll('{quote}', profile.quote)
+const seoTitle = replaceFounderSeoPlaceholders(seo.founder.title)
+const description = replaceFounderSeoPlaceholders(seo.founder.description)
 const { profileImage } = founderMap[founder]
 const carouselImages = await Promise.all(
   founderMap[founder].images.map((img) => {
@@ -38,7 +42,12 @@ const carouselImages = await Promise.all(
 const carouselImageUrls = carouselImages.map((img) => img.src)
 ---
 
-<MainLayout title={profile.title} showHero={false}>
+<MainLayout
+  title={profile.title}
+  {seoTitle}
+  {description}
+  showHero={false}
+>
   <section class="mx-auto max-w-6xl px-6 pt-10 md:pt-16 md:px-10">
     <div class="flex flex-col gap-7 md:flex-row md:items-stretch md:gap-10">
       <aside class="space-y-7 md:w-[42%] md:space-y-9 md:pt-2">

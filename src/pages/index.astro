@@ -1,0 +1,7 @@
+---
+import { getDetectedLang } from '@utils/i18'
+
+const lang = getDetectedLang(Astro.request)
+
+return Astro.redirect(`/${lang}/`)
+---

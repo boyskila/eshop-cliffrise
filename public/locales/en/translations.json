@@ -22,6 +22,42 @@
     "contact": "Contact us"
   },
   "heroTitle": "CliffRise is a way to give back to the rocks - every purchase supports the creation of new climbing routes.",
+  "seo": {
+    "home": {
+      "title": "CliffRise - Climbing Products with a Mission",
+      "description": "CliffRise creates climbing chalk and climbing products that support the development of new rock climbing routes in Bulgaria."
+    },
+    "product": {
+      "title": "{productName} - Climbing Products for Rock Climbing in Bulgaria",
+      "description": "{productName} by CliffRise. {productDescription} Climbing products that support new rock climbing routes in Bulgaria.",
+      "fallbackDescription": "Climbing chalk and climbing gear for rock climbing."
+    },
+    "about": {
+      "title": "About CliffRise - Route Development in Bulgaria",
+      "description": "Meet the climbers behind CliffRise and learn how our climbing products support new rock climbing routes and the Bulgarian climbing community."
+    },
+    "climbingGuide": {
+      "title": "Climbing Guide to {area} - Rock Climbing in Bulgaria",
+      "description": "Explore rock climbing in {area}, Bulgaria with route information, local context and practical tips from the CliffRise climbing community."
+    },
+    "festival": {
+      "title": "Teteven Climb Festival - Rock Climbing in Bulgaria",
+      "description": "Teteven Climb is a Bulgarian climbing festival with rock climbing, yoga and community events in the Teteven climbing area."
+    },
+    "founder": {
+      "title": "{name} - Rock Climbing and Route Development in Bulgaria",
+      "description": "{name} - CliffRise climber and route developer. {quote}"
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy for CliffRise Climbing Products"
+    },
+    "termsAndConditions": {
+      "title": "Terms and Conditions for CliffRise Climbing Products"
+    },
+    "gdpr": {
+      "title": "GDPR Information for CliffRise Climbing Products"
+    }
+  },
   "causeP1": "By choosing CliffRise chalk or any of our other products, you directly support the development of climbing areas in Bulgaria. Every purchase helps create new routes, maintain existing ones, and improve the places we all love to climb at.",
   "causeP2": "CliffRise is a way to give back to the rocks and the climbing community. Your support helps us keep moving forward, bring new ideas to life, and continue developing climbing in Bulgaria.",
   "aboutUsP1": "The guys behind the idea are well-known climbers in Bulgaria, with a long list of difficult ascents behind them.",
