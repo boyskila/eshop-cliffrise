@@ -1,11 +1,16 @@
 ---
 import CookieBanner from '@components/CookieBanner.astro'
 import GoogleAnalytics from '@components/GoogleAnalytics.astro'
+import SEO from '@components/SEO.astro'
 import { getLang, getTranslations } from '@utils/i18'
 import '../styles/global.css'
 
 const lang = getLang(Astro.params)
 const { cookieBanner } = getTranslations(Astro.params)
+const baseUrl = Astro.site ?? Astro.url
+const title = 'Checkout | CliffRise Shop'
+const description =
+  'Secure checkout for CliffRise climbing products and route-funding purchases.'
 
 Astro.response.headers.set('Cache-Control', 'no-store')
 ---
@@ -16,7 +21,18 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <title>CliffRise eshop | Checkout</title>
+    <SEO
+      name="CliffRise Shop"
+      {title}
+      {description}
+      image={{
+        src: new URL('/CR_Featured_Image.webp', baseUrl).href,
+        alt: 'CliffRise Shop',
+      }}
+      canonicalURL={new URL(Astro.url.pathname, baseUrl)}
+      locale={lang}
+      robots="noindex,nofollow"
+    />
     <GoogleAnalytics />
   </head>
   <body class="h-full">

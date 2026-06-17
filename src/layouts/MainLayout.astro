@@ -11,27 +11,100 @@ import Divider from '@components/ui/Divider.astro'
 import ContactUsModal from '@components/contactForm/ContactUsModal.astro'
 import CookieBanner from '@components/CookieBanner.astro'
 import GoogleAnalytics from '@components/GoogleAnalytics.astro'
+import { DEFAULT_LANG, SUPPORTED_LANGS } from '@constants'
+import {
+  buildBaseSchemaGraph,
+  buildSchemaDocument,
+  normalizeSchemaNodes,
+} from '@utils/schema'
 import '../styles/global.css'
+
+type SEOImage = {
+  src: string
+  alt: string
+}
 
 interface Props {
   title: string
+  seoTitle?: string
   showHero?: boolean
+  description?: string
+  image?: SEOImage
+  robots?: string
+  canonicalURL?: URL | string
+  jsonLd?: unknown | unknown[]
+  og?: {
+    type?: string
+  }
 }
 
+const baseUrl = Astro.site ?? Astro.url
 const defaults = {
   name: 'CliffRise Shop',
   description:
     'CliffRise is a climbing brand supporting real work on the rock in Bulgaria - helping create new routes and maintain climbing areas for the community.',
   image: {
-    src: new URL('/CR_Featured_Image.webp', Astro.site).href,
+    src: new URL('/CR_Featured_Image.webp', baseUrl).href,
     alt: 'CliffRise Shop',
   },
 } as const
 
-const { showHero = true, title } = Astro.props
-const { notification, cart, cookieBanner } = getTranslations(Astro.params)
+const {
+  showHero = true,
+  title,
+  seoTitle,
+  description = defaults.description,
+  image = defaults.image,
+  robots = 'index,follow',
+  canonicalURL = new URL(Astro.url.pathname, baseUrl),
+  jsonLd,
+  og,
+} = Astro.props
+const { notification, cart, cookieBanner, seo } = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const cartFromSession = await Astro.session?.get('cart')
+
+const formatTitle = (pageTitle: string) =>
+  pageTitle.includes('CliffRise') ? pageTitle : `${pageTitle} | CliffRise Shop`
+const formattedTitle = formatTitle(seoTitle ?? title)
+
+const getLocalizedPathname = (locale: string) => {
+  const segments = Astro.url.pathname.split('/').filter(Boolean)
+
+  if (
+    SUPPORTED_LANGS.includes(segments[0] as (typeof SUPPORTED_LANGS)[number])
+  ) {
+    segments[0] = locale
+  } else {
+    segments.unshift(locale)
+  }
+
+  return `/${segments.join('/')}/`
+}
+
+const alternates = [
+  ...SUPPORTED_LANGS.map((locale) => ({
+    lang: locale,
+    href: new URL(getLocalizedPathname(locale), baseUrl),
+  })),
+  {
+    lang: 'x-default',
+    href: new URL(getLocalizedPathname(DEFAULT_LANG), baseUrl),
+  },
+]
+
+const schema = buildSchemaDocument([
+  ...buildBaseSchemaGraph({
+    baseUrl,
+    lang,
+    websiteDescription: seo.home.description,
+    pageTitle: formattedTitle,
+    pageDescription: description,
+    canonicalURL,
+    image,
+  }),
+  ...normalizeSchemaNodes(jsonLd),
+])
 
 Astro.response.headers.set('Cache-Control', 'no-store')
 ---
@@ -42,8 +115,18 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <title>CliffRise eshop | {title}</title>
-    <SEO {...defaults} {title} />
+    <SEO
+      name={defaults.name}
+      title={formattedTitle}
+      {description}
+      {image}
+      locale={lang}
+      {robots}
+      {canonicalURL}
+      {alternates}
+      jsonLd={schema}
+      og={{ type: 'website', ...og }}
+    />
     <GoogleAnalytics />
     <ClientRouter />
   </head>

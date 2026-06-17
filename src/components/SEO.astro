@@ -1,7 +1,13 @@
 ---
+import { DEFAULT_LANG, SUPPORTED_LANGS } from '@constants'
+
 export type Image = {
   src: string
   alt: string
+}
+export type Alternate = {
+  lang: string
+  href: string | URL
 }
 export type SEOMetadata = {
   name: string
@@ -10,6 +16,7 @@ export type SEOMetadata = {
   image: Image
   canonicalURL?: URL | string
   locale?: string
+  robots?: string
 }
 export type OpenGraph = Partial<SEOMetadata> & {
   type?: string
@@ -18,7 +25,14 @@ export type Twitter = Partial<SEOMetadata> & {
   handle?: string
   card?: 'summary' | 'summary_large_image'
 }
+export type JsonLdItem = Record<string, unknown> & {
+  '@context'?: string
+  '@type'?: string | string[]
+  '@graph'?: Record<string, unknown>[]
+}
 export type Props = SEOMetadata & {
+  alternates?: Alternate[]
+  jsonLd?: JsonLdItem | JsonLdItem[]
   og?: OpenGraph
   twitter?: Twitter
 }
@@ -27,11 +41,39 @@ const {
   title,
   description,
   image,
-  locale = 'bg',
-  canonicalURL = new URL(Astro.url.pathname, Astro.site),
+  locale: providedLocale,
+  robots = 'index,follow',
+  alternates = [],
+  jsonLd,
+  canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url),
   og: _og = {},
   twitter: _twitter = {},
 } = Astro.props
+
+const baseUrl = Astro.site ?? Astro.url
+const openGraphLocales = {
+  en: 'en_US',
+  bg: 'bg_BG',
+} as const
+
+const toAbsoluteUrl = (url: string | URL) => new URL(url.toString(), baseUrl)
+const getLocaleFromPathname = () => {
+  const firstSegment = Astro.url.pathname.split('/').filter(Boolean)[0]
+
+  return SUPPORTED_LANGS.includes(
+    firstSegment as (typeof SUPPORTED_LANGS)[number],
+  )
+    ? firstSegment
+    : DEFAULT_LANG
+}
+const toOpenGraphLocale = (locale: string) =>
+  openGraphLocales[locale as keyof typeof openGraphLocales] ?? locale
+
+const locale = providedLocale ?? getLocaleFromPathname()
+const currentOpenGraphLocale = toOpenGraphLocale(locale)
+const alternateOpenGraphLocales = Object.values(openGraphLocales).filter(
+  (openGraphLocale) => openGraphLocale !== currentOpenGraphLocale,
+)
 
 const og: OpenGraph = {
   name,
@@ -39,7 +81,7 @@ const og: OpenGraph = {
   description,
   canonicalURL,
   image,
-  locale,
+  locale: currentOpenGraphLocale,
   type: 'website',
   ..._og,
 }
@@ -53,29 +95,56 @@ const twitter: Twitter = {
   card: 'summary_large_image',
   ..._twitter,
 }
+const absoluteOgImage = og.image && {
+  ...og.image,
+  src: toAbsoluteUrl(og.image.src).href,
+}
+const absoluteTwitterImage = twitter.image && {
+  ...twitter.image,
+  src: toAbsoluteUrl(twitter.image.src).href,
+}
 
 const ensureTrailingSlash = (url: string | URL) =>
   url.toString().replace(/\/$/, '') + '/'
+
+const canonicalHref = ensureTrailingSlash(toAbsoluteUrl(canonicalURL))
+const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []
 ---
 
 <!-- Page Metadata -->
 <meta name="generator" content={Astro.generator} />
-<link rel="canonical" href={ensureTrailingSlash(canonicalURL)} />
+<link rel="canonical" href={canonicalHref} />
 <title>{title}</title>
 <meta name="description" content={description} />
+<meta name="robots" content={robots} />
+
+{
+  alternates.map((alternate) => (
+    <link
+      rel="alternate"
+      hreflang={alternate.lang}
+      href={ensureTrailingSlash(toAbsoluteUrl(alternate.href))}
+    />
+  ))
+}
 
 <!-- OpenGraph Tags -->
 <meta property="og:title" content={og.title} />
 <meta property="og:type" content={og.type} />
-<meta property="og:url" content={ensureTrailingSlash(og.canonicalURL!)} />
+<meta property="og:url" content={canonicalHref} />
 <meta property="og:locale" content={og.locale} />
+{
+  alternateOpenGraphLocales.map((locale) => (
+    <meta property="og:locale:alternate" content={locale} />
+  ))
+}
 <meta property="og:description" content={og.description} />
 <meta property="og:site_name" content={og.name} />
 {
-  og.image && (
+  absoluteOgImage && (
     <>
-      <meta property="og:image" content={og.image.src} />
-      <meta property="og:image:alt" content={og.image.alt} />
+      <meta property="og:image" content={absoluteOgImage.src} />
+      <meta property="og:image:alt" content={absoluteOgImage.alt} />
     </>
   )
 }
@@ -86,10 +155,16 @@ const ensureTrailingSlash = (url: string | URL) =>
 <meta name="twitter:title" content={twitter.title} />
 <meta name="twitter:description" content={twitter.description} />
 {
-  twitter.image && (
+  absoluteTwitterImage && (
     <>
-      <meta name="twitter:image" content={twitter.image.src} />
-      <meta name="twitter:image:alt" content={twitter.image.alt} />
+      <meta name="twitter:image" content={absoluteTwitterImage.src} />
+      <meta name="twitter:image:alt" content={absoluteTwitterImage.alt} />
     </>
   )
+}
+
+{
+  jsonLdItems.map((item) => (
+    <script type="application/ld+json" set:html={JSON.stringify(item)} />
+  ))
 }

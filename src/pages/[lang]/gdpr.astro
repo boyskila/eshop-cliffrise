@@ -2,10 +2,15 @@
 import MainLayout from '@layouts/MainLayout.astro'
 import { getTranslations } from '@utils/i18'
 
-const { gdpr } = getTranslations(Astro.params)
+const { gdpr, seo } = getTranslations(Astro.params)
 ---
 
-<MainLayout title={gdpr.title} showHero={false}>
+<MainLayout
+  title={gdpr.title}
+  seoTitle={seo.gdpr.title}
+  description={gdpr.intro}
+  showHero={false}
+>
   <section class="mx-auto max-w-4xl px-6 py-16 text-lg leading-8">
     <h1 class="mb-8 text-3xl font-bold">{gdpr.title}</h1>
 

@@ -2,10 +2,15 @@
 import MainLayout from '@layouts/MainLayout.astro'
 import { getTranslations } from '@utils/i18'
 
-const { privacyPolicy } = getTranslations(Astro.params)
+const { privacyPolicy, seo } = getTranslations(Astro.params)
 ---
 
-<MainLayout title={privacyPolicy.title} showHero={false}>
+<MainLayout
+  title={privacyPolicy.title}
+  seoTitle={seo.privacyPolicy.title}
+  description={privacyPolicy.intro}
+  showHero={false}
+>
   <section class="mx-auto max-w-4xl px-6 py-16 text-lg leading-8">
     <h1 class="mb-8 text-3xl font-bold">{privacyPolicy.title}</h1>
 
