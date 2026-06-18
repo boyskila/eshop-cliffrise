@@ -13,5 +13,10 @@ interface Window {
   __gaLoaded?: boolean
   __gaLoading?: boolean
   __gaLastPageView?: string
+  __gaPendingPageView?: {
+    page_title: string
+    page_location: string
+    page_path: string
+  }
   __gaListenersBound?: boolean
 }
