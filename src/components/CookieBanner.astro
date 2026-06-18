@@ -48,7 +48,8 @@ const { lang, text } = Astro.props
     }
   }
 
-  const hasStoredCookieConsent = () => getStoredCookieConsent() !== null
+  const hasStoredCookieConsent = () =>
+    getStoredCookieConsent() === cookieConsentValue
 
   const storeCookieConsent = () => {
     try {
