@@ -75,6 +75,7 @@ const GA_ID = 'G-D9DXQP66G4'
         }
 
         document.head.appendChild(script)
+        window.dispatchEvent(new CustomEvent('ptupdate'))
       }
 
       function grantAnalyticsConsent() {
