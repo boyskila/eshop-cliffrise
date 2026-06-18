@@ -1,31 +1,121 @@
-<script is:inline>
-  const googleAnalyticsId = 'G-D9DXQP66G4'
+---
+const GA_ID = 'G-D9DXQP66G4'
+---
 
-  window.dataLayer = window.dataLayer || []
+{
+  import.meta.env.PROD && (
+    <script define:vars={{ GA_ID }}>
+      const CONSENT_KEY = 'cliffrise_cookie_consent'
+      const CONSENT_VALUE = 'accepted'
+      const GA_SCRIPT_ID = 'cliffrise-google-analytics'
 
-  function gtag() {
-    window.dataLayer.push(arguments)
-  }
+      function hasAnalyticsConsent() {
+        try {
+          return window.localStorage.getItem(CONSENT_KEY) === CONSENT_VALUE
+        } catch {
+          return false
+        }
+      }
 
-  window.gtag = gtag
+      function initializeGoogleTagQueue() {
+        window.dataLayer = window.dataLayer || []
+        window.gtag =
+          window.gtag ||
+          function gtag(...args) {
+            window.dataLayer?.push(args)
+          }
+      }
 
-  gtag('js', new Date())
-  gtag('config', googleAnalyticsId, {
-    page_path: window.location.pathname,
-    page_location: window.location.href,
-    page_title: document.title,
-  })
+      function getConsentState(analyticsStorage) {
+        return {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: analyticsStorage,
+        }
+      }
 
-  document.addEventListener('astro:page-load', () => {
-    if (window.gtag) {
-      window.gtag('event', 'page_view', {
-        page_title: document.title,
-        page_location: window.location.href,
-        page_path: window.location.pathname,
-      })
-    }
-  })
-</script>
+      function initializeConsentMode() {
+        if (window.__gaConsentInitialized) return
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D9DXQP66G4"
-></script>
+        initializeGoogleTagQueue()
+        window.gtag(
+          'consent',
+          'default',
+          getConsentState(hasAnalyticsConsent() ? 'granted' : 'denied'),
+        )
+        window.__gaConsentInitialized = true
+      }
+
+      function loadGoogleAnalytics() {
+        if (window.__gaLoaded || window.__gaLoading) return
+
+        window.__gaLoading = true
+        initializeGoogleTagQueue()
+
+        window.gtag('js', new Date())
+        window.gtag('config', GA_ID, {
+          send_page_view: false,
+        })
+
+        const script = document.createElement('script')
+        script.id = GA_SCRIPT_ID
+        script.type = 'text/partytown'
+        script.async = true
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`
+
+        script.onload = () => {
+          window.__gaLoaded = true
+          window.__gaLoading = false
+        }
+
+        script.onerror = () => {
+          window.__gaLoaded = false
+          window.__gaLoading = false
+        }
+
+        document.head.appendChild(script)
+      }
+
+      function grantAnalyticsConsent() {
+        initializeConsentMode()
+        window.gtag('consent', 'update', getConsentState('granted'))
+      }
+
+      function trackPageView() {
+        if (!hasAnalyticsConsent()) return
+
+        loadGoogleAnalytics()
+
+        const pageLocation = window.location.href
+
+        if (window.__gaLastPageView === pageLocation) return
+
+        window.__gaLastPageView = pageLocation
+
+        window.gtag('event', 'page_view', {
+          page_title: document.title,
+          page_location: pageLocation,
+          page_path: window.location.pathname + window.location.search,
+        })
+      }
+
+      function handleAnalyticsAccepted() {
+        grantAnalyticsConsent()
+        trackPageView()
+      }
+
+      initializeConsentMode()
+      trackPageView()
+
+      if (!window.__gaListenersBound) {
+        document.addEventListener('astro:page-load', trackPageView)
+        window.addEventListener(
+          'cliffrise:analytics-accepted',
+          handleAnalyticsAccepted,
+        )
+        window.__gaListenersBound = true
+      }
+    </script>
+  )
+}

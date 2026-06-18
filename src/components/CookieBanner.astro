@@ -10,6 +10,7 @@ const { lang, text } = Astro.props
 ---
 
 <div
+  id="cookie-consent"
   data-cookie-banner
   class="fixed right-4 bottom-4 left-4 z-[55] hidden border border-gray-200 bg-white p-4 text-black shadow-2xl md:right-6 md:bottom-6 md:left-auto md:max-w-xl md:p-5"
 >
@@ -24,6 +25,7 @@ const { lang, text } = Astro.props
       </a>
     </p>
     <button
+      id="cookie-accept"
       type="button"
       data-accept-cookies
       class="shrink-0 bg-black px-6 py-3 text-sm font-bold whitespace-nowrap text-white uppercase transition-colors hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:outline-none"
@@ -38,23 +40,23 @@ const { lang, text } = Astro.props
   const cookieConsentValue = 'accepted'
   let cookieBannerController: AbortController | null = null
 
-  const hasStoredCookieConsent = () => {
+  const getStoredCookieConsent = () => {
     try {
-      return (
-        window.localStorage.getItem(cookieConsentKey) === cookieConsentValue
-      )
+      return window.localStorage.getItem(cookieConsentKey)
     } catch {
-      return false
+      return null
     }
   }
 
-  const hasCookieConsent = () => hasStoredCookieConsent()
+  const hasStoredCookieConsent = () => getStoredCookieConsent() !== null
 
   const storeCookieConsent = () => {
     try {
       window.localStorage.setItem(cookieConsentKey, cookieConsentValue)
+      return true
     } catch {
-      // Persisting the browser cookie below is enough when localStorage is unavailable.
+      // Consent cannot be persisted when browser storage is unavailable.
+      return false
     }
   }
 
@@ -62,23 +64,25 @@ const { lang, text } = Astro.props
     cookieBannerController?.abort()
     cookieBannerController = new AbortController()
 
-    const banner = document.querySelector<HTMLElement>('[data-cookie-banner]')
-    const acceptButton = document.querySelector<HTMLButtonElement>(
-      '[data-accept-cookies]',
-    )
+    const banner = document.getElementById('cookie-consent')
+    const acceptButton = document.getElementById('cookie-accept')
 
     if (!banner || !acceptButton) {
       return
     }
 
-    banner.classList.toggle('hidden', hasCookieConsent())
+    banner.classList.toggle('hidden', hasStoredCookieConsent())
 
     acceptButton.addEventListener(
       'click',
       () => {
-        storeCookieConsent()
+        if (!storeCookieConsent()) {
+          return
+        }
+
         banner.classList.add('hidden')
-        window.dispatchEvent(new Event('cliffrise:cookie-consent'))
+
+        window.dispatchEvent(new Event('cliffrise:analytics-accepted'))
       },
       { signal: cookieBannerController.signal },
     )
