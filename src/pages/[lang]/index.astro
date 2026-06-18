@@ -8,14 +8,56 @@ import {
   FeedbackSection,
 } from '@components/sections'
 import Divider from '@components/ui/Divider.astro'
-import { getTranslations } from '@utils/i18'
+import { getLang, getTranslations } from '@utils/i18'
+import { TETEVEN_CLIMB_2026 } from '@data/events'
+import TetevenClimb2026ImageBg from '@assets/images/ttvn_meetup_2026_desktop.webp'
+import TetevenClimb2026ImageEn from '@assets/images/ttvn_meetup_2026_desktop_en.webp'
 
 const translations = getTranslations(Astro.params)
+const lang = getLang(Astro.params)
 const title = translations.seo.home.title
 const description = translations.seo.home.description
+const baseUrl = Astro.site ?? Astro.url
+const canonicalURL = new URL(Astro.url.pathname, baseUrl)
+const eventLocationName = lang === 'bg' ? 'Тетевен' : 'Teteven'
+const eventName = translations.eventsSection.meetup2026Alt
+const eventImage =
+  lang === 'bg' ? TetevenClimb2026ImageBg : TetevenClimb2026ImageEn
+const eventSchema = {
+  '@type': 'Event',
+  '@id': `${canonicalURL.href}#events-section`,
+  name: eventName,
+  description: translations.eventsSection.text,
+  startDate: TETEVEN_CLIMB_2026.startDate,
+  endDate: TETEVEN_CLIMB_2026.endDate,
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: eventLocationName,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: eventLocationName,
+      addressCountry: TETEVEN_CLIMB_2026.location.addressCountry,
+    },
+  },
+  image: [new URL(eventImage.src, baseUrl).href],
+  url: TETEVEN_CLIMB_2026.url,
+  organizer: {
+    '@type': 'Organization',
+    '@id': new URL('/', baseUrl).href,
+    name: 'CliffRise',
+    url: new URL('/', baseUrl).href,
+  },
+}
 ---
 
-<MainLayout {title} {description}>
+<MainLayout
+  {title}
+  {description}
+  canonicalURL={canonicalURL}
+  jsonLd={eventSchema}
+>
   <CauseSection />
   <EventsSection />
   <AboutSection />
