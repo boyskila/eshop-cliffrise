@@ -3,7 +3,6 @@ import tailwindcss from '@tailwindcss/vite'
 import node from '@astrojs/node'
 import { DEFAULT_LANG, SUPPORTED_LANGS } from './src/constants'
 import solidJs from '@astrojs/solid-js'
-import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import Stripe from 'stripe'
 import { loadEnv } from 'vite'
@@ -113,11 +112,6 @@ export default defineConfig({
   },
   integrations: [
     solidJs(),
-    partytown({
-      config: {
-        forward: ['dataLayer.push'],
-      },
-    }),
     sitemap({
       customPages: sitemapCustomPages,
       filter: shouldIncludeSitemapPage,
