@@ -1,9 +1,11 @@
 ---
-import { getTranslations } from '@utils/i18'
+import { getLang, getTranslations } from '@utils/i18'
 import ErrorMsg from './ErrorMsg.astro'
 
 const { contactForm } = getTranslations(Astro.params)
 const className = 'w-full p-2 border-b border-black bg-[#f7f7f7] h-13'
+const lang = getLang(Astro.params)
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY
 ---
 
 <form
@@ -12,6 +14,11 @@ const className = 'w-full p-2 border-b border-black bg-[#f7f7f7] h-13'
   autocomplete="off"
   class="flex flex-col gap-5 lg:gap-7 flex-1 group-data-[success]:hidden"
 >
+  <div
+    class="cf-turnstile"
+    data-sitekey={turnstileSiteKey}
+    data-language={lang}
+  ></div>
   <input
     placeholder={contactForm.namePlaceholder}
     type="text"

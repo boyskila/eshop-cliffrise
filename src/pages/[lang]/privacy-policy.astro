@@ -48,6 +48,17 @@ const { privacyPolicy, seo } = getTranslations(Astro.params)
     </ul>
 
     <h2 class="mb-4 text-2xl font-bold">{privacyPolicy.cookiesTitle}</h2>
-    <p>{privacyPolicy.cookiesText}</p>
+    <p class="mb-8">{privacyPolicy.cookiesText}</p>
+
+    <h2 class="mb-4 text-2xl font-bold">
+      {privacyPolicy.turnstileTitle}
+    </h2>
+    <p>{privacyPolicy.turnstileText}</p>
+    <p>
+      {privacyPolicy.moreInfo}
+      <a class="underline" href={privacyPolicy.turnstileUrl}>
+        {privacyPolicy.turnstileLinkText}
+      </a>
+    </p>
   </section>
 </MainLayout>
