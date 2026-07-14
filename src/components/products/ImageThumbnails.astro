@@ -44,9 +44,43 @@ const { productName, productImages } = Astro.props
   const mainImage = document.getElementById(
     'product-main-image',
   ) as HTMLImageElement | null
+  const imageOverlay = document.querySelector<HTMLImageElement>(
+    '[data-product-image-overlay]',
+  )
   const thumbnails = document.querySelectorAll<HTMLButtonElement>(
     '[data-product-thumbnail]',
   )
+  let latestSwap = 0
+
+  const setImageSource = (
+    image: HTMLImageElement,
+    src: string,
+    srcset: string,
+    sizes: string,
+  ) => {
+    if (sizes) {
+      image.sizes = sizes
+    } else {
+      image.removeAttribute('sizes')
+    }
+
+    if (srcset) {
+      image.srcset = srcset
+    } else {
+      image.removeAttribute('srcset')
+    }
+
+    image.src = src
+  }
+
+  const decodeImage = async (image: HTMLImageElement) => {
+    try {
+      await image.decode()
+      return image.naturalWidth > 0
+    } catch {
+      return false
+    }
+  }
 
   const warmCache = (thumb: HTMLButtonElement) => {
     const src = thumb.dataset.imageSrc
@@ -54,15 +88,13 @@ const { productName, productImages } = Astro.props
       return
     }
     const img = new Image()
-    const srcset = thumb.dataset.imageSrcset
-    const sizes = thumb.dataset.imageSizes
-    if (srcset) {
-      img.srcset = srcset
-    }
-    if (sizes) {
-      img.sizes = sizes
-    }
-    img.src = src
+    setImageSource(
+      img,
+      src,
+      thumb.dataset.imageSrcset ?? '',
+      thumb.dataset.imageSizes ?? '',
+    )
+    void decodeImage(img)
   }
 
   thumbnails.forEach((thumb) => {
@@ -82,26 +114,31 @@ const { productName, productImages } = Astro.props
         return
       }
 
+      const swap = ++latestSwap
       const preloader = new Image()
-      if (srcset.trim().length > 0) {
-        preloader.srcset = srcset
-      }
-      if (sizes.trim().length > 0) {
-        preloader.sizes = sizes
-      }
-      preloader.src = src
-      await preloader.decode().catch(() => {})
+      setImageSource(preloader, src, srcset, sizes)
 
-      mainImage.src = src
-      if (srcset.trim().length > 0) {
-        mainImage.srcset = srcset
-      } else {
-        mainImage.removeAttribute('srcset')
+      if (!(await decodeImage(preloader)) || swap !== latestSwap) {
+        return
       }
-      if (sizes.trim().length > 0) {
-        mainImage.sizes = sizes
-      } else {
-        mainImage.removeAttribute('sizes')
+
+      if (!imageOverlay) {
+        setImageSource(mainImage, src, srcset, sizes)
+        return
+      }
+
+      imageOverlay.style.opacity = '0'
+      setImageSource(imageOverlay, src, srcset, sizes)
+
+      if (!(await decodeImage(imageOverlay)) || swap !== latestSwap) {
+        return
+      }
+
+      imageOverlay.style.opacity = '1'
+      setImageSource(mainImage, src, srcset, sizes)
+
+      if ((await decodeImage(mainImage)) && swap === latestSwap) {
+        imageOverlay.style.opacity = '0'
       }
     })
   })
