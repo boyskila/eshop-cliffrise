@@ -1,21 +1,7 @@
 import { ActionError, defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { emailService } from '@services/email'
-import { checkRateLimit } from '@services/rateLimit'
 import { escapeHtml, sanitizeInput, sanitizeMessage } from '@utils/func'
-
-const getClientIp = (headers: Headers) => {
-  const forwardedFor = headers.get('x-forwarded-for')
-  if (forwardedFor) {
-    return forwardedFor.split(',')[0]?.trim() || 'unknown'
-  }
-  return headers.get('cf-connecting-ip') ?? 'unknown'
-}
-
-const rateLimitMax = Number(import.meta.env.CONTACT_RATE_LIMIT_MAX ?? 5)
-const rateLimitWindowMs = Number(
-  import.meta.env.CONTACT_RATE_LIMIT_WINDOW_MS ?? 60_000,
-)
 
 const formatMultilineHtml = (value: string) => {
   return escapeHtml(value).replace(/\n/g, '<br>')
@@ -32,20 +18,7 @@ export const contact = defineAction({
       .pipe(z.string().min(10).max(5000)),
   }),
 
-  handler: async ({ name, email, message }, ctx) => {
-    const ip = getClientIp(ctx.request.headers)
-    const rateLimit = checkRateLimit({
-      key: `contact:${ip}`,
-      limit: rateLimitMax,
-      windowMs: rateLimitWindowMs,
-    })
-
-    if (!rateLimit.allowed) {
-      throw new ActionError({
-        code: 'TOO_MANY_REQUESTS',
-        message: `Too many requests. Try again in ${rateLimit.retryAfterSeconds}s.`,
-      })
-    }
+  handler: async ({ name, email, message}) => {
 
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
