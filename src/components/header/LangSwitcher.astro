@@ -19,39 +19,18 @@ const newPath = currentPath.replace(`/${langFromParams}/`, `/${lang}/`)
   <span class="text-[22px] md:text-xl font-medium uppercase">{lang}</span>
 </a>
 <script>
-  let nextHref = ''
-  document.addEventListener('astro:page-load', () => {
-    const langSwitcher = document.querySelector<HTMLLinkElement>(
-      '[data-lang-switcher]',
+  const langSwitcher = document.querySelector<HTMLLinkElement>(
+    '[data-lang-switcher]',
+  )
+  const { hash } = window.location
+
+  if (langSwitcher && hash) {
+    const nextLang = langSwitcher.dataset.nextLang ?? ''
+    const currentLang = langSwitcher.dataset.lang ?? ''
+    const pathname = window.location.pathname.replace(
+      `/${currentLang}/`,
+      `/${nextLang}/`,
     )
-    const { hash } = window.location
-    if (langSwitcher && hash) {
-      const nextLang = langSwitcher.dataset.nextLang ?? ''
-      const currentLang = langSwitcher.dataset.lang ?? ''
-      const pathname = window.location.pathname.replace(
-        `/${currentLang}/`,
-        `/${nextLang}/`,
-      )
-      langSwitcher.href = nextHref || `${pathname}${hash}`
-    }
-  })
-  document.addEventListener('click', (e) => {
-    const langSwitcher = (e.target as HTMLLinkElement).closest<HTMLLinkElement>(
-      '[data-lang-switcher]',
-    )
-    if (langSwitcher) {
-      const { hash } = window.location
-      if (hash) {
-        e.preventDefault()
-        const nextLang = langSwitcher.dataset.nextLang ?? ''
-        const currentLang = langSwitcher.dataset.lang ?? ''
-        const pathname = window.location.pathname.replace(
-          `/${currentLang}/`,
-          `/${nextLang}/`,
-        )
-        nextHref = `${pathname}${hash}`
-        history.pushState(null, '', nextHref)
-      }
-    }
-  })
+    langSwitcher.href = `${pathname}${hash}`
+  }
 </script>

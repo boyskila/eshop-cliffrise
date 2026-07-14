@@ -20,7 +20,6 @@ const clickQuantityButtonUntil = async (
 test.describe('Quantity Controls - Accessibility', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(PRODUCT_URL)
-    await page.waitForLoadState('networkidle')
   })
 
   test.afterEach(async ({ page }) => {

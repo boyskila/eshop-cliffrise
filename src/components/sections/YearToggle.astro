@@ -40,30 +40,28 @@
 </div>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    const yearToggles =
-      document.querySelectorAll<HTMLButtonElement>('[data-year-toggle]')
+  const yearToggles =
+    document.querySelectorAll<HTMLButtonElement>('[data-year-toggle]')
 
-    yearToggles.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const year = btn.dataset.yearToggle
-        if (!year) {
-          return
-        }
+  yearToggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const year = btn.dataset.yearToggle
+      if (!year) {
+        return
+      }
 
-        yearToggles.forEach((b) => {
-          b.setAttribute(
-            'aria-pressed',
-            b.dataset.yearToggle === year ? 'true' : 'false',
-          )
-        })
-
-        document
-          .querySelectorAll<HTMLElement>('[data-year-panel]')
-          .forEach((panel) => {
-            panel.classList.toggle('hidden', panel.dataset.yearPanel !== year)
-          })
+      yearToggles.forEach((button) => {
+        button.setAttribute(
+          'aria-pressed',
+          button.dataset.yearToggle === year ? 'true' : 'false',
+        )
       })
+
+      document
+        .querySelectorAll<HTMLElement>('[data-year-panel]')
+        .forEach((panel) => {
+          panel.classList.toggle('hidden', panel.dataset.yearPanel !== year)
+        })
     })
   })
 </script>

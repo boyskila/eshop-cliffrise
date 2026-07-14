@@ -41,70 +41,68 @@ const { productName, productImages } = Astro.props
 }
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    const mainImage = document.getElementById(
-      'product-main-image',
-    ) as HTMLImageElement | null
-    const thumbnails = document.querySelectorAll<HTMLButtonElement>(
-      '[data-product-thumbnail]',
-    )
+  const mainImage = document.getElementById(
+    'product-main-image',
+  ) as HTMLImageElement | null
+  const thumbnails = document.querySelectorAll<HTMLButtonElement>(
+    '[data-product-thumbnail]',
+  )
 
-    const warmCache = (thumb: HTMLButtonElement) => {
+  const warmCache = (thumb: HTMLButtonElement) => {
+    const src = thumb.dataset.imageSrc
+    if (!src) {
+      return
+    }
+    const img = new Image()
+    const srcset = thumb.dataset.imageSrcset
+    const sizes = thumb.dataset.imageSizes
+    if (srcset) {
+      img.srcset = srcset
+    }
+    if (sizes) {
+      img.sizes = sizes
+    }
+    img.src = src
+  }
+
+  thumbnails.forEach((thumb) => {
+    const onIntent = () => warmCache(thumb)
+    thumb.addEventListener('mouseenter', onIntent, { once: true })
+    thumb.addEventListener('focus', onIntent, { once: true })
+    thumb.addEventListener('touchstart', onIntent, {
+      once: true,
+      passive: true,
+    })
+
+    thumb.addEventListener('click', async () => {
       const src = thumb.dataset.imageSrc
-      if (!src) {
+      const srcset = thumb.dataset.imageSrcset ?? ''
+      const sizes = thumb.dataset.imageSizes ?? ''
+      if (!mainImage || !src) {
         return
       }
-      const img = new Image()
-      const srcset = thumb.dataset.imageSrcset
-      const sizes = thumb.dataset.imageSizes
-      if (srcset) {
-        img.srcset = srcset
+
+      const preloader = new Image()
+      if (srcset.trim().length > 0) {
+        preloader.srcset = srcset
       }
-      if (sizes) {
-        img.sizes = sizes
+      if (sizes.trim().length > 0) {
+        preloader.sizes = sizes
       }
-      img.src = src
-    }
+      preloader.src = src
+      await preloader.decode().catch(() => {})
 
-    thumbnails.forEach((thumb) => {
-      const onIntent = () => warmCache(thumb)
-      thumb.addEventListener('mouseenter', onIntent, { once: true })
-      thumb.addEventListener('focus', onIntent, { once: true })
-      thumb.addEventListener('touchstart', onIntent, {
-        once: true,
-        passive: true,
-      })
-
-      thumb.addEventListener('click', async () => {
-        const src = thumb.dataset.imageSrc
-        const srcset = thumb.dataset.imageSrcset ?? ''
-        const sizes = thumb.dataset.imageSizes ?? ''
-        if (!mainImage || !src) {
-          return
-        }
-
-        const preloader = new Image()
-        if (srcset.trim().length > 0) {
-          preloader.srcset = srcset
-        }
-        if (sizes.trim().length > 0) {
-          preloader.sizes = sizes
-        }
-        preloader.src = src
-        await preloader.decode().catch(() => {})
-
-        mainImage.src = src
-        if (srcset.trim().length > 0) {
-          mainImage.srcset = srcset
-        } else {
-          mainImage.removeAttribute('srcset')
-        }
-        if (sizes.trim().length > 0) {
-          mainImage.sizes = sizes
-        } else {
-          mainImage.removeAttribute('sizes')
-        }
-      })
+      mainImage.src = src
+      if (srcset.trim().length > 0) {
+        mainImage.srcset = srcset
+      } else {
+        mainImage.removeAttribute('srcset')
+      }
+      if (sizes.trim().length > 0) {
+        mainImage.sizes = sizes
+      } else {
+        mainImage.removeAttribute('sizes')
+      }
     })
   })
 </script>

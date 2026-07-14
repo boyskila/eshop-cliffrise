@@ -50,8 +50,8 @@ test.describe('Image Thumbnails', () => {
   })
 })
 
-test.describe('Image Thumbnails - AbortController cleanup', () => {
-  test('listeners work correctly after client-side navigation', async ({
+test.describe('Image Thumbnails - Page navigation', () => {
+  test('listeners work correctly after navigating away and back', async ({
     page,
   }) => {
     await page.goto(PRODUCT_URL)

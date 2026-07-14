@@ -128,7 +128,7 @@ test.describe('Kind Selector', () => {
   })
 })
 
-test.describe('Kind Selector - AbortController cleanup', () => {
+test.describe('Kind Selector - Page navigation', () => {
   test('listeners work correctly after navigation', async ({ page }) => {
     await page.goto(TSHIRT_URL)
 

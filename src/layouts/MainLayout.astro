@@ -1,6 +1,5 @@
 ---
 import SEO from '@components/SEO.astro'
-import { ClientRouter } from 'astro:transitions'
 import { getLang, getTranslations } from '@utils/i18'
 import Header from '@components/header/Header.astro'
 import Hero from '@components/Hero.astro'
@@ -110,7 +109,7 @@ Astro.response.headers.set('Cache-Control', 'no-store')
 ---
 
 <!doctype html>
-<html lang={Astro.params.lang} transition:animate="none">
+<html lang={Astro.params.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -128,7 +127,6 @@ Astro.response.headers.set('Cache-Control', 'no-store')
       og={{ type: 'website', ...og }}
     />
     <GoogleAnalytics />
-    <ClientRouter />
   </head>
   <body class="[&:has([data-cart-dialog])]:overflow-hidden">
     <Header />
@@ -167,6 +165,16 @@ Astro.response.headers.set('Cache-Control', 'no-store')
 </html>
 
 <script>
+  const scrollToHash = () => {
+    if (!window.location.hash) {
+      return
+    }
+
+    requestAnimationFrame(() => {
+      document.querySelector(window.location.hash)?.scrollIntoView()
+    })
+  }
+
   window.addEventListener('pageshow', (event) => {
     const navigationEntry = performance.getEntriesByType('navigation')[0] as
       | PerformanceNavigationTiming
@@ -177,9 +185,9 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     }
   })
 
-  document.addEventListener('astro:page-load', () => {
-    if (window.location.hash) {
-      document.querySelector(window.location.hash)?.scrollIntoView()
-    }
-  })
+  if (document.readyState === 'complete') {
+    scrollToHash()
+  } else {
+    window.addEventListener('load', scrollToHash, { once: true })
+  }
 </script>
