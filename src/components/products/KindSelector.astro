@@ -44,18 +44,11 @@ const { kindTitle, productKinds, disabled = false } = Astro.props
 }
 
 <script>
-  let kindSelectorController: AbortController | null = null
+  const selectors = document.querySelectorAll<HTMLElement>(
+    '[data-kind-selector]',
+  )
 
-  document.addEventListener('astro:page-load', () => {
-    const selectors = document.querySelectorAll<HTMLElement>(
-      '[data-kind-selector]',
-    )
-    if (!selectors.length) return
-
-    kindSelectorController?.abort()
-    kindSelectorController = new AbortController()
-    const { signal } = kindSelectorController
-
+  if (selectors.length) {
     selectors.forEach((selector) => {
       const panel = selector.closest<HTMLElement>('[data-product-container]')
       if (!panel) {
@@ -159,25 +152,20 @@ const { kindTitle, productKinds, disabled = false } = Astro.props
 
       kindOptions.forEach((option) => {
         const onIntent = () => warmCache(option)
-        option.addEventListener('mouseenter', onIntent, { signal, once: true })
-        option.addEventListener('focus', onIntent, { signal, once: true })
+        option.addEventListener('mouseenter', onIntent, { once: true })
+        option.addEventListener('focus', onIntent, { once: true })
         option.addEventListener('touchstart', onIntent, {
-          signal,
           once: true,
           passive: true,
         })
 
-        option.addEventListener(
-          'click',
-          () => {
-            const kindIndex = option.dataset.kindIndex ?? '0'
-            setKind(kindIndex)
-          },
-          { signal },
-        )
+        option.addEventListener('click', () => {
+          const kindIndex = option.dataset.kindIndex ?? '0'
+          setKind(kindIndex)
+        })
       })
 
       clearKindSelection()
     })
-  })
+  }
 </script>

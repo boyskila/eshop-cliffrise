@@ -16,116 +16,102 @@ import SuccessMsg from './SuccessMsg.astro'
 <script>
   import { actions } from 'astro:actions'
 
-  let contactFormController: AbortController | null = null
+  const dialog = document.querySelector<HTMLDialogElement>('#contactFormModal')
+  const form = dialog?.querySelector<HTMLFormElement>('form[contact-form]')
+  const submitButton = form?.querySelector<HTMLButtonElement>(
+    'button[type="submit"]',
+  )
+  const messageInput = form?.querySelector<HTMLTextAreaElement>(
+    'textarea[name="message"]',
+  )
+  const errorMessage = dialog?.querySelector<HTMLElement>(
+    '[data-form-error-msg]',
+  )
+  const closeModalButton = dialog?.querySelector<HTMLButtonElement>(
+    '[aria-label="Close modal"]',
+  )
 
-  document.addEventListener('astro:page-load', () => {
-    contactFormController?.abort()
-    contactFormController = new AbortController()
-    const { signal } = contactFormController
+  if (form && submitButton && dialog) {
+    const defaultErrorMessage =
+      errorMessage?.dataset.defaultError ??
+      'An error occurred while submitting the form. Please try again later.'
+    const messageLimitReachedError =
+      errorMessage?.dataset.messageLimitReachedError ?? defaultErrorMessage
+    const maxMessageLength = messageInput?.maxLength ?? 5000
 
-    const dialog =
-      document.querySelector<HTMLDialogElement>('#contactFormModal')
-    const form = dialog?.querySelector<HTMLFormElement>('form[contact-form]')
-    const submitButton = form?.querySelector<HTMLButtonElement>(
-      'button[type="submit"]',
-    )
-    const messageInput = form?.querySelector<HTMLTextAreaElement>(
-      'textarea[name="message"]',
-    )
-    const errorMessage = dialog?.querySelector<HTMLElement>(
-      '[data-form-error-msg]',
-    )
-    const closeModalButton = dialog?.querySelector<HTMLButtonElement>(
-      '[aria-label="Close modal"]',
-    )
-
-    if (form && submitButton && dialog) {
-      const defaultErrorMessage =
-        errorMessage?.dataset.defaultError ??
-        'An error occurred while submitting the form. Please try again later.'
-      const messageLimitReachedError =
-        errorMessage?.dataset.messageLimitReachedError ?? defaultErrorMessage
-      const maxMessageLength = messageInput?.maxLength ?? 5000
-
-      const resetError = () => {
-        delete dialog.dataset.error
-        if (errorMessage) {
-          errorMessage.textContent = defaultErrorMessage ?? ''
-        }
+    const resetError = () => {
+      delete dialog.dataset.error
+      if (errorMessage) {
+        errorMessage.textContent = defaultErrorMessage
       }
-
-      const handleError = (message = defaultErrorMessage) => {
-        console.error('Error submitting contact form:', message)
-        if (errorMessage) {
-          errorMessage.textContent = message
-        }
-        dialog.dataset.error = 'true'
-        submitButton.disabled = false
-        delete dialog.dataset.submitting
-      }
-
-      const showMessageLimitNotice = () => {
-        if (errorMessage) {
-          errorMessage.textContent = messageLimitReachedError
-        }
-        dialog.dataset.error = 'true'
-      }
-
-      const updateMessageLengthNotice = () => {
-        if (!messageInput) {
-          return
-        }
-
-        if (messageInput.value.length >= maxMessageLength) {
-          showMessageLimitNotice()
-          return
-        }
-
-        resetError()
-      }
-
-      messageInput?.addEventListener('input', updateMessageLengthNotice, {
-        signal,
-      })
-
-      closeModalButton?.addEventListener('click', () => {
-        resetError()
-        delete dialog.dataset.success
-      })
-      form.addEventListener(
-        'submit',
-        async (e) => {
-          e.preventDefault()
-          resetError()
-
-          if (messageInput && messageInput.value.length > maxMessageLength) {
-            return handleError(messageLimitReachedError)
-          }
-
-          submitButton.disabled = true
-          dialog.dataset.submitting = 'true'
-
-          const formData = new FormData(form)
-
-          try {
-            const { error } = await actions.contact(formData)
-
-            if (error) {
-              return handleError()
-            }
-
-            dialog.dataset.success = 'true'
-            setTimeout(() => {
-              form.reset()
-              submitButton.disabled = false
-              delete dialog.dataset.submitting
-            }, 4000)
-          } catch (error) {
-            handleError((error as Error)?.message)
-          }
-        },
-        { signal },
-      )
     }
-  })
+
+    const handleError = (message = defaultErrorMessage) => {
+      console.error('Error submitting contact form:', message)
+      if (errorMessage) {
+        errorMessage.textContent = message
+      }
+      dialog.dataset.error = 'true'
+      submitButton.disabled = false
+      delete dialog.dataset.submitting
+    }
+
+    const showMessageLimitNotice = () => {
+      if (errorMessage) {
+        errorMessage.textContent = messageLimitReachedError
+      }
+      dialog.dataset.error = 'true'
+    }
+
+    const updateMessageLengthNotice = () => {
+      if (!messageInput) {
+        return
+      }
+
+      if (messageInput.value.length >= maxMessageLength) {
+        showMessageLimitNotice()
+        return
+      }
+
+      resetError()
+    }
+
+    messageInput?.addEventListener('input', updateMessageLengthNotice)
+
+    closeModalButton?.addEventListener('click', () => {
+      resetError()
+      delete dialog.dataset.success
+    })
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      resetError()
+
+      if (messageInput && messageInput.value.length > maxMessageLength) {
+        return handleError(messageLimitReachedError)
+      }
+
+      submitButton.disabled = true
+      dialog.dataset.submitting = 'true'
+
+      const formData = new FormData(form)
+
+      try {
+        const { error } = await actions.contact(formData)
+
+        if (error) {
+          return handleError()
+        }
+
+        dialog.dataset.success = 'true'
+        setTimeout(() => {
+          form.reset()
+          submitButton.disabled = false
+          delete dialog.dataset.submitting
+        }, 4000)
+      } catch (error) {
+        handleError((error as Error)?.message)
+      }
+    })
+  }
 </script>
