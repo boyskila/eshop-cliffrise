@@ -31,6 +31,43 @@ import SuccessMsg from './SuccessMsg.astro'
     '[aria-label="Close modal"]',
   )
 
+  const loadTurnstile = () => {
+    const turnstileWindow = window as typeof window & {
+      turnstile?: unknown
+    }
+
+    if (
+      turnstileWindow.turnstile ||
+      document.querySelector('[data-turnstile-script]')
+    ) {
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+    script.async = true
+    script.dataset.turnstileScript = ''
+    script.addEventListener('error', () => script.remove(), { once: true })
+    document.head.append(script)
+  }
+
+  if (dialog) {
+    const turnstileObserver = new MutationObserver(() => {
+      if (dialog.open) {
+        loadTurnstile()
+      }
+    })
+
+    turnstileObserver.observe(dialog, {
+      attributes: true,
+      attributeFilter: ['open'],
+    })
+
+    if (dialog.open) {
+      loadTurnstile()
+    }
+  }
+
   if (form && submitButton && dialog) {
     const defaultErrorMessage =
       errorMessage?.dataset.defaultError ??
@@ -106,6 +143,12 @@ import SuccessMsg from './SuccessMsg.astro'
         dialog.dataset.success = 'true'
         setTimeout(() => {
           form.reset()
+          const turnstile = (
+            window as typeof window & {
+              turnstile?: { reset: () => void }
+            }
+          ).turnstile
+          turnstile?.reset()
           submitButton.disabled = false
           delete dialog.dataset.submitting
         }, 4000)

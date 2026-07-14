@@ -381,6 +381,10 @@
     "stripeText": "Онлайн плащанията се обработват чрез Stripe Payments Europe Ltd.",
     "moreInfo": "Повече информация: ",
     "stripeUrl": "https://stripe.com/privacy",
+    "turnstileTitle": "6. Cloudflare Turnstile",
+    "turnstileText": "Използваме Cloudflare Turnstile в контактната форма, за да разграничаваме реални посетители от автоматизирани злоупотреби. Cloudflare може да обработва техническа информация, необходима за предоставянето на тази услуга за сигурност.",
+    "turnstileLinkText": "Политика за поверителност на Cloudflare Turnstile",
+    "turnstileUrl": "https://www.cloudflare.com/en-gb/turnstile-privacy-policy/",
     "rightsTitle": "4. Права на потребителите",
     "rightsIntro": "Всеки потребител има право:",
     "rightsItems": [

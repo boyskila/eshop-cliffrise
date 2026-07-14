@@ -380,6 +380,10 @@
     "stripeText": "Online payments are processed through Stripe Payments Europe Ltd.",
     "moreInfo": "More information: ",
     "stripeUrl": "https://stripe.com/privacy",
+    "turnstileTitle": "6. Cloudflare Turnstile",
+    "turnstileText": "We use Cloudflare Turnstile in the contact form to help distinguish human visitors from automated abuse. Cloudflare may process technical information required to provide this security service.",
+    "turnstileLinkText": "Cloudflare Turnstile Privacy Policy",
+    "turnstileUrl": "https://www.cloudflare.com/en-gb/turnstile-privacy-policy/",
     "rightsTitle": "4. User rights",
     "rightsIntro": "Every user has the right:",
     "rightsItems": [
