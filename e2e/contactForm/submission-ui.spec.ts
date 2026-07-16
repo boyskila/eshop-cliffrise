@@ -103,7 +103,10 @@ test.describe('Contact Form Modal - Submission UI', () => {
 
     await submitButton.click()
     await expect(dialog).toHaveAttribute('data-submitting', 'true')
-    await expect(dialog).not.toHaveAttribute('data-submitting', 'true')
+    await expect(dialog).toHaveAttribute('data-success', 'true')
+    await expect(dialog).not.toHaveAttribute('data-submitting', 'true', {
+      timeout: 10_000,
+    })
     await closeButton.click()
 
     const reopened = await openContactFormModal(page)

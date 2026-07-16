@@ -32,6 +32,7 @@ jobs:
       BCC_EMAIL: ${{ vars.BCC_EMAIL }}
       STRIPE_SHIPPING_RATE_FREE: ${{ vars.STRIPE_SHIPPING_RATE_FREE }}
       STRIPE_SHIPPING_RATE_STANDARD: ${{ vars.STRIPE_SHIPPING_RATE_STANDARD }}
+      PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
