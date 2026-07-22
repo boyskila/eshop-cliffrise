@@ -38,7 +38,6 @@ const { lang, text } = Astro.props
 <script>
   const cookieConsentKey = 'cliffrise_cookie_consent'
   const cookieConsentValue = 'granted'
-  let cookieBannerController: AbortController | null = null
 
   const getStoredCookieConsent = () => {
     try {
@@ -54,40 +53,22 @@ const { lang, text } = Astro.props
   const storeCookieConsent = () => {
     try {
       window.localStorage.setItem(cookieConsentKey, cookieConsentValue)
-      return true
     } catch {
-      // Consent cannot be persisted when browser storage is unavailable.
-      return false
+      // Consent applies to the current page when storage is unavailable.
     }
   }
 
-  const setupCookieBanner = () => {
-    cookieBannerController?.abort()
-    cookieBannerController = new AbortController()
+  const banner = document.getElementById('cookie-consent')
+  const acceptButton = document.getElementById('cookie-accept')
 
-    const banner = document.getElementById('cookie-consent')
-    const acceptButton = document.getElementById('cookie-accept')
-
-    if (!banner || !acceptButton) {
-      return
-    }
-
+  if (banner && acceptButton) {
     banner.classList.toggle('hidden', hasStoredCookieConsent())
 
-    acceptButton.addEventListener(
-      'click',
-      () => {
-        if (!storeCookieConsent()) {
-          return
-        }
+    acceptButton.addEventListener('click', () => {
+      storeCookieConsent()
+      banner.classList.add('hidden')
 
-        banner.classList.add('hidden')
-
-        window.dispatchEvent(new Event('cliffrise:analytics-accepted'))
-      },
-      { signal: cookieBannerController.signal },
-    )
+      window.dispatchEvent(new Event('cliffrise:analytics-accepted'))
+    })
   }
-
-  setupCookieBanner()
 </script>

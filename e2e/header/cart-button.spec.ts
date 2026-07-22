@@ -7,6 +7,10 @@ const waitForActionResponse = (page: Page, actionName: string) =>
       response.url().includes(`_actions/${actionName}`),
   )
 
+const gotoAndWaitForCart = async (page: Page, url: string) => {
+  await Promise.all([waitForActionResponse(page, 'getCart'), page.goto(url)])
+}
+
 const addProductToCart = async (page: Page, productId: string) => {
   const ok = await page.evaluate(async (id) => {
     const response = await fetch('/_actions/addToCart/', {
@@ -19,7 +23,7 @@ const addProductToCart = async (page: Page, productId: string) => {
   }, productId)
 
   expect(ok).toBeTruthy()
-  await page.goto('/en/')
+  await gotoAndWaitForCart(page, '/en/')
 }
 
 const openCartPanel = async (page: Page) => {
@@ -44,7 +48,7 @@ const openCartPanel = async (page: Page) => {
 
 test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/bg/')
+    await gotoAndWaitForCart(page, '/bg/')
   })
   test('cart button is visible and has expected accessibility attributes', async ({
     page,
@@ -100,8 +104,34 @@ test.describe('Accessibility', () => {
 
 test.describe('Functionallity', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/en/')
+    await gotoAndWaitForCart(page, '/en/')
   })
+
+  test('cart product link opens the product detail page', async ({ page }) => {
+    const header = page.locator('header')
+
+    await addProductToCart(page, '1')
+    await header.getByLabel(/1 item/).click()
+
+    const shoppingCartDialog = page.getByRole('dialog', {
+      name: /shopping cart/i,
+    })
+    const productLink = shoppingCartDialog.getByRole('link', {
+      name: 'Chunky Chalk',
+    })
+
+    await expect(productLink).toHaveAttribute('href', '/en/products/1/')
+    await Promise.all([
+      waitForActionResponse(page, 'getCart'),
+      productLink.click(),
+    ])
+
+    await expect(page).toHaveURL(/\/en\/products\/1\/$/)
+    await expect(
+      page.getByRole('heading', { name: /Chunky Chalk/ }).first(),
+    ).toBeVisible()
+  })
+
   test('cart button updates cart count when items are added to cart', async ({
     page,
   }) => {

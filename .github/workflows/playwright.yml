@@ -22,8 +22,6 @@ jobs:
       REDIS_URL: redis://localhost:6379
       RESEND_API_KEY: ${{ vars.RESEND_API_KEY }}
       RESEND_TEMPLATE_ID: ${{ vars.RESEND_TEMPLATE_ID }}
-      CONTACT_RATE_LIMIT_MAX: 3
-      CONTACT_RATE_LIMIT_WINDOW_MS: 60000
       SITE_URL: http://127.0.0.1:4321
       STRIPE_SECRET_KEY: ${{ vars.STRIPE_SECRET_KEY }}
       STRIPE_PUBLIC_KEY: ${{ vars.STRIPE_PUBLIC_KEY }}

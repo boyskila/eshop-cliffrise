@@ -85,10 +85,6 @@ export const Cart = (props: Props) => {
                     <div class="flex flex-col flex-1">
                       <a
                         href={item.href}
-                        onClick={(e) => {
-                          e.preventDefault()
-                          window.location.href = item.href
-                        }}
                         class="text-lg font-medium mb-2 hover:underline underline-offset-4 leading-5 cursor-pointer"
                       >
                         {item.name}

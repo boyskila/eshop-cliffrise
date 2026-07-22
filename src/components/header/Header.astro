@@ -35,7 +35,6 @@ const menuItems = [
           menuItems.map(({ href, title }) => {
             return (
               <a
-                data-hash-link
                 href={href}
                 class="font-normal text-white text-[22px] whitespace-nowrap"
               >
@@ -75,22 +74,3 @@ const menuItems = [
     <MobileMenu menuItems={menuItems} client:media="(max-width: 1023px)" />
   </nav>
 </header>
-
-<script>
-  document.addEventListener('click', (e) => {
-    const link = (e.target as HTMLElement).closest<HTMLAnchorElement>(
-      '[data-hash-link]',
-    )
-    if (link) {
-      const hash = link.hash
-      const langSwitcher = document.querySelector(
-        '[data-lang-switcher]',
-      ) as HTMLLinkElement
-      const { lang } = langSwitcher.dataset
-      const { nextLang } = langSwitcher.dataset
-      if (lang && nextLang && langSwitcher) {
-        langSwitcher.href = `/${nextLang}/${hash}`
-      }
-    }
-  })
-</script>

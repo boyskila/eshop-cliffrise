@@ -10,6 +10,7 @@ import { loadEnv } from 'vite'
 const modeFlagIndex = process.argv.indexOf('--mode')
 const mode =
   modeFlagIndex >= 0 ? process.argv[modeFlagIndex + 1] : process.env.NODE_ENV
+const isTestMode = mode === 'test'
 const env = loadEnv(mode || 'production', process.cwd(), '')
 const getEnv = (name) => process.env[name] ?? env[name]
 const siteUrl = new URL(getEnv('SITE_URL') || 'http://localhost:4321')
@@ -63,7 +64,7 @@ const getSitemapProductPages = async () => {
 
 const sitemapCustomPages = [
   ...sitemapStaticPages,
-  ...(await getSitemapProductPages()),
+  ...(isTestMode ? [] : await getSitemapProductPages()),
 ]
 
 const shouldIncludeSitemapPage = (page) => {
