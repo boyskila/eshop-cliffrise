@@ -42,12 +42,7 @@ const carouselImages = await Promise.all(
 const carouselImageUrls = carouselImages.map((img) => img.src)
 ---
 
-<MainLayout
-  title={profile.title}
-  {seoTitle}
-  {description}
-  showHero={false}
->
+<MainLayout title={profile.title} {seoTitle} {description} showHero={false}>
   <section class="mx-auto max-w-6xl px-6 pt-10 md:pt-16 md:px-10">
     <div class="flex flex-col gap-7 md:flex-row md:items-stretch md:gap-10">
       <aside class="space-y-7 md:w-[42%] md:space-y-9 md:pt-2">

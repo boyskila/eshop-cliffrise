@@ -1,6 +1,12 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro'
 import { getTranslations } from '@utils/i18'
+import { SUPPORTED_LANGS } from '@constants'
+
+export const prerender = true
+
+export const getStaticPaths = () =>
+  SUPPORTED_LANGS.map((lang) => ({ params: { lang } }))
 
 const { gdpr, seo } = getTranslations(Astro.params)
 ---

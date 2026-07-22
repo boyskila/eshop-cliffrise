@@ -1,13 +1,8 @@
-import { createEffect, createSignal, Show } from 'solid-js'
+import { Show } from 'solid-js'
 import { cartCount, isCartOpen, toggleCart } from '@signals/cart'
 
-type Props = { initialCartCount: number }
-
-export default function CartButton(props: Props) {
-  const [count, setCount] = createSignal(props.initialCartCount)
-  createEffect(() => {
-    setCount(cartCount())
-  })
+export default function CartButton() {
+  const count = () => cartCount()
   return (
     <button
       onClick={toggleCart}

@@ -1,5 +1,11 @@
 ---
 import FounderPage from '@components/founders/FounderPage.astro'
+import { SUPPORTED_LANGS } from '@constants'
+
+export const prerender = true
+
+export const getStaticPaths = () =>
+  SUPPORTED_LANGS.map((lang) => ({ params: { lang } }))
 ---
 
 <FounderPage founder="alexYanev" />
