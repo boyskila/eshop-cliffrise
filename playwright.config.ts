@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   webServer: {
     command:
-      "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && npm run astro -- build --mode test && npm run preview -- --host 127.0.0.1 --port 4321",
+      "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && cross-env PUBLIC_GOOGLE_ANALYTICS_ID=G-TEST npm run astro -- build --mode test && npm run preview -- --host 127.0.0.1 --port 4321",
     url: `http://127.0.0.1:4321`,
     reuseExistingServer: false,
   },

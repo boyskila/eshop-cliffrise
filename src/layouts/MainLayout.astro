@@ -139,7 +139,7 @@ const schema = buildSchemaDocument([
         checkout: cart.checkout,
         routeFunding: cart.routeFunding,
       }}
-      client:idle
+      client:load
     />
     <CartNotifications
       client:visible
@@ -159,31 +159,3 @@ const schema = buildSchemaDocument([
     <CookieBanner lang={lang} text={cookieBanner} />
   </body>
 </html>
-
-<script>
-  const scrollToHash = () => {
-    if (!window.location.hash) {
-      return
-    }
-
-    requestAnimationFrame(() => {
-      document.querySelector(window.location.hash)?.scrollIntoView()
-    })
-  }
-
-  window.addEventListener('pageshow', (event) => {
-    const navigationEntry = performance.getEntriesByType('navigation')[0] as
-      | PerformanceNavigationTiming
-      | undefined
-
-    if (event.persisted || navigationEntry?.type === 'back_forward') {
-      window.location.reload()
-    }
-  })
-
-  if (document.readyState === 'complete') {
-    scrollToHash()
-  } else {
-    window.addEventListener('load', scrollToHash, { once: true })
-  }
-</script>
