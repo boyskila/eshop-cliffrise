@@ -1,6 +1,5 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
-import { getCartCount } from '@utils/cart'
 import { MobileMenu } from './MobileMenu'
 import { MobileMenuButton } from './MobileMenuButton'
 import LangSwitcher from './LangSwitcher.astro'
@@ -9,7 +8,6 @@ import CartButton from './CartButton'
 const lang = getLang(Astro.params)
 const { header } = getTranslations(Astro.params)
 const { products, ourCause, tetevenClimb, aboutUs, contact } = header
-const cart = await Astro.session?.get('cart')
 const menuItems = [
   { href: `/${lang}/#products`, title: products },
   { href: `/${lang}/#our-cause`, title: ourCause },
@@ -68,7 +66,7 @@ const menuItems = [
           />
         </a>
         <div class="block">
-          <CartButton client:load initialCartCount={getCartCount(cart)} />
+          <CartButton client:load />
         </div>
         <LangSwitcher />
       </div>

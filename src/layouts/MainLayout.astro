@@ -61,7 +61,6 @@ const {
 } = Astro.props
 const { notification, cart, cookieBanner, seo } = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
-const cartFromSession = await Astro.session?.get('cart')
 
 const formatTitle = (pageTitle: string) =>
   pageTitle.includes('CliffRise') ? pageTitle : `${pageTitle} | CliffRise Shop`
@@ -104,8 +103,6 @@ const schema = buildSchemaDocument([
   }),
   ...normalizeSchemaNodes(jsonLd),
 ])
-
-Astro.response.headers.set('Cache-Control', 'no-store')
 ---
 
 <!doctype html>
@@ -143,7 +140,6 @@ Astro.response.headers.set('Cache-Control', 'no-store')
         routeFunding: cart.routeFunding,
       }}
       client:idle
-      initialCart={cartFromSession}
     />
     <CartNotifications
       client:visible
