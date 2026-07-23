@@ -1,18 +1,22 @@
 import { defineMiddleware } from 'astro:middleware'
 import { SUPPORTED_LANGS } from '@constants'
-import { getDetectedLang } from '@utils/i18'
+import { getLocaleRedirectUrl, setLocaleRedirectHeaders } from '@utils/i18'
+
+const staticFileExtension =
+  /\.(?:css|js|mjs|map|json|xml|txt|ico|png|jpe?g|webp|avif|svg|gif|woff2?|ttf|otf|pdf)$/i
 
 const hasLocalePrefix = (pathname: string) => {
   return SUPPORTED_LANGS.some(
-    (lang) => pathname === `/${lang}` || pathname.startsWith(`/${lang}/`),
+    (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   )
 }
 
 const shouldSkipLocaleRedirect = (pathname: string) => {
   return (
+    pathname === '/api' ||
     pathname.startsWith('/api/') ||
     pathname.startsWith('/_') ||
-    pathname.includes('.')
+    staticFileExtension.test(pathname)
   )
 }
 
@@ -27,12 +31,10 @@ export const onRequest = defineMiddleware((context, next) => {
     return next()
   }
 
-  const locale = getDetectedLang(context.request)
-  const redirectUrl = new URL(context.url)
-  redirectUrl.pathname = `/${locale}${pathname === '/' ? '/' : pathname}`
-  const response = context.redirect(redirectUrl.toString(), 302)
+  const redirectUrl = getLocaleRedirectUrl(context.request, context.url)
+  const response = context.redirect(redirectUrl.toString(), 307)
 
-  response.headers.set('Cache-Control', 'no-store')
+  setLocaleRedirectHeaders(response.headers)
 
   return response
 })

@@ -10,6 +10,7 @@ export default tseslint.config(
     ignores: [
       '.astro/',
       'dist/',
+      'dist-playwright/',
       'node_modules/',
       'playwright-report/',
       'test-results/',

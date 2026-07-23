@@ -1,11 +1,12 @@
 ---
 import { getLang } from '@utils/i18'
+import { getLocalizedPathname } from '@utils/siteUrls'
 
 const langFromParams = getLang(Astro.params)
 const lang = langFromParams === 'en' ? 'bg' : 'en'
 
 const currentPath = Astro.url.pathname
-const newPath = currentPath.replace(`/${langFromParams}/`, `/${lang}/`)
+const newPath = `${getLocalizedPathname(currentPath, lang)}${Astro.url.search}`
 ---
 
 <a
@@ -23,7 +24,7 @@ const newPath = currentPath.replace(`/${langFromParams}/`, `/${lang}/`)
 
   if (langSwitcher) {
     const updateLanguageSwitcherHash = () => {
-      langSwitcher.href = `${langSwitcher.pathname}${window.location.hash}`
+      langSwitcher.href = `${langSwitcher.pathname}${langSwitcher.search}${window.location.hash}`
     }
 
     updateLanguageSwitcherHash()
