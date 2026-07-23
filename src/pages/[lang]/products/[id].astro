@@ -21,6 +21,7 @@ import {
   getSchemaLanguage,
   getWebPageId,
 } from '@utils/schema'
+import { getCanonicalSiteUrl, getCanonicalUrl } from '@utils/siteUrls'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
@@ -42,8 +43,8 @@ const carouselProducts = await prepareProductCards(products)
 const productRequiresKindSelection = product.kind.length > 0
 const productOutOfStock = product.outOfStock ?? false
 const freeShippingThreshold = await getFreeShippingThreshold()
-const baseUrl = Astro.site ?? Astro.url
-const canonicalURL = new URL(product.href, baseUrl)
+const baseUrl = getCanonicalSiteUrl()
+const canonicalURL = getCanonicalUrl(product.href)
 const productImageUrl = new URL(mainImage.src, baseUrl).href
 const productImageUrls = productGalleryImages.map(
   ({ full }) => new URL(full.src, baseUrl).href,
@@ -138,7 +139,6 @@ const breadcrumbJsonLd = {
   {seoTitle}
   description={seoDescription}
   image={{ src: productImageUrl, alt: product.name }}
-  {canonicalURL}
   jsonLd={[productJsonLd, breadcrumbJsonLd]}
   og={{ type: 'product' }}
   showHero={false}

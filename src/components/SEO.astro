@@ -1,5 +1,6 @@
 ---
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@constants'
+import { getCanonicalSiteUrl, getCanonicalUrl } from '@utils/siteUrls'
 
 export type Image = {
   src: string
@@ -45,12 +46,12 @@ const {
   robots = 'index,follow',
   alternates = [],
   jsonLd,
-  canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url),
+  canonicalURL = getCanonicalUrl(Astro.url.pathname),
   og: _og = {},
   twitter: _twitter = {},
 } = Astro.props
 
-const baseUrl = Astro.site ?? Astro.url
+const baseUrl = getCanonicalSiteUrl()
 const openGraphLocales = {
   en: 'en_US',
   bg: 'bg_BG',
@@ -104,10 +105,7 @@ const absoluteTwitterImage = twitter.image && {
   src: toAbsoluteUrl(twitter.image.src).href,
 }
 
-const ensureTrailingSlash = (url: string | URL) =>
-  url.toString().replace(/\/$/, '') + '/'
-
-const canonicalHref = ensureTrailingSlash(toAbsoluteUrl(canonicalURL))
+const canonicalHref = getCanonicalUrl(canonicalURL).href
 const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []
 ---
 
@@ -117,13 +115,14 @@ const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []
 <title>{title}</title>
 <meta name="description" content={description} />
 <meta name="robots" content={robots} />
+<meta name="theme-color" content="#000000" />
 
 {
   alternates.map((alternate) => (
     <link
       rel="alternate"
       hreflang={alternate.lang}
-      href={ensureTrailingSlash(toAbsoluteUrl(alternate.href))}
+      href={getCanonicalUrl(alternate.href).href}
     />
   ))
 }
@@ -165,6 +164,10 @@ const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []
 
 {
   jsonLdItems.map((item) => (
-    <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(item)}
+      is:inline
+    />
   ))
 }

@@ -59,23 +59,26 @@ test('loads Google Analytics once after consent and after each reload', async ({
   await gotoAndWaitForCart(page, '/en/')
   await expect(page.locator('#google-analytics-script')).toHaveCount(1)
 
-  const getConfigCommands = () =>
-    page.evaluate(() =>
-      window.dataLayer?.filter(
-        (entry) => Array.isArray(entry) && entry[0] === 'config',
-      ),
-    )
+  const getConfigMeasurementIds = () =>
+    page.evaluate(() => {
+      return (window.dataLayer ?? []).flatMap((entry) => {
+        if (!Array.isArray(entry) || entry[0] !== 'config') {
+          return []
+        }
 
-  const initialConfigCommands = await getConfigCommands()
-  expect(initialConfigCommands).toHaveLength(1)
-  expect(initialConfigCommands?.[0]?.[1]).toBe('G-TEST')
+        return typeof entry[1] === 'string' ? [entry[1]] : []
+      })
+    })
+
+  const initialConfigMeasurementIds = await getConfigMeasurementIds()
+  expect(initialConfigMeasurementIds).toEqual(['G-TEST'])
   await expect.poll(() => analyticsRequests.length).toBe(1)
 
   await reloadAndWaitForCart(page)
   await expect(page.locator('#google-analytics-script')).toHaveCount(1)
 
-  const reloadedConfigCommands = await getConfigCommands()
-  expect(reloadedConfigCommands).toHaveLength(1)
+  const reloadedConfigMeasurementIds = await getConfigMeasurementIds()
+  expect(reloadedConfigMeasurementIds).toEqual(['G-TEST'])
   await expect.poll(() => analyticsRequests.length).toBe(2)
 })
 

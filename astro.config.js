@@ -6,39 +6,51 @@ import solidJs from '@astrojs/solid-js'
 import sitemap from '@astrojs/sitemap'
 import Stripe from 'stripe'
 import { loadEnv } from 'vite'
+import {
+  getCanonicalSiteUrl,
+  getLocalizedProductUrls,
+  normalizeSiteUrl,
+} from './src/utils/siteUrls'
 
 const modeFlagIndex = process.argv.indexOf('--mode')
 const mode =
   modeFlagIndex >= 0 ? process.argv[modeFlagIndex + 1] : process.env.NODE_ENV
-const isTestMode = mode === 'test'
-const env = loadEnv(mode || 'production', process.cwd(), '')
+const isPlaywrightTest = process.env.PLAYWRIGHT_TEST === 'true'
+const resolvedMode = isPlaywrightTest ? 'test' : (mode ?? 'production')
+const isTestMode = resolvedMode === 'test'
+const outputDirectory = isTestMode ? './dist-playwright' : './dist'
+const env = loadEnv(resolvedMode, process.cwd(), '')
 const getEnv = (name) => process.env[name] ?? env[name]
-const siteUrl = new URL(getEnv('SITE_URL') || 'http://localhost:4321')
+const configuredSiteUrl = getEnv('SITE_URL')
+
+if (!configuredSiteUrl && !isTestMode) {
+  throw new Error('SITE_URL is required outside test mode')
+}
+
+const runtimeSiteUrl = normalizeSiteUrl(
+  configuredSiteUrl ?? 'http://localhost:4321',
+)
+const canonicalSiteUrl = getCanonicalSiteUrl()
 const sessionTtlSeconds = 60 * 60 * 24 * 30
 const sitemapLocales = Object.fromEntries(
   SUPPORTED_LANGS.map((lang) => [lang, lang]),
 )
-const sitemapStaticPaths = [
-  '/',
-  '/privacy-policy/',
-  '/terms-and-conditions/',
-  '/gdpr/',
-  '/people/boyko-lalov/',
-  '/people/alex-ianev/',
-]
-const sitemapStaticPages = SUPPORTED_LANGS.flatMap((lang) =>
-  sitemapStaticPaths.map((path) => new URL(`/${lang}${path}`, siteUrl).href),
+const sitemapHomepagePages = SUPPORTED_LANGS.map(
+  (lang) => new URL(`/${lang}/`, canonicalSiteUrl).href,
 )
 
-const getSitemapProductPages = async () => {
+const getSitemapProductSlugs = async () => {
   const stripeSecretKey = getEnv('STRIPE_SECRET_KEY')
 
   if (!stripeSecretKey) {
+    console.warn(
+      'STRIPE_SECRET_KEY is not set; skipping Stripe product pages in sitemap',
+    )
     return []
   }
 
   const stripe = new Stripe(stripeSecretKey)
-  const productPages = []
+  const productSlugs = []
 
   try {
     for await (const product of stripe.products.list({
@@ -51,21 +63,19 @@ const getSitemapProductPages = async () => {
         continue
       }
 
-      for (const lang of SUPPORTED_LANGS) {
-        productPages.push(new URL(`/${lang}/products/${slug}/`, siteUrl).href)
-      }
+      productSlugs.push(slug)
     }
   } catch (error) {
-    console.warn('Could not add Stripe product pages to sitemap', error)
+    console.warn('Could not fetch Stripe products for the sitemap', error)
   }
 
-  return productPages
+  return productSlugs
 }
 
-const sitemapCustomPages = [
-  ...sitemapStaticPages,
-  ...(isTestMode ? [] : await getSitemapProductPages()),
-]
+const sitemapProductPages = isTestMode
+  ? []
+  : getLocalizedProductUrls(await getSitemapProductSlugs())
+const sitemapCustomPages = [...sitemapHomepagePages, ...sitemapProductPages]
 
 const shouldIncludeSitemapPage = (page) => {
   const { pathname } = new URL(page)
@@ -76,13 +86,15 @@ const shouldIncludeSitemapPage = (page) => {
     pathname !== '/bg/products/' &&
     !pathname.includes('/checkout/') &&
     !pathname.includes('/api/') &&
+    !pathname.startsWith('/_actions/') &&
     !pathname.includes('[') &&
     !pathname.includes(']')
   )
 }
 
 export default defineConfig({
-  site: siteUrl.href,
+  site: canonicalSiteUrl.href,
+  outDir: outputDirectory,
   trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],
@@ -127,9 +139,9 @@ export default defineConfig({
       { protocol: 'http', hostname: 'localhost', port: '4321' },
       { protocol: 'http', hostname: '127.0.0.1', port: '4321' },
       {
-        protocol: siteUrl.protocol.replace(':', ''),
-        hostname: siteUrl.hostname,
-        port: siteUrl.port || undefined,
+        protocol: runtimeSiteUrl.protocol.replace(':', ''),
+        hostname: runtimeSiteUrl.hostname,
+        port: runtimeSiteUrl.port || undefined,
       },
       {
         protocol: 'https',

@@ -10,6 +10,7 @@ import { getTotalPrice } from '@utils/cart'
 import { getFreeShippingThreshold } from '@utils/shipping'
 import { getStripeShippingRate } from '@utils/stripeShipping'
 import { formatPriceWithBgn } from '@utils/func'
+import { normalizeSiteUrl } from '@utils/siteUrls'
 
 const lang = getLang(Astro.params)
 const translations = getTranslations(Astro.params)
@@ -72,7 +73,9 @@ if (sessionId) {
   const session = await stripe.checkout.sessions.retrieve(sessionId)
   clientSecret = session.client_secret ?? null
 } else {
-  const siteUrl = import.meta.env.SITE_URL || 'http://localhost:4321'
+  const siteUrl = normalizeSiteUrl(
+    import.meta.env.SITE_URL ?? Astro.url.origin,
+  ).origin
 
   const lineItems = cart.map((item) => ({
     price_data: {

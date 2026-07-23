@@ -12,13 +12,14 @@ import { getLang, getTranslations } from '@utils/i18'
 import { TETEVEN_CLIMB_2026 } from '@data/events'
 import TetevenClimb2026ImageBg from '@assets/images/ttvn_meetup_2026_desktop.webp'
 import TetevenClimb2026ImageEn from '@assets/images/ttvn_meetup_2026_desktop_en.webp'
+import { getCanonicalSiteUrl, getCanonicalUrl } from '@utils/siteUrls'
 
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const title = translations.seo.home.title
 const description = translations.seo.home.description
-const baseUrl = Astro.site ?? Astro.url
-const canonicalURL = new URL(Astro.url.pathname, baseUrl)
+const baseUrl = getCanonicalSiteUrl()
+const canonicalURL = getCanonicalUrl(Astro.url.pathname)
 const eventLocationName = lang === 'bg' ? 'Тетевен' : 'Teteven'
 const eventName = translations.eventsSection.meetup2026Alt
 const eventImage =
@@ -52,12 +53,7 @@ const eventSchema = {
 }
 ---
 
-<MainLayout
-  {title}
-  {description}
-  canonicalURL={canonicalURL}
-  jsonLd={eventSchema}
->
+<MainLayout {title} {description} jsonLd={eventSchema}>
   <CauseSection />
   <EventsSection />
   <AboutSection />
