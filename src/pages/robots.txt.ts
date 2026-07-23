@@ -1,21 +1,21 @@
-import type { APIContext } from 'astro'
+import type { APIRoute } from 'astro'
+import { getCanonicalSiteUrl } from '@utils/siteUrls'
 
 export const prerender = false
 
-const getSiteUrl = (site: URL | undefined) =>
-  site ?? new URL(process.env.SITE_URL || 'https://www.cliffrise.com')
-
-export function GET({ site }: APIContext) {
-  const siteUrl = getSiteUrl(site)
+export const GET: APIRoute = () => {
+  const siteUrl = getCanonicalSiteUrl()
   const sitemapUrl = new URL('/sitemap-index.xml', siteUrl)
   const body = [
     'User-agent: *',
     'Allow: /',
     '',
-    'Disallow: /cart',
-    'Disallow: /checkout',
-    'Disallow: /en/checkout',
-    'Disallow: /bg/checkout',
+    'Disallow: /cart/',
+    'Disallow: /en/cart/',
+    'Disallow: /bg/cart/',
+    'Disallow: /checkout/',
+    'Disallow: /en/checkout/',
+    'Disallow: /bg/checkout/',
     'Disallow: /success',
     'Disallow: /cancel',
     '',

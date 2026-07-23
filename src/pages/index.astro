@@ -1,7 +1,10 @@
 ---
-import { getDetectedLang } from '@utils/i18'
+import { getLocaleRedirectUrl, setLocaleRedirectHeaders } from '@utils/i18'
 
-const lang = getDetectedLang(Astro.request)
+setLocaleRedirectHeaders(Astro.response.headers)
 
-return Astro.redirect(`/${lang}/`)
+return Astro.redirect(
+  getLocaleRedirectUrl(Astro.request, Astro.url).toString(),
+  307,
+)
 ---

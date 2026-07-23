@@ -1,36 +1,33 @@
 ---
 import { getLang } from '@utils/i18'
+import { getLocalizedPathname } from '@utils/siteUrls'
 
 const langFromParams = getLang(Astro.params)
 const lang = langFromParams === 'en' ? 'bg' : 'en'
 
 const currentPath = Astro.url.pathname
-const newPath = currentPath.replace(`/${langFromParams}/`, `/${lang}/`)
+const newPath = `${getLocalizedPathname(currentPath, lang)}${Astro.url.search}`
 ---
 
 <a
   href={newPath}
   data-lang-switcher
-  data-next-lang={lang}
-  data-lang={langFromParams}
   class="p-1 flex items-center text-white upppercase underline underline-offset-7"
   aria-label={`Switch to ${langFromParams === 'en' ? 'Bulgarian' : 'English'}`}
 >
   <span class="text-[22px] md:text-xl font-medium uppercase">{lang}</span>
 </a>
 <script>
-  const langSwitcher = document.querySelector<HTMLLinkElement>(
+  const langSwitcher = document.querySelector<HTMLAnchorElement>(
     '[data-lang-switcher]',
   )
-  const { hash } = window.location
 
-  if (langSwitcher && hash) {
-    const nextLang = langSwitcher.dataset.nextLang ?? ''
-    const currentLang = langSwitcher.dataset.lang ?? ''
-    const pathname = window.location.pathname.replace(
-      `/${currentLang}/`,
-      `/${nextLang}/`,
-    )
-    langSwitcher.href = `${pathname}${hash}`
+  if (langSwitcher) {
+    const updateLanguageSwitcherHash = () => {
+      langSwitcher.href = `${langSwitcher.pathname}${langSwitcher.search}${window.location.hash}`
+    }
+
+    updateLanguageSwitcherHash()
+    window.addEventListener('hashchange', updateLanguageSwitcherHash)
   }
 </script>

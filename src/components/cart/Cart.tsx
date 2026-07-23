@@ -1,6 +1,6 @@
-import { For, Show, createEffect } from 'solid-js'
+import { actions } from 'astro:actions'
+import { For, Show, onMount } from 'solid-js'
 import { cart, isCartOpen, toggleCart, updateCart } from '@signals/cart'
-import type { CartItem } from '@actions'
 import { DecreaseQuantityButton } from './DecreaseQuantityButton'
 import { IncreaseQuantityButton } from './IncreaseQuantityButton'
 import { RemoveFromCartButton } from './RemoveFromCartButton'
@@ -22,12 +22,22 @@ type Props = {
     checkout: string
     routeFunding: string
   }
-  initialCart?: CartItem[]
 }
 
 export const Cart = (props: Props) => {
-  createEffect(() => {
-    updateCart(props.initialCart ?? [])
+  onMount(async () => {
+    try {
+      const { data, error: actionError } = await actions.getCart()
+
+      if (actionError) {
+        console.error('Unable to restore the cart', actionError)
+        return
+      }
+
+      updateCart(data ?? [])
+    } catch (requestError) {
+      console.error('Unable to restore the cart', requestError)
+    }
   })
 
   return (
@@ -75,10 +85,6 @@ export const Cart = (props: Props) => {
                     <div class="flex flex-col flex-1">
                       <a
                         href={item.href}
-                        onClick={(e) => {
-                          e.preventDefault()
-                          window.location.href = item.href
-                        }}
                         class="text-lg font-medium mb-2 hover:underline underline-offset-4 leading-5 cursor-pointer"
                       >
                         {item.name}

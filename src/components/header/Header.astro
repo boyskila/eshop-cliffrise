@@ -1,6 +1,5 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
-import { getCartCount } from '@utils/cart'
 import { MobileMenu } from './MobileMenu'
 import { MobileMenuButton } from './MobileMenuButton'
 import LangSwitcher from './LangSwitcher.astro'
@@ -9,7 +8,6 @@ import CartButton from './CartButton'
 const lang = getLang(Astro.params)
 const { header } = getTranslations(Astro.params)
 const { products, ourCause, tetevenClimb, aboutUs, contact } = header
-const cart = await Astro.session?.get('cart')
 const menuItems = [
   { href: `/${lang}/#products`, title: products },
   { href: `/${lang}/#our-cause`, title: ourCause },
@@ -37,7 +35,6 @@ const menuItems = [
           menuItems.map(({ href, title }) => {
             return (
               <a
-                data-hash-link
                 href={href}
                 class="font-normal text-white text-[22px] whitespace-nowrap"
               >
@@ -68,7 +65,7 @@ const menuItems = [
           />
         </a>
         <div class="block">
-          <CartButton client:load initialCartCount={getCartCount(cart)} />
+          <CartButton client:load />
         </div>
         <LangSwitcher />
       </div>
@@ -77,22 +74,3 @@ const menuItems = [
     <MobileMenu menuItems={menuItems} client:media="(max-width: 1023px)" />
   </nav>
 </header>
-
-<script>
-  document.addEventListener('click', (e) => {
-    const link = (e.target as HTMLElement).closest<HTMLAnchorElement>(
-      '[data-hash-link]',
-    )
-    if (link) {
-      const hash = link.hash
-      const langSwitcher = document.querySelector(
-        '[data-lang-switcher]',
-      ) as HTMLLinkElement
-      const { lang } = langSwitcher.dataset
-      const { nextLang } = langSwitcher.dataset
-      if (lang && nextLang && langSwitcher) {
-        langSwitcher.href = `/${nextLang}/${hash}`
-      }
-    }
-  })
-</script>

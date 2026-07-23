@@ -10,7 +10,12 @@ import Divider from '@components/ui/Divider.astro'
 import ContactUsModal from '@components/contactForm/ContactUsModal.astro'
 import CookieBanner from '@components/CookieBanner.astro'
 import GoogleAnalytics from '@components/GoogleAnalytics.astro'
-import { DEFAULT_LANG, SUPPORTED_LANGS } from '@constants'
+import {
+  getCanonicalSiteUrl,
+  getCanonicalUrl,
+  getLocalizedAlternates,
+} from '@utils/siteUrls'
+import type { Locale } from '@types'
 import {
   buildBaseSchemaGraph,
   buildSchemaDocument,
@@ -31,13 +36,14 @@ interface Props {
   image?: SEOImage
   robots?: string
   canonicalURL?: URL | string
+  alternateLocales?: readonly Locale[]
   jsonLd?: unknown | unknown[]
   og?: {
     type?: string
   }
 }
 
-const baseUrl = Astro.site ?? Astro.url
+const baseUrl = getCanonicalSiteUrl()
 const defaults = {
   name: 'CliffRise Shop',
   description:
@@ -55,42 +61,20 @@ const {
   description = defaults.description,
   image = defaults.image,
   robots = 'index,follow',
-  canonicalURL = new URL(Astro.url.pathname, baseUrl),
+  canonicalURL: providedCanonicalURL,
+  alternateLocales,
   jsonLd,
   og,
 } = Astro.props
+const canonicalURL = getCanonicalUrl(providedCanonicalURL ?? Astro.url.pathname)
 const { notification, cart, cookieBanner, seo } = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
-const cartFromSession = await Astro.session?.get('cart')
 
 const formatTitle = (pageTitle: string) =>
   pageTitle.includes('CliffRise') ? pageTitle : `${pageTitle} | CliffRise Shop`
 const formattedTitle = formatTitle(seoTitle ?? title)
 
-const getLocalizedPathname = (locale: string) => {
-  const segments = Astro.url.pathname.split('/').filter(Boolean)
-
-  if (
-    SUPPORTED_LANGS.includes(segments[0] as (typeof SUPPORTED_LANGS)[number])
-  ) {
-    segments[0] = locale
-  } else {
-    segments.unshift(locale)
-  }
-
-  return `/${segments.join('/')}/`
-}
-
-const alternates = [
-  ...SUPPORTED_LANGS.map((locale) => ({
-    lang: locale,
-    href: new URL(getLocalizedPathname(locale), baseUrl),
-  })),
-  {
-    lang: 'x-default',
-    href: new URL(getLocalizedPathname(DEFAULT_LANG), baseUrl),
-  },
-]
+const alternates = getLocalizedAlternates(Astro.url.pathname, alternateLocales)
 
 const schema = buildSchemaDocument([
   ...buildBaseSchemaGraph({
@@ -104,8 +88,6 @@ const schema = buildSchemaDocument([
   }),
   ...normalizeSchemaNodes(jsonLd),
 ])
-
-Astro.response.headers.set('Cache-Control', 'no-store')
 ---
 
 <!doctype html>
@@ -142,8 +124,7 @@ Astro.response.headers.set('Cache-Control', 'no-store')
         checkout: cart.checkout,
         routeFunding: cart.routeFunding,
       }}
-      client:idle
-      initialCart={cartFromSession}
+      client:load
     />
     <CartNotifications
       client:visible
@@ -163,31 +144,3 @@ Astro.response.headers.set('Cache-Control', 'no-store')
     <CookieBanner lang={lang} text={cookieBanner} />
   </body>
 </html>
-
-<script>
-  const scrollToHash = () => {
-    if (!window.location.hash) {
-      return
-    }
-
-    requestAnimationFrame(() => {
-      document.querySelector(window.location.hash)?.scrollIntoView()
-    })
-  }
-
-  window.addEventListener('pageshow', (event) => {
-    const navigationEntry = performance.getEntriesByType('navigation')[0] as
-      | PerformanceNavigationTiming
-      | undefined
-
-    if (event.persisted || navigationEntry?.type === 'back_forward') {
-      window.location.reload()
-    }
-  })
-
-  if (document.readyState === 'complete') {
-    scrollToHash()
-  } else {
-    window.addEventListener('load', scrollToHash, { once: true })
-  }
-</script>

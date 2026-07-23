@@ -35,9 +35,7 @@
 
 @font-face {
   font-family: 'NaftaBrushFont';
-  src:
-    url('/fonts/nafta.woff2') format('woff2'),
-    url('/fonts/nafta.woff') format('woff');
+  src: url('/fonts/nafta.woff2') format('woff2');
 }
 
 /* Apply globally */
