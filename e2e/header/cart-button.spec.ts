@@ -71,16 +71,16 @@ test.describe('Accessibility', () => {
     await openCartPanel(page)
   })
 
-  test('empty cart products text links to products section', async ({
+  test('empty cart products text links to the products page', async ({
     page,
   }) => {
     const { cartDrawer } = await openCartPanel(page)
-    const productsLink = cartDrawer.locator('a[href$="#products"]')
+    const productsLink = cartDrawer.locator('a[href$="/products/"]')
 
-    await expect(productsLink).toHaveAttribute('href', '/bg/#products')
+    await expect(productsLink).toHaveAttribute('href', '/bg/products/')
     await productsLink.click()
 
-    await expect(page).toHaveURL(/\/bg\/#products$/)
+    await expect(page).toHaveURL(/\/bg\/products\/$/)
     await expect(cartDrawer).toBeHidden()
   })
 

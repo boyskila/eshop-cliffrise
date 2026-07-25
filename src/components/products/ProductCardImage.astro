@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets'
+import { PRODUCT_CARD_IMAGE_SIZES } from '@constants'
+import { isString } from '@utils/func'
+import type { ProductImage } from '@types'
+
+interface Props {
+  src: ProductImage
+  alt: string
+  isHoverImage?: boolean
+}
+
+const { src, alt, isHoverImage = false } = Astro.props as Props
+const imageClass = isHoverImage
+  ? 'absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity delay-0 duration-0 group-hover:opacity-100 group-hover:delay-350 group-focus-visible:opacity-100 group-focus-visible:delay-100'
+  : 'bg-shimmer h-auto w-full object-cover object-center'
+const productCardImageWidths = [300, 500, 800, 1200]
+const imageAttributes = {
+  alt,
+  'aria-hidden': isHoverImage ? ('true' as const) : undefined,
+  'data-product-card-hover-image': isHoverImage ? true : undefined,
+  'data-product-card-image': isHoverImage ? undefined : true,
+  class: imageClass,
+  loading: 'lazy' as const,
+}
+---
+
+{
+  isString(src) ? (
+    <Image
+      src={src}
+      width={1200}
+      height={1200}
+      format="webp"
+      quality={80}
+      {...imageAttributes}
+    />
+  ) : (
+    <Image
+      src={src}
+      widths={productCardImageWidths}
+      sizes={PRODUCT_CARD_IMAGE_SIZES}
+      format="webp"
+      quality={80}
+      {...imageAttributes}
+    />
+  )
+}

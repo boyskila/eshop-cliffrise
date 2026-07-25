@@ -69,7 +69,7 @@ test.describe('Checkout - Shipping', () => {
     await expect(page).toHaveURL(new RegExp(`${PRODUCT_URL}$`))
   })
 
-  test('back to shop falls back to products section on direct shipping visit', async ({
+  test('back to shop falls back to products page on direct shipping visit', async ({
     page,
   }) => {
     const addResponse = await page.request.post('/_actions/addToCart/', {
@@ -82,7 +82,7 @@ test.describe('Checkout - Shipping', () => {
 
     await page.locator('#back-to-shop').click()
 
-    await expect(page).toHaveURL(/\/en\/#products$/)
+    await expect(page).toHaveURL(/\/en\/products\/$/)
   })
 
   test('shows Stripe shipping rate after Bourgas office is selected', async ({
