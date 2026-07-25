@@ -1,12 +1,13 @@
 ---
 name: coding-style
 description: >
-  Enforces personal JavaScript and TypeScript coding style preferences whenever Claude writes, edits, or reviews JS/TS code. Always apply this skill when writing any JavaScript or TypeScript code, including React components, Astro components, utility functions, API routes, or any other JS/TS files. Apply automatically — do not wait to be asked. Current rules: prefer arrow functions over regular function declarations, const over let, curly braces for multi-line function bodies, implicit return for one-liners, descriptive variable names.
+  Enforces personal JavaScript and TypeScript coding style preferences whenever an AI coding assistant writes, edits, or reviews JS/TS code. Always apply this skill when writing any JavaScript or TypeScript code, including React components, Astro components, utility functions, API routes, or any other JS/TS files. Apply automatically — do not wait to be asked. Current rules: prefer arrow functions over regular function declarations, const over let, curly braces for multi-line function bodies, implicit return for one-liners, descriptive variable names.
+  For UI layout, use Flexbox instead of CSS Grid and prefer Tailwind utility classes over custom CSS.
 ---
 
 # Coding Style Skill
 
-Enforces the user's personal JS/TS coding style preferences on all code Claude writes or modifies.
+Enforces the user's personal JS/TS coding style preferences on all code an AI coding assistant writes or modifies.
 
 ---
 
@@ -211,6 +212,62 @@ const label = isActive ? 'On' : 'Off'
 
 ---
 
+### 7. Flexbox and Tailwind for Layout
+
+**Use Flexbox for page and component layouts. Do not use CSS Grid unless the user explicitly requests it.**
+
+❌ Avoid:
+
+```html
+<div class="grid grid-cols-3 gap-4">
+  <!-- content -->
+</div>
+```
+
+✅ Prefer:
+
+```html
+<div class="flex flex-wrap gap-4">
+  <!-- content -->
+</div>
+```
+
+**Prefer Tailwind utility classes over custom CSS and inline styles.**
+
+❌ Avoid:
+
+```html
+<div class="product-list">
+  <!-- content -->
+</div>
+
+<style>
+  .product-list {
+    display: flex;
+    gap: 1rem;
+  }
+</style>
+```
+
+✅ Prefer:
+
+```html
+<div class="flex gap-4">
+  <!-- content -->
+</div>
+```
+
+**Rules:**
+
+- Use `flex`, `flex-col`, `flex-wrap`, `basis-*`, `grow`, `shrink`, `gap-*`, and responsive variants for layouts
+- Do not add Tailwind `grid`, `grid-cols-*`, `grid-rows-*`, or related CSS Grid utilities
+- Prefer responsive Tailwind variants such as `md:` and `lg:` over custom media queries
+- Prefer existing project utility classes before creating new CSS
+- Add scoped custom CSS only when Tailwind cannot express the required behavior cleanly
+- Preserve existing non-Flexbox layouts unless the requested change places them in scope
+
+---
+
 ## Quick Reference
 
 | Situation                 | Style                                               |
@@ -223,6 +280,8 @@ const label = isActive ? 'On' : 'Off'
 | Conditionals              | `if (x) { ... }` not `x && doThing()`, ternaries OK |
 | Regular function          | ❌ convert to arrow                                 |
 | `var`                     | ❌ never use                                        |
+| UI layout                 | Flexbox, not CSS Grid                               |
+| Styling                   | Tailwind utilities before custom CSS                |
 
 ---
 
