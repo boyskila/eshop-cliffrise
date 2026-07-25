@@ -1,0 +1,66 @@
+---
+import { DEFAULT_LANG, SUPPORTED_LANGS } from '@constants'
+import { getTranslations } from '@utils/i18'
+import type { Locale } from '@types'
+import '../styles/global.css'
+
+export const prerender = false
+
+const pathnameSegments = Astro.originPathname.split('/').filter(Boolean)
+const pathnameLang = pathnameSegments[0]
+const lang = SUPPORTED_LANGS.includes(pathnameLang as Locale)
+  ? (pathnameLang as Locale)
+  : DEFAULT_LANG
+const translations = getTranslations({ lang })
+const isProductPage =
+  pathnameSegments[1] === 'products' && pathnameSegments.length === 3
+const notFoundContent = isProductPage
+  ? {
+      ...translations.productNotFound,
+      href: `/${lang}/products/`,
+      linkText: translations.productNotFound.backToProducts,
+    }
+  : {
+      ...translations.pageNotFound,
+      href: `/${lang}/`,
+      linkText: translations.pageNotFound.backToHome,
+    }
+const title = `${notFoundContent.title} | CliffRise Shop`
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <title>{title}</title>
+    <meta name="description" content={notFoundContent.description} />
+    <meta name="robots" content="noindex,follow" />
+  </head>
+  <body>
+    <main
+      class="flex min-h-screen flex-col items-center justify-center px-6 py-20 text-center"
+    >
+      <a href={`/${lang}/`} class="mb-12 p-0" aria-label="CliffRise home">
+        <img
+          src="/logos/cliffrise.svg"
+          alt="CliffRise"
+          class="mx-auto size-20 bg-black p-3"
+        />
+      </a>
+      <h1 class="mb-5 text-4xl font-bold">
+        {notFoundContent.title}
+      </h1>
+      <p class="mb-8 max-w-3xl text-lg text-gray-600">
+        {notFoundContent.description}
+      </p>
+      <a
+        href={notFoundContent.href}
+        class="inline-block bg-black px-8 py-3 text-lg text-white"
+      >
+        {notFoundContent.linkText}
+      </a>
+    </main>
+  </body>
+</html>
