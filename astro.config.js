@@ -38,6 +38,9 @@ const sitemapLocales = Object.fromEntries(
 const sitemapHomepagePages = SUPPORTED_LANGS.map(
   (lang) => new URL(`/${lang}/`, canonicalSiteUrl).href,
 )
+const sitemapProductCategoryPages = SUPPORTED_LANGS.map(
+  (lang) => new URL(`/${lang}/products/`, canonicalSiteUrl).href,
+)
 
 const getSitemapProductSlugs = async () => {
   const stripeSecretKey = getEnv('STRIPE_SECRET_KEY')
@@ -75,15 +78,17 @@ const getSitemapProductSlugs = async () => {
 const sitemapProductPages = isTestMode
   ? []
   : getLocalizedProductUrls(await getSitemapProductSlugs())
-const sitemapCustomPages = [...sitemapHomepagePages, ...sitemapProductPages]
+const sitemapCustomPages = [
+  ...sitemapHomepagePages,
+  ...sitemapProductCategoryPages,
+  ...sitemapProductPages,
+]
 
 const shouldIncludeSitemapPage = (page) => {
   const { pathname } = new URL(page)
 
   return (
     pathname !== '/' &&
-    pathname !== '/en/products/' &&
-    pathname !== '/bg/products/' &&
     !pathname.includes('/checkout/') &&
     !pathname.includes('/api/') &&
     !pathname.startsWith('/_actions/') &&

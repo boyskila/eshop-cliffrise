@@ -122,6 +122,92 @@ test.describe('Localized SEO routing', () => {
     expect(bulgarianSeoLinks.alternates).toEqual(expectedAlternates)
   })
 
+  test('product category pages use localized canonicals and alternates', async ({
+    request,
+  }) => {
+    const englishSeoLinks = await getSeoLinks(request, '/en/products/')
+    const bulgarianSeoLinks = await getSeoLinks(request, '/bg/products/')
+    const expectedAlternates = {
+      en: `${canonicalOrigin}/en/products/`,
+      bg: `${canonicalOrigin}/bg/products/`,
+      'x-default': `${canonicalOrigin}/en/products/`,
+    }
+
+    expect(englishSeoLinks.canonical).toBe(expectedAlternates.en)
+    expect(bulgarianSeoLinks.canonical).toBe(expectedAlternates.bg)
+    expect(englishSeoLinks.alternates).toEqual(expectedAlternates)
+    expect(bulgarianSeoLinks.alternates).toEqual(expectedAlternates)
+  })
+
+  test('product category page renders a product list without a carousel', async ({
+    page,
+  }) => {
+    await page.goto('/en/products/')
+
+    await expect(page.locator('[data-products-list]')).toBeVisible()
+    await expect(
+      page.locator('[data-products-list] [data-product-card-image]'),
+    ).not.toHaveCount(0)
+    await expect(page.locator('[data-products-carousel]')).toHaveCount(0)
+  })
+
+  test('unknown products return a noindex 404 page', async ({ request }) => {
+    const response = await request.get('/en/products/not-a-real-product/', {
+      maxRedirects: 0,
+    })
+    const html = await response.text()
+
+    expect(response.status()).toBe(404)
+    expect(response.headers().location).toBeUndefined()
+    expect(html).toContain('Product not found')
+    expect(html).toContain('content="noindex,follow"')
+    expect(html).toContain('href="/en/products/"')
+  })
+
+  test('unknown localized routes return a generic localized 404 page', async ({
+    request,
+  }) => {
+    const englishResponse = await request.get('/en/not-a-real-page/', {
+      maxRedirects: 0,
+    })
+    const bulgarianResponse = await request.get('/bg/not-a-real-page/', {
+      maxRedirects: 0,
+    })
+    const englishHtml = await englishResponse.text()
+    const bulgarianHtml = await bulgarianResponse.text()
+
+    expect(englishResponse.status()).toBe(404)
+    expect(englishHtml).toContain('Page not found')
+    expect(englishHtml).toContain('href="/en/"')
+    expect(englishHtml).toContain('content="noindex,follow"')
+
+    expect(bulgarianResponse.status()).toBe(404)
+    expect(bulgarianHtml).toContain('Страницата не е намерена')
+    expect(bulgarianHtml).toContain('href="/bg/"')
+    expect(bulgarianHtml).toContain('content="noindex,follow"')
+  })
+
+  test('indexable page templates render one h1', async ({ request }) => {
+    const paths = [
+      '/en/',
+      '/en/products/',
+      '/en/products/1/',
+      '/en/people/boyko-lalov/',
+      '/en/privacy-policy/',
+    ]
+
+    for (const path of paths) {
+      const response = await request.get(path)
+      const html = await response.text()
+      const h1Count = html.match(/<h1(?:\s|>)/g)?.length ?? 0
+
+      expect(response.ok(), `${path} should return a successful response`).toBe(
+        true,
+      )
+      expect(h1Count, `${path} should render exactly one h1`).toBe(1)
+    }
+  })
+
   test('sitemap contains only canonical localized hosts and excludes root', async ({
     request,
   }) => {
@@ -140,6 +226,8 @@ test.describe('Localized SEO routing', () => {
     const sitemap = await response.text()
     expect(sitemap).toContain(`<loc>${canonicalOrigin}/en/</loc>`)
     expect(sitemap).toContain(`<loc>${canonicalOrigin}/bg/</loc>`)
+    expect(sitemap).toContain(`<loc>${canonicalOrigin}/en/products/</loc>`)
+    expect(sitemap).toContain(`<loc>${canonicalOrigin}/bg/products/</loc>`)
     expect(sitemap).not.toContain(`<loc>${canonicalOrigin}/</loc>`)
     expect(sitemap).not.toContain('www.cliffrise.com')
     expect(sitemap).not.toContain('/checkout/')

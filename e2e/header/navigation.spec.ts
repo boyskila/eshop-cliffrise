@@ -19,7 +19,7 @@ const NAV_ITEMS = [
   { name: 'Our Mission', href: '/en/#our-cause' },
   { name: 'About Us', href: '/en/#about-us' },
   { name: 'Teteven Climb', href: '/en/#events-section' },
-  { name: 'Products', href: '/en/#products' },
+  { name: 'Products', href: '/en/products/' },
   { name: 'Contact us', href: '/en/#contact-us' },
 ] as const
 
@@ -200,7 +200,7 @@ test.describe('Mobile menu button opens and closes the menu', () => {
     const { menu, mobileMenuButton } = await openMobileMenu(page)
     await menu.getByRole('menuitem', { name: 'Products' }).click()
 
-    await expect(page).toHaveURL(/\/en\/#products$/)
+    await expect(page).toHaveURL(/\/en\/products\/$/)
     await expect(menu).toBeHidden()
     await expect(mobileMenuButton).toHaveAttribute('aria-expanded', 'false')
   })
@@ -229,7 +229,11 @@ test.describe('Header navigation destinations', () => {
 
     for (const { href } of NAV_ITEMS) {
       const hash = href.split('#').at(1)
-      expect(hash).toBeTruthy()
+
+      if (!hash) {
+        continue
+      }
+
       await expect(page.locator(`#${hash}`)).toHaveCount(1)
     }
   })
@@ -246,7 +250,7 @@ test.describe('Header navigation destinations', () => {
     }
   })
 
-  test('desktop: clicking a hash link updates the language switcher target', async ({
+  test('desktop: clicking the products link updates the language switcher target', async ({
     page,
   }) => {
     await page.setViewportSize(VIEWPORTS.desktop)
@@ -254,10 +258,10 @@ test.describe('Header navigation destinations', () => {
 
     await page.locator('header').getByRole('link', { name: 'Products' }).click()
 
-    await expect(page).toHaveURL(/\/en\/#products$/)
+    await expect(page).toHaveURL(/\/en\/products\/$/)
     await expect(page.locator('[data-lang-switcher]')).toHaveAttribute(
       'href',
-      '/bg/#products',
+      '/bg/products/',
     )
   })
 

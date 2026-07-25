@@ -66,7 +66,7 @@ export const Cart = (props: Props) => {
                   emptyDescBeforeProducts={props.text.emptyDescBeforeProducts}
                   emptyDescProductsLink={props.text.emptyDescProductsLink}
                   emptyDescAfterProducts={props.text.emptyDescAfterProducts}
-                  productsHref={`/${props.lang}/#products`}
+                  productsHref={`/${props.lang}/products/`}
                 />
               }
             >
