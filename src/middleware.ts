@@ -13,6 +13,8 @@ const hasLocalePrefix = (pathname: string) => {
 
 const shouldSkipLocaleRedirect = (pathname: string) => {
   return (
+    pathname === '/404' ||
+    pathname === '/404/' ||
     pathname === '/api' ||
     pathname.startsWith('/api/') ||
     pathname.startsWith('/_') ||

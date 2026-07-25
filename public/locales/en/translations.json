@@ -11,6 +11,16 @@
   "seeAlso": "See Also",
   "comingSoon": "Coming soon",
   "freeDelivery": "Free Delivery over",
+  "productNotFound": {
+    "title": "Product not found",
+    "description": "The product you are looking for is unavailable or no longer exists.",
+    "backToProducts": "View all products"
+  },
+  "pageNotFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or may have moved.",
+    "backToHome": "Back to home"
+  },
   "header": {
     "title": "CliffRise",
     "subtitle": "Funding Routes",
@@ -26,6 +36,10 @@
     "home": {
       "title": "CliffRise - Climbing Products with a Mission",
       "description": "CliffRise creates climbing chalk and climbing products that support the development of new rock climbing routes in Bulgaria."
+    },
+    "products": {
+      "title": "Climbing Products with a Mission",
+      "description": "Explore CliffRise climbing chalk, clothing, and climbing accessories. Every purchase supports the development of new climbing routes in Bulgaria."
     },
     "product": {
       "title": "{productName} - Climbing Products for Rock Climbing in Bulgaria",

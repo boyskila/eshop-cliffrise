@@ -31,7 +31,7 @@ const { id } = Astro.params
 const product = products.find((p) => p.slug === id)
 
 if (!product) {
-  return Astro.redirect(`/${lang}/products/`)
+  return Astro.rewrite('/404')
 }
 
 const productGalleryImages = await prepareProductGalleryImages(product.images)
