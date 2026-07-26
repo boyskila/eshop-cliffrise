@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import { getLang, getTranslations } from '@utils/i18'
 import { StripeCheckout } from '@components/checkout/StripeCheckout'
 import { getStripe } from '@services/stripe'
@@ -18,13 +19,13 @@ const translations = getTranslations(Astro.params)
 const cart: CartItem[] = (await Astro.session?.get('cart')) ?? []
 
 if (cart.length === 0) {
-  return Astro.redirect(`/${lang}/`)
+  return Astro.redirect(getRelativeLocaleUrl(lang))
 }
 
 const shipping: ShippingInfo | undefined = await Astro.session?.get('shipping')
 
 if (!shipping) {
-  return Astro.redirect(`/${lang}/checkout/shipping/`)
+  return Astro.redirect(getRelativeLocaleUrl(lang, 'checkout/shipping'))
 }
 
 const stripePublicKey = import.meta.env.STRIPE_PUBLIC_KEY
@@ -103,7 +104,7 @@ if (sessionId) {
         shipping_rate: shippingRate.id,
       },
     ],
-    return_url: `${siteUrl}/${lang}/checkout/success/?session_id={CHECKOUT_SESSION_ID}`,
+    return_url: `${siteUrl}${getRelativeLocaleUrl(lang, 'checkout/success')}?session_id={CHECKOUT_SESSION_ID}`,
     customer_creation: 'always',
     metadata: {
       shipping_office: shipping.office,
@@ -118,7 +119,7 @@ if (sessionId) {
     locale: lang,
   })
 
-  stripeRedirect = `/${lang}/checkout/?session_id=${created.id}`
+  stripeRedirect = `${getRelativeLocaleUrl(lang, 'checkout')}?session_id=${created.id}`
 }
 
 if (stripeRedirect) {
@@ -126,7 +127,7 @@ if (stripeRedirect) {
 }
 
 if (!clientSecret) {
-  return Astro.redirect(`/${lang}/`)
+  return Astro.redirect(getRelativeLocaleUrl(lang))
 }
 ---
 

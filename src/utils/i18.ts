@@ -1,8 +1,8 @@
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import en from '../../public/locales/en/translations.json'
 import bg from '../../public/locales/bg/translations.json'
-import { DEFAULT_LANG } from '@constants'
+import { DEFAULT_LANG, SUPPORTED_LANGS } from '@constants'
 import type { Locale, Translations } from '@types'
-import { ensureTrailingSlash } from '@utils/siteUrls'
 
 const FOREIGN_VISITOR_LANG: Locale = 'en'
 const BULGARIA_COUNTRY_CODE = 'BG'
@@ -13,9 +13,18 @@ export const getTranslations = (params: { lang?: Locale }): Translations => {
   return lang === 'en' ? en : bg
 }
 
-export const getLang = (params: { lang?: Locale }) => {
-  return params.lang ?? DEFAULT_LANG
+export const getLang = (params: { lang?: Locale }): Locale => {
+  const { lang } = params
+
+  if (lang && SUPPORTED_LANGS.includes(lang as Locale)) {
+    return lang as Locale
+  }
+
+  return DEFAULT_LANG
 }
+
+export const getLocaleAnchorUrl = (lang: Locale, elementId: string) =>
+  `${getRelativeLocaleUrl(lang)}#${elementId}`
 
 export const getDetectedLang = (request: Request): Locale => {
   const country = request.headers
@@ -33,9 +42,7 @@ export const getDetectedLang = (request: Request): Locale => {
 export const getLocaleRedirectUrl = (request: Request, url: URL): URL => {
   const locale = getDetectedLang(request)
   const redirectUrl = new URL(url)
-  const localizedPathname =
-    url.pathname === '/' ? `/${locale}/` : `/${locale}${url.pathname}`
-  redirectUrl.pathname = ensureTrailingSlash(localizedPathname)
+  redirectUrl.pathname = getRelativeLocaleUrl(locale, url.pathname)
 
   return redirectUrl
 }

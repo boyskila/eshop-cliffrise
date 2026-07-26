@@ -1,3 +1,4 @@
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import type Stripe from 'stripe'
 import type { Locale, Product } from '@types'
 import { isString } from '@utils/func'
@@ -31,7 +32,7 @@ export const mapStripeProductToProduct = (
 
   return {
     id: stripeProduct.id,
-    href: `/${lang}/products/${catalogMetadata.slug}/`,
+    href: getRelativeLocaleUrl(lang, `products/${catalogMetadata.slug}`),
     slug: catalogMetadata.slug,
     name: localizedMetadata.name,
     description: localizedMetadata.description ?? '',

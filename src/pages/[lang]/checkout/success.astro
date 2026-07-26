@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import { getLang, getTranslations } from '@utils/i18'
 import { getStripe } from '@services/stripe'
 import CheckoutLayout from '@layouts/CheckoutLayout.astro'
@@ -19,7 +20,7 @@ if (sessionId) {
     if (session.status === 'complete') {
       Astro.session?.set('cart', [])
       Astro.session?.set('orderEmail', session.customer_details?.email ?? null)
-      return Astro.redirect(`/${lang}/checkout/success/`)
+      return Astro.redirect(getRelativeLocaleUrl(lang, 'checkout/success'))
     }
 
     status = session.status
@@ -53,7 +54,7 @@ if (sessionId) {
             </p>
           )}
           <a
-            href={`/${lang}/`}
+            href={getRelativeLocaleUrl(lang)}
             class="inline-block bg-black text-white px-8 py-3 text-lg"
           >
             {translations.checkout.continueShopping}
@@ -63,7 +64,7 @@ if (sessionId) {
         <div class="text-center max-w-lg mx-auto px-4">
           <h1 class="text-3xl font-bold mb-4">{translations.checkout.error}</h1>
           <a
-            href={`/${lang}/`}
+            href={getRelativeLocaleUrl(lang)}
             class="inline-block bg-black text-white px-8 py-3 text-lg"
           >
             {translations.checkout.continueShopping}

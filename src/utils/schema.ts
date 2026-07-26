@@ -1,4 +1,6 @@
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@types'
+import { getLocaleAnchorUrl } from '@utils/i18'
 
 export type SchemaNode = Record<string, unknown>
 
@@ -85,8 +87,9 @@ export const buildBaseSchemaGraph = ({
   image?: SEOImage
 }): SchemaNode[] => {
   const rootUrl = new URL('/', baseUrl).href
-  const aboutUrl = new URL(`/${lang}/#about-us`, baseUrl).href
-  const contactUrl = new URL(`/${lang}/#contact-us`, baseUrl).href
+  const aboutUrl = new URL(getLocaleAnchorUrl(lang, 'about-us'), baseUrl).href
+  const contactUrl = new URL(getLocaleAnchorUrl(lang, 'contact-us'), baseUrl)
+    .href
   const logoUrl = new URL('/logos/cliffrise.svg', baseUrl).href
   const imageUrl = image ? new URL(image.src, baseUrl).href : undefined
   const organizationId = getOrganizationId(baseUrl)
@@ -132,12 +135,18 @@ export const buildBaseSchemaGraph = ({
         {
           '@type': 'Person',
           name: 'Boyko Lalov',
-          url: new URL(`/${lang}/people/boyko-lalov/`, baseUrl).href,
+          url: new URL(
+            getRelativeLocaleUrl(lang, 'people/boyko-lalov'),
+            baseUrl,
+          ).href,
         },
         {
           '@type': 'Person',
           name: 'Alex Ianev',
-          url: new URL(`/${lang}/people/alex-ianev/`, baseUrl).href,
+          url: new URL(
+            getRelativeLocaleUrl(lang, 'people/alex-ianev'),
+            baseUrl,
+          ).href,
         },
       ],
       knowsAbout: [

@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import { getLang, getTranslations } from '@utils/i18'
 import ShippingForm from '@components/checkout/ShippingForm.astro'
 import type { CartItem } from '@actions'
@@ -15,7 +16,7 @@ Astro.response.headers.set('Cache-Control', 'no-store')
 const cart: CartItem[] = (await Astro.session?.get('cart')) ?? []
 
 if (cart.length === 0) {
-  return Astro.redirect(`/${lang}/`)
+  return Astro.redirect(getRelativeLocaleUrl(lang))
 }
 
 const cartTotal = getTotalPrice(cart)

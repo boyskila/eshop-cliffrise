@@ -1,7 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": [
+    "dist",
+    "dist-playwright",
+    "playwright-report",
+    "test-results",
+    "node_modules"
+  ],
   "compilerOptions": {
     "paths": {
       "@constants": ["./src/constants"],

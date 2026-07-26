@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale, ShippingInfo, Translations } from '@types'
 import OfficeSearch from './OfficeSearch.astro'
 import OfficeMap from './OfficeMap.astro'
@@ -27,7 +28,7 @@ const { lang, text, initialShipping, isFreeShipping } = Astro.props
   <form
     id="shipping-form"
     class="flex flex-col gap-6 flex-1"
-    data-redirect={`/${lang}/checkout/`}
+    data-redirect={getRelativeLocaleUrl(lang, 'checkout')}
     data-lang={lang}
     data-fee-label={text.shippingFeeLabel}
     data-calculating-fee={text.calculatingFee}
@@ -83,7 +84,7 @@ const { lang, text, initialShipping, isFreeShipping } = Astro.props
 
     <a
       id="back-to-shop"
-      href={`/${lang}/products/`}
+      href={getRelativeLocaleUrl(lang, 'products')}
       class="text-center text-lg text-gray-500 hover:text-black"
     >
       {text.backToShop}
