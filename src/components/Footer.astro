@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import { getLang, getTranslations } from '@utils/i18'
 
 const { footer, theCause } = getTranslations(Astro.params)
@@ -51,19 +52,19 @@ const lang = getLang(Astro.params)
     >
       <div class="flex flex-col">
         <a
-          href={`/${lang}/terms-and-conditions/`}
+          href={getRelativeLocaleUrl(lang, 'terms-and-conditions')}
           class="text-white order-1 landscape:order-0 md:text-lg p-0"
         >
           {footer.termsAndConditions}
         </a>
         <a
-          href={`/${lang}/privacy-policy/`}
+          href={getRelativeLocaleUrl(lang, 'privacy-policy')}
           class="text-white order-1 landscape:order-0 md:text-lg p-0"
         >
           {footer.privacyPolicy}
         </a>
         <a
-          href={`/${lang}/gdpr/`}
+          href={getRelativeLocaleUrl(lang, 'gdpr')}
           class="text-white order-1 landscape:order-0 md:text-lg uppercase mb-5 landscape:mb-0 md:mb-0 p-0"
         >
           {footer.gdpr}

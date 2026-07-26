@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale, Translations } from '@types'
 
 interface Props {
@@ -19,7 +20,7 @@ const { lang, text } = Astro.props
       {text.message}
       <a
         class="font-semibold underline underline-offset-4"
-        href={`/${lang}/privacy-policy/`}
+        href={getRelativeLocaleUrl(lang, 'privacy-policy')}
       >
         {text.privacyPolicy}
       </a>

@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import MainLayout from '@layouts/MainLayout.astro'
 import { getTranslations, getLang } from '@utils/i18'
 import { getProducts } from '@data/products'
@@ -115,13 +116,13 @@ const breadcrumbJsonLd = {
       '@type': 'ListItem',
       position: 1,
       name: homeLabel,
-      item: new URL(`/${lang}/`, baseUrl).href,
+      item: new URL(getRelativeLocaleUrl(lang), baseUrl).href,
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: translations.products,
-      item: new URL(`/${lang}/products/`, baseUrl).href,
+      item: new URL(getRelativeLocaleUrl(lang, 'products'), baseUrl).href,
     },
     {
       '@type': 'ListItem',

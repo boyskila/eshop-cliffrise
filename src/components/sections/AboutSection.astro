@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import { getLang, getTranslations } from '@utils/i18'
 import CliffriseTeamImg from '@assets/images/me_and_alex.webp'
 
@@ -41,14 +42,14 @@ const lang = getLang(Astro.params)
         <p>
           {aboutUsP2BeforeBoyko}
           <a
-            href={`/${lang}/people/boyko-lalov/`}
+            href={getRelativeLocaleUrl(lang, 'people/boyko-lalov')}
             class="font-semibold underline underline-offset-4"
           >
             {founders.boykoLalov.name}
           </a>
           {aboutUsP2BetweenFounders}
           <a
-            href={`/${lang}/people/alex-ianev/`}
+            href={getRelativeLocaleUrl(lang, 'people/alex-ianev')}
             class="font-semibold underline underline-offset-4"
           >
             {founders.alexYanev.name}
