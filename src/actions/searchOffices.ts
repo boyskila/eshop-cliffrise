@@ -2,6 +2,7 @@ import { defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import type { SpeedyOffice } from '@types'
 import { SPEEDY_API_URL } from '@services/speedyOffices'
+import { SPEEDY_PASSWORD, SPEEDY_USERNAME } from 'astro:env/server'
 
 export const searchOffices = defineAction({
   input: z.object({
@@ -10,12 +11,9 @@ export const searchOffices = defineAction({
   }),
 
   handler: async ({ query, lang }) => {
-    const username = import.meta.env.SPEEDY_USERNAME
-    const password = import.meta.env.SPEEDY_PASSWORD
-
     const body = {
-      userName: username,
-      password: password,
+      userName: SPEEDY_USERNAME,
+      password: SPEEDY_PASSWORD,
       countryId: 100, // Bulgaria
       name: query,
     }

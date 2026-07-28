@@ -6,7 +6,7 @@
     "dev": "astro dev --mode test",
     "dev:prod": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "node --env-file=.env ./node_modules/astro/astro.js preview",
     "start": "node ./dist/server/entry.mjs",
     "astro": "astro",
     "lint": "eslint .",

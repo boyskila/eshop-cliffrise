@@ -1,5 +1,7 @@
 <script>
-  const googleAnalyticsId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID
+  import { PUBLIC_GOOGLE_ANALYTICS_ID } from 'astro:env/client'
+
+  const googleAnalyticsId = PUBLIC_GOOGLE_ANALYTICS_ID
   const isAnalyticsEnabled = import.meta.env.PROD && Boolean(googleAnalyticsId)
 
   if (isAnalyticsEnabled) {

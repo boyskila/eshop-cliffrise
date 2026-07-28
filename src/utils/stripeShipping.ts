@@ -1,22 +1,18 @@
 import { getStripe } from '@services/stripe'
+import {
+  STRIPE_SHIPPING_RATE_FREE,
+  STRIPE_SHIPPING_RATE_STANDARD,
+} from 'astro:env/server'
 
 type ShippingRateKind = 'free' | 'standard'
 
-const shippingRateEnvByKind: Record<ShippingRateKind, string> = {
-  free: 'STRIPE_SHIPPING_RATE_FREE',
-  standard: 'STRIPE_SHIPPING_RATE_STANDARD',
+const shippingRateByKind: Record<ShippingRateKind, string> = {
+  free: STRIPE_SHIPPING_RATE_FREE,
+  standard: STRIPE_SHIPPING_RATE_STANDARD,
 }
 
-export const getStripeShippingRateId = (kind: ShippingRateKind) => {
-  const envName = shippingRateEnvByKind[kind]
-  const rateId = import.meta.env[envName]
-
-  if (!rateId) {
-    throw new Error(`${envName} is not set`)
-  }
-
-  return rateId
-}
+export const getStripeShippingRateId = (kind: ShippingRateKind) =>
+  shippingRateByKind[kind]
 
 export const getStripeShippingRate = async (kind: ShippingRateKind) => {
   const stripe = getStripe()

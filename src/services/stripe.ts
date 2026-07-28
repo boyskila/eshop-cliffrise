@@ -1,15 +1,11 @@
 import Stripe from 'stripe'
+import { STRIPE_SECRET_KEY } from 'astro:env/server'
 
 let stripeInstance: Stripe | null = null
 
 export const getStripe = () => {
   if (!stripeInstance) {
-    const key = import.meta.env.STRIPE_SECRET_KEY
-
-    if (!key) {
-      throw new Error('STRIPE_SECRET_KEY is not set')
-    }
-    stripeInstance = new Stripe(key)
+    stripeInstance = new Stripe(STRIPE_SECRET_KEY)
   }
   return stripeInstance
 }

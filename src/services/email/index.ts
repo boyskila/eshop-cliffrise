@@ -2,6 +2,7 @@ import type { EmailService } from '@types'
 import { FakeEmailService } from './FakeEmailService'
 import { ResendEmailService } from './ResendEmailService'
 import { isTestMode } from '@utils/func'
+import { RESEND_API_KEY } from 'astro:env/server'
 
 export { sentEmails, clearSentEmails } from './FakeEmailService'
 
@@ -16,9 +17,7 @@ class EmailServiceSingleton {
     if (isTestMode) {
       EmailServiceSingleton.instance = new FakeEmailService()
     } else {
-      EmailServiceSingleton.instance = new ResendEmailService(
-        import.meta.env.RESEND_API_KEY,
-      )
+      EmailServiceSingleton.instance = new ResendEmailService(RESEND_API_KEY)
     }
     return EmailServiceSingleton.instance as any
   }
