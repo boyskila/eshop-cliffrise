@@ -2,12 +2,23 @@
 import MainLayout from '@layouts/MainLayout.astro'
 import ProductCardImage from '@components/products/ProductCardImage.astro'
 import { Price } from '@components/ui/Price'
-import { getProducts } from '@data/products'
+import { loadBuildProducts } from '@data/products'
 import { getLang, getTranslations } from '@utils/i18'
+import { SUPPORTED_LANGS } from '@constants'
 
+export const prerender = true
+
+export const getStaticPaths = async () =>
+  Promise.all(
+    SUPPORTED_LANGS.map(async (lang) => ({
+      params: { lang },
+      props: { products: await loadBuildProducts(lang) },
+    })),
+  )
+
+const { products } = Astro.props
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
-const products = await getProducts(lang)
 const sortedProducts = [...products].sort((firstProduct, secondProduct) => {
   const firstOrder = firstProduct.carouselOrder ?? Number.POSITIVE_INFINITY
   const secondOrder = secondProduct.carouselOrder ?? Number.POSITIVE_INFINITY

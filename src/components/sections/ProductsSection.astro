@@ -1,12 +1,16 @@
 ---
 import { getLang, getTranslations } from '@utils/i18'
-import { getProducts } from '@data/products'
+import type { Product } from '@types'
 import ProductsCarousel from '../ui/carousel/ProductsCarousel'
 import { prepareProductCards } from '@utils/image'
 
+interface Props {
+  products: Product[]
+}
+
+const { products } = Astro.props
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
-const products = await getProducts(lang)
 const carouselProducts = await prepareProductCards(products)
 ---
 

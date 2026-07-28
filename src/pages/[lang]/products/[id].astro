@@ -2,7 +2,8 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import MainLayout from '@layouts/MainLayout.astro'
 import { getTranslations, getLang } from '@utils/i18'
-import { getProducts } from '@data/products'
+import { loadBuildProducts } from '@data/products'
+import { SUPPORTED_LANGS } from '@constants'
 import { AddToCartButton } from '@components/products/AddToCartButton'
 import ProductsCarousel from '@components/ui/carousel/ProductsCarousel'
 import KindSelector from '@components/products/KindSelector.astro'
@@ -24,16 +25,28 @@ import {
 } from '@utils/schema'
 import { getCanonicalSiteUrl, getCanonicalUrl } from '@utils/siteUrls'
 
-const translations = getTranslations(Astro.params)
-const lang = getLang(Astro.params)
-const products = await getProducts(lang)
-const { id } = Astro.params
-const product = products.find(({ slug }) => slug === id)
+export const prerender = true
 
-if (!product) {
-  return Astro.rewrite('/404')
+export const getStaticPaths = async () => {
+  const freeShippingThreshold = await getFreeShippingThreshold()
+  const productsByLang = await Promise.all(
+    SUPPORTED_LANGS.map(async (lang) => ({
+      lang,
+      products: await loadBuildProducts(lang),
+    })),
+  )
+
+  return productsByLang.flatMap(({ lang, products }) =>
+    products.map((product) => ({
+      params: { lang, id: product.slug },
+      props: { product, products, freeShippingThreshold },
+    })),
+  )
 }
 
+const { product, products, freeShippingThreshold } = Astro.props
+const translations = getTranslations(Astro.params)
+const lang = getLang(Astro.params)
 const productGalleryImages = await prepareProductGalleryImages(product.images)
 const mainImage =
   productGalleryImages[0]?.full ??
@@ -42,7 +55,6 @@ const renderedProductKinds = await prepareProductKinds(product.kind)
 const carouselProducts = await prepareProductCards(products)
 const productRequiresKindSelection = product.kind.length > 0
 const productOutOfStock = product.outOfStock ?? false
-const freeShippingThreshold = await getFreeShippingThreshold()
 const baseUrl = getCanonicalSiteUrl()
 const canonicalURL = getCanonicalUrl(product.href)
 const productImageUrl = new URL(mainImage.src, baseUrl).href

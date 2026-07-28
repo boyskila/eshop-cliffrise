@@ -1,23 +1,53 @@
 import { getStripe } from '@services/stripe'
+import type Stripe from 'stripe'
 import { getMockProducts } from './mockProducts'
 import type { Locale, Product } from '@types'
 import { isTestMode } from '@utils/func'
 import { mapStripeProductToProduct } from './productMapper'
 
-const listStripeProducts = () => {
+const listStripeProducts = async (): Promise<Stripe.Product[]> => {
+  const products: Stripe.Product[] = []
   const stripe = getStripe()
-  return stripe.products.list({
+
+  for await (const product of stripe.products.list({
+    active: true,
+    limit: 100,
     expand: ['data.default_price'],
-  })
+  })) {
+    products.push(product)
+  }
+
+  return products
 }
 
-export const getProducts = async (lang: Locale): Promise<Product[]> => {
+const mapProducts = (
+  stripeProducts: Stripe.Product[],
+  lang: Locale,
+): Product[] => {
+  return stripeProducts.map((stripeProduct) =>
+    mapStripeProductToProduct(stripeProduct, lang),
+  )
+}
+
+export const loadProducts = async (lang: Locale): Promise<Product[]> => {
   if (isTestMode) {
     return getMockProducts(lang)
   }
 
-  const productsList = await listStripeProducts()
-  return productsList.data.map((stripeProduct) =>
-    mapStripeProductToProduct(stripeProduct, lang),
-  )
+  return mapProducts(await listStripeProducts(), lang)
 }
+
+let buildStripeProducts: Promise<Stripe.Product[]> | undefined
+
+export const loadBuildProducts = async (
+  lang: Locale,
+): Promise<Product[]> => {
+  if (isTestMode) {
+    return getMockProducts(lang)
+  }
+
+  buildStripeProducts ??= listStripeProducts()
+  return mapProducts(await buildStripeProducts, lang)
+}
+
+export const getProducts = loadProducts

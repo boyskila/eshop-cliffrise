@@ -13,7 +13,20 @@ import { TETEVEN_CLIMB_2026 } from '@data/events'
 import TetevenClimb2026ImageBg from '@assets/images/ttvn_meetup_2026_desktop.webp'
 import TetevenClimb2026ImageEn from '@assets/images/ttvn_meetup_2026_desktop_en.webp'
 import { getCanonicalSiteUrl, getCanonicalUrl } from '@utils/siteUrls'
+import { SUPPORTED_LANGS } from '@constants'
+import { loadBuildProducts } from '@data/products'
 
+export const prerender = true
+
+export const getStaticPaths = async () =>
+  Promise.all(
+    SUPPORTED_LANGS.map(async (lang) => ({
+      params: { lang },
+      props: { products: await loadBuildProducts(lang) },
+    })),
+  )
+
+const { products } = Astro.props
 const translations = getTranslations(Astro.params)
 const lang = getLang(Astro.params)
 const title = translations.seo.home.title
@@ -58,7 +71,7 @@ const eventSchema = {
   <EventsSection />
   <AboutSection />
   <Divider />
-  <ProductsSection />
+  <ProductsSection {products} />
   <Divider />
   <FeedbackSection />
 </MainLayout>
