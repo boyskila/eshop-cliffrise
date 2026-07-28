@@ -80,7 +80,7 @@ export const cart = {
     handler: async ({ productId }, { session }) => {
       const cart = (await session?.get('cart')) ?? []
       const nextCart = cart.filter((item) => item.id !== productId)
-      await session?.set('cart', nextCart)
+      session?.set('cart', nextCart)
       return nextCart
     },
   }),
@@ -100,7 +100,7 @@ export const cart = {
         }
         return item
       })
-      await session?.set('cart', nextCart)
+      session?.set('cart', nextCart)
       return nextCart
     },
   }),

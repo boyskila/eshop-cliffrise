@@ -100,15 +100,3 @@ export const getLocalizedAlternates = (
   ]
 }
 
-export const getLocalizedProductUrls = (
-  slugs: readonly string[],
-  locales: readonly Locale[] = SUPPORTED_LANGS,
-): string[] => {
-  const uniqueSlugs = [...new Set(slugs)]
-
-  return uniqueSlugs.flatMap((slug) =>
-    locales.map(
-      (locale) => getCanonicalUrl(`/${locale}/products/${slug}/`).href,
-    ),
-  )
-}
