@@ -2,6 +2,7 @@ import { ActionError, defineAction } from 'astro:actions'
 import { z } from 'astro/zod'
 import { emailService } from '@services/email'
 import { escapeHtml, sanitizeInput, sanitizeMessage } from '@utils/func'
+import { BCC_EMAIL, OWNER_EMAIL } from 'astro:env/server'
 
 const formatMultilineHtml = (value: string) => {
   return escapeHtml(value).replace(/\n/g, '<br>')
@@ -18,20 +19,17 @@ export const contact = defineAction({
       .pipe(z.string().min(10).max(5000)),
   }),
 
-  handler: async ({ name, email, message}) => {
-
+  handler: async ({ name, email, message }) => {
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
     const safeMessage = formatMultilineHtml(message)
-    const ownerEmail = import.meta.env.OWNER_EMAIL
-
     try {
       const result = await emailService.get().send({
-        from: ownerEmail,
-        to: ownerEmail,
+        from: OWNER_EMAIL,
+        to: OWNER_EMAIL,
         replyTo: email,
         subject: `[CliffRise] New message from ${safeName}`,
-        bcc: [import.meta.env.BCC_EMAIL],
+        ...(BCC_EMAIL ? { bcc: [BCC_EMAIL] } : {}),
         html: `<!doctype html>
           <html lang="en">
             <body style="font-family: Arial, sans-serif; color: #1f2933; line-height: 1.5;">

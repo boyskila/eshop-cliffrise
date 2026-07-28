@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, envField } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import node from '@astrojs/node'
 import { DEFAULT_LANG, SUPPORTED_LANGS } from './src/constants'
@@ -48,6 +48,83 @@ export default defineConfig({
   site: canonicalSiteUrl.href,
   outDir: outputDirectory,
   trailingSlash: 'always',
+  env: {
+    schema: {
+      STRIPE_PUBLIC_KEY: envField.string({
+        context: 'client',
+        access: 'public',
+        min: 1,
+      }),
+      PUBLIC_TURNSTILE_SITE_KEY: envField.string({
+        context: 'client',
+        access: 'public',
+        min: 1,
+      }),
+      PUBLIC_GOOGLE_ANALYTICS_ID: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+        min: 1,
+      }),
+      STRIPE_SECRET_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      STRIPE_WEBHOOK_SECRET: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      STRIPE_SHIPPING_RATE_FREE: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      STRIPE_SHIPPING_RATE_STANDARD: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      RESEND_API_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      RESEND_TEMPLATE_ID: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      OWNER_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      BCC_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+        min: 1,
+      }),
+      SPEEDY_USERNAME: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      SPEEDY_PASSWORD: envField.string({
+        context: 'server',
+        access: 'secret',
+        min: 1,
+      }),
+      SITE_URL: envField.string({
+        context: 'server',
+        access: 'secret',
+        url: true,
+      }),
+    },
+    validateSecrets: true,
+  },
   vite: {
     plugins: [tailwindcss()],
     server: {
@@ -67,7 +144,7 @@ export default defineConfig({
   session: {
     driver: 'redis',
     options: {
-      url: process.env.REDIS_URL || 'redis://localhost:6379',
+      url: getEnv('REDIS_URL') || 'redis://localhost:6379',
       base: 'cliffrise:sessions',
       ttl: sessionTtlSeconds,
       connectTimeout: 1000,

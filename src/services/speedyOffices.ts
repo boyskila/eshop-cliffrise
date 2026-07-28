@@ -1,4 +1,5 @@
 import type { MapOffice, SpeedyOffice } from '@types'
+import { SPEEDY_PASSWORD, SPEEDY_USERNAME } from 'astro:env/server'
 
 export const SPEEDY_API_URL = 'https://api.speedy.bg/v1/location/office'
 const TTL = 60 * 60 * 1000 // 1 hour
@@ -6,15 +7,12 @@ const TTL = 60 * 60 * 1000 // 1 hour
 let cache: { offices: MapOffice[]; timestamp: number } | null = null
 
 const fetchOfficesFromApi = async (): Promise<MapOffice[]> => {
-  const username = import.meta.env.SPEEDY_USERNAME
-  const password = import.meta.env.SPEEDY_PASSWORD
-
   const response = await fetch(SPEEDY_API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      userName: username,
-      password: password,
+      userName: SPEEDY_USERNAME,
+      password: SPEEDY_PASSWORD,
       countryId: 100,
     }),
   })

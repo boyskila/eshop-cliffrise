@@ -11,6 +11,12 @@ import {
   isTestMode,
 } from '@utils/func'
 import type { Locale } from '@types'
+import {
+  BCC_EMAIL,
+  OWNER_EMAIL,
+  RESEND_TEMPLATE_ID,
+  STRIPE_WEBHOOK_SECRET,
+} from 'astro:env/server'
 
 type EmailLineItem = {
   name: string
@@ -162,15 +168,18 @@ export const POST: APIRoute = async ({ request }) => {
     }
   } else {
     const signature = request.headers.get('stripe-signature')
-    const webhookSecret = import.meta.env.STRIPE_WEBHOOK_SECRET
 
-    if (!webhookSecret || !signature) {
+    if (!signature) {
       return new Response('Missing webhook configuration', { status: 400 })
     }
 
     try {
       const stripe = getStripe()
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+      event = stripe.webhooks.constructEvent(
+        body,
+        signature,
+        STRIPE_WEBHOOK_SECRET,
+      )
     } catch (err) {
       console.error('Webhook signature verification failed:', err)
       return new Response('Invalid signature', { status: 400 })
@@ -191,12 +200,12 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (customerEmail) {
       const result = await emailService.get().send({
-        from: import.meta.env.OWNER_EMAIL,
+        from: OWNER_EMAIL,
         to: customerEmail,
-        bcc: [import.meta.env.BCC_EMAIL],
+        ...(BCC_EMAIL ? { bcc: [BCC_EMAIL] } : {}),
         subject: t.orderConfirmedSubject,
         template: {
-          id: import.meta.env.RESEND_TEMPLATE_ID,
+          id: RESEND_TEMPLATE_ID,
           variables: await buildEmailVariables(session),
         },
       })
