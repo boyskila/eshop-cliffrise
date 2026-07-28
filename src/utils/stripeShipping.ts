@@ -20,7 +20,9 @@ export const getStripeShippingRateId = (kind: ShippingRateKind) => {
 
 export const getStripeShippingRate = async (kind: ShippingRateKind) => {
   const stripe = getStripe()
-  const rate = await stripe.shippingRates.retrieve(getStripeShippingRateId(kind))
+  const rate = await stripe.shippingRates.retrieve(
+    getStripeShippingRateId(kind),
+  )
   const amount = rate.fixed_amount?.amount
   const currency = rate.fixed_amount?.currency
   const bgnPrice = rate.metadata.bgn_price
@@ -32,7 +34,9 @@ export const getStripeShippingRate = async (kind: ShippingRateKind) => {
   }
 
   if (bgnPrice !== undefined && !Number.isFinite(bgnPrice)) {
-    throw new Error(`Stripe shipping rate "${rate.id}" metadata.bgn_price must be a number`)
+    throw new Error(
+      `Stripe shipping rate "${rate.id}" metadata.bgn_price must be a number`,
+    )
   }
 
   return {
