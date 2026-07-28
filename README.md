@@ -23,3 +23,18 @@ Cloudflare is the single owner of the hostname redirect. Configure one
 permanent edge redirect from `https://www.cliffrise.com/*` to
 `https://cliffrise.com/*` that preserves the path and query string. Astro does
 not duplicate this redirect behind the proxy.
+
+## Prerendered catalog
+
+The localized homepage, product listing, and product detail pages are
+prerendered. Their `getStaticPaths` functions share one paginated Stripe catalog
+load and pass localized products through page props, so no catalog request
+happens while serving these pages.
+
+Because the catalog is baked into the build, **a Stripe product or price change
+only goes live on the next deploy.** This repository does not currently trigger
+deployments from Stripe webhooks. `@astrojs/sitemap` picks these routes up from
+the build output, so the sitemap needs no manual page list.
+
+Checkout, actions, and `/api/` stay on-demand; those depend on the session and
+must not be cached.

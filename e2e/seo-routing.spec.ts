@@ -1,8 +1,5 @@
 import { expect, test, type APIRequestContext } from '@playwright/test'
-import {
-  getLocalizedAlternates,
-  getLocalizedProductUrls,
-} from '../src/utils/siteUrls'
+import { getLocalizedAlternates } from '../src/utils/siteUrls'
 
 const canonicalOrigin = 'https://cliffrise.com'
 
@@ -67,15 +64,6 @@ test.describe('Localized SEO routing', () => {
       bg: `${canonicalOrigin}/bg/privacy-policy/`,
       'x-default': `${canonicalOrigin}/bg/privacy-policy/`,
     })
-  })
-
-  test('builds unique localized product sitemap URLs', () => {
-    expect(getLocalizedProductUrls(['chalk', 'chalk', 'tape'])).toEqual([
-      `${canonicalOrigin}/en/products/chalk/`,
-      `${canonicalOrigin}/bg/products/chalk/`,
-      `${canonicalOrigin}/en/products/tape/`,
-      `${canonicalOrigin}/bg/products/tape/`,
-    ])
   })
 
   test('English homepage self-canonicalizes with reciprocal alternates', async ({

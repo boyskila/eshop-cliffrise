@@ -4,13 +4,8 @@ import node from '@astrojs/node'
 import { DEFAULT_LANG, SUPPORTED_LANGS } from './src/constants'
 import solidJs from '@astrojs/solid-js'
 import sitemap from '@astrojs/sitemap'
-import Stripe from 'stripe'
 import { loadEnv } from 'vite'
-import {
-  getCanonicalSiteUrl,
-  getLocalizedProductUrls,
-  normalizeSiteUrl,
-} from './src/utils/siteUrls'
+import { getCanonicalSiteUrl, normalizeSiteUrl } from './src/utils/siteUrls'
 
 const modeFlagIndex = process.argv.indexOf('--mode')
 const mode =
@@ -35,54 +30,6 @@ const sessionTtlSeconds = 60 * 60 * 24 * 30
 const sitemapLocales = Object.fromEntries(
   SUPPORTED_LANGS.map((lang) => [lang, lang]),
 )
-const sitemapHomepagePages = SUPPORTED_LANGS.map(
-  (lang) => new URL(`/${lang}/`, canonicalSiteUrl).href,
-)
-const sitemapProductCategoryPages = SUPPORTED_LANGS.map(
-  (lang) => new URL(`/${lang}/products/`, canonicalSiteUrl).href,
-)
-
-const getSitemapProductSlugs = async () => {
-  const stripeSecretKey = getEnv('STRIPE_SECRET_KEY')
-
-  if (!stripeSecretKey) {
-    console.warn(
-      'STRIPE_SECRET_KEY is not set; skipping Stripe product pages in sitemap',
-    )
-    return []
-  }
-
-  const stripe = new Stripe(stripeSecretKey)
-  const productSlugs = []
-
-  try {
-    for await (const product of stripe.products.list({
-      active: true,
-      limit: 100,
-    })) {
-      const slug = product.metadata.slug
-
-      if (!slug) {
-        continue
-      }
-
-      productSlugs.push(slug)
-    }
-  } catch (error) {
-    console.warn('Could not fetch Stripe products for the sitemap', error)
-  }
-
-  return productSlugs
-}
-
-const sitemapProductPages = isTestMode
-  ? []
-  : getLocalizedProductUrls(await getSitemapProductSlugs())
-const sitemapCustomPages = [
-  ...sitemapHomepagePages,
-  ...sitemapProductCategoryPages,
-  ...sitemapProductPages,
-]
 
 const shouldIncludeSitemapPage = (page) => {
   const { pathname } = new URL(page)
@@ -131,7 +78,6 @@ export default defineConfig({
   integrations: [
     solidJs(),
     sitemap({
-      customPages: sitemapCustomPages,
       filter: shouldIncludeSitemapPage,
       i18n: {
         defaultLocale: DEFAULT_LANG,
