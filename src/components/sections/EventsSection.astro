@@ -1,33 +1,32 @@
 ---
-import { getLang, getTranslations } from '@utils/i18'
+import { getTranslations } from '@utils/i18'
 import GalleryCarousel from '../ui/carousel/GalleryCarousel'
 import YearToggle from './YearToggle.astro'
-import { getImage, Image } from 'astro:assets'
-import TtvnMeetup2026Img from '@assets/images/ttvn_meetup_2026_mobile.webp'
-import TtvnMeetup2026ImgDesktop from '@assets/images/ttvn_meetup_2026_desktop.webp'
-import TtvnMeetup2026ImgEn from '@assets/images/ttvn_meetup_2026_mobile_en.webp'
-import TtvnMeetup2026ImgDesktopEn from '@assets/images/ttvn_meetup_2026_desktop_en.webp'
-import { galleryImages } from '@data/carousel-images'
-import EventLink from './EventLink.astro'
-const lang = getLang(Astro.params)
-const { eventsSection, tetevenClimb } = getTranslations(Astro.params)
-const { seeEvent, text, meetup2026Alt } = eventsSection
-const meetup2026MobileImage =
-  lang === 'bg' ? TtvnMeetup2026Img : TtvnMeetup2026ImgEn
-const meetup2026DesktopImage =
-  lang === 'bg' ? TtvnMeetup2026ImgDesktop : TtvnMeetup2026ImgDesktopEn
+import { getImage } from 'astro:assets'
+import { galleryImages2025, galleryImages2026 } from '@data/carousel-images'
 
-const processedGalleryImages = await Promise.all(
-  galleryImages.map((img) =>
-    getImage({
-      src: img,
-      widths: [400, 800, 1200],
-      format: 'webp',
-      quality: 80,
-    }),
-  ),
-)
-const galleryImageUrls = processedGalleryImages.map((img) => img.src)
+const { eventsSection, tetevenClimb } = getTranslations(Astro.params)
+const { text } = eventsSection
+
+const processGalleryImages = (images: typeof galleryImages2025) =>
+  Promise.all(
+    images.map((img) =>
+      getImage({
+        src: img,
+        widths: [400, 800, 1200],
+        format: 'webp',
+        quality: 80,
+      }),
+    ),
+  )
+
+const [processedGalleryImages2025, processedGalleryImages2026] =
+  await Promise.all([
+    processGalleryImages(galleryImages2025),
+    processGalleryImages(galleryImages2026),
+  ])
+const galleryImageUrls2025 = processedGalleryImages2025.map((img) => img.src)
+const galleryImageUrls2026 = processedGalleryImages2026.map((img) => img.src)
 ---
 
 <section
@@ -50,24 +49,11 @@ const galleryImageUrls = processedGalleryImages.map((img) => img.src)
   <div class="relative">
     <YearToggle />
     <div class="overflow-x-hidden flex items-start justify-center">
-      <div
-        data-year-panel="2026"
-        class="w-full flex flex-col gap-6 md:gap-8 items-start"
-      >
-        <Image
-          src={meetup2026MobileImage}
-          alt={meetup2026Alt}
-          class="bg-shimmer object-contain w-full lg:hidden"
-        />
-        <Image
-          src={meetup2026DesktopImage}
-          alt={meetup2026Alt}
-          class="bg-shimmer object-contain w-full lg:block hidden"
-        />
-        <EventLink text={seeEvent} />
+      <div data-year-panel="2026" class="w-full">
+        <GalleryCarousel images={galleryImageUrls2026} client:idle />
       </div>
       <div data-year-panel="2025" class="hidden w-full">
-        <GalleryCarousel images={galleryImageUrls} client:idle />
+        <GalleryCarousel images={galleryImageUrls2025} client:idle />
       </div>
     </div>
   </div>

@@ -1,15 +1,14 @@
 ---
-import { TETEVEN_CLIMB_2026 } from '@data/events'
-
 type Props = {
   text: string
+  href: string
 }
 
-const { text } = Astro.props
+const { text, href } = Astro.props
 ---
 
 <a
-  href={TETEVEN_CLIMB_2026.url}
+  {href}
   target="_blank"
   rel="noopener noreferrer"
   class="font-bold
