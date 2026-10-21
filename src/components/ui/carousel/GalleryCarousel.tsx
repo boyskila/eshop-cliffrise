@@ -50,7 +50,7 @@ export default (props: { images: string[] }) => {
   })
 
   return (
-    <div ref={emblaRef} data-year-panel="2025" class="hidden">
+    <div ref={emblaRef}>
       <div class="flex touch-pan-y touch-pinch-zoom">
         <For each={groupedSlides()}>
           {(slide) => (

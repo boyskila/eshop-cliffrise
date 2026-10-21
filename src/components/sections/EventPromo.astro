@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import EventLink from './EventLink.astro'
+
+type Props = {
+  mobileImage: ImageMetadata
+  desktopImage: ImageMetadata
+  alt: string
+  linkText: string
+  href: string
+}
+
+const { mobileImage, desktopImage, alt, linkText, href } = Astro.props
+---
+
+<div class="w-full flex flex-col gap-6 md:gap-8 items-start">
+  <Image
+    src={mobileImage}
+    {alt}
+    class="bg-shimmer object-contain w-full lg:hidden"
+  />
+  <Image
+    src={desktopImage}
+    {alt}
+    class="bg-shimmer object-contain w-full lg:block hidden"
+  />
+  <EventLink text={linkText} {href} />
+</div>
