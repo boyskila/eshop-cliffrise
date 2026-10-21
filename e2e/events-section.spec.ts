@@ -16,13 +16,23 @@ test.describe('Events Section', () => {
     await expect(description).not.toBeEmpty()
   })
 
-  test('2026 panel is visible by default', async ({ page }) => {
+  test('2026 gallery is visible by default with images in order', async ({
+    page,
+  }) => {
     const panel2026 = getPanel(page, '2026')
     await expect(panel2026).toBeVisible()
 
-    const poster = panel2026.locator('img:visible')
-    await expect(poster).toBeVisible()
-    await expect(poster).toHaveAttribute('src', /ttvn_meetup_2026/)
+    const images = panel2026.locator('img')
+    await expect(images).toHaveCount(20)
+    await expect(images.first()).toBeVisible()
+    await expect(images.first()).toHaveAttribute(
+      'src',
+      /CliffriseTetevenMeetup2026_1\..*\.webp/,
+    )
+    await expect(images.last()).toHaveAttribute(
+      'src',
+      /CliffriseTetevenMeetup2026_20\..*\.webp/,
+    )
   })
 
   test('2025 panel is hidden by default', async ({ page }) => {
@@ -30,13 +40,13 @@ test.describe('Events Section', () => {
     await expect(panel2025).toBeHidden()
   })
 
-  test('"See the event" link points to the Facebook event', async ({
-    page,
-  }) => {
-    const link = page.locator('a[href="https://fb.me/e/7ebntwiFq"]')
-    await expect(link).toBeVisible()
-    await expect(link).toHaveAttribute('target', '_blank')
-    await expect(link).not.toBeEmpty()
+  test('2026 gallery displays carousel navigation', async ({ page }) => {
+    const panel2026 = getPanel(page, '2026')
+    const firstDot = panel2026.getByRole('button', {
+      name: 'Go to slide 1',
+    })
+
+    await expect(firstDot).toBeVisible()
   })
 })
 
