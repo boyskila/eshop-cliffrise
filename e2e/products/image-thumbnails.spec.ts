@@ -74,3 +74,28 @@ test.describe('Image Thumbnails - Page navigation', () => {
     await expect(mainImage).toHaveAttribute('src', expectedSrc!)
   })
 })
+
+test.describe('Localized product images', () => {
+  test('uses English images when available and falls back per image', async ({
+    page,
+  }) => {
+    await page.goto('/en/products/1/')
+    const englishImages = await page
+      .locator('[data-product-thumbnail]')
+      .evaluateAll((thumbnails) =>
+        thumbnails.map((thumbnail) => thumbnail.getAttribute('data-image-src')),
+      )
+
+    await page.goto('/bg/products/1/')
+    const bulgarianImages = await page
+      .locator('[data-product-thumbnail]')
+      .evaluateAll((thumbnails) =>
+        thumbnails.map((thumbnail) => thumbnail.getAttribute('data-image-src')),
+      )
+
+    expect(englishImages).toHaveLength(2)
+    expect(bulgarianImages).toHaveLength(2)
+    expect(englishImages[0]).not.toBe(bulgarianImages[0])
+    expect(englishImages[1]).toBe(bulgarianImages[1])
+  })
+})

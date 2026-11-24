@@ -39,7 +39,10 @@ export const mapStripeProductToProduct = (
     kind: localizedMetadata.kind.map((kind) => ({
       name: kind.name,
       image: kind.image
-        ? resolveProductImage(`${catalogMetadata.imageFolder}${kind.image}`)
+        ? resolveProductImage(
+            `${catalogMetadata.imageFolder}${kind.image}`,
+            lang,
+          )
         : undefined,
       inStock: kind.inStock ?? true,
     })),
@@ -47,10 +50,14 @@ export const mapStripeProductToProduct = (
     weight: catalogMetadata.weight,
     image: resolveProductImage(
       `${catalogMetadata.imageFolder}${catalogMetadata.mainImage}`,
+      lang,
     ),
-    hoverImage: resolveProductImage(`${catalogMetadata.imageFolder}hover.webp`),
+    hoverImage: resolveProductImage(
+      `${catalogMetadata.imageFolder}hover.webp`,
+      lang,
+    ),
     images: catalogMetadata.images.map((image) =>
-      resolveProductImage(`${catalogMetadata.imageFolder}${image}`),
+      resolveProductImage(`${catalogMetadata.imageFolder}${image}`, lang),
     ),
     kindTitle: localizedMetadata.kindTitle,
     productPageTitle: localizedMetadata.productPageTitle,

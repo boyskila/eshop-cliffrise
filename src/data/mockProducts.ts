@@ -1,164 +1,179 @@
 import type { Locale, Product } from '@types'
-import { resolveProductImage } from './productImages'
+import { resolveProductImage as resolveBaseProductImage } from './productImages'
 
 type MockProductsMap = Record<string, Product[]>
 
-const enProducts: Product[] = [
-  {
-    id: '1',
-    slug: '1',
-    href: '/en/products/1/',
-    name: 'Chunky Chalk',
-    description:
-      'Chunky climbing chalk with a coarse structure that breaks down easily and provides reliable friction. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.',
-    kind: [],
-    price: 12.99,
-    weight: 0.3,
-    image: resolveProductImage('dry-chalk/irl1'),
-    hoverImage: resolveProductImage('dry-chalk/hover'),
-    images: [
-      resolveProductImage('dry-chalk/irl1'),
-      resolveProductImage('dry-chalk/irl2'),
-    ],
-    productPageTitle: 'Chunky Chalk – 250 g',
-  },
-  {
-    id: '2',
-    slug: '2',
-    href: '/en/products/2/',
-    name: 'Moist Chunky Chalk',
-    description:
-      'Moist chunky climbing chalk with a denser structure that breaks down easily and leaves an even layer on the hands. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.',
-    kind: [],
-    price: 13.99,
-    weight: 0.3,
-    image: resolveProductImage('wet-chalk/wet-chalk'),
-    hoverImage: resolveProductImage('wet-chalk/hover'),
-    images: [resolveProductImage('wet-chalk/wet-chalk')],
-    productPageTitle: 'Moist Chunky Chalk – 250g',
-  },
-  {
-    id: '3',
-    slug: '3',
-    href: '/en/products/3/',
-    name: 'Liquid Chalk',
-    description:
-      'Liquid chalk that dries quickly and leaves an even layer on the hands. Made for reliable friction both indoors and outdoors.',
-    kind: [],
-    outOfStock: true,
-    price: 14.99,
-    weight: 0.3,
-    image: resolveProductImage('liquid-chalk/irl1'),
-    hoverImage: resolveProductImage('liquid-chalk/hover'),
-    images: [resolveProductImage('liquid-chalk/irl1')],
-    productPageTitle: 'Liquid Chalk – 250 ml',
-  },
-  {
-    id: '4',
-    slug: '4',
-    href: '/en/products/4/',
-    name: 'T‑Shirt with a Cause',
-    description:
-      'Comfortable T‑shirt for climbing and for the days between routes. Simple, durable and made for people who love climbing.',
-    kind: [
-      { name: 'S', inStock: true },
-      { name: 'M', inStock: true },
-      { name: 'L', inStock: true },
-      { name: 'XL', inStock: true },
-    ],
-    kindTitle: 'Select size:',
-    price: 29.99,
-    weight: 0.25,
-    image: resolveProductImage('tshirt/irl1'),
-    hoverImage: resolveProductImage('tshirt/hover'),
-    images: [resolveProductImage('tshirt/irl1')],
-  },
-  {
-    id: '5',
-    slug: '5',
-    href: '/en/products/5/',
-    name: 'Beanie with a Cause',
-    description:
-      'Warm beanie for cold days in the mountains and in the city. Comfortable, simple and made for climbing adventures.',
-    kind: [
-      {
-        name: 'blue',
-        image: resolveProductImage('beanies/blue'),
-        inStock: true,
-      },
-      {
-        name: 'black',
-        image: resolveProductImage('beanies/black'),
-        inStock: true,
-      },
-      {
-        name: 'red',
-        image: resolveProductImage('beanies/blue'),
-        inStock: true,
-      },
-      {
-        name: 'green',
-        image: resolveProductImage('beanies/green'),
-        inStock: true,
-      },
-      {
-        name: 'gray',
-        image: resolveProductImage('beanies/gray'),
-        inStock: true,
-      },
-    ],
-    kindTitle: 'Select color:',
-    price: 24.99,
-    weight: 0.1,
-    image: resolveProductImage('beanies/blue'),
-    hoverImage: resolveProductImage('beanies/hover'),
-    images: [resolveProductImage('beanies/blue')],
-  },
-  {
-    id: '6',
-    slug: '6',
-    href: '/en/products/6/',
-    name: 'Climbing Tape',
-    description:
-      'Durable tape for protecting fingers while climbing. Made for crack climbing, sharp holds and long climbing sessions.',
-    kind: [
-      {
-        name: 'green',
-        image: resolveProductImage('tape/green'),
-        inStock: true,
-      },
-      { name: 'blue', image: resolveProductImage('tape/green'), inStock: true },
-      {
-        name: 'yellow',
-        image: resolveProductImage('tape/green'),
-        inStock: true,
-      },
-      {
-        name: 'orange',
-        image: resolveProductImage('tape/red'),
-        inStock: true,
-      },
-      { name: 'pink', image: resolveProductImage('tape/pink'), inStock: true },
-      {
-        name: 'black',
-        image: resolveProductImage('tape/black'),
-        inStock: true,
-      },
-      {
-        name: 'white',
-        image: resolveProductImage('tape/green'),
-        inStock: true,
-      },
-    ],
-    kindTitle: 'Select color:',
-    outOfStock: true,
-    price: 7.99,
-    weight: 0.05,
-    image: resolveProductImage('tape/green'),
-    hoverImage: resolveProductImage('tape/hover'),
-    images: [resolveProductImage('tape/green')],
-  },
-]
+const resolveProductImage = resolveBaseProductImage
+
+const enProducts: Product[] = (() => {
+  const resolveProductImage = (relativePath: string) =>
+    resolveBaseProductImage(relativePath, 'en')
+
+  return [
+    {
+      id: '1',
+      slug: '1',
+      href: '/en/products/1/',
+      name: 'Chunky Chalk',
+      description:
+        'Chunky climbing chalk with a coarse structure that breaks down easily and provides reliable friction. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.',
+      kind: [],
+      price: 12.99,
+      weight: 0.3,
+      image: resolveProductImage('dry-chalk/irl1'),
+      hoverImage: resolveProductImage('dry-chalk/hover'),
+      images: [
+        resolveProductImage('dry-chalk/irl1'),
+        resolveProductImage('dry-chalk/irl2'),
+      ],
+      productPageTitle: 'Chunky Chalk – 250 g',
+    },
+    {
+      id: '2',
+      slug: '2',
+      href: '/en/products/2/',
+      name: 'Moist Chunky Chalk',
+      description:
+        'Moist chunky climbing chalk with a denser structure that breaks down easily and leaves an even layer on the hands. Made for bouldering, sport routes and long climbing sessions. Open. Crush. Climb.',
+      kind: [],
+      price: 13.99,
+      weight: 0.3,
+      image: resolveProductImage('wet-chalk/wet-chalk'),
+      hoverImage: resolveProductImage('wet-chalk/hover'),
+      images: [resolveProductImage('wet-chalk/wet-chalk')],
+      productPageTitle: 'Moist Chunky Chalk – 250g',
+    },
+    {
+      id: '3',
+      slug: '3',
+      href: '/en/products/3/',
+      name: 'Liquid Chalk',
+      description:
+        'Liquid chalk that dries quickly and leaves an even layer on the hands. Made for reliable friction both indoors and outdoors.',
+      kind: [],
+      outOfStock: true,
+      price: 14.99,
+      weight: 0.3,
+      image: resolveProductImage('liquid-chalk/irl1'),
+      hoverImage: resolveProductImage('liquid-chalk/hover'),
+      images: [resolveProductImage('liquid-chalk/irl1')],
+      productPageTitle: 'Liquid Chalk – 250 ml',
+    },
+    {
+      id: '4',
+      slug: '4',
+      href: '/en/products/4/',
+      name: 'T‑Shirt with a Cause',
+      description:
+        'Comfortable T‑shirt for climbing and for the days between routes. Simple, durable and made for people who love climbing.',
+      kind: [
+        { name: 'S', inStock: true },
+        { name: 'M', inStock: true },
+        { name: 'L', inStock: true },
+        { name: 'XL', inStock: true },
+      ],
+      kindTitle: 'Select size:',
+      price: 29.99,
+      weight: 0.25,
+      image: resolveProductImage('tshirt/irl1'),
+      hoverImage: resolveProductImage('tshirt/hover'),
+      images: [resolveProductImage('tshirt/irl1')],
+    },
+    {
+      id: '5',
+      slug: '5',
+      href: '/en/products/5/',
+      name: 'Beanie with a Cause',
+      description:
+        'Warm beanie for cold days in the mountains and in the city. Comfortable, simple and made for climbing adventures.',
+      kind: [
+        {
+          name: 'blue',
+          image: resolveProductImage('beanies/blue'),
+          inStock: true,
+        },
+        {
+          name: 'black',
+          image: resolveProductImage('beanies/black'),
+          inStock: true,
+        },
+        {
+          name: 'red',
+          image: resolveProductImage('beanies/blue'),
+          inStock: true,
+        },
+        {
+          name: 'green',
+          image: resolveProductImage('beanies/green'),
+          inStock: true,
+        },
+        {
+          name: 'gray',
+          image: resolveProductImage('beanies/gray'),
+          inStock: true,
+        },
+      ],
+      kindTitle: 'Select color:',
+      price: 24.99,
+      weight: 0.1,
+      image: resolveProductImage('beanies/blue'),
+      hoverImage: resolveProductImage('beanies/hover'),
+      images: [resolveProductImage('beanies/blue')],
+    },
+    {
+      id: '6',
+      slug: '6',
+      href: '/en/products/6/',
+      name: 'Climbing Tape',
+      description:
+        'Durable tape for protecting fingers while climbing. Made for crack climbing, sharp holds and long climbing sessions.',
+      kind: [
+        {
+          name: 'green',
+          image: resolveProductImage('tape/green'),
+          inStock: true,
+        },
+        {
+          name: 'blue',
+          image: resolveProductImage('tape/green'),
+          inStock: true,
+        },
+        {
+          name: 'yellow',
+          image: resolveProductImage('tape/green'),
+          inStock: true,
+        },
+        {
+          name: 'orange',
+          image: resolveProductImage('tape/red'),
+          inStock: true,
+        },
+        {
+          name: 'pink',
+          image: resolveProductImage('tape/pink'),
+          inStock: true,
+        },
+        {
+          name: 'black',
+          image: resolveProductImage('tape/black'),
+          inStock: true,
+        },
+        {
+          name: 'white',
+          image: resolveProductImage('tape/green'),
+          inStock: true,
+        },
+      ],
+      kindTitle: 'Select color:',
+      outOfStock: true,
+      price: 7.99,
+      weight: 0.05,
+      image: resolveProductImage('tape/green'),
+      hoverImage: resolveProductImage('tape/hover'),
+      images: [resolveProductImage('tape/green')],
+    },
+  ]
+})()
 
 const bgProducts: Product[] = [
   {
