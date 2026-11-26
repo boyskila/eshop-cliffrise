@@ -23,7 +23,7 @@ test.describe('Events Section', () => {
     await expect(panel2026).toBeVisible()
 
     const images = panel2026.locator('img')
-    await expect(images).toHaveCount(20)
+    await expect(images).toHaveCount(21)
     await expect(images.first()).toBeVisible()
     await expect(images.first()).toHaveAttribute(
       'src',
