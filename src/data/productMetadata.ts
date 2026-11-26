@@ -36,7 +36,7 @@ const productImageListSchema = z.array(z.string().min(1))
 
 const parseJsonValue = <T>(
   raw: string,
-  schema: z.ZodSchema<T>,
+  schema: z.ZodType<T>,
   label: string,
 ): T => {
   let parsed: unknown

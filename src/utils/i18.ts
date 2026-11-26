@@ -13,15 +13,9 @@ export const getTranslations = (params: { lang?: Locale }): Translations => {
   return lang === 'en' ? en : bg
 }
 
-export const getLang = (params: { lang?: Locale }): Locale => {
-  const { lang } = params
-
-  if (lang && SUPPORTED_LANGS.includes(lang as Locale)) {
-    return lang as Locale
-  }
-
-  return DEFAULT_LANG
-}
+export const getLang = ({ lang }: { lang?: string }): Locale =>
+  SUPPORTED_LANGS.find((supportedLang) => supportedLang === lang) ??
+  DEFAULT_LANG
 
 export const getLocaleAnchorUrl = (lang: Locale, elementId: string) =>
   `${getRelativeLocaleUrl(lang)}#${elementId}`

@@ -32,6 +32,7 @@ import img2026_17 from '@assets/images/gallery/2026/CliffriseTetevenMeetup2026_1
 import img2026_18 from '@assets/images/gallery/2026/CliffriseTetevenMeetup2026_18.webp'
 import img2026_19 from '@assets/images/gallery/2026/CliffriseTetevenMeetup2026_19.webp'
 import img2026_20 from '@assets/images/gallery/2026/CliffriseTetevenMeetup2026_20.webp'
+import img2026_21 from '@assets/images/gallery/2026/CliffriseTetevenMeetup2026_21.webp'
 
 import boltingImg from '@assets/images/founders/boyko/gallery/bolting.webp'
 import tetevenImg from '@assets/images/founders/boyko/gallery/teteven.webp'
@@ -82,6 +83,7 @@ export const galleryImages2026: ImageMetadata[] = [
   img2026_18,
   img2026_19,
   img2026_20,
+  img2026_21,
 ]
 
 export const boykoImages: ImageMetadata[] = [
