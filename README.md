@@ -2,6 +2,8 @@
 
 A simple online shop implemented using AstroJs, Tailwind and Stripe for handling payments.
 
+Development, builds, and the standalone server require Node.js 22.23.4 or newer.
+
 ## Google Analytics
 
 Set the public GA4 measurement ID in the production environment:
