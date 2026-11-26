@@ -8,18 +8,24 @@ const formatMultilineHtml = (value: string) => {
   return escapeHtml(value).replace(/\n/g, '<br>')
 }
 
+const contactFormSchema = z.object({
+  name: z.string().transform(sanitizeInput).pipe(z.string().min(2).max(100)),
+  email: z.string().trim().pipe(z.email().max(254)),
+  message: z
+    .string()
+    .transform(sanitizeMessage)
+    .pipe(z.string().min(10).max(5000)),
+})
+
 export const contact = defineAction({
   accept: 'form',
-  input: z.object({
-    name: z.string().transform(sanitizeInput).pipe(z.string().min(2).max(100)),
-    email: z.string().trim().email().max(254),
-    message: z
-      .string()
-      .transform(sanitizeMessage)
-      .pipe(z.string().min(10).max(5000)),
-  }),
+  input: contactFormSchema,
 
-  handler: async ({ name, email, message }) => {
+  handler: async ({
+    name,
+    email,
+    message,
+  }: z.output<typeof contactFormSchema>): Promise<{ success: true }> => {
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
     const safeMessage = formatMultilineHtml(message)

@@ -1,4 +1,4 @@
-import { defineConfig, envField } from 'astro/config'
+import { defineConfig, envField, sessionDrivers } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import node from '@astrojs/node'
 import { DEFAULT_LANG, SUPPORTED_LANGS } from './src/constants'
@@ -48,6 +48,7 @@ export default defineConfig({
   site: canonicalSiteUrl.href,
   outDir: outputDirectory,
   trailingSlash: 'always',
+  compressHTML: true,
   env: {
     schema: {
       STRIPE_PUBLIC_KEY: envField.string({
@@ -142,14 +143,13 @@ export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   session: {
-    driver: 'redis',
-    options: {
+    driver: sessionDrivers.redis({
       url: getEnv('REDIS_URL') || 'redis://localhost:6379',
       base: 'cliffrise:sessions',
       ttl: sessionTtlSeconds,
       connectTimeout: 1000,
       maxRetriesPerRequest: 1,
-    },
+    }),
     ttl: sessionTtlSeconds,
   },
   integrations: [
